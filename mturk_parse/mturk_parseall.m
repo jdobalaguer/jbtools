@@ -1,4 +1,7 @@
 function mturk_parseall(pathname)
+
+    %% parallel
+    jb_parallel_start;
     
     %% directories
     % dir files
@@ -16,7 +19,7 @@ function mturk_parseall(pathname)
     nb_allfiles = length(allfiles);
     
     %% parse data
-    for i_allfiles = 1:nb_allfiles
+    parfor i_allfiles = 1:nb_allfiles
         filename = [pathname,filesep,allfiles(i_allfiles).name];
         % SKIP
         if exist([filename,'.parse.mat'],'file')
@@ -48,7 +51,7 @@ function mturk_parseall(pathname)
     fprintf('mturk_parseall: \n');
     
     %% uncell data
-    for i_allfiles = 1:nb_allfiles
+    parfor i_allfiles = 1:nb_allfiles
         filename = [pathname,filesep,allfiles(i_allfiles).name];
         % SKIP
         if exist([filename,'.uncell.mat'],'file')
@@ -107,4 +110,7 @@ function mturk_parseall(pathname)
     % print
     fprintf('mturk_parseall: \n');
     
+    %% parallel
+    jb_parallel_stop;
+
 end
