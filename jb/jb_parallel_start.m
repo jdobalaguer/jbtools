@@ -2,7 +2,11 @@
 function jb_parallel_start()
     if exist('matlabpool','file') && ~matlabpool('size')
         % profiles
-        [~,profiles] = defaultParallelConfig();
+        if verLessThan('matlab','8.0.0')
+            [~,profiles] = defaultParallelConfig();
+        else
+            profiles = parallel.clusterProfiles();
+        end
 
         % janmanager
         if ismember('janmanager',profiles)

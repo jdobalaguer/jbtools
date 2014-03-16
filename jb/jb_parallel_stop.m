@@ -1,6 +1,6 @@
 
 function jb_parallel_stop()
-    if exist('matlabpool','builtin') && matlabpool('size')
+    if exist('matlabpool','file') && matlabpool('size')
         matlabpool('close');
     end
 end
