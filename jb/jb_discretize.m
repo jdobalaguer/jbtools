@@ -1,5 +1,5 @@
 
-function y = jb_discretize(x,n)
+function [y,q] = jb_discretize(x,n)
     
     p = linspace(0,1,n+1);
     q = quantile(x,p);

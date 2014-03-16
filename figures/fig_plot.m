@@ -25,8 +25,8 @@ function hdl = fig_plot(varargin)
     if ~exist('a','var')||isempty(a); a=0.15; end
     
     %% asserts
-    assert(size(x,2)==size(my,2));
-    assert(size(x,2)==size(sy,2));
+    assert(size(x,2)==size(my,2),'x and my must have same number of columns');
+    assert(size(x,2)==size(sy,2),'x and sy must have same number of columns');
     
     %% variables
     [xx,sb] = get_spline(x,my-sy);
@@ -96,7 +96,7 @@ end
 function hdl = plot_shade(x,s1,s2,c,a)
     sx = [x,fliplr(x)];
     sy = [s1 fliplr(s2)];
-    if ischar(c); c = fig_color(c)./255; end
+    if ischar(c); c = fig_color(c,1)./255; end
     %sc = (1-a).*ones(1,3) + a.*c;
     %hdl = fill(sx,sy,sc,'linestyle','none');
     hdl = fill(sx,sy,c,'linestyle','none','facealpha',a);

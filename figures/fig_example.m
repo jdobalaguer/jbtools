@@ -58,6 +58,6 @@ function fig_example()
     fig_figure(f);
 
     %% save
-    fig_export('fig_example.pdf','-nocrop');
+    fig_export('fig_example.pdf');
     
 end
