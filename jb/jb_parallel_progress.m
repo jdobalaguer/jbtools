@@ -1,33 +1,33 @@
-function percent = jb_parforprogress(N)
-%jb_parforprogress Progress monitor (progress bar) that works with parfor.
-%   jb_parforprogress works by creating a file called .progress in
+function percent = jb_parallel_progress(N)
+%jb_parallel_progress Progress monitor (progress bar) that works with parfor.
+%   jb_parallel_progress works by creating a file called .progress in
 %   your working directory, and then keeping track of the parfor loop's
 %   progress within that file. This workaround is necessary because parfor
 %   workers cannot communicate with one another so there is no simple way
 %   to know which iterations have finished and which haven't.
 %
-%   jb_parforprogress(N) initializes the progress monitor for a set of N
+%   jb_parallel_progress(N) initializes the progress monitor for a set of N
 %   upcoming calculations.
 %
-%   jb_parforprogress updates the progress inside your parfor loop and
+%   jb_parallel_progress updates the progress inside your parfor loop and
 %   displays an updated progress bar.
 %
-%   jb_parforprogress(0) deletes .progress and finalizes progress
+%   jb_parallel_progress(0) deletes .progress and finalizes progress
 %   bar.
 %
 %   To suppress output from any of these functions, just ask for a return
-%   variable from the function calls, like PERCENT = jb_parforprogress which
+%   variable from the function calls, like PERCENT = jb_parallel_progress which
 %   returns the percentage of completion.
 %
 %   Example:
 %
 %      N = 100;
-%      jb_parforprogress(N);
+%      jb_parallel_progress(N);
 %      parfor i=1:N
 %         pause(rand); % Replace with real code
-%         jb_parforprogress;
+%         jb_parallel_progress;
 %      end
-%      jb_parforprogress(0);
+%      jb_parallel_progress(0);
 %
 %   See also PARFOR.
 
@@ -51,18 +51,18 @@ if N > 0
     fclose(f);
     
     if nargout == 0
-        disp(['  0%[>', repmat(' ', 1, w), ']']);
+        fprintf(['  0%%[>', repmat(' ', 1, w), ']\n']);
     end
 elseif N == 0
     delete('.progress');
     percent = 100;
     
     if nargout == 0
-        disp([repmat(char(8), 1, (w+9)), char(10), '100%[', repmat('=', 1, w+1), ']']);
+        fprintf([repmat(char(8), 1, (w+8)), '100%%[', repmat('=', 1, w+1), ']\n']);
     end
 else
     if ~exist('.progress', 'file')
-        error('.progress not found. Run jb_parforprogress(N) before jb_parforprogress to initialize .progress.');
+        error('.progress not found. Run jb_parallel_progress(N) before jb_parallel_progress to initialize .progress.');
     end
     
     f = fopen('.progress', 'a');
@@ -75,7 +75,8 @@ else
     percent = (length(progress)-1)/progress(1)*100;
     
     if nargout == 0
-        perc = sprintf('%3.0f%%', percent); % 4 characters wide, percentage
-        disp([repmat(char(8), 1, (w+9)), char(10), perc, '[', repmat('=', 1, round(percent*w/100)), '>', repmat(' ', 1, w - round(percent*w/100)), ']']);
+        perc = sprintf('%3.0f%%%%', percent); % 4 characters wide, percentage
+        fprintf([repmat('\b', 1, (w+8)), perc, '[', repmat('=', 1, round(percent*w/100)), '>', repmat(' ', 1, w - round(percent*w/100)), ']\n']);
+        drawnow('update');
     end
 end
