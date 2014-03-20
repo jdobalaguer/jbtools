@@ -11,9 +11,10 @@ function mturk_geturl(path,url)
     %% get files
     downloaded = 0;
     for i_file = 1:length(u_file)
-        file = [path,filesep,u_file{i_file}];
-        if ~exist(file,'file')
-            urlwrite(url,file);
+        urlfile  = [url, filesep,u_file{i_file}];
+        pathfile = [path,filesep,u_file{i_file}];
+        if ~exist(pathfile,'file')
+            urlwrite(urlfile,pathfile);
             downloaded = downloaded + 1;
         end
     end
