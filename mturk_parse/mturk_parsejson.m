@@ -56,12 +56,12 @@ function [data] = mturk_parsejson(json)
 
                 case 'n'
                     value = nan;
-                    if (length(json) >= 4) && strcmp(json(1:4),'ull')
+                    if (length(json) >= 4) && strcmp(json(1:4),'null')
+                        json(1:4) = [];
+                    elseif (length(json) >= 3) && strcmp(json(1:3),'nan')
                         json(1:3) = [];
-                    elseif (length(json) >= 3) && strcmp(json(1:3),'an')
-                        json(1:2) = [];
                     else
-                        ME = MException('json:parse_value',['Invalid NULL identifier: ' id json]);
+                        ME = MException('json:parse_value',['Invalid NULL identifier: ' json]);
                         ME.throw;
                     end
 
