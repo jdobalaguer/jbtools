@@ -1,0 +1,23 @@
+
+function mturk_geturl(path,url)
+    %% create path
+    mkdirp(path);
+    
+    %% list files
+    index   = urlread(url);
+    u_file  = unique(regexp(index,'\w*.txt','match'));
+    nb_file = length(u_file);
+    
+    %% get files
+    downloaded = 0;
+    for i_file = 1:length(u_file)
+        file = [path,filesep,u_file{i_file}];
+        if ~exist(file,'file')
+            urlwrite(url,file);
+            downloaded = downloaded + 1;
+        end
+    end
+    
+    %% fprintf
+    fprintf('mturk_geturl: downloaded %d files\n',downloaded);
+end
