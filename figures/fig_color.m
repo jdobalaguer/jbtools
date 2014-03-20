@@ -22,9 +22,9 @@ function color = fig_color(scheme,n)
         case 'w';       color = repmat(255*[1,1,1],[n,1]);
         case 'default'; color = 255*[0,0,1;0,1,0;1,0,0;0,1,1;1,0,1;1,1,0;0,0,0;1,1,1];
         % colours
-        case 'gray';    color = zeros(n,3); color(:,1) = linspace(255,51,n);
-                                            color(:,2) = linspace(255,51,n);
-                                            color(:,3) = linspace(255,51,n);
+        case 'gray';    color = zeros(n,3); color(:,1) = linspace(255,0,n);
+                                            color(:,2) = linspace(255,0,n);
+                                            color(:,3) = linspace(255,0,n);
         case 'red';     color = zeros(n,3); color(:,1) = linspace(255,51,n);
         case 'green';   color = zeros(n,3); color(:,2) = linspace(255,51,n);
         case 'blue';    color = zeros(n,3); color(:,3) = linspace(255,51,n);
@@ -39,6 +39,14 @@ function color = fig_color(scheme,n)
         case 'summer';  color = [253,242,180;213,233,162;138,191,139;230,166,76;122,35,18];
         case 'bley';    color = [190,252,251;158,184,185;176,165,171;135,118,110;19,18,14];
         case 'work';    color = [214,255,244;214,255,183;252,233,138;175,181,255;155,216,255];
+        % HSV
+        case 'hsv';
+            color_hsv = nan(n,3);
+            color_hsv(:,1) = linspace(1/n,1,n);
+            color_hsv(:,2) = 0.5;
+            color_hsv(:,3) = 1;
+            color = 255 * hsv2rgb(color_hsv);
+    % otherwise
         otherwise       error('fig_color: scheme "%s" not valid',scheme);
     end
     
