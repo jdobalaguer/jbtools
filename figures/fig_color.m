@@ -43,7 +43,7 @@ function color = fig_color(scheme,n)
         case 'hsv';
             color_hsv = nan(n,3);
             color_hsv(:,1) = linspace(1/n,1,n);
-            color_hsv(:,2) = 0.5;
+            color_hsv(:,2) = 1;
             color_hsv(:,3) = 1;
             color = 255 * hsv2rgb(color_hsv);
     % otherwise
