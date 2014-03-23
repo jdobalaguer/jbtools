@@ -1,5 +1,4 @@
 %  ANALYSIS internal script
-fprintf('analysis_constructor: \n');
 
 %% constructor
 analysis_constructor_assert;    % assert
