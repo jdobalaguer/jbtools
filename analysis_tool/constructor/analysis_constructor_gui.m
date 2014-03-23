@@ -13,6 +13,7 @@ obj.obj.plot     = analysis_gui_plot(obj);
 
 %% resize window
 obj.obj.window.resize_window(obj);
+obj.obj.window.reposition_window();
 
 %% reposition panels
 obj.obj.title.reposition(obj);

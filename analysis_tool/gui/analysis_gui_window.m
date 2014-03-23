@@ -48,6 +48,18 @@ classdef analysis_gui_window < handle
             set(obj.window,'Position',[obj.position,obj.size]);
         end
         
+        % resize
+        function reposition_window(obj)
+            % position
+            pos = get(0,'ScreenSize');
+            pos = reshape(pos,[2,2]);
+            pos = mean(pos,2)';
+            pos = pos - 0.5*obj.size;
+            obj.position = pos;
+            % window
+            set(obj.window,'Position',[obj.position,obj.size]);
+        end
+        
         % show window
         function show_window(obj)
             set(obj.window,'Visible','on');
