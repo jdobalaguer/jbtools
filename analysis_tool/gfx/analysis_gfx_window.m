@@ -1,7 +1,7 @@
 % ANALYSIS internal script
 
-%% gui
-classdef analysis_gui_window < handle
+%% gfx
+classdef analysis_gfx_window < handle
     %% properties
     properties
         position
@@ -12,7 +12,7 @@ classdef analysis_gui_window < handle
     %% methods
     methods
         %% constructor
-        function obj = analysis_gui_window(a)
+        function obj = analysis_gfx_window(a)
             obj.create_window(a);
         end
         
@@ -23,12 +23,12 @@ classdef analysis_gui_window < handle
             obj.size     = [a.par.win_size(1),10];
             obj.window   = figure(...
                 'Color',a.par.win_background,...
-                'Name','ANALYSIS',...
+                'Name','GRAPHICS',...
                 'Units','pixels',...
                 'Position',[obj.position,obj.size],...
                 'MenuBar','no',...
                 'Resize','off',...
-                'CloseRequestFcn',@a.destructor,...
+                'CloseRequestFcn',@a.gfx_hold,...
                 'Visible','off');
         end
         
@@ -36,13 +36,8 @@ classdef analysis_gui_window < handle
         function resize_window(obj,a)
             % height
             height = 0;
-            height = height + a.obj.title.size(2);
-            height = height + a.obj.figure.size(2);
-            height = height + a.obj.sdata.size(2);
-            height = height + a.obj.axis.size(2);
-            height = height + a.obj.filter.size(2);
-            height = height + a.obj.graphics.size(2);
-            height = height + a.obj.plot.size(2);
+            height = height + a.gfx.title.size(2);
+            height = height + a.gfx.style.size(2);
             % size
             obj.size(2) = height;
             % window
@@ -55,7 +50,7 @@ classdef analysis_gui_window < handle
             pos = get(0,'ScreenSize');
             pos = reshape(pos,[2,2]);
             pos = mean(pos,2)';
-            pos = pos - [obj.size(1), 0.5*obj.size(2)];
+            pos = pos - [0 , 0.5*obj.size(2)];
             obj.position = pos;
             % window
             set(obj.window,'Position',[obj.position,obj.size]);

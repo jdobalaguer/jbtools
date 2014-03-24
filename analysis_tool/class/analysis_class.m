@@ -9,8 +9,9 @@
 classdef analysis_class < handle
     %% properties
     properties
-        gui % gui parameters
+        par % gui parameters
         obj % gui objects
+        gfx % gfx objects
         fig % list of figures
     end
     
@@ -30,10 +31,10 @@ classdef analysis_class < handle
         %% sdata
         %% axis
         %% graphics
+        function       gfx_hold(obj,~,~),           analysis_gfx_hold;              end
+        
         %% plot
-        function       plot_plot(obj,~,~),          analysis_plot_plot;             end
-        function       plot_figplot(obj,~,~),       analysis_plot_figplot;          end
-        function       plot_figbarweb(obj,~,~),     analysis_plot_figbarweb;        end
+        function       plot_run(obj,~,~),           analysis_plot_run;             end
         function       plot_export(obj,~,~),        analysis_plot_export;           end
         
         %% destructor

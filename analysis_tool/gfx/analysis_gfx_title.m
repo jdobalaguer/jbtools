@@ -1,7 +1,7 @@
 % ANALYSIS internal script
 
-%% gui
-classdef analysis_gui_title < handle
+%% gfx
+classdef analysis_gfx_title < handle
     %% properties
     properties
         position
@@ -13,7 +13,7 @@ classdef analysis_gui_title < handle
     %% methods
     methods
         %% constructor
-        function obj = analysis_gui_title(a)
+        function obj = analysis_gfx_title(a)
             obj.set_position([0,0]);
             obj.set_size(a);
             obj.create_panel(a);
@@ -37,7 +37,7 @@ classdef analysis_gui_title < handle
         %% create panel
         function create_panel(obj,a)
             obj.panel = uipanel(...
-                'Parent',a.obj.window.window,...
+                'Parent',a.gfx.window.window,...
                 'Title',[],...
                 'BorderType','none',...
                 'BackgroundColor',a.par.win_background,...
@@ -60,12 +60,12 @@ classdef analysis_gui_title < handle
                 'Style','text',...
                 'Units','pixel',...
                 'Position', [item_pos item_size],...
-                'String', ' ANALYSIS ');
+                'String', ' GRAPHICS ');
         end
         
         %% reposition
         function reposition(obj,a)
-            previous_height = a.obj.window.size(2);
+            previous_height = a.gfx.window.size(2);
             height          = previous_height - obj.size(2);
             obj.set_position([obj.position(1),height]);
         end

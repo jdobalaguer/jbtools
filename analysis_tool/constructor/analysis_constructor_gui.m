@@ -8,6 +8,7 @@ obj.obj.title    = analysis_gui_title(obj);
 obj.obj.figure   = analysis_gui_figure(obj);
 obj.obj.sdata    = analysis_gui_sdata(obj);
 obj.obj.axis     = analysis_gui_axis(obj);
+obj.obj.filter   = analysis_gui_filter(obj);
 obj.obj.graphics = analysis_gui_graphics(obj);
 obj.obj.plot     = analysis_gui_plot(obj);
 
@@ -20,6 +21,7 @@ obj.obj.title.reposition(obj);
 obj.obj.figure.reposition(obj);
 obj.obj.sdata.reposition(obj);
 obj.obj.axis.reposition(obj);
+obj.obj.filter.reposition(obj);
 obj.obj.graphics.reposition(obj);
 obj.obj.plot.reposition(obj);
 

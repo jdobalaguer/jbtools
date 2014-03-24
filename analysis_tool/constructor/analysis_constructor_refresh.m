@@ -4,3 +4,4 @@
 obj.obj.figure.refresh();
 obj.obj.sdata.refresh();
 obj.obj.axis.refresh();
+obj.obj.graphics.refresh();

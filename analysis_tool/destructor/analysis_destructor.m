@@ -1,6 +1,7 @@
 %  ANALYSIS internal script
 
 %% destructor
-analysis_destructor_close;  % close all figures
-delete(gcbf);
+analysis_figure_closeall;      % close all figures
+delete(obj.gfx.window.window); % close gfx
+delete(obj.obj.window.window); % close gui
 delete(obj);   % delete
