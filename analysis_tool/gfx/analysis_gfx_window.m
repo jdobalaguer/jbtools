@@ -38,6 +38,7 @@ classdef analysis_gfx_window < handle
             height = 0;
             height = height + a.gfx.title.size(2);
             height = height + a.gfx.style.size(2);
+            height = height + a.gfx.colour.size(2);
             % size
             obj.size(2) = height;
             % window

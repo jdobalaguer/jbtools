@@ -1,7 +1,7 @@
 % ANALYSIS internal script
 
 %% gui
-classdef analysis_gfx_style < handle
+classdef analysis_gfx_colour < handle
     %% properties
     properties
         analysis
@@ -14,7 +14,7 @@ classdef analysis_gfx_style < handle
     %% methods
     methods
         %% constructor
-        function obj = analysis_gfx_style(a)
+        function obj = analysis_gfx_colour(a)
             obj.analysis = a;
             obj.set_position([0,0]);
             obj.set_size(a);
@@ -40,7 +40,7 @@ classdef analysis_gfx_style < handle
         function create_panel(obj,a)
             obj.panel = uipanel(...
                 'Parent',a.gfx.window.window,...
-                'Title',' STYLE ',...
+                'Title',' COLOUR ',...
                 'BackgroundColor',a.par.win_background,...
                 'Units','pixels',...
                 'Position',[obj.position obj.size]);
@@ -60,12 +60,17 @@ classdef analysis_gfx_style < handle
                 'Style',    'popup',...
                 'Units',    'pixel',...
                 'Position', [item_pos item_size],...
-                'String',   {'scatter','fig_plot','fig_barweb'});
+                'String',   {   ...
+                                'jet','hot','cool',...
+                                'default',...
+                                'b','g','r','c','m','y','k','w', ...
+                                'gray','red','green','blue',...
+                                'cegato','cucumber','forever','summer','bley','work','hsv'});
         end
         
         %% reposition
         function reposition(obj,a)
-            previous_height = a.gfx.title.position(2);
+            previous_height = a.gfx.style.position(2);
             height          = previous_height - obj.size(2);
             obj.set_position([obj.position(1),height]);
         end

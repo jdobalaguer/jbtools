@@ -96,15 +96,23 @@ else        hold('off');
             clf(h_fig);
 end
 
+
+%% colour
+u_colour = get(obj.gfx.colour.objects.list,'String');
+i_colour = get(obj.gfx.colour.objects.list,'Value');
+s_colour = u_colour{i_colour};
+
 %% plot
 u_style = get(obj.gfx.style.objects.list,'String');
 i_style = get(obj.gfx.style.objects.list,'Value');
-style  = u_style{i_style};
-switch(style)
+s_style  = u_style{i_style};
+switch(s_style)
     case 'scatter'
-        plot(u_x,m_y,'.k');
+        plot(u_x,m_y,   'Marker',           '.', ...
+                        'LineStyle',        'none', ...
+                        'MarkerEdgeColor',  fig_color(s_colour,1)./255 );
     case 'fig_plot'
-        fig_plot(u_x,m_y,e_y);
+        fig_plot(u_x,m_y,e_y,fig_color(s_colour,1)./255);
     case 'fig_barweb'
         m_y = m_y';
         e_y = e_y';
@@ -115,14 +123,14 @@ switch(style)
                             [], ... title
                             [], ... xlabel
                             [], ... ylabel
-                            [], ... colour
+                            fig_color(s_colour,nb_x)./255, ... colour
                             [], ... grid
                             num2leg(u_x), ... legend
                             1 , ... error sides (1, 2)
                             'axis' ... legend style ('plot','axis')
                             );
     otherwise
-        obj.error(sprintf('unknown style "%s"',style));
+        obj.error(sprintf('unknown style "%s"',s_style));
         return;
 
 end
