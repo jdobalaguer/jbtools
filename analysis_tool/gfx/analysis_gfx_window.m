@@ -39,6 +39,7 @@ classdef analysis_gfx_window < handle
             height = height + a.gfx.title.size(2);
             height = height + a.gfx.style.size(2);
             height = height + a.gfx.colour.size(2);
+            height = height + a.gfx.axis.size(2);
             % size
             obj.size(2) = height;
             % window
@@ -59,7 +60,7 @@ classdef analysis_gfx_window < handle
         
         % show window
         function show_window(obj)
-            set(obj.window,'Visible','on');
+            set(obj.window,'Visible','off');
         end
     end
 end

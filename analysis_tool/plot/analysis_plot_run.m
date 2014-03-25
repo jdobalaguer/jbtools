@@ -102,10 +102,58 @@ u_colour = get(obj.gfx.colour.objects.list,'String');
 i_colour = get(obj.gfx.colour.objects.list,'Value');
 s_colour = u_colour{i_colour};
 
-%% plot
+%% style
 u_style = get(obj.gfx.style.objects.list,'String');
 i_style = get(obj.gfx.style.objects.list,'Value');
 s_style  = u_style{i_style};
+
+%% fig_axis
+sa = struct();
+% title
+sa.title   = get(obj.gfx.axis.objects.title,'String');
+if iscell(sa.title), sa.title = sa.title{1}; end
+% tick
+sa.xtick   = get(obj.gfx.axis.objects.xtick,'String');
+if iscell(sa.xtick), sa.xtick = sa.xtick{1}; end
+if isempty(strtrim(sa.xtick)),  sa = rmfield(sa,'xtick');
+else                            sa.xtick = eval(sa.xtick);
+end
+sa.ytick   = get(obj.gfx.axis.objects.ytick,'String');
+if iscell(sa.ytick), sa.ytick = sa.ytick{1}; end
+if isempty(strtrim(sa.ytick)),  sa = rmfield(sa,'ytick');
+else                            sa.ytick = eval(sa.ytick);
+end
+% ticklabel
+sa.xticklabel = get(obj.gfx.axis.objects.xticklabel,'String');
+if iscell(sa.xticklabel), sa.xticklabel = sa.xticklabel{1}; end
+if isempty(strtrim(sa.xticklabel)), sa = rmfield(sa,'xticklabel');
+else                                sa.xticklabel = eval(sa.xticklabel);
+end
+sa.yticklabel   = get(obj.gfx.axis.objects.yticklabel,'String');
+if iscell(sa.yticklabel), sa.yticklabel = sa.yticklabel{1}; end
+if isempty(strtrim(sa.yticklabel)), sa = rmfield(sa,'yticklabel');
+else                                sa.yticklabel = eval(sa.yticklabel);
+end
+% grid
+u_grid   = {'off','on'};
+sa.xgrid = u_grid{get(obj.gfx.axis.objects.xgrid,'Value')};
+sa.ygrid = u_grid{get(obj.gfx.axis.objects.ygrid,'Value')};
+% lim
+sa.xlim   = get(obj.gfx.axis.objects.xlim,'String');
+if iscell(sa.xlim), sa.xlim = sa.xlim{1}; end
+if isempty(strtrim(sa.xlim)),   sa = rmfield(sa,'xlim');
+else                            sa.xlim = eval(sa.xlim);
+end
+sa.ylim   = get(obj.gfx.axis.objects.ylim,'String');
+if iscell(sa.ylim), sa.ylim = sa.ylim{1}; end
+if isempty(strtrim(sa.ylim)),   sa = rmfield(sa,'ylim');
+else                            sa.ylim = eval(sa.ylim);
+end
+% label
+sa.xlabel  = get(obj.gfx.axis.objects.xlabel,'String');
+sa.ylabel  = get(obj.gfx.axis.objects.ylabel,'String');
+
+%% plot
 switch(s_style)
     case 'scatter'
         plot(u_x,m_y,   'Marker',           '.', ...
@@ -120,13 +168,13 @@ switch(s_style)
                             e_y,... error
                             [], ... width
                             [], ... group
-                            [], ... title
-                            [], ... xlabel
-                            [], ... ylabel
+                            sa.title, ... title
+                            sa.xlabel, ... xlabel
+                            sa.ylabel, ... ylabel
                             fig_color(s_colour,nb_x)./255, ... colour
                             [], ... grid
                             num2leg(u_x), ... legend
-                            1 , ... error sides (1, 2)
+                            [], ... error sides (1, 2)
                             'axis' ... legend style ('plot','axis')
                             );
     otherwise
@@ -134,5 +182,11 @@ switch(s_style)
         return;
 
 end
-fig_axis();
+
+%% fig_axis
+%if ~strcmp(s_style,'fig_barweb')
+    fig_axis(sa);
+%end
+
+%% fig_figure
 fig_figure(gcf());

@@ -7,6 +7,7 @@ obj.gfx.window   = analysis_gfx_window(obj);
 obj.gfx.title    = analysis_gfx_title(obj);
 obj.gfx.style    = analysis_gfx_style(obj);
 obj.gfx.colour   = analysis_gfx_colour(obj);
+obj.gfx.axis     = analysis_gfx_axis(obj);
 
 %% resize window
 obj.gfx.window.resize_window(obj);
@@ -15,6 +16,8 @@ obj.gfx.window.reposition_window();
 %% reposition panels
 obj.gfx.title.reposition(obj);
 obj.gfx.style.reposition(obj);
+obj.gfx.colour.reposition(obj);
+obj.gfx.axis.reposition(obj);
 
 %% show window
 obj.gfx.window.show_window();
