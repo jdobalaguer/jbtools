@@ -78,10 +78,21 @@ classdef analysis_gui_sdata < handle
         %% refresh
         function refresh(obj,~,~)
             string = evalin('base','who()');
+            % remove
             string(strcmp(string,'ans')) = [];
+            ii_rm = [];
+            for i_string = 1:length(string)
+                evalin('base',['~isstruct(',string{i_string},')'])
+                if evalin('base',['~isstruct(',string{i_string},')'])
+                    ii_rm(end+1) = i_string;
+                end
+            end
+            string(ii_rm) = [];
+            % empty
             if isempty(string)
                 set(obj.objects.list,'String',' ');
                 set(obj.objects.list,'Enable','off');
+            % show
             else
                 set(obj.objects.list,'String',string);
                 set(obj.objects.list,'Enable','on');

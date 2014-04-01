@@ -38,6 +38,10 @@ function varargout = fig_axis(sa,ca)
     set(ca,   'XMinorTick','on', ...
               'XTick',sa.xtick);
   end
+  % xminor
+  if isfield(sa,{'xminor'})
+    set(ca,   'XMinorTick',sa.xminor);
+  end
   % ygrid
   if isfield(sa,{'xgrid'})
     set(ca,   'XGrid'     , sa.xgrid);
@@ -54,6 +58,10 @@ function varargout = fig_axis(sa,ca)
   if isfield(sa,{'ytick'})
     set(ca,   'YMinorTick', 'on', ...
               'YTick'     , sa.ytick);
+  end
+  % yminor
+  if isfield(sa,{'yminor'})
+    set(ca,   'YMinorTick',sa.yminor);
   end
   % ygrid
   if isfield(sa,{'ygrid'})
