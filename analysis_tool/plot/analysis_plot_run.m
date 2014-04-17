@@ -35,15 +35,15 @@ if strcmp(ss_f    ,' '), obj.warning('no filter selected'); return; end
 
 %% values
 % x
-x = evalin('base',sprintf('%s.%s',ss_sdata,ss_x));
+x = evalin('base',sprintf('%s.%s;',ss_sdata,ss_x));
 x = x(:);
 % y
-y = evalin('base',sprintf('%s.%s',ss_sdata,ss_y));
+y = evalin('base',sprintf('%s.%s;',ss_sdata,ss_y));
 if (size(y,2)==length(x)), y = y'; end
 
 % filter
 if do_filter
-    f = evalin('base',sprintf('%s.%s',ss_sdata,ss_f));
+    f = evalin('base',sprintf('%s.%s;',ss_sdata,ss_f));
     f = f(:);
 end
 

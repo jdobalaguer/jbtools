@@ -20,7 +20,7 @@ function color = fig_color(scheme,n)
         case 'y';       color = repmat(255*[1,1,0],[n,1]);
         case 'k';       color = repmat(255*[0,0,0],[n,1]);
         case 'w';       color = repmat(255*[1,1,1],[n,1]);
-        case 'default'; color = 255*[0,0,1;0,1,0;1,0,0;0,1,1;1,0,1;1,1,0;0,0,0;1,1,1];
+        case 'default'; color = [000,000,255;000,255,000;255,000,000;000,255,255;255,000,255;255,255,000;000,000,000;255,255,255];
         % colours
         case 'gray';    color = zeros(n,3); color(:,1) = linspace(255,0,n);
                                             color(:,2) = linspace(255,0,n);
@@ -33,12 +33,15 @@ function color = fig_color(scheme,n)
         case 'cool';    f = figure(); color = 255.*cool(n); close(f);
         case 'jet';     f = figure(); color = 255.*jet(n);  close(f);
         % palettes (see http://www.colourlovers.com)
-        case 'cegato';  color = [29,12,108;237,131,46;233,199,234;61,197,184;215,250,15];
-        case 'cucumber';color = [110,9,41;201,215,104;231,247,174;87,80,52;1,201,182];
-        case 'forever'; color = [23,198,178;255,183,66;249,118,52;13,86,3;179,77,89];
-        case 'summer';  color = [253,242,180;213,233,162;138,191,139;230,166,76;122,35,18];
-        case 'bley';    color = [190,252,251;158,184,185;176,165,171;135,118,110;19,18,14];
+        case 'cegato';  color = [029,012,108;237,131,046;233,199,234;061,197,184;215,250,015];
+        case 'cucumber';color = [110,009,041;201,215,104;231,247,174;087,080,052;001,201,182];
+        case 'forever'; color = [023,198,178;255,183,066;249,118,052;013,086,003;179,077,089];
+        case 'summer';  color = [253,242,180;213,233,162;138,191,139;230,166,076;122,035,018];
+        case 'bley';    color = [190,252,251;158,184,185;176,165,171;135,118,110;019,018,014];
         case 'work';    color = [214,255,244;214,255,183;252,233,138;175,181,255;155,216,255];
+        % palettable
+        case 'wong';    color = [148,188,218;144,055,028;071,006,047;143,119,044;216,199,225];
+        case 'clovers'; color = [233,127,002;189,021,080;073,010,061;011,072,107;138,155,015;003,054,073];
         % HSV
         case 'hsv';
             color_hsv = nan(n,3);
@@ -50,7 +53,8 @@ function color = fig_color(scheme,n)
         otherwise       error('fig_color: scheme "%s" not valid',scheme);
     end
     
-    if size(color,1)~=n
-        fprintf('fig_color: warning. scheme "%s" has %d colors \n',scheme,size(color,1));
-    end
+    % resize
+    s = size(color,1);
+    color = repmat(color , ceil(n./s) , 1);
+    color(n+1:end , :) = [];
 end

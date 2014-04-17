@@ -32,6 +32,8 @@ function varargout = fig_axis(sa,ca)
           'TickDir'     , 'out'     , ...
           'TickLength'  , [.02 .02] , ...
           'LineWidth'   , 1         );
+  set(get(gcf,'CurrentAxes'), 'box', 'off');
+  set(get(gcf,'CurrentAxes'),'layer','top');
         
   % xtick
   if isfield(sa,{'xtick'})

@@ -77,13 +77,12 @@ classdef analysis_gui_sdata < handle
         
         %% refresh
         function refresh(obj,~,~)
-            string = evalin('base','who()');
+            string = evalin('base','who();');
             % remove
             string(strcmp(string,'ans')) = [];
             ii_rm = [];
             for i_string = 1:length(string)
-                evalin('base',['~isstruct(',string{i_string},')'])
-                if evalin('base',['~isstruct(',string{i_string},')'])
+                if evalin('base',['~isstruct(',string{i_string},');'])
                     ii_rm(end+1) = i_string;
                 end
             end

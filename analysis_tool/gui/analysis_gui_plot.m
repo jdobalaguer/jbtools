@@ -77,7 +77,7 @@ classdef analysis_gui_plot < handle
         
         %% refresh
         function refresh(obj)
-            string = evalin('base','who()');
+            string = evalin('base','who();');
             string(strcmp(string,'ans')) = [];
             set(obj.objects.list,'String',string);
         end

@@ -52,6 +52,7 @@ function fig_example()
     sa_plot.xtick   = t(1):5:t(end);
     sa_plot.xlim    = [t(1),t(end)];
     sa_plot.ytick   = -1:+1;
+    sa_plot.ylim    = [-2,+2];
     va_plot = fig_axis(sa_plot);
 
     %% set figure

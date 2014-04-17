@@ -152,13 +152,15 @@ for e = 1 : Ne		% Go through each effect
 	en=fn{efs{e}(1)};	% Naming of factors
 	for f = 2:length(efs{e})
 		en = [fn{efs{e}(f)} en];
-	end
-
-	disp(sprintf('Effect %02d: %-18s F(%3.2f,%3.2f)=%4.3f,\tp=%4.3f',...
-		e,en,cdfs(e,1),cdfs(e,2),F(e),p(e)))
+    end
+    
+	if ~nargout
+        disp(sprintf('Effect %02d: %-18s F(%3.2f,%3.2f)=%4.3f,\tp=%4.3f',...
+            e,en,cdfs(e,1),cdfs(e,2),F(e),p(e)))
+    end
 end
 
-disp(sprintf('\n'))
+if ~nargout, disp(sprintf('\n')); end
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -183,4 +185,3 @@ else
 end
 
 b=[zeros(1,p-length(b)) b];
-

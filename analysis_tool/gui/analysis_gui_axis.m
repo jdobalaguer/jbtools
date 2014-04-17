@@ -109,7 +109,7 @@ classdef analysis_gui_axis < handle
             if strcmp(sdata,' ')
                 fields = {};
             else
-                fields = evalin('base',sprintf('fieldnames(%s)',sdata{1}));
+                fields = evalin('base',sprintf('fieldnames(%s);',sdata{1}));
             end
             if isempty(fields)
                 set(obj.objects.xlist,'Value',1);
