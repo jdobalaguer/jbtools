@@ -1,0 +1,39 @@
+%%% [ Ymean Yste plothandle]= pce(X, Y  [,couleur,] [,trait]
+%%% [,tailletraitprincipal] [largbar])
+%%% trace le graphe
+
+%%% [ Ymean Yste plothandle]= = plotcurverreur(X, Y tableau 2d dont sont
+%%% extraits mean et ste [,couleur,] [,trait] [,taille du trait principal] 
+%%% [,taille du trait barrederreur] [,largeur de la barre(si 0 adapté à pas de X)])
+%%%
+%%%ou alors directement plotcurveerreur(X, {Ymean Yste}, cor, trait,...
+%%%taillemean, taillestd, largbar)
+%%%(en 3ème valeur de retour, renvoie le plot handle de la coube principale
+%%%(utile pour metre une légende)
+
+
+function [ Ymean Yste plothandle]=pce(X, Ybrut, cor, trait, taillemean, largbar)
+
+if iscell(Ybrut), %mean et ste déjà rentrés,
+    Ymean=Ybrut{1};
+    Yste=Ybrut{2};
+else       % faut calculer
+   Ymean=mean(Ybrut,2)'; 
+   Yste=ste(Ybrut');
+end
+[nbgraph siz]=size(Yste);
+
+
+if nargin<3, cor={'b' 'r' 'g' 'k' 'y'}; end  %bleu par défaut
+if nargin<4, trait='-'; end %trait plein par défaut
+if nargin<5, taillemean=2; end
+if nargin<6, largbar=.3*(X(siz)-X(1))/siz; end
+
+    hold on;
+    for gr=1:nbgraph   %pour chaque graphe
+    plothandle(1,gr) = plotcurve(X, Ymean(gr,:), cor{gr}, trait, taillemean);
+    for kk=1:siz
+    plothandle(3*kk-1:3*kk+1,gr) = barrederreur(X(kk),Ymean(gr,kk),Yste(gr,kk), largbar, cor{gr});
+    end
+    end
+    hold off;

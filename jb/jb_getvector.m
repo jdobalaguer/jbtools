@@ -38,6 +38,7 @@ function [m,e,u] = jb_getvector(varargin)
         s = [];
         for i = 1:size(u,2), s(end+1) = length(unique(u(:,i))); end
         s = fliplr(s);
+        if isscalar(s), s(end+1)=1; end
         m = reshape(m,s);
         e = reshape(e,s);
     end
