@@ -1,3 +1,3 @@
 function hn = hostname()
-    hostname = evalc('system(''hostname'');');    
+    hn = evalc('system(''hostname'');');    
 end
