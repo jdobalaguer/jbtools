@@ -1,3 +1,3 @@
 function varargout = meeze(varargin)
-    varargout{:} = squeeze(mean(varargin{:}));
+    varargout{:} = squeeze(nanmean(varargin{:}));
 end

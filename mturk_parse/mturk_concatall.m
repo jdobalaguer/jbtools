@@ -37,7 +37,7 @@ function ret = mturk_concatall(s)
         % foreach cell
         ret.(this_field) = s{1}.(this_field);
         for i_s = 2:nb_s
-            ret.(this_field) = mturk_concatstruct(catdim,ret.(this_field),s{i_s}.(this_field));
+            ret.(this_field) = jb_concatstruct(catdim,ret.(this_field),s{i_s}.(this_field));
         end
     end
 end

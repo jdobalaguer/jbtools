@@ -9,7 +9,7 @@ classdef jb_audioport < handle
     methods
         % constructor
         function obj = jb_audioport()
-            assert(exist('PsychPortAudio','file'));
+            assert(exist('PsychPortAudio','file')>0);
             obj.port = [];
             obj.freq_low  = 2500;
             obj.freq_high = 7500;

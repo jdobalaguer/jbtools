@@ -1,7 +1,16 @@
-function ret = mturk_concatstruct(dim,s1,s2)
-    
+%% concat many structs
+function ret = struct_concat(varargin)
+    dim = varargin{1};
+    ret = struct();
+    for i_struct = 2:length(varargin)
+        ret = struct_concat_two( ret , varargin{i_struct});
+    end
+end
+
+%% concat two structs
+function struct_concat_two(dim,s1,s2)
     u_field = fieldnames(s1);
-     nb_fields = length(u_field);
+    nb_fields = length(u_field);
     
     ret = struct();
     for i_field = 1:nb_fields

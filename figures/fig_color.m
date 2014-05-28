@@ -9,7 +9,16 @@ function color = fig_color(scheme,n)
     if ~exist('scheme', 'var'); scheme = 'default'; end
     if ~exist('n',      'var'); n      = 5;         end
     
-    %% scheme
+    %% numerical scheme
+    if isnumeric(scheme)
+        assert(isvector(scheme));
+        assert(any(size(scheme,2)==[1,3]));
+        if length(scheme)==1, scheme = repmat(scheme,1,3); end
+        color = repmat(scheme,n,1);
+        return;
+    end
+    
+    %% prototype scheme
     switch scheme
         % matlab default
         case 'b';       color = repmat(255*[0,0,1],[n,1]);
