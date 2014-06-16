@@ -27,7 +27,9 @@
 % 
 %     
 
-function z = ztransf(x)
-    s = nanstd(x);
-    z = (x - nanmean(x)) ./ nanstd(x);
+function z = ztransf(x,m,s)
+    if ~exist('m','var'), m = nanmean(x(:)); end
+    if ~exist('s','var'), s = nanstd( x(:)); end
+    if s==0,              s = 1;             end
+    z = (x - m) ./ s;
 end
