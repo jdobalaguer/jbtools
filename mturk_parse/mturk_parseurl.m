@@ -1,5 +1,7 @@
 
 function mturk_parseurl(path_file,path_url)
+    % mturk_parseurl(path_file,path_url)
+    
     if path_file(end)=='/', path_file(end) = []; end
     if path_url(end)=='/',  path_url(end) = [];  end
     

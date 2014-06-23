@@ -38,8 +38,13 @@ function ret = mturk_uncell(c)
     end    
     % includes a number
     if isnumeric(c{1})
+        s_c = size(c{1});
+        for i_c = 1:length(c)
+            c{i_c} = reshape(c{i_c},[1,s_c]);
+        end
+        c = mat2vec(c);
         ret = cell2mat(c);
-        ret = reshape(ret,[nb_cells,size(c{1})]);
+        ret = reshape(ret,[nb_cells,s_c]);
         return;
     end
     

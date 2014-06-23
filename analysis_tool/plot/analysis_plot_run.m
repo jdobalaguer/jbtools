@@ -164,7 +164,11 @@ switch(s_style)
                         'LineStyle',        '-', ...
                         'Color',            fig_color(s_colour,1)./255 );
     case 'fig_plot'
-        fig_plot(u_x,m_y,e_y,fig_color(s_colour,1)./255);
+        fig_plot(u_x,m_y,fig_color(s_colour,1)./255);
+    case 'fig_steplot'
+        fig_steplot(u_x,m_y,e_y,fig_color(s_colour,1)./255);
+    case 'fig_spline'
+        fig_steplot(u_x,m_y,e_y,fig_color(s_colour,1)./255);
     case 'fig_barweb'
         m_y = m_y';
         e_y = e_y';

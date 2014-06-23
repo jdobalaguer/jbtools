@@ -15,6 +15,13 @@ function cf = fig_figure(cf)
     fig_smooth(cf);
     
     %% text
-    fig_fontname(cf);
+    fig_fontname(cf,'Verdana');
+    fig_fontsize(cf,18);
+    
+    %% toolbar
+    set(cf,'ToolBar','none');
+    
+    %% docked
+    %set(cf,'WindowStyle','docked');
     
 end

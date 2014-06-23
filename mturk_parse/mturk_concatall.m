@@ -3,7 +3,8 @@ function ret = mturk_concatall(s)
     nb_fields = length(u_field);
     nb_s = length(s);
     
-    ret = struct();
+    ret_cell = struct();
+    ret      = struct();
     if ~nb_s
         return
     end
@@ -35,10 +36,11 @@ function ret = mturk_concatall(s)
         end
         
         % foreach cell
-        ret.(this_field) = s{1}.(this_field);
+        ret_cell.(this_field){1} = s{1}.(this_field);
         for i_s = 2:nb_s
-            ret.(this_field) = jb_concatstruct(catdim,ret.(this_field),s{i_s}.(this_field));
+            ret_cell.(this_field){i_s} = s{i_s}.(this_field);
         end
+        ret.(this_field) = struct_concat(catdim,ret_cell.(this_field){:});
     end
 end
 
