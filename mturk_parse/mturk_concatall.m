@@ -17,15 +17,15 @@ function ret = mturk_concatall(s)
             case 'sdata'
                 catdim = 1;
             case 'edata'
-                catdim = 2;
+                catdim = 1;
             case 'parameters'
-                catdim = 2;
+                catdim = 1;
             case 'numbers'
-                catdim = 2;
+                catdim = 1;
             otherwise
-                fprintf('mturk_concatall: WARNING. unknown field %s.   \n');
-                fprintf('mturk_concatall: WARNING. default cat dim = 2.\n');
-                catdim = 2;
+                fprintf('mturk_concatall: WARNING. unknown field %s.   \n',this_field);
+                fprintf('mturk_concatall: WARNING. default cat dim = 1.\n');
+                catdim = 1;
         end
         
         % add subject
