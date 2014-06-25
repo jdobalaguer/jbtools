@@ -1,4 +1,4 @@
-function z = jb_filterstruct(s,ii)
+function z = struct_filter(s,ii)
 
     u_field = fieldnames(s);
     n_field = length(u_field);

@@ -41,9 +41,9 @@ function [m,e,u] = jb_getvector(varargin)
         if isscalar(s), s(end+1)=1; end
         m = reshape(m,s);
         e = reshape(e,s);
+        m = permute(m,fliplr(1:length(size(m))));
+        e = permute(e,fliplr(1:length(size(e))));
     end
-    m = permute(m,fliplr(1:length(size(m))));
-    e = permute(e,fliplr(1:length(size(e))));
     
 end
 
