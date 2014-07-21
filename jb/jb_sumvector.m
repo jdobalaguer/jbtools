@@ -1,5 +1,5 @@
 
-function [m,e,u] = jb_getvector(varargin)
+function [s,u] = jb_sumvector(varargin)
     % [m,e,u] = jb_getvector(y,x1[,x2][,x3][...])
     
     %% variables
@@ -24,27 +24,22 @@ function [m,e,u] = jb_getvector(varargin)
     n = size(u,1);
     
     %% get values
-    m = nan(n,1);
-    e = nan(n,1);
+    s = nan(n,1);
     for i = 1:n
         row = u(i,:);
         ii = findrow(row,x);
-        m(i) = nanmean(y(ii));
-        e(i) = nanste( y(ii));
+        s(i) = nansum(y(ii));
     end
     
     %% reshape
-    if nargout<3
+    if nargout<2
         s = [];
         for i = 1:size(u,2), s(end+1) = length(unique(u(:,i))); end
         s = fliplr(s);
         if isscalar(s), s(end+1)=1; end
-        m = reshape(m,s);
-        e = reshape(e,s);
-        m = permute(m,fliplr(1:length(size(m))));
-        e = permute(e,fliplr(1:length(size(e))));
+        s = reshape(s,s);
+        s = permute(s,fliplr(1:length(size(s))));
     end
-    
 end
 
 function ii = findrow(v,m)

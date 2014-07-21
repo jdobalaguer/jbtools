@@ -1,13 +1,13 @@
 
 function hdl = fig_steplot(varargin)
-    %% hdl = fig_plot([x,]my,sy[,c][,a])
+    %% hdl = fig_steplot([x,]my,sy[,c][,a])
     %
     % splines plot with nan standard error shade
     %
     
     %% map inputs
-    if isempty(varargin);   error('fig_plot: error. no input.'); end
-    if length(varargin)==1; error('fig_plot: error. fig_plot(my,sy).'); end
+    if isempty(varargin);   error('fig_steplot: error. no input.'); end
+    if length(varargin)==1; error('fig_steplot: error. fig_steplot(my,sy).'); end
     if length(varargin)==2
         my = varargin{1};
         sy = varargin{2};

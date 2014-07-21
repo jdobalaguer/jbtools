@@ -46,6 +46,6 @@ end
 
 function s = add_subject(s)
     if ~isfield(s,'vb_subject')
-        s.vb_subject = repmat(randi(10000),size(s.vb_index));
+        s.vb_subject = repmat(randi(1000000),size(s.vb_index));
     end
 end
