@@ -16,16 +16,14 @@ function y = jb_applyvector(varargin)
     
     %% apply
     y = apply(f,x,[]);
-    
-    %% recursive function
-    function y = apply(f,xs,us)
-        if isempty(xs), y = f(us{:}); return; end
-        y = nan(size(xs{1}));
-        for ux = unique(xs{1})
-            ii = (xs{1} == ux);
-            y(ii) = apply(f,cellfun(@(x)x(ii),xs(2:end),'UniformOutput',false),[us,{ux}]);
-        end
-    end
-
 end
 
+%% recursive function
+function y = apply(f,xs,us)
+    if isempty(xs), y = f(us{:}); return; end
+    y = nan(size(xs{1}));
+    for ux = unique(xs{1})
+        ii = (xs{1} == ux);
+        y(ii) = apply(f,cellfun(@(x)x(ii),xs(2:end),'UniformOutput',false),[us,{ux}]);
+    end
+end
