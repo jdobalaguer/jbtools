@@ -59,6 +59,9 @@ classdef dict < handle
     methods
         
         function obj = dict(key,value)
+            % shut up the struct(obj) warning
+            warning('off','MATLAB:structOnObject');
+            % add keys and values
             if exist('key','var') && exist('value','var')
                 assert(iscell(key),'dict: error. key is not a cell');
                 assert(iscell(value),'dict: error. value is not a cell');

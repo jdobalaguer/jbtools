@@ -8,7 +8,7 @@ function fig_fontname(cf,fn)
     
     %% default
     if ~exist('cf','var')||isempty(cf); cf=gcf();   end
-    if ~exist('fn','var')||isempty(fn); fn='Arial'; end
+    if ~exist('fn','var')||isempty(fn); fn='Calibri'; end
     
     %% text
     labelText(cf,'FontName',fn);

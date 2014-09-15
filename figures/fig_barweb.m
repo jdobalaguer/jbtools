@@ -53,6 +53,7 @@ function handles = fig_barweb(barvalues, errors, width, groupnames, bw_title, bw
     if nargin<12 || isempty(legend_type);   legend_type = 'plot';             end
     change_axis = 0;
     ymax = 0;
+    ymin = 0;
 
     %% assert
     assert(nargin>=2,                         'Must have at least the first two arguments:  barweb(barvalues, errors, width, groupnames, bw_title, bw_xlabel, bw_ylabel, bw_colormap, gridstatus, bw_legend, barwebtype)');
@@ -98,13 +99,14 @@ function handles = fig_barweb(barvalues, errors, width, groupnames, bw_title, bw
         x = mean(x([1 3],:));
         handles.errors(i) = errorbar(x, barvalues(:,i), errors(:,i), 'k', 'linestyle', 'none', 'linewidth', 2);
         ymax = max([ymax; barvalues(:,i)+errors(:,i)]);
+        ymin = min([ymin; barvalues(:,i)-errors(:,i)]);
     end
 
     if error_sides == 1
         set(gca,'children', flipud(get(gca,'children')));
     end
 
-    ylim([0 ymax*1.1]);
+    ylim([ymin ymax]*1.1);
     xlim([0.5 numgroups-change_axis+0.5]);
 
     if strcmp(legend_type, 'axis')
