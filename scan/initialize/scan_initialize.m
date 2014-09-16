@@ -3,9 +3,9 @@ function scan = scan_initialize(scan)
     %% scan = SCAN_INITIALIZE([scan])
     % initialize a struct containing any necessary parameters.
     % this function must be executed from the root directory.
-    % see also scan3_preprocess_run
-    %          scan3_glm_run
-    %          scan3_mvpa_run
+    % see also scan_preprocess_run
+    %          scan_glm_run
+    %          scan_mvpa_run
     
     %% WARNINGS
     %#ok<>

@@ -17,7 +17,7 @@ function scan_plot_bar(varargin)
         load([varargin{2},'/scan.mat']);
         scan.glm.plot.mask     = varargin{3};
         scan.glm.plot.contrast = varargin{4};
-    elseif isstruct(varargin{2}) && nargin==1
+    elseif isstruct(varargin{2}) && nargin==2
         scan = varargin{2};
     else
         error('scan_plot_bar: error. wrong input');

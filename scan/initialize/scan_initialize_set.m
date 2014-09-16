@@ -5,48 +5,69 @@ function scan = scan_initialize_set(scan)
     % see also scan_initialize
     
     %% WARNING
-    %#ok<*NBRAK,*FPARK>
+    %#ok<*FPARK,*ALIGN>
     
-    %% GLM (example)
-    % scan.glm.name       = 'unnamed';  ... identifier
-    % scan.glm.image      = 'smooth';   ... "image" "normalization" "smooth"
-    % scan.glm.function   = 'hrf';      ... "hrf" "fir"
-    % scan.glm.fir.ord    = 8;          ... order of FIR
-    % scan.glm.fir.len    = 14;         ... time length of FIR
-    % scan.glm.hrf.ord    = [0 0];      ... temporal derivative and sparsity
-    % scan.glm.delay      = 0;          ... delay shift for onsets
-    % scan.glm.marge      = 5;          ... marge between onsets and last scan
-    % scan.glm.regressor  = struct('subject',{},'session',{},'onset',{},'discard',{},'name',{},'subname',{},'level',{});
-    % scan.glm.contrast   = struct('name',{},'convec',{});
+    %% FUNCTION
     
-    % scan.glm.plot.mask  = '';         ... regression
-    % scan.glm.plot.contrast  = '';     ...
-    % scan.glm.plot.extension = 'img';  ...
+    % directory
+    scan.dire.root                  = pwd();
+    scan.dire.spm                   = [fileparts(which('spm.m')),filesep];
+    scan.dire.mask                  = [scan.dire.root,filesep,'data',filesep,'mask',filesep];
     
-    %% MVPA (example)
-    % scan.mvpa.name      = 'unnamed';  ... identifier
-    % scan.mvpa.mask      = '';         ... mask applied to the image
-    % scan.mvpa.partition = 4;          ... number of partitions for cross-validation (>1)
-    % scan.mvpa.shift     = 0;          ... shift for regressors (aiming for the HRF peak, when not convolved)
-    % scan.mvpa.nn.hidden = 50;         ... hidden neurons for the nn-classifier
+    dire_dicom();
+    dire_nii();
+    if isfield(scan,'mvpa'),    dire_mvpa();
+                                dire_glm(scan.dire.mvpa.glm);
+    elseif isfield(scan,'glm'), dire_glm([scan.dire.root,filesep,'data',filesep,'glm',filesep,scan.glm.name,filesep]);
+    end
+    
+    % file
+    scan.file.T1 = [scan.dire.spm,'templates/T1.nii,1'];
+    if isfield(scan,'mvpa') && ~isempty(scan.mvpa.mask), scan.file.mvpa_mask = [scan.dire.mask,scan.mvpa.mask,'.img,1']; end
+    
+    % subject
+    if ~isfield(scan,'subject'), scan.subject = struct(); end
+    assert(~isfield(scan.subject,'u') || ~isfield(scan.subject,'r'), 'scan_parameters: error. only one of subject.u and subject.r must be specified');
+    if ~isfield(scan.subject,'u')
+        if ~isfield(scan.subject,'r'),      scan.subject.r = []; end
+        if ~isfield(scan.dire.nii,'subs'),  scan.subject.u = [];
+        else                                scan.subject.u   = 1:size(scan.dire.nii.subs, 1);  scan.subject.u(jb_anyof(scan.subject.u,scan.subject.r)) = [];
+        end
+        scan.subject     = rmfield(scan.subject,'r');
+    end
+    scan.subject.n   = length(scan.subject.u);
+    
+    %% SORT
+    scan = struct_sort(scan);
+    
+    %% AUXILIAR
+    
+    % dicom
+    function dire_dicom()
+        if isfield(scan,'dicom'),
+            scan.dire.dicom             = struct();
+            scan.dire.dicom.root        = [pwd(),filesep,'data',filesep,'dicom',filesep];
+            scan.dire.dicom.subs        = dir([scan.dire.dicom.root,'sub_*']); scan.dire.dicom.subs = strcat(scan.dire.dicom.root,strvcat(scan.dire.dicom.subs.name),filesep);
+            scan.dire.dicom.strs        = strcat(scan.dire.dicom.subs,filesep,scan.dicom.str,filesep);
+            scan.dire.dicom.epi         = strcat(scan.dire.dicom.subs,filesep,scan.dicom.epi,filesep);
+    end;end
 
-    %% DIRECTORIES
-    scan.dire.root                       = pwd();
-    scan.dire.spm                        = [fileparts(which('spm.m')),filesep];
-    scan.dire.mask                       = [scan.dire.root,filesep,'data',filesep,'mask',filesep];
-    
-    % nifti
-    scan.dire.nii                        = struct();
-    scan.dire.nii.root                   = [scan.dire.root,filesep,'data',filesep,'nii',filesep];
-    scan.dire.nii.subs                   = dir([scan.dire.nii.root,'sub_*']); scan.dire.nii.subs = strcat(scan.dire.nii.root,strvcat(scan.dire.nii.subs.name),'/');
-    scan.dire.nii.epi4                   = strcat(scan.dire.nii.subs,'epi4',filesep);
-    scan.dire.nii.epi3                   = strcat(scan.dire.nii.subs,'epi3',filesep);
-    scan.dire.nii.str                    = strcat(scan.dire.nii.subs,'str',filesep);
-    
+    % nii
+    function dire_nii()
+        scan.dire.nii               = struct();
+        scan.dire.nii.root          = [scan.dire.root,filesep,'data',filesep,'nii',filesep];
+        scan.dire.nii.subs          = dir([scan.dire.nii.root,'sub_*']);
+        if isempty(scan.dire.nii.subs), scan.dire.nii = rmfield(scan.dire.nii,'subs');
+        else    scan.dire.nii.subs          = strcat(scan.dire.nii.root,strvcat(scan.dire.nii.subs.name),'/');
+                scan.dire.nii.epi4          = strcat(scan.dire.nii.subs,'epi4',filesep);
+                scan.dire.nii.epi3          = strcat(scan.dire.nii.subs,'epi3',filesep);
+                scan.dire.nii.str           = strcat(scan.dire.nii.subs,'str',filesep);
+    end;end
+
     % glm
-    if isfield(scan,'glm')
+    function dire_glm(root)
         scan.dire.glm               = struct();
-        scan.dire.glm.root          = [scan.dire.root,filesep,'data',filesep,'glm',filesep,scan.glm.name,filesep];
+        scan.dire.glm.root          = root;
         scan.dire.glm.regressor     = [scan.dire.glm.root,'original',filesep,'regressor',filesep];
         scan.dire.glm.firstlevel    = [scan.dire.glm.root,'original',filesep,'first_level',filesep];
         scan.dire.glm.secondlevel   = [scan.dire.glm.root,'original',filesep,'second_level',filesep];
@@ -59,33 +80,10 @@ function scan = scan_initialize_set(scan)
     end
     
     % mvpa
-    if isfield(scan,'mvpa')
+    function dire_mvpa()
         scan.dire.mvpa              = struct();
         scan.dire.mvpa.root         = [scan.dire.root,filesep,'data',filesep,'mvpa',filesep,scan.mvpa.name,filesep];
+        scan.dire.mvpa.glm          = [scan.dire.mvpa.root,'glm', filesep];
+        scan.dire.mvpa.mvpa         = [scan.dire.mvpa.root,'mvpa',filesep];
     end
-    
-    %% FILES
-    
-    % mask
-    if isfield(scan,'mvpa')
-        if isempty(scan.mvpa.mask), scan.file.mvpa_mask = '';
-        else                        scan.file.mvpa_mask = [scan.dire.mask,scan.mvpa.mask,'.img,1']; end
-    end
-    
-    % T1
-    scan.file.T1 = [scan.dire.spm,'templates/T1.nii,1'];
-    
-    %% SUBJECT
-    if ~isfield(scan,'subject'), scan.subject = struct(); end
-    assert(~isfield(scan.subject,'u') || ~isfield(scan.subject,'r'), 'scan_parameters: error. only one of subject.u and subject.r must be specified');
-    if ~isfield(scan.subject,'u') && ~isfield(scan.subject,'r'), scan.subject.r = []; end
-    if ~isfield(scan.subject,'u'),
-        scan.subject.u   = 1:size(scan.dire.nii.subs, 1);
-        scan.subject.u(jb_anyof(scan.subject.u,scan.subject.r)) = [];
-        scan.subject     = rmfield(scan.subject,'r');
-    end
-    scan.subject.n   = length(scan.subject.u);
-    
-    %% SORT
-    scan = struct_sort(scan);
 end

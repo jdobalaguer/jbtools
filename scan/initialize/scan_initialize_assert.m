@@ -1,6 +1,6 @@
 
 function scan_initialize_assert(scan)
-    %% scan = SCAN_INITIALIZE_SET(scan)
+    %% scan = SCAN_INITIALIZE_ASSERT(scan)
     % general struct sanity check
     % see also scan_initialize
     

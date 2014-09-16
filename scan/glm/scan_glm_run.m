@@ -7,7 +7,7 @@ function scan = scan_glm_run(scan)
     %          scan_mvpa_run
 
     %% WARNINGS
-    %#ok<*NASGU>
+    %#ok<>
     
     %% FUNCTION
     
@@ -57,7 +57,7 @@ function scan = scan_glm_run(scan)
     if do_secondlevel,  scan = scan_glm_second_contrast(scan);  save_scan(); end    % SECOND LEVEL: run contrasts and statistics
    
     % copy
-    glm_copy = false(5); if isfield(scan.glm,'copy'), glm_copy = scan.glm.copy; end
+    glm_copy = false(6); if isfield(scan.glm,'copy'), glm_copy = scan.glm.copy; end
     if glm_copy(1),     scan = scan_glm_copy_beta1(scan);       save_scan(); end    % COPY:         beta      (first level)
     if glm_copy(2),     scan = scan_glm_copy_contrast1(scan);   save_scan(); end    % COPY:         contrast  (first level)
     if glm_copy(3),     scan = scan_glm_copy_statistic1(scan);  save_scan(); end    % COPY:         statistic (first level)

@@ -1,6 +1,6 @@
 
 function scan_plot_bar_1(scan,directory)
-    %% SCAN_PLOT_BAR_B1(SCAN,DIRECTORY)
+    %% SCAN_PLOT_BAR_1(SCAN,DIRECTORY)
     % Plot bars for BOLD signal (1st level)
     % (after running "scan_glm_run")
     % see also scan_plot_bar
