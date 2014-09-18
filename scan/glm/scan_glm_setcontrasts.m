@@ -10,10 +10,11 @@ function scan = scan_glm_setcontrasts(scan)
     %% FUNCTION
     scan.glm.contrast  = {};
     % set names
-    tmp = load(sprintf('%scondition_sub_%02i_run_%02i.mat',scan.dire.glm.regressor,scan.subject.u(1),1),'cond');
+    condition = load(sprintf('%sfinal_condition_sub_%02i.mat',scan.dire.glm.regressor,scan.subject.u(1)),'condition');
+    condition = condition.condition;
     u_name = {};
-    for i = 1:length(tmp.cond)
-        u_name = [u_name, {tmp.cond{i}.name}, tmp.cond{i}.subname];
+    for i = 1:length(condition{1})
+        u_name = [u_name, {condition{1}{i}.name}, condition{1}{i}.subname];
     end
     n_name = length(u_name);
     % set order

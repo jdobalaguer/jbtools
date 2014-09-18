@@ -83,7 +83,7 @@ function scan = scan_initialize_set(scan)
     function dire_mvpa()
         scan.dire.mvpa              = struct();
         scan.dire.mvpa.root         = [scan.dire.root,filesep,'data',filesep,'mvpa',filesep,scan.mvpa.name,filesep];
-        scan.dire.mvpa.glm          = [scan.dire.mvpa.root,'glm', filesep];
+        scan.dire.mvpa.glm          = [scan.dire.root,filesep,'data',filesep,'mvpa',filesep,'glm', filesep];
         scan.dire.mvpa.mvpa         = [scan.dire.mvpa.root,'mvpa',filesep];
     end
 end

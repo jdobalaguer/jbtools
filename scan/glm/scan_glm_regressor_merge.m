@@ -5,7 +5,7 @@ function scan = scan_glm_regressor_merge(scan)
     % see also scan_glm_run
 
     %%  WARNINGS
-    %#ok<*NUSED,*FPARK>
+    %#ok<*AGROW,*NASGU,*FPARK>
     
     %% FUNCTION
     for sub = scan.subject.u
@@ -15,42 +15,42 @@ function scan = scan_glm_regressor_merge(scan)
         nb_runs     = size(dire_niiruns, 1);
         u_run       = 1:nb_runs;
 
-        % concatenate realignment
-        R = zeros(0,6);
+        % realignment
         nb_volumes = nan(size(u_run));
-        for i_run = 1:nb_runs
+        tmp_cond = load(sprintf('%sfinal_realignment_sub_%02i.mat',  scan.dire.glm.regressor,sub),'realignment');
+        tmp_cond = tmp_cond.realignment;
+        R_merged   = zeros(0,6);
+        for i_run = u_run
             run = u_run(i_run);
-            file_datreaR = sprintf('%srealign_sub_%02i_run_%02i.mat',  scan.dire.glm.regressor,sub,i_run);
             % run onset
-            R     = [R,zeros(size(R,1),1)];
-            tmp   = load(file_datreaR,'R');
-            tmp.R = [tmp.R, zeros(size(tmp.R,1),i_run-1), ones(size(tmp.R,1),1)];
+            R_merged            = [R_merged,zeros(size(R_merged,1),1)];
+            tmp_cond{i_run}   = [tmp_cond{i_run}, zeros(size(tmp_cond{i_run},1),i_run-1), ones(size(tmp_cond{i_run},1),1)];
             % concatenate
-            R = [R ; tmp.R];
-            nb_volumes(i_run) = size(tmp.R,1);
+            R_merged = [R_merged ; tmp_cond{i_run}];
+            nb_volumes(i_run) = size(tmp_cond{i_run},1);
         end
-        R(:,end) = [];
-        file_datreaS = sprintf('%smerged_realign_sub_%02i.mat',  scan.dire.glm.regressor,sub);
-        save(file_datreaS,'R');
+        R_merged(:,end) = [];
+        realignment     = {R_merged};
+        save(sprintf('%smerge_realignment_sub_%02i.mat',  scan.dire.glm.regressor,sub),'realignment');
+        save(sprintf('%sfinal_realignment_sub_%02i.mat',  scan.dire.glm.regressor,sub),'realignment');
 
-        % concatenate conditions
+        % condition
         onset = 0;
-        cond = {};
-        load(sprintf('%scondition_sub_%02i_run_%02i.mat',scan.dire.glm.regressor,sub,u_run(1)));
-        for i_run = 2:nb_runs
-            onset = onset + scan.pars.tr * nb_volumes(i_run-1);
-            run = u_run(i_run);
-            file_datconR = sprintf('%scondition_sub_%02i_run_%02i.mat',scan.dire.glm.regressor,sub,i_run);
-            tmp = load(file_datconR,'cond');
-            for i_cond = 1:length(cond)
-                cond{i_cond}.onset = [cond{i_cond}.onset, tmp.cond{i_cond}.onset + onset];
-                for i_level = 1:length(cond{i_cond}.level)
-                    cond{i_cond}.level{i_level} = [cond{i_cond}.level{i_level}, tmp.cond{i_cond}.level{i_level}];
+        C_unmerged = load(sprintf('%sfinal_condition_sub_%02i.mat',scan.dire.glm.regressor,sub),'condition');
+        C_unmerged = C_unmerged.condition;
+        C_merged   = C_unmerged{1};
+        for i_run = 1:nb_runs-1
+            onset = onset + scan.pars.tr * nb_volumes(i_run);
+            for i_cond = 1:length(C_merged)
+                C_merged{i_cond}.onset = [C_merged{i_cond}.onset, C_unmerged{i_run+1}{i_cond}.onset + onset];
+                for i_level = 1:length(C_merged{i_cond}.level)
+                    C_merged{i_cond}.level{i_level} = [C_merged{i_cond}.level{i_level}, C_unmerged{i_run+1}{i_cond}.level{i_level}];
                 end
             end
 
         end
-        file_datconS = sprintf('%smerged_condition_sub_%02i.mat',scan.dire.glm.regressor,sub);
-        save(file_datconS,'cond');
+        condition = {C_merged};
+        save(sprintf('%smerge_condition_sub_%02i.mat',scan.dire.glm.regressor,sub),'condition');
+        save(sprintf('%sfinal_condition_sub_%02i.mat',scan.dire.glm.regressor,sub),'condition');
     end
 end

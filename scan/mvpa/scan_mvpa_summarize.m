@@ -1,25 +1,36 @@
 
-function scan3_mvpa_summarize()
-    %% SCAN3_MVPA_SUMMARIZE()
+function scan = scan_mvpa_summarize(scan)
+    %% SCAN_MVPA_SUMMARIZE()
     % display a summary of the results of the multi-voxel pattern analysis
-    % see also scan3_mvpa
+    % see also scan_mvpa
 
     %%  WARNINGS
-    %#ok<*NUSED>
+    %#ok<*NUSED,*AGROW,*NASGU>
     
-    %% GLOBAL PARAMETERS
-    global name_glm name_mvpa name_mask name_image r_subject do_pooling;
-    global n_subject u_subject;
-    global mvpa_subject mvpa_nscans mvpa_result;
-    
-    global dire_spm dire_nii dire_nii_subs dire_nii_epi4 dire_nii_epi3 dire_nii_str dire_glm dire_glm_condition dire_glm_firstlevel dire_glm_secondlevel dire_glm_contrast dire_mask;
-    global file_mask file_T1;
-    global pars_nslices pars_tr pars_ordsl pars_refsl pars_reft0 pars_voxs;
-    global mvpa_partition mvpa_shift;
-    
-    %% IMAGE
-    for i_subject = 1:n_subject
-        
+    %% FUNCTION
+    for i_subject = 1:scan.subject.n
+        d_prime  = [];
+        for i_iteration = 1:length(scan.mvpa.result(i_subject).iterations)
+            [u_level,n_level] = numbers(scan.mvpa.result(i_subject).iterations(i_iteration).perfmet.desireds);
+            for i_level = 1:n_level
+                level = u_level(i_level);
+                prediction          = scan.mvpa.result(i_subject).iterations(i_iteration).perfmet.guesses ;
+                category            = scan.mvpa.result(i_subject).iterations(i_iteration).perfmet.desireds;
+                hit_rate            = mean(prediction(category==level)==level);
+                false_alarm_rate    = mean(prediction(category~=level)==level);
+                d_prime(i_iteration,i_level) = norminv(hit_rate) - norminv(false_alarm_rate);
+            end
+        end
+        for i_level = 1:n_level
+            level   = u_level(i_level);
+            m_prime = mean(d_prime(:,i_level));
+            s_prime = std( d_prime(:,i_level));
+            h       = ttest(d_prime(:,i_level),0,'tail','right');
+            if isnan(h), h = 0; end
+            if h,   cprintf([0,1,0],'d-prime (%d) = %+0.2f ± %0.2f \n',level,m_prime,s_prime);
+            else    cprintf([1,0,0],'d-prime (%d) = %+0.2f ± %0.2f \n',level,m_prime,s_prime);
+            end
+        end
     end
 
 end

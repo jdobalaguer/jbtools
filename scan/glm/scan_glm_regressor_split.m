@@ -7,53 +7,36 @@ function scan = scan_glm_regressor_split(scan)
     %          scan_mvpa_run
 
     %%  WARNINGS
-    %#ok<*NUSED,*FPARK>
+    %#ok<*AGROW,*NASGU>
     
     %% FUNCTION
-    error('scan_glm_regressor_split: error. TODO');
     for sub = scan.subject.u
         dire_niiepi3 = strtrim(scan.dire.nii.epi3(sub,:));
         fprintf('Split regressors for:    %s\n',dire_niiepi3);
-        dire_niiruns = dir([dire_niiepi3,'run*']); dire_niiruns = strcat(strvcat(dire_niiruns.name),'/');
-        nb_runs     = size(dire_niiruns, 1);
-        u_run       = 1:nb_runs;
 
-        % concatenate realignment
-        R = zeros(0,6);
-        nb_volumes = nan(size(u_run));
-        for i_run = 1:nb_runs
-            run = u_run(i_run);
-            file_datreaR = sprintf('%srealign_sub_%02i_run_%02i.mat',  scan.dire.glm.regressor,sub,i_run);
-            % run onset
-            R     = [R,zeros(size(R,1),1)];
-            tmp   = load(file_datreaR,'R');
-            tmp.R = [tmp.R, zeros(size(tmp.R,1),i_run-1), ones(size(tmp.R,1),1)];
-            % concatenate
-            R = [R ; tmp.R];
-            nb_volumes(i_run) = size(tmp.R,1);
-        end
-        R(:,end) = [];
-        file_datreaS = sprintf('%smerged_realign_sub_%02i.mat',  scan.dire.glm.regressor,sub);
-        save(file_datreaS,'R');
-
-        % concatenate conditions
-        onset = 0;
-        cond = {};
-        load(sprintf('%scondition_sub_%02i_run_%02i.mat',scan.dire.glm.regressor,sub,u_run(1)));
-        for i_run = 2:nb_runs
-            onset = onset + scan.pars.tr * nb_volumes(i_run-1);
-            run = u_run(i_run);
-            file_datconR = sprintf('%scondition_sub_%02i_run_%02i.mat',scan.dire.glm.regressor,sub,i_run);
-            tmp = load(file_datconR,'cond');
-            for i_cond = 1:length(cond)
-                cond{i_cond}.onset = [cond{i_cond}.onset, tmp.cond{i_cond}.onset + onset];
-                for i_level = 1:length(cond{i_cond}.level)
-                    cond{i_cond}.level{i_level} = [cond{i_cond}.level{i_level}, tmp.cond{i_cond}.level{i_level}];
+        % load merged regressor
+        C_joint = load(sprintf('%sfinal_condition_sub_%02i.mat',scan.dire.glm.regressor,sub));
+        C_joint = C_joint.condition;
+        C_split = {};
+        
+        % split conditions
+        for i_run = 1:length(C_joint)
+            for i_cond = 1:length(C_joint{i_run})
+                for i_onset = 1:length(C_joint{i_run}{i_cond}.onset)
+                    tmp = struct();
+                    tmp.name        = sprintf('%s_%03i',C_joint{i_run}{i_cond}.name,i_onset);
+                    tmp.onset       = C_joint{i_cond}{i_run}.onset(i_onset);
+                    tmp.subname     = {};
+                    tmp.level       = {};
+                    tmp.duration    = 0;
+                    C_split{end+1} = tmp;
                 end
             end
-
         end
-        file_datconS = sprintf('%smerged_condition_sub_%02i.mat',scan.dire.glm.regressor,sub);
-        save(file_datconS,'cond');
+        
+        % save
+        condition = {C_split};
+        save(sprintf('%ssplit_condition_sub_%02i.mat',scan.dire.glm.regressor,sub),'condition');
+        save(sprintf('%sfinal_condition_sub_%02i.mat',scan.dire.glm.regressor,sub),'condition');
     end
 end

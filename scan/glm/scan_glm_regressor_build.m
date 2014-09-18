@@ -8,9 +8,12 @@ function scan = scan_glm_regressor_build(scan)
     %#ok<*NUSED,*AGROW,*FPARK,*NASGU>
     
     %% FUNCTION
-    % make directory
-    if ~exist(scan.dire.glm.regressor,'dir'); mkdirp(scan.dire.glm.regressor); end
+    mkdirp(scan.dire.glm.regressor);
     for sub = scan.subject.u
+        condition   = {};
+        realignment = {};
+        
+        % directories and files
         dire_nii_epi3 = strtrim(scan.dire.nii.epi3(sub,:));
         fprintf('Building regressors for: %s\n',dire_nii_epi3);
         dire_nii_runs = dir([strtrim(dire_nii_epi3),'run*']);
@@ -18,15 +21,9 @@ function scan = scan_glm_regressor_build(scan)
         nb_runs     = size(dire_nii_runs, 1);
         u_run       = 1:nb_runs;
         for i_run = u_run
-            file_dat_con = sprintf('%scondition_sub_%02i_run_%02i.mat',scan.dire.glm.regressor,sub,i_run);
-            file_dat_rea = sprintf('%srealign_sub_%02i_run_%02i.mat',  scan.dire.glm.regressor,sub,i_run);
 
-            % dirs & files
-            dire_nii_run     = strcat(dire_nii_epi3,strtrim(dire_nii_runs(i_run,:)));
-            dire_nii_rea     = strcat(dire_nii_run,'realignment',filesep);
-            file_nii_rea     = dir([dire_nii_rea,'rp_*image*.txt']);   file_nii_rea = strcat(dire_nii_rea,strvcat(file_nii_rea.name));
-            
-            cond = {};
+            % condition
+            condition{i_run} = {};
             for i_cond = 1:length(scan.glm.regressor)
                 regressor = scan.glm.regressor(i_cond);
                 ii_sub   = (regressor.subject == sub);
@@ -41,19 +38,26 @@ function scan = scan_glm_regressor_build(scan)
                 level    = regressor.level;
                 duration = regressor.duration;
                 for i_level = 1:length(level), level{i_level} = level{i_level}(ii_data); end
-                cond{end+1} = struct(   'name'     , name       , ...
-                                        'onset'    , {onset}    , ...
-                                        'subname'  , {subname}  , ...
-                                        'level'    , {level}    , ...
-                                        'duration' , {duration} );
+                condition{i_run}{end+1} = struct( ...
+                    'name'     , name       , ...
+                    'onset'    , {onset}    , ...
+                    'subname'  , {subname}  , ...
+                    'level'    , {level}    , ...
+                    'duration' , {duration} );
             end
 
-            % load realignment
+            % load/save realignment
+            dire_nii_run  = strcat(dire_nii_epi3,strtrim(dire_nii_runs(i_run,:)));
+            dire_nii_rea  = strcat(dire_nii_run,'realignment',filesep);
+            file_nii_rea  = dir([dire_nii_rea,'rp_*image*.txt']);   file_nii_rea = strcat(dire_nii_rea,strvcat(file_nii_rea.name));
             R = load(file_nii_rea);
-
-            % save regressors
-            save(file_dat_con,'cond');
-            save(file_dat_rea,'R');
+            realignment{i_run} = R;
         end
+        
+        % save
+        save(sprintf('%splain_realignment_sub_%02i.mat',    scan.dire.glm.regressor,sub), 'realignment');
+        save(sprintf('%sfinal_realignment_sub_%02i.mat',    scan.dire.glm.regressor,sub), 'realignment');
+        save(sprintf('%splain_condition_sub_%02i.mat',      scan.dire.glm.regressor,sub), 'condition');
+        save(sprintf('%sfinal_condition_sub_%02i.mat',      scan.dire.glm.regressor,sub), 'condition');
     end
 end
