@@ -9,15 +9,16 @@ function scan = scan_glm_first_contrast(scan)
     
     %% FUNCTION
     jobs = {};
-    for i_sub = scan.subject.u
-        fprintf('glm first level contrasts for: subject %02i\n',i_sub);
-        dir_datglm1 = sprintf('%ssub_%02i/',scan.dire.glm.firstlevel,i_sub);
+    for i_subject = 1:scan.subject.n
+        subject = scan.subject.u(i_subject);
+        fprintf('glm first level contrasts for: subject %02i\n',subject);
+        dir_datglm1 = sprintf('%ssub_%02i/',scan.dire.glm.firstlevel,subject);
         job = struct();
         job.spm.stats.con.spmmat = {[dir_datglm1,'SPM.mat']};
-        for i_con = 1:length(scan.glm.contrast)
-            job.spm.stats.con.consess{i_con}.tcon.name      = scan.glm.contrast{i_con}.name;
-            job.spm.stats.con.consess{i_con}.tcon.convec    = scan.glm.contrast{i_con}.convec;
-            job.spm.stats.con.consess{i_con}.tcon.sessrep   = 'replsc';
+        for i_contrast = 1:length(scan.glm.contrast{i_subject})
+            job.spm.stats.con.consess{i_contrast}.tcon.name      = scan.glm.contrast{i_subject}{i_contrast}.name;
+            job.spm.stats.con.consess{i_contrast}.tcon.convec    = scan.glm.contrast{i_subject}{i_contrast}.convec;
+            job.spm.stats.con.consess{i_contrast}.tcon.sessrep   = 'replsc';
         end
         job.spm.stats.con.delete = 1;
         jobs{end+1} = job;

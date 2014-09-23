@@ -9,7 +9,7 @@ function scan = scan_mvpa_mask(scan)
     
     %% FUNCTION
     for i_subject = 1:scan.subject.n
-        scan.mvpa.subject(i_subject) = load_spm_mask(scan.mvpa.subject(i_subject),scan.mvpa.mask,scan.file.mvpa_mask);
+        scan.mvpa.subject(i_subject) = load_spm_mask(scan.mvpa.subject(i_subject),scan.mvpa.variable.mask,scan.file.mvpa_mask);
     end
 
 end

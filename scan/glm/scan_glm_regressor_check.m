@@ -28,7 +28,7 @@ function scan = scan_glm_regressor_check(scan)
                     for i_level = 1:length(condition{i_run}{i_cond}.level)
                         condition{i_run}{i_cond}.level{i_level}(scans_to_remove) = [];
                     end
-                    cprintf([1,0.5,0],'scan3_glm: warning. subject %02i run %02i cond %s removed %d samples',sub,u_run(i_run),condition{i_cond}.name);
+                    cprintf([1,0.5,0],'scan_glm_regressor_check: warning. subject %02i run %02i cond %s removed %d samples',sub,u_run(i_run),condition{i_run}{i_cond}.name);
                     fprintf('\n');
                 end
             end
