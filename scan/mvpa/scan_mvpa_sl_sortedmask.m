@@ -12,7 +12,7 @@ function scan = scan_mvpa_sl_sortedmask(scan)
     
     for i_subject = 1:scan.subject.n
         % create masks from the statmaps
-        scan.mvpa.subject(i_subject) = create_sorted_mask(scan.mvpa.subject(i_subject),scan.mvpa.variable.mask,[scan.mvpa.variable.pattern,'_srch_200'],200,'descending',true);
+        scan.mvpa.subject(i_subject) = create_sorted_mask(scan.mvpa.subject(i_subject),[scan.mvpa.variable.pattern,'_srch'],[scan.mvpa.variable.pattern,'_srch_200'],200,'descending',true);
     end
 
     % update variable

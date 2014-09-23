@@ -11,7 +11,6 @@ function scan = scan_mvpa_sl_adjency(scan)
     
     for i_subject = 1:scan.subject.n
         % create adjacency matrix
-        scan.mvpa.variable.mask
         scan.mvpa.subject(i_subject).adj_sphere = create_adj_list(scan.mvpa.subject(i_subject),scan.mvpa.variable.mask,'radius',scan.mvpa.sphere);
     end
 
