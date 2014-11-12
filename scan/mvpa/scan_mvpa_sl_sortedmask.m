@@ -9,13 +9,12 @@ function scan = scan_mvpa_sl_sortedmask(scan)
     
     %% FUNCTION
     
-    
-    for i_subject = 1:scan.subject.n
-        % create masks from the statmaps
-        scan.mvpa.subject(i_subject) = create_sorted_mask(scan.mvpa.subject(i_subject),[scan.mvpa.variable.pattern,'_srch'],[scan.mvpa.variable.pattern,'_srch_200'],200,'descending',true);
-    end
-
     % update variable
-    scan.mvpa.variable.mask = [scan.mvpa.variable.pattern,'_srch_200'];
+    scan.mvpa.variable.mask = sprintf('%s_srch_%d',scan.mvpa.variable.pattern,scan.mvpa.nvoxel);
+    
+    % create masks from the statmaps
+    for i_subject = 1:scan.subject.n
+        scan.mvpa.subject(i_subject) = create_sorted_mask(scan.mvpa.subject(i_subject),[scan.mvpa.variable.pattern,'_srch'],scan.mvpa.variable.mask,scan.mvpa.nvoxel,'descending',true);
+    end
     
 end

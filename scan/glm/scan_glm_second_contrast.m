@@ -8,7 +8,8 @@ function scan = scan_glm_second_contrast(scan)
     %#ok<*NUSED,*AGROW>
     
     %% FUNCTION
-    warning('TO FIX INMEDIATELY');
+    warning('TO FIX INMEDIATELY: assert that contrasts across participants are all equal');
+    i_sub = 1;
     
     jobs = {};
     for i_con = 1:length(scan.glm.contrast{i_sub})

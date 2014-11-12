@@ -32,7 +32,7 @@ function scan_plot_peristimulus_1(scan,directory)
         values = nan(scan.subject.n , length(scan.glm.plot.time));
         for i_time = 1:size(dire_contrast,1)
             dire_time = strtrim(dire_contrast(i_time,:));
-            file_subject = dir([dire_time,'*_sub*_con*.',scan.glm.plot.extension]);
+            file_subject = dir([dire_time,'*_sub*_*.',scan.glm.plot.extension]);
             file_subject = strcat(dire_time,strvcat(file_subject.name));
             value = nan(1,size(file_subject,1));
             for i_subject = 1:size(file_subject,1)

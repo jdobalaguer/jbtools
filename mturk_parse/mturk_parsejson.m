@@ -108,6 +108,11 @@ function [data] = mturk_parsejson(json)
             switch id
                 case '"' % Start a name/value pair
                     [name,value] = parse_name_value();
+%                     if ~isempty(str2double(name))
+%                         name
+%                         str2double(name)
+%                         name = ['number',name]; %#ok<AGROW>
+%                     end
                     if isempty(name)
                         ME = MException('json:parse_object',['Can not have an empty name: ' json]);
                         ME.throw;

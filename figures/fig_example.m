@@ -42,10 +42,12 @@ function fig_example()
     yy = ss+rr;
     my = nanmean(yy);
     sy = nanstd(yy);
-    pl = fig_plot(t,my,sy);
+    sp = fig_steplot(t,my,sy);
+    ep = fig_errplot(t,my,sy);
     % fig_axis
     sa_plot = struct();
-    sa_plot.ilegend = pl;
+    sa_plot.ilegend = sp.shade;
+    sa_plot.tlegend = 'legend';
     sa_plot.title   = 'FIGURE PLOT';
     sa_plot.xlabel  = 'x label';
     sa_plot.ylabel  = 'y label';
@@ -60,5 +62,6 @@ function fig_example()
 
     %% save
     fig_export('fig_example.pdf');
+    fig_svg('fig_example.svg');
     
 end

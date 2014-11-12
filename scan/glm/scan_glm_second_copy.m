@@ -11,7 +11,7 @@ function scan = scan_glm_second_copy(scan)
     for i_subject = 1:scan.subject.n
         subject = scan.subject.u(i_subject);
         fprintf('glm second level copy for: subject %02i\n',subject);
-        for i_contrast = 1:length(scan.glm.contrast{subject})
+        for i_contrast = 1:length(scan.glm.contrast{i_subject})
             dir_datglm1 = sprintf('%ssub_%02i/',scan.dire.glm.firstlevel,subject);
             dir_datglm2 = sprintf('%s%s/',scan.dire.glm.secondlevel,scan.glm.contrast{i_subject}{i_contrast}.name);
             if ~exist(dir_datglm2,'dir'); mkdirp(dir_datglm2); end

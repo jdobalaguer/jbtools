@@ -1,13 +1,11 @@
 function ret = mturk_concatall(s)
+    if isempty(s), ret = struct(); return; end
     u_field = fieldnames(s{1});
     nb_fields = length(u_field);
     nb_s = length(s);
     
     ret_cell = struct();
     ret      = struct();
-    if ~nb_s
-        return
-    end
     
     % foreach field
     for i_field = 1:nb_fields
@@ -23,8 +21,8 @@ function ret = mturk_concatall(s)
             case 'numbers'
                 catdim = 1;
             otherwise
-                fprintf('mturk_concatall: WARNING. unknown field %s.   \n',this_field);
-                fprintf('mturk_concatall: WARNING. default cat dim = 1.\n');
+                fprintf('mturk_parseall: WARNING. unknown field %s.   \n',this_field);
+                fprintf('mturk_parseall: WARNING. default cat dim = 1.\n');
                 catdim = 1;
         end
         
@@ -45,7 +43,7 @@ function ret = mturk_concatall(s)
 end
 
 function s = add_subject(s)
-    if ~isfield(s,'vb_subject')
-        s.vb_subject = repmat(randi(1000000),size(s.vb_index));
+    if ~isfield(s,'expt_subject')
+        s.expt_subject = repmat(randi(1000000),size(s.expt_index));
     end
 end

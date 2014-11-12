@@ -1,5 +1,9 @@
 
 function mturk_parseall_uncell(pathname,allfiles,i_allfiles)
+    %%  warnings
+    %#ok<*NASGU>
+    
+    %% function
     nb_allfiles = length(allfiles);
     
     filename = [pathname,filesep,allfiles(i_allfiles).name];
@@ -20,11 +24,12 @@ function mturk_parseall_uncell(pathname,allfiles,i_allfiles)
             data = struct();
             load([filename,'.parse.mat'],'data');
             % read and parse
-            data = mturk_uncell(data);
+            data = mturk_uncell(data,{});
             % save
             save([filename,'.uncell.mat'],'data');
-        catch
+        catch err
             fprintf('mturk_parseall: WARNING. error while uncelling "%s" \n',allfiles(i_allfiles).name);
+            rethrow(err);
         end
     end
 end
