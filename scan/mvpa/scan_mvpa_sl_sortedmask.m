@@ -9,6 +9,16 @@ function scan = scan_mvpa_sl_sortedmask(scan)
     
     %% FUNCTION
     
+    % check nvox
+    min_nvox = Inf;
+    for i_subject = 1:scan.subject.n
+        min_nvox = min(min_nvox , get_objfield(scan.mvpa.subject,'Mask',scan.mvpa.variable.mask,'nvox'));
+    end
+    if scan.mvpa.nvoxel > min_nvox
+        warning('scan_mvpa_sl_sortedmask: warning. nvoxel is bigger than the mask. set to %d voxels', min_nvox);
+        scan.mvpa.nvoxel = min_nvox;
+    end
+    
     % update variable
     scan.mvpa.variable.mask = sprintf('%s_srch_%d',scan.mvpa.variable.pattern,scan.mvpa.nvoxel);
     

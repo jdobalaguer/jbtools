@@ -16,7 +16,9 @@ function scan = scan_initialize_set(scan)
     
     dire_dicom();
     dire_nii();
-    if isfield(scan,'mvpa'),    dire_mvpa();
+    if isfield(scan,'rsa'),     dire_rsa();
+                                dire_glm(scan.dire.rsa.glm);
+    elseif isfield(scan,'mvpa'),dire_mvpa();
                                 dire_glm(scan.dire.mvpa.glm);
     elseif isfield(scan,'glm'), dire_glm([scan.dire.root,filesep,'data',filesep,'glm',filesep,scan.glm.name,filesep]);
     end
@@ -85,5 +87,13 @@ function scan = scan_initialize_set(scan)
         scan.dire.mvpa.root         = [scan.dire.root,filesep,'data',filesep,'mvpa',filesep,scan.mvpa.name,filesep];
         scan.dire.mvpa.glm          = [scan.dire.root,filesep,'data',filesep,'mvpa',filesep,'glm', filesep];
         scan.dire.mvpa.mvpa         = [scan.dire.mvpa.root,'mvpa',filesep];
+    end
+
+    % rsa
+    function dire_rsa()
+        scan.dire.rsa              = struct();
+        scan.dire.rsa.root         = [scan.dire.root,filesep,'data',filesep,'rsa',filesep,scan.rsa.name,filesep];
+        scan.dire.rsa.glm          = [scan.dire.rsa.root,'glm', filesep];
+        scan.dire.rsa.rsa          = [scan.dire.rsa.root,'mvpa',filesep];
     end
 end

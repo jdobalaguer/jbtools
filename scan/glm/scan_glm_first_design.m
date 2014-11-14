@@ -49,28 +49,27 @@ function scan = scan_glm_first_design(scan)
         if scan.glm.pooling
             file_pooling = {};
             for i_run = u_run, file_pooling = [file_pooling;file_niiimg{i_run}]; end
-            file_niiimg = file_pooling;
+            file_niiimg = {file_pooling};
         end
-        
         
         for i_run = 1:length(condition)
             % nii files
-            job.spm.stats.fmri_spec.sess(i_run).scans = file_niiimg;
+            job.spm.stats.fmri_spec.sess(i_run).scans = file_niiimg{i_run};
             job.spm.stats.fmri_spec.sess(i_run).hpf   = 128;
             job.spm.stats.fmri_spec.sess(i_run).cond  = struct('name',{},'onset',{},'duration',{},'tmod',{},'pmod',{});
             
             % conditions (regressors, modulators & factors)
-            for i_cond1 = 1:length(condition{i_run})
+            for i_cond = 1:length(condition{i_run})
                 cond = struct();
-                cond.name     = condition{i_run}{i_cond1}.name;
-                cond.onset    = condition{i_run}{i_cond1}.onset;
-                cond.duration = condition{i_run}{i_cond1}.duration;
+                cond.name     = condition{i_run}{i_cond}.name;
+                cond.onset    = condition{i_run}{i_cond}.onset;
+                cond.duration = condition{i_run}{i_cond}.duration;
                 cond.tmod     = 0;
                 cond.pmod     = struct('name', {}, 'param', {}, 'poly', {});
-                for i_cond2 = 1:length(condition{i_run}{i_cond1}.subname)
-                    cond.pmod(i_cond2).name  = condition{i_run}{i_cond1}.subname{i_cond2};
-                    cond.pmod(i_cond2).param = condition{i_run}{i_cond1}.level{i_cond2};
-                    cond.pmod(i_cond2).poly = 1;
+                for i_subcond = 1:length(condition{i_run}{i_cond}.subname)
+                    cond.pmod(i_subcond).name  = condition{i_run}{i_cond}.subname{i_subcond};
+                    cond.pmod(i_subcond).param = condition{i_run}{i_cond}.level{i_subcond};
+                    cond.pmod(i_subcond).poly = 1;
                 end
                 job.spm.stats.fmri_spec.sess(i_run).cond(end+1) = cond;
             end

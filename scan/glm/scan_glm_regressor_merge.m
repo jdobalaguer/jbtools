@@ -8,6 +8,8 @@ function scan = scan_glm_regressor_merge(scan)
     %#ok<*AGROW,*NASGU,*FPARK>
     
     %% FUNCTION
+    if ~scan.glm.pooling, return; end
+    
     for sub = scan.subject.u
         dire_niiepi3 = strtrim(scan.dire.nii.epi3(sub,:));
         fprintf('Merge regressors for:    %s\n',dire_niiepi3);

@@ -8,8 +8,6 @@ function scan = scan_glm_copy_beta2(scan)
     %#ok<*NUSED>
     
     %% COPY CONTRASTS
-    warning('TO FIX INMEDIATELY');
-            
     mkdirp(scan.dire.glm.beta2);
     for i_con = 1:length(scan.glm.contrast{1})
         fprintf('glm copy beta2 for :       contrast "%s" \n',scan.glm.contrast{1}{i_con}.name);

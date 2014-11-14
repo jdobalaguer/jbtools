@@ -17,7 +17,7 @@ function scan = scan_mvpa_sl_selector(scan)
         n_time      = length(session);
         session_sl  = ones(n_session,n_time);
         
-        assert(n_session>=3 , 'scan_mvpa_sl_selector: error. you need at least 4 sessions');
+        assert(n_session>=3 , 'scan_mvpa_sl_selector: error. you need at least 3 sessions');
         
         % label one session with 2s for evaluation
         for i_session = 1:n_session, session_sl(i_session, session==i_session) = 2; end
@@ -28,6 +28,11 @@ function scan = scan_mvpa_sl_selector(scan)
         % add each row as a selector, and group together
         for i_session = 1:n_session, scan.mvpa.subject(i_subject) = initset_object(scan.mvpa.subject(i_subject),'selector',sprintf('%s_xval_sl_%i',scan.mvpa.variable.selector,i_session),session_sl(i_session,:),'group_name',[scan.mvpa.variable.selector,'_xval_sl']); end
         
+        % add dummy selectors
+        if scan.mvpa.dummy_sel
+            session_sl(session_sl(:)==3) = 0;
+            for i_session = 1:n_session, scan.mvpa.subject(i_subject) = initset_object(scan.mvpa.subject(i_subject),'selector',sprintf('%s_xval_sl_dummy_%i',scan.mvpa.variable.selector,i_session),session_sl(i_session,:),'group_name',[scan.mvpa.variable.selector,'_xval_sl_dummy']); end
+        end
     end
     
     % update variable

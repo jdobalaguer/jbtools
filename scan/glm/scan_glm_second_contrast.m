@@ -13,8 +13,8 @@ function scan = scan_glm_second_contrast(scan)
     
     jobs = {};
     for i_con = 1:length(scan.glm.contrast{i_sub})
-        fprintf('glm second level for: contrast "%s"\n',scan.glm.contrast{1}{i_con}.name);
-        dir_datglm2 = sprintf('%s%s/',scan.dire.glm.secondlevel,scan.glm.contrast{1}{i_con}.name);
+        fprintf('glm second level for: contrast "%s"\n',scan.glm.contrast{i_sub}{i_con}.name);
+        dir_datglm2 = sprintf('%s%s/',scan.dire.glm.secondlevel,scan.glm.contrast{i_sub}{i_con}.name);
         % design
         job = struct();
         job.spm.stats.factorial_design.dir                      = {dir_datglm2};
@@ -38,7 +38,7 @@ function scan = scan_glm_second_contrast(scan)
         % contrast
         job = struct();
         job.spm.stats.con.spmmat                    = {[dir_datglm2,'SPM.mat']};
-        job.spm.stats.con.consess{1}.tcon.name      = scan.glm.contrast{1}{i_con}.name;
+        job.spm.stats.con.consess{1}.tcon.name      = scan.glm.contrast{i_sub}{i_con}.name;
         job.spm.stats.con.consess{1}.tcon.convec    = 1; % contrast vector, here just 1, (simple T)
         job.spm.stats.con.consess{1}.tcon.sessrep   = 'none';
         job.spm.stats.con.delete = 1;

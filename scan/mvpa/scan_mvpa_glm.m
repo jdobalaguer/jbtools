@@ -11,19 +11,17 @@ function scan = scan_mvpa_glm(scan)
     
     %% FUNCTION
     
+    % assert
+    assert(isfield(scan,'glm'),             'scan_mvpa_glm: error. glm not defined');
+    assert( strcmp(scan.glm.function,'hrf'),'scan_mvpa_glm: error. this only works with glm.function = ''hrf''');
+    assert(scan.glm.pooling,                'scan_mvpa_glm: error. pooling required');
+    
     % GLM flags
     glm_redo = false(1,3);
-    if isfield(scan,'glm')
-        scan.glm.pooling = true;
-        if isfield(scan.glm,'redo'), glm_redo(scan.glm.redo : end) = true; end
-        do_glm_regressor   = glm_redo(1)  || ~exist(scan.dire.glm.regressor ,'dir');
-        do_glm_regression  = glm_redo(2)  || ~exist(scan.dire.glm.firstlevel,'dir');
-        do_glm_firstlevel  = glm_redo(3)  || ~exist(scan.dire.glm.firstlevel,'dir');
-        % assert
-        assert( strcmp(scan.glm.function,'hrf'),'scan_mvpa_run: error. this only works with glm.function = ''hrf''');
-    else
-        [do_glm_regressor,do_glm_regression,do_glm_firstlevel] = deal(false,false,false);
-    end
+    if isfield(scan.glm,'redo'), glm_redo(scan.glm.redo : end) = true; end
+    do_glm_regressor   = glm_redo(1)  || ~exist(scan.dire.glm.regressor ,'dir');
+    do_glm_regression  = glm_redo(2)  || ~exist(scan.dire.glm.firstlevel,'dir');
+    do_glm_firstlevel  = glm_redo(3)  || ~exist(scan.dire.glm.firstlevel,'dir');
     
     % delete
     if do_glm_regressor   && exist(scan.dire.glm.regressor,  'dir'); rmdir(scan.dire.glm.regressor,  's'); end
@@ -34,7 +32,7 @@ function scan = scan_mvpa_glm(scan)
     if do_glm_firstlevel  && exist(scan.dire.glm.contrast1,  'dir'); rmdir(scan.dire.glm.contrast1,  's'); end
     if do_glm_firstlevel  && exist(scan.dire.glm.statistic1, 'dir'); rmdir(scan.dire.glm.statistic1, 's'); end
     
-    % SPM and mvpa-toolbox
+    % SPM
     if ~exist('spm.m',      'file'), spm8_add_paths(); end
     spm_jobman('initcfg');
     
