@@ -47,11 +47,11 @@ function scan = scan_mvpa_summarize(scan)
     
     
     % print global result
-    m_prime     = mean(global_d_prime);
-    s_prime     = ste( global_d_prime);
-    m_accuracy  = mean(global_accuracy);
-    s_accuracy  = ste( global_accuracy);
-    [h,p,ci,stats]   = ttest(mat2vec(global_d_prime),0,'tail','right');
+    m_prime     = mean(mean(d_prime,2));
+    s_prime     = ste( mean(d_prime,2));
+    m_accuracy  = mean(mean(accuracy,2));
+    s_accuracy  = ste( mean(accuracy,2));
+    [h,p,ci,stats]   = ttest(mean(d_prime,2),0,'tail','right');
     if isnan(h), h = 0; end
     if h,   cprintf('*g','GLOBAL significant');
     else    cprintf('*r','GLOBAL not significant');

@@ -1,0 +1,45 @@
+
+function [scan,job] = scan_preprocess_smoothing(scan,ojb)
+    %% scan = SCAN_PREPROCESS_SMOOTHING(scan)
+    % smooth raw data
+    % see also scan_preprocess_run
+    
+    %% WARNINGS
+    %#ok<>
+    
+    %% FUNCTION
+    % function smoothing(df,dt,prefix)
+    jobs = {};
+    for i_sub = u_subject
+        dir_sub = strtrim(dir_subs(i_sub,:));
+        dir_epi3 = strtrim(dir_epis3(i_sub,:));
+        dir_runs    = dir([strtrim(dir_epis3(i_sub,:)),'run*']); dir_runs = strcat(strvcat(dir_runs.name),'/');
+        nb_runs     = size(dir_runs, 1);
+        u_run       = 1:nb_runs;
+        fprintf('Smoothing for:                   %s\n',dir_sub);
+        job = struct();
+        job.spm.spatial.smooth.fwhm = [8 8 8];
+        job.spm.spatial.smooth.dtype = 0;
+        job.spm.spatial.smooth.im = 0;
+        job.spm.spatial.smooth.prefix = 's';
+        filenames_for_smooth = {};
+        for i_run = u_run
+            dir_run = strcat(dir_epi3,strtrim(dir_runs(i_run,:)));
+            dir_img = strcat(dir_run,'images',filesep);
+            dir_frm = strcat(dir_run,df,filesep);
+            dir_too = strcat(dir_run,dt,filesep);
+            if ~exist(dir_too,'dir') || isempty(dir([dir_too,'s',prefix,'images*.nii']))
+                spm_select('clearvfiles');
+                raw_func_filenames{i_run}    = spm_select('List', dir_frm, ['^',prefix,'images.*\.nii$']);
+                filenames_for_smooth{end+1} = strcat(dir_frm,raw_func_filenames{i_run});
+            end
+        end
+        if ~isempty(filenames_for_smooth)
+            job.spm.spatial.smooth.data = cellstr(strvcat(filenames_for_smooth));
+            jobs{end+1} = job;
+        end
+    end
+    if ~isempty(jobs); spm_jobman('run',jobs); end
+    % smoothing (move files)
+    move('normalisation','smooth',sprintf('w%du',pars_voxs));
+end

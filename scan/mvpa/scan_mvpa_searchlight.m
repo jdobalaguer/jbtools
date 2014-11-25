@@ -32,11 +32,8 @@ function scan = scan_mvpa_searchlight(scan)
     if ~exist('spm.m',      'file'), spm8_add_paths(); end
     if ~exist('init_subj.m','file'), mvpa_add_paths(); end
     
-    % create folder
+    % create folders
     mkdirp(scan.dire.mvpa.root);
-    save_scan();
-
-    % mvpa
     mkdirp(scan.dire.mvpa.mvpa);
                              scan = scan_mvpa_variable(scan,'searchlight');
     if  do_mvpa_loading,     scan = scan_mvpa_initialize(scan);      save_scan(); end    % LOAD:         initialize
