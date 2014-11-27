@@ -19,6 +19,7 @@ function [scan,job] = scan_preprocess_unzip(scan,job)
             else        dir_from = strcat(dir_sub,job.from.path);
             end
             zip_from = [dir_from,'.zip'];
+            fprintf('Unzip file:                      %s\n',zip_from);
             unzip(zip_from,dir_from);
         end
     end

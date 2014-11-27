@@ -45,6 +45,15 @@ function scan = scan_glm_first_design(scan)
             dire_niiimg = strcat(dire_niirun,scan.glm.image,filesep);
             assert(logical(exist(dire_niiimg,'dir')),'scan3_glm_firstlevel: error. dire_niiimg doesnt exist');
             file_niiimg{i_run} = cellstr(spm_select('FPlist', dire_niiimg,'^.*images.*\.nii'));
+            % discard mean images
+            ii_discard = [];
+            for i_niiimg = 1:length(file_niiimg{i_run})
+                [~,file_niiname,~] = fileparts(file_niiimg{i_run}{i_niiimg});
+                if ~isempty(regexp(file_niiname,'.*mean.*','match'))
+                    ii_discard(end+1) = i_niiimg;
+                end
+            end
+            file_niiimg{i_run}(ii_discard) = [];
         end
         if scan.glm.pooling
             file_pooling = {};

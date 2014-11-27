@@ -2,6 +2,7 @@
 function scan = scan_mvpa_glm(scan)
     %% scan = SCAN_MVPA_GLM(scan)
     % runs a general linear model (GLM) for the multi-voxel pattern analysis (MVPA)
+    % runs a general linear model (GLM) for the representation similarity analysis (RSA)
     % see also scan_glm_run
     %          scan_mvpa_run
     %          scan_mvpa_searchlight
@@ -46,12 +47,7 @@ function scan = scan_mvpa_glm(scan)
     if do_glm_regression,   scan = scan_glm_first_design(scan);     save_scan(); end    % REGRESSION:   design
     if do_glm_regression,   scan = scan_glm_first_estimate(scan);   save_scan(); end    % REGRESSION:   estimate
     
-    if do_glm_firstlevel,   scan = scan_glm_setcontrasts(scan);     save_scan(); end    % FIRST LEVEL:  set contrasts
-    if do_glm_firstlevel,   scan = scan_glm_first_contrast(scan);   save_scan(); end    % FIRST LEVEL:  run contrasts and statistics
-    
-    if do_glm_firstlevel,   scan = scan_glm_copy_beta1(scan);       save_scan(); end    % COPY:         beta (first level)
-    if do_glm_firstlevel,   scan = scan_glm_copy_contrast1(scan);   save_scan(); end    % COPY:         contrast (first level)
-    if do_glm_firstlevel,   scan = scan_glm_copy_statistic1(scan);  save_scan(); end    % COPY:         statistic (first level)
+    if do_glm_copy,         scan = scan_glm_copy_split(scan);       save_scan(); end    % COPY:         beta (first level)
     
     %% AUXILIAR
     function save_scan()

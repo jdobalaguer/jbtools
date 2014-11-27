@@ -18,6 +18,7 @@ function [scan,job] = scan_preprocess_zip(scan,job)
             if job.run, dir_from = strcat(dir_sub,sprintf(job.from.path,i_run));
             else        dir_from = strcat(dir_sub,job.from.path);
             end
+            fprintf('Zip folder:                      %s\n',dir_from);
             zip_from = [dir_from,'.zip'];
             zip(zip_from,dir_from);
         end

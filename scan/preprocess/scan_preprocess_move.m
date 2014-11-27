@@ -21,6 +21,7 @@ function [scan,job] = scan_preprocess_move(scan,job)
                         dir_move = strcat(dir_sub,job.move.path,filesep);
             end
             mkdirp(dir_move);
+            fprintf('Move folder:                     %s\n',dir_from);
             for i_file = 1:length(job.move.file)
                 if ~isempty(dir([dir_from,job.move.file{i_file}])), movefile([dir_from,job.move.file{i_file}],dir_move); end
             end

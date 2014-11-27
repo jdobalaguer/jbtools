@@ -18,9 +18,8 @@ function [scan,job] = scan_preprocess_remove(scan,job)
             if job.run, dir_from = strcat(dir_sub,sprintf(job.from.path,i_run),filesep);
             else        dir_from = strcat(dir_sub,job.from.path,filesep);
             end
-            if ~isfield(job.from,'file') || isempty(job.from.file)
-                rmdir(dir_from,'s');
-            end
+            fprintf('Remove folder:                   %s\n',dir_from);
+            rmdir(dir_from,'s');
         end
     end
 end

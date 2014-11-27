@@ -85,7 +85,7 @@ function scan = scan_initialize_set(scan)
     function dire_mvpa()
         scan.dire.mvpa              = struct();
         scan.dire.mvpa.root         = [scan.dire.root,filesep,'data',filesep,'mvpa',filesep,scan.mvpa.name,filesep];
-        scan.dire.mvpa.glm          = [scan.dire.root,filesep,'data',filesep,'mvpa',filesep,'glm', filesep];
+        scan.dire.mvpa.glm          = [scan.dire.root,filesep,'data',filesep,'mvpa',filesep,'glm', filesep,scan.mvpa.glm,filesep];
         scan.dire.mvpa.mvpa         = [scan.dire.mvpa.root,'mvpa',filesep];
     end
 
@@ -93,7 +93,7 @@ function scan = scan_initialize_set(scan)
     function dire_rsa()
         scan.dire.rsa              = struct();
         scan.dire.rsa.root         = [scan.dire.root,filesep,'data',filesep,'rsa',filesep,scan.rsa.name,filesep];
-        scan.dire.rsa.glm          = [scan.dire.rsa.root,'glm', filesep];
-        scan.dire.rsa.rsa          = [scan.dire.rsa.root,'mvpa',filesep];
+        scan.dire.rsa.glm          = [scan.dire.root,filesep,'data',filesep,'mvpa',filesep,'glm', filesep,scan.rsa.glm,filesep];
+        scan.dire.rsa.rsa          = [scan.dire.rsa.root,'rsa',filesep];
     end
 end

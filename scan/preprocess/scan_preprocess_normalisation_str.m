@@ -38,7 +38,7 @@ function [scan,job] = scan_preprocess_normalisation_str(scan,job)
         batch.spm.spatial.normalise.estwrite.roptions.vox = repmat(scan.pars.voxs,[1,3]);       % Voxel Sizes [2 2 2] is default
         batch.spm.spatial.normalise.estwrite.roptions.interp = 1;                               % Interpolation (Default: 1)
         batch.spm.spatial.normalise.estwrite.roptions.wrap = [0 0 0];                           % Wrapping, 0: No
-        batch.spm.spatial.normalise.estwrite.roptions.prefix = sprintf('w%d',scan.pars.voxs);   % Prefix
+        batch.spm.spatial.normalise.estwrite.roptions.prefix = 'w';                             % Prefix
         batches{end+1} = batch;
     end
     if ~isempty(batches)
