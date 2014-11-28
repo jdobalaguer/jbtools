@@ -6,7 +6,7 @@ function mkdirp(path)
     i_filesep = find(path==filesep(),1,'last');
     rootpath = path;
     rootpath(i_filesep:end) = [];
-    if ~exist(rootpath,'dir'); mkdirp(rootpath); end
-    mkdir(path);
+    if ~exist(rootpath,'dir'), mkdirp(rootpath); end
+    if ~exist(path,'dir'),     mkdir(path);      end
 end
 

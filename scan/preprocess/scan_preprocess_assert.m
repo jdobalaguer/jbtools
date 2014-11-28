@@ -27,9 +27,9 @@ function scan = scan_preprocess_assert(scan)
             assert(isfield(job.move,'path'), 'scan_preprocess_run: error. job %d "%s" ill-defined',i_job,job.job);
             assert(isfield(job.move,'file'), 'scan_preprocess_run: error. job %d "%s" ill-defined',i_job,job.job);
         end
+        assert(isfield(job,'run'), 'scan_preprocess_run: error. job %d ill-defined',i_job);
         
         % default
-        if ~isfield(job,'run'),     job.run     = true;  end
         if ~isfield(job,'unzip'),   job.unzip   = false; end
         if ~isfield(job,'rmzip'),   job.rmzip   = false; end
         if ~isfield(job,'zip'),     job.zip     = false; end

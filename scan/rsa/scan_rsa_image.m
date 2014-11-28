@@ -13,24 +13,19 @@ function scan = scan_rsa_image(scan)
     assert(scan.subject.n == length(scan.rsa.variable.file), 'scan_rsa_image: error. number of subjects doesnt match');
     
     % load images
-    path = scan.rsa.variable.file;
-    mask = scan.rsa.variable.mask;
     for i_subject = 1:scan.subject.n
+        path = scan.rsa.variable.file{i_subject};
+        mask = scan.rsa.variable.mask{i_subject};
+        
+        % subject
         subject = scan.subject.u(i_subject);
         fprintf('scan_rsa: loading subject %02i: \n',subject);
         
         % numbers
-        n_beta  = length(path{i_subject});
-        n_voxel = numel(scan_nifti_load(path{i_subject}{1},mask));
+        n_voxel = numel(scan_nifti_load(path{1},mask));
         
         % discarded images
-        ii_subject = (scan.rsa.regressor.subject == subject);
-        assert(sum(ii_subject)==n_beta, 'scan_rsa_image: error. number of subjects doesnt match');
-        if isempty(scan.rsa.regressor.discard),
-            ii_discard = false(size(ii_subject));
-        else
-            ii_discard = (scan.rsa.regressor.discard(ii_subject));
-        end
+        ii_discard = scan.rsa.variable.discard{i_subject};
         f_ndiscard = find(~ii_discard);
         n_ndiscard = length(f_ndiscard);
         
@@ -38,8 +33,10 @@ function scan = scan_rsa_image(scan)
         beta = nan(n_voxel,n_ndiscard);
         jb_parallel_progress(n_ndiscard);
         for i_beta = 1:n_ndiscard
-            vol = scan_nifti_load(path{i_subject}{f_ndiscard(i_beta)},mask);
-            beta(:,i_beta) = vol;
+            [v,s] = scan_nifti_load(path{f_ndiscard(i_beta)},mask);
+            if isempty(scan.rsa.variable.size{i_subject}), scan.rsa.variable.size{i_subject} = s; end
+            assert(all(s==scan.rsa.variable.size{i_subject}),'scan_rsa_image: error. inconsistent image %02i with mask size',i_beta);
+            beta(:,i_beta) = v;
             jb_parallel_progress();
         end
         jb_parallel_progress(0);

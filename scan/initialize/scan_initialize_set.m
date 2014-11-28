@@ -94,6 +94,6 @@ function scan = scan_initialize_set(scan)
         scan.dire.rsa              = struct();
         scan.dire.rsa.root         = [scan.dire.root,filesep,'data',filesep,'rsa',filesep,scan.rsa.name,filesep];
         scan.dire.rsa.glm          = [scan.dire.root,filesep,'data',filesep,'mvpa',filesep,'glm', filesep,scan.rsa.glm,filesep];
-        scan.dire.rsa.rsa          = [scan.dire.rsa.root,'rsa',filesep];
+        scan.dire.rsa.mask         = [scan.dire.rsa.root,'mask',filesep];
     end
 end

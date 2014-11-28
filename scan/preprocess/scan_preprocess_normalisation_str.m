@@ -10,15 +10,14 @@ function [scan,job] = scan_preprocess_normalisation_str(scan,job)
     %% FUNCTION
     
     % assert
-    assertWarning(~job.run,'scan_preprocess_coregistration: warning. job.run set to false');
-    job.run = false;
+    assertWarning(all(job.run==1),'scan_preprocess_coregistration: warning. job.run set to 1');
+    job.run(:) = 1;
     
     % normalisation
     batches = {};
     for i_subject = scan.subject.u
-        dir_sub  = strtrim(scan.dire.nii.subs(i_subject,:));
-        fprintf('Normalise Anatomy for:           %s\n',dir_sub);
-        dir_from  = strcat(dir_sub,job.from.path,filesep);
+        fprintf('Normalisation (structural) : subject %02i \n',i_subject);
+        dir_from = strcat(sprintf(job.from.path,i_subject),filesep);
         file_from = dir([dir_from,job.from.file]);
         assert(length(file_from)==1,'scan_preprocess_normalisation_str: error. multiple structural files');
         batch = struct();

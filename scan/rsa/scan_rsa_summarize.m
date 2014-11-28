@@ -5,25 +5,27 @@ function scan = scan_rsa_summarize(scan)
     % see also scan_rsa_run
     
     %% WARNINGS
-    %#ok<*AGROW>
+    %#ok<*AGROW,*ASGLU>
     
     %% FUNCTION
+    if scan.subject.n < 2, return; end
     
     % calculate statistics
     beta = [];
     for i_subject = 1:scan.subject.n
-        beta(end+1,:) = scan.rsa.result{i_subject}.stats.beta;
+        b = [];
+        for i_session = 1:length(scan.rsa.result{i_subject})
+            b(i_session,:) = scan.rsa.result{i_subject}{i_session}.stats.beta;
+        end
+        beta(i_subject,:) = meeze(b);
     end
     [h,p,~,stats] = ttest(beta);
-    
-    % concatenate names
-    %TODO
     
     % print
     for i_model = 2:length(h)
         if isnan(h(i_model)), h(i_model) = 0; end
-        if h,   cprintf('*g','model "%s" significant',     scan.rsa.variable.model{i_subject}{i_model-1}.name);
-        else    cprintf('*r','model "%s" not significant', scan.rsa.variable.model{i_subject}{i_model-1}.name);
+        if h(i_model),  cprintf('*g','model "%s" significant',     scan.rsa.variable.model{i_subject}{i_model-1}.name);
+        else            cprintf('*r','model "%s" not significant', scan.rsa.variable.model{i_subject}{i_model-1}.name);
         end
         fprintf('\n');
         fprintf('p-value        = %0.3f          \n',p(i_model));

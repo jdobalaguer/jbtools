@@ -10,18 +10,17 @@ function [scan,job] = scan_preprocess_coregistration(scan,job)
     %% FUNCTION
     
     % assert
-    assertWarning(~job.run,'scan_preprocess_coregistration: warning. job.run set to false');
-    job.run = false;
+    assertWarning(all(job.run==1),'scan_preprocess_coregistration: warning. job.run set to 1');
+    job.run(:) = 1;
     
     % coregistration
     batches = {};
     for i_subject = scan.subject.u
-        dir_sub  = strtrim(scan.dire.nii.subs(i_subject,:));
-        fprintf('Coregistration for:              %s\n',dir_sub);
-        dir_mean = strcat(dir_sub,job.mean.path,filesep);
+        fprintf('Coregistration : subject %02i \n',i_subject);
+        dir_mean = strcat(sprintf(job.mean.path,i_subject),filesep);
         file_mean = dir([dir_mean,job.mean.file]);
         file_mean = strcat(dir_mean,strvcat(file_mean.name));
-        dir_from  = strcat(dir_sub,job.from.path,filesep);
+        dir_from = strcat(sprintf(job.from.path,i_subject),filesep);
         file_from = dir([dir_from,job.from.file]);
         assert(length(file_from)==1,'scan_preprocess_coregistration: error. multiple structural files');
         copyfile([dir_from,file_from.name],[dir_from,'c',file_from.name]);

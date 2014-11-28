@@ -43,7 +43,7 @@ function scan = scan_glm_first_design(scan)
         for i_run = u_run
             dire_niirun = strcat(dire_nii_epi3,strtrim(dire_nii_runs(i_run,:)));
             dire_niiimg = strcat(dire_niirun,scan.glm.image,filesep);
-            assert(logical(exist(dire_niiimg,'dir')),'scan3_glm_firstlevel: error. dire_niiimg doesnt exist');
+            assert(logical(exist(dire_niiimg,'dir')),'scan3_glm_firstlevel: error. "%s" doesnt exist',dire_niiimg);
             file_niiimg{i_run} = cellstr(spm_select('FPlist', dire_niiimg,'^.*images.*\.nii'));
             % discard mean images
             ii_discard = [];

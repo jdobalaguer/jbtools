@@ -9,11 +9,26 @@ function scan = scan_rsa_mask(scan)
     
     %% FUNCTION
     
-    % no mask
-    if ~isfield(scan.rsa,'mask') || isempty(scan.rsa.mask),
-        scan.rsa.variable.mask = [];
-    % mask
-    else
-        scan.rsa.variable.mask = scan_nifti_load([scan.dire.mask,scan.rsa.mask]);
+    % default
+    if ~isfield(scan.rsa,'mask')    scan.rsa.mask = '';                                         end
+    if ischar(scan.rsa.mask),       scan.rsa.mask = repmat({scan.rsa.mask},[1,scan.subject.n]); end
+    
+    % assert
+    assert(scan.subject.n == length(scan.rsa.mask), 'scan_rsa_mask: error. number of subjects doesnt match');
+
+    for i_subject = 1:scan.subject.n
+        
+        % no mask
+        if isempty(scan.rsa.mask{i_subject}),
+            scan.rsa.variable.mask{i_subject} = false(0,0,0);
+            scan.rsa.variable.size{i_subject} = [];
+        
+        % mask
+        else
+            [m,s] = scan_nifti_load([scan.dire.mask,scan.rsa.mask{i_subject}]);
+            scan.rsa.variable.mask{i_subject} = m;
+            scan.rsa.variable.size{i_subject} = s;
+        end
+        
     end
 end

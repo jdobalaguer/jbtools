@@ -19,11 +19,17 @@ function scan = scan_rsa_createrdm(scan)
         fprintf('scan_rsa: create rdm %02i: \n',subject);
         switch(scan.rsa.distance)
             case 'pearson'
-                scan.rsa.variable.rdm{i_subject} = -corr(scan.rsa.variable.beta{i_subject},'type','Pearson');
+                scan.rsa.variable.rdm{i_subject} = 1-corr(scan.rsa.variable.beta{i_subject},'type','Pearson');
             case 'spearman'
-                scan.rsa.variable.rdm{i_subject} = -corr(scan.rsa.variable.beta{i_subject},'type','Spearman');
-            case 'mse'
-                error('"mse" todo');
+                scan.rsa.variable.rdm{i_subject} = squareform(pdist(scan.rsa.variable.beta{i_subject}','spearman'));
+            case 'manhattan'
+                scan.rsa.variable.rdm{i_subject} = squareform(pdist(scan.rsa.variable.beta{i_subject}','minkowski',1));
+            case 'euclidean'
+                scan.rsa.variable.rdm{i_subject} = squareform(pdist(scan.rsa.variable.beta{i_subject}','euclidean'));
+            case 'seuclidean'
+                scan.rsa.variable.rdm{i_subject} = squareform(pdist(scan.rsa.variable.beta{i_subject}','seuclidean'));
+            case 'cosine'
+                scan.rsa.variable.rdm{i_subject} = squareform(pdist(scan.rsa.variable.beta{i_subject}','cosine'));
             case 'dot'
                 scan.rsa.variable.rdm{i_subject} = 1./ (scan.rsa.variable.beta{i_subject}' * scan.rsa.variable.beta{i_subject});
             otherwise

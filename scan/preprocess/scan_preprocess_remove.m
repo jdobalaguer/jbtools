@@ -9,16 +9,13 @@ function [scan,job] = scan_preprocess_remove(scan,job)
 
     %% FUNCTION
     for i_subject = scan.subject.u
-        dir_sub  = strtrim(scan.dire.nii.subs(i_subject,:));
-        dir_runs    = dir([strtrim(scan.dire.nii.epi3(i_subject,:)),'run*']); dir_runs = strcat(strvcat(dir_runs.name),filesep);
-        nb_runs     = size(dir_runs, 1);
+        nb_runs     = job.run(i_subject);
         u_run       = 1:nb_runs;
-        if ~job.run, u_run = 1; end
         for i_run = u_run
-            if job.run, dir_from = strcat(dir_sub,sprintf(job.from.path,i_run),filesep);
-            else        dir_from = strcat(dir_sub,job.from.path,filesep);
+            if nb_runs==1,  dir_from = strcat(sprintf(job.from.path,i_subject));
+            else            dir_from = strcat(sprintf(job.from.path,i_subject,i_run));
             end
-            fprintf('Remove folder:                   %s\n',dir_from);
+            fprintf('Remove folder : subject %02i : run %d \n',i_subject,i_run);
             rmdir(dir_from,'s');
         end
     end

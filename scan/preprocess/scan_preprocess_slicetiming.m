@@ -8,6 +8,7 @@ function [scan,job] = scan_preprocess_slicetiming(scan,job)
     %#ok<*FPARK,*AGROW>
 
     %% FUNCTION
+    error('scan_preprocess_slicetiming: error. I havent tested this function yet..');
     
     % slice timing
     batches = {};

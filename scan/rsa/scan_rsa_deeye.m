@@ -28,7 +28,7 @@ function scan = scan_rsa_deeye(scan)
         ii_diag = (abs(x-y) < scan.rsa.deeye);
         
         % rdm
-        rdm(ii_diag(:)) = 0;
+        rdm(ii_diag(:)) = nan;
         scan.rsa.variable.rdm{i_subject} = rdm;
         
         if isfield(scan.rsa.variable,'model')

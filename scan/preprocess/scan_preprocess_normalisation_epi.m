@@ -10,17 +10,9 @@ function [scan,job] = scan_preprocess_normalisation_epi(scan,job)
     %% FUNCTION
     batches = {};
     for i_subject = scan.subject.u
-        dir_sub  = strtrim(scan.dire.nii.subs(i_subject,:));
-        dir_runs = dir([strtrim(scan.dire.nii.epi3(i_subject,:)),'run*']);
-        dir_runs = strcat(strvcat(dir_runs.name),filesep);
-        nb_runs  = size(dir_runs, 1);
-        u_run    = 1:nb_runs;
-        if ~job.run, u_run = 1; end
-        fprintf('Writing normalized epis for:     %s\n',dir_sub);
-        dir_norm  = strcat(dir_sub,job.norm.path,filesep);
-        file_norm = dir([dir_norm,job.norm.file]);
-        assert(length(file_norm)==1,'scan_preprocess_normalisation_epi: error. multiple files for normalisation parameters');
-        file_norm = [dir_norm,filesep,file_norm.name];
+        nb_runs     = job.run(i_subject);
+        u_run       = 1:nb_runs;
+        
         batch = struct();
         batch.spm.spatial.normalise.write.roptions.preserve = 0;
         batch.spm.spatial.normalise.write.roptions.bb       = [-78 -112 -50; 78 76 85];
@@ -29,9 +21,16 @@ function [scan,job] = scan_preprocess_normalisation_epi(scan,job)
         batch.spm.spatial.normalise.write.roptions.wrap     = [0 0 0];
         batch.spm.spatial.normalise.write.roptions.prefix   = 'w';
         file_from = {};
+        
+        dir_norm  = strcat(sprintf(job.norm.path,i_subject),filesep);
+        file_norm = dir([dir_norm,job.norm.file]);
+        assert(length(file_norm)==1,'scan_preprocess_normalisation_epi: error. multiple files for normalisation parameters');
+        file_norm = [dir_norm,filesep,file_norm.name];
+        
         for i_run = u_run
-            if job.run, dir_from = strcat(dir_sub,sprintf(job.from.path,i_run),filesep);
-            else        dir_from = strcat(dir_sub,job.from.path,filesep);
+            fprintf('Normalisation (functional) : subject %02i : run %d \n',i_subject,i_run);
+            if nb_runs==1,  dir_from = strcat(sprintf(job.from.path,i_subject),filesep);
+            else            dir_from = strcat(sprintf(job.from.path,i_subject,i_run),filesep);
             end
             run_images = dir([dir_from,job.from.file]);
             run_images = strvcat(run_images.name);

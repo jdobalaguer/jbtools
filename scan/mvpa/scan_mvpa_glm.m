@@ -18,11 +18,12 @@ function scan = scan_mvpa_glm(scan)
     assert(scan.glm.pooling,                'scan_mvpa_glm: error. pooling required');
     
     % GLM flags
-    glm_redo = false(1,3);
+    glm_redo = false(1,4);
     if isfield(scan.glm,'redo'), glm_redo(scan.glm.redo : end) = true; end
     do_glm_regressor   = glm_redo(1)  || ~exist(scan.dire.glm.regressor ,'dir');
     do_glm_regression  = glm_redo(2)  || ~exist(scan.dire.glm.firstlevel,'dir');
     do_glm_firstlevel  = glm_redo(3)  || ~exist(scan.dire.glm.firstlevel,'dir');
+    do_glm_copy        = glm_redo(4)  || ~exist(scan.dire.glm.beta1,'dir');
     
     % delete
     if do_glm_regressor   && exist(scan.dire.glm.regressor,  'dir'); rmdir(scan.dire.glm.regressor,  's'); end

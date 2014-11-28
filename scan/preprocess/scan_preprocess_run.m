@@ -32,6 +32,7 @@ function scan = scan_preprocess_run(scan)
             case 'coregistration',      [scan,job] = scan_preprocess_coregistration(scan,job);
             case 'normalisation_str',   [scan,job] = scan_preprocess_normalisation_str(scan,job);
             case 'normalisation_epi',   [scan,job] = scan_preprocess_normalisation_epi(scan,job);
+            case 'normalisation_mni',   [scan,job] = scan_preprocess_normalisation_mni(scan,job);
             case 'smoothing',           [scan,job] = scan_preprocess_smoothing(scan,job);
             otherwise,                  error('scan_preprocess_run: error. job "%s" unknown', job.job);
         end
