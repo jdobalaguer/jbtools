@@ -1,49 +1,44 @@
 
 function scan = scan_mvpa_image(scan)
-    %% SCAN_MVPA_IMAGE()
-    % load the images for the multi-voxel pattern analysis
+    %% scan = SCAN_MVPA_IMAGE(scan)
+    % load images
     % see also scan_mvpa_run
-
-    %%  WARNINGS
-    %#ok<*NUSED,*AGROW,*FPARK,*ERTAG>
+    %          scan_mvpa_rsa
+    
+    %% WARNINGS
+    %#ok<*AGROW>
     
     %% FUNCTION
     
-    % set folder
-    switch scan.mvpa.source
-        case 'beta'
-            folder = scan.dire.glm.beta1;
-        case 'cont'
-            folder = scan.dire.glm.contrast1;
-        case 'spmT'
-            folder = scan.dire.glm.statistic1;
-        otherwise
-            error('scan_mvpa_image: error. source "%s" unknown',scan.mvpa.source);
-    end
-        
+    % assert
+    assert(scan.subject.n == length(scan.mvpa.variable.file), 'scan_mvpa_image: error. number of subjects doesnt match');
+    
+    % load images
     for i_subject = 1:scan.subject.n
+        path = scan.mvpa.variable.file{i_subject};
+        mask = scan.mvpa.variable.mask{i_subject};
         
-        % get file pattern
-        dire_pattern = dir([folder,scan.mvpa.image,'*_001']);
-        file_pattern = struct('name',{},'date',{},'bytes',{},'isdir',{},'datenum',{});
-        for i_dire = 1:length(dire_pattern)
-            poss_pattern = dir(sprintf('%s%s/*_sub%02i*.img',folder,dire_pattern(i_dire).name,scan.subject.u(i_subject)));
-            if ~isempty(poss_pattern),  file_pattern(i_dire) = poss_pattern;
-            else                        dire_pattern(i_dire:end) = [];
-                                        break;
-            end
+        % subject
+        subject = scan.subject.u(i_subject);
+        fprintf('scan_mvpa: loading subject %02i: \n',subject);
+        
+        % numbers
+        n_voxel = numel(scan_nifti_load(path{1},mask));
+        n_beta  = length(scan.mvpa.variable.file{i_subject});
+        
+        % load images
+        beta = nan(n_voxel,n_beta);
+        jb_parallel_progress(n_beta);
+        for i_beta = 1:n_beta
+            [v,s] = scan_nifti_load(path{i_beta},mask);
+            if isempty(scan.mvpa.variable.size{i_subject}), scan.mvpa.variable.size{i_subject} = s; end
+            assert(all(s==scan.mvpa.variable.size{i_subject}),'scan_mvpa_image: error. inconsistent image %02i with mask size',i_beta);
+            beta(:,i_beta) = v;
+            jb_parallel_progress();
         end
-        file_pattern = cellstr(strcat(folder,strvcat(dire_pattern.name),filesep,strvcat(file_pattern.name)));
+        jb_parallel_progress(0);
         
-        % discard trials
-        ii_subject = (scan.mvpa.regressor.subject == scan.subject.u(i_subject));
-        ii_discard = scan.mvpa.regressor.discard;
-        file_pattern(ii_discard(ii_subject)) = [];
-        
-        % set subject
-        scan.mvpa.subject(i_subject) = load_spm_pattern(scan.mvpa.subject(i_subject),scan.mvpa.variable.pattern,scan.mvpa.variable.mask,file_pattern);
-        scan.mvpa.nscans(i_subject)  = size(file_pattern,1);
-        
+        % save
+        scan.mvpa.variable.beta{i_subject} = beta;
     end
-
 end

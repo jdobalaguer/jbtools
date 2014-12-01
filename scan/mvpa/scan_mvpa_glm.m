@@ -2,10 +2,10 @@
 function scan = scan_mvpa_glm(scan)
     %% scan = SCAN_MVPA_GLM(scan)
     % runs a general linear model (GLM) for the multi-voxel pattern analysis (MVPA)
-    % runs a general linear model (GLM) for the representation similarity analysis (RSA)
+    %                                or for the representation similarity analysis (RSA)
     % see also scan_glm_run
-    %          scan_mvpa_run
-    %          scan_mvpa_searchlight
+    %          scan_mvpa_dx
+    %          scan_mvpa_rsa
     
     %% WARNINGS
     %#ok<>

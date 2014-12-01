@@ -16,16 +16,14 @@ function scan = scan_initialize_set(scan)
     
     dire_dicom();
     dire_nii();
-    if isfield(scan,'rsa'),     dire_rsa();
-                                dire_glm(scan.dire.rsa.glm);
-    elseif isfield(scan,'mvpa'),dire_mvpa();
+    if isfield(scan,'mvpa'),    dire_mvpa();
                                 dire_glm(scan.dire.mvpa.glm);
     elseif isfield(scan,'glm'), dire_glm([scan.dire.root,filesep,'data',filesep,'glm',filesep,scan.glm.name,filesep]);
     end
     
     % file
     scan.file.T1 = [scan.dire.spm,'templates/T1.nii,1'];
-    if isfield(scan,'mvpa') && ~isempty(scan.mvpa.mask), scan.file.mvpa_mask = [scan.dire.mask,scan.mvpa.mask,'.img,1']; end
+    if isfield(scan,'mvpa') && isfield(scan.mvpa,'mask') && ~isempty(scan.mvpa.mask), scan.file.mvpa_mask = [scan.dire.mask,scan.mvpa.mask,'.img,1']; end
     
     % subject
     if ~isfield(scan,'subject'), scan.subject = struct(); end
@@ -87,13 +85,6 @@ function scan = scan_initialize_set(scan)
         scan.dire.mvpa.root         = [scan.dire.root,filesep,'data',filesep,'mvpa',filesep,scan.mvpa.name,filesep];
         scan.dire.mvpa.glm          = [scan.dire.root,filesep,'data',filesep,'mvpa',filesep,'glm', filesep,scan.mvpa.glm,filesep];
         scan.dire.mvpa.mvpa         = [scan.dire.mvpa.root,'mvpa',filesep];
-    end
-
-    % rsa
-    function dire_rsa()
-        scan.dire.rsa              = struct();
-        scan.dire.rsa.root         = [scan.dire.root,filesep,'data',filesep,'rsa',filesep,scan.rsa.name,filesep];
-        scan.dire.rsa.glm          = [scan.dire.root,filesep,'data',filesep,'mvpa',filesep,'glm', filesep,scan.rsa.glm,filesep];
-        scan.dire.rsa.mask         = [scan.dire.rsa.root,'mask',filesep];
+        scan.dire.mvpa.mask         = [scan.dire.mvpa.root,'mask',filesep];
     end
 end

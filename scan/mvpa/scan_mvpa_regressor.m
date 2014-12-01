@@ -1,28 +1,40 @@
 
 function scan = scan_mvpa_regressor(scan)
-    %% SCAN_MVPA_REGRESSOR()
-    % set the regressors for the multi-voxel pattern analysis
-    % see also scan_mvpa_run
-
-    %%  WARNINGS
-    %#ok<*NUSED,*AGROW>
+    %% scan = SCAN_MVPA_REGRESSOR(scan)
+    % set regressors
+    % see also scan_mvpa_dx
+    %          scan_mvpa_rsa
+    
+    %% WARNINGS
+    %#ok<*AGROW>
     
     %% FUNCTION
+    
+    scan.mvpa.variable.regressor = {};
+    
+    % set regressors
     for i_subject = 1:scan.subject.n
+        scan.mvpa.variable.regressor{i_subject} = {};
         
-        % get values
-        ii_subject = (scan.mvpa.regressor.subject == scan.subject.u(i_subject));
+        subject = scan.subject.u(i_subject);
+        ii_subject = (scan.mvpa.regressor.subject == subject);
+        if isempty(scan.mvpa.regressor.discard), scan.mvpa.regressor.discard = false(size(ii_subject)); end
         ii_discard = scan.mvpa.regressor.discard;
-        names_regs = scan.mvpa.regressor.name;
-        value_regs = [];
-        for i_level = 1:length(scan.mvpa.regressor.level)
-            value_regs(i_level,:) = logical(scan.mvpa.regressor.level{i_level}(ii_subject & ~ii_discard));
-        end
+        ii = ii_subject & ~ii_discard;
         
-        % set values
-        scan.mvpa.subject(i_subject) = init_object(  scan.mvpa.subject(i_subject),'regressors',scan.mvpa.variable.regressor);
-        scan.mvpa.subject(i_subject) = set_mat(      scan.mvpa.subject(i_subject),'regressors',scan.mvpa.variable.regressor,value_regs);
-        scan.mvpa.subject(i_subject) = set_objfield( scan.mvpa.subject(i_subject),'regressors',scan.mvpa.variable.regressor,'condnames',names_regs);
+        % set regressor per subject
+        for i_regressor = 1:length(scan.mvpa.regressor.name)
+            
+            regressor           = struct();
+            regressor.index     = ii;
+            regressor.discard   = ii_discard(ii_subject);
+            regressor.session   = scan.mvpa.regressor.session(ii);
+            regressor.name      = scan.mvpa.regressor.name{i_regressor};
+            regressor.level     = scan.mvpa.regressor.level{i_regressor}(ii);
+            
+            % save
+            scan.mvpa.variable.regressor{i_subject}{i_regressor} = regressor;
+            
+        end
     end
-
 end

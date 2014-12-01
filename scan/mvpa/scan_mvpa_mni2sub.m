@@ -1,31 +1,31 @@
 
-function scan = scan_rsa_mni2sub(scan)
-    %% scan = SCAN_RSA_MNI2SUB(scan)
-    % apply the inverse of normalization on masks, from MNI space to subject space (RSA)
-    % see also scan_rsa_run
+function scan = scan_mvpa_mni2sub(scan)
+    %% scan = SCAN_MVPA_MNI2SUB(scan)
+    % apply the inverse of normalization on masks, from MNI space to subject space
+    % see also scan_mvpa_run
+    %          scan_mvpa_run
     
     %% WARNINGS
     %#ok<*AGROW,*NASGU>
     
     %% FUNCTION
-    if ~scan.rsa.mni, return; end
+    if ~scan.mvpa.mni, return; end
     
     % assert
-    assert(scan.subject.n == length(scan.rsa.variable.mask), 'scan_rsa_createrdm: error. number of subjects doesnt match');
+    assert(scan.subject.n == length(scan.mvpa.variable.mask), 'scan_mvpa_mni2sub: error. number of subjects doesnt match');
     
     % copy original mask
-    scan.rsa.variable.rdm = cell(1,scan.subject.n);
     for i_subject = 1:scan.subject.n
         subject = scan.subject.u(i_subject);
-        fprintf('scan_rsa: transform mask %02i: \n',subject);
+        fprintf('scan_mvpa: transform mask %02i: \n',subject);
         
-        if isempty(scan.rsa.mask{i_subject})
-            error('scan_rsa_mni2sub: error. TODO write emtpy mask');
+        if isempty(scan.mvpa.mask{i_subject})
+            error('scan_mvpa_mni2sub: error. TODO write emtpy mask');
         else
-            [dire_from,name_from,ext_from] = fileparts(scan.rsa.mask{i_subject});
+            [dire_from,name_from,ext_from] = fileparts(scan.mvpa.mask{i_subject});
             mask_from = [scan.dire.mask,dire_from,filesep,name_from];
-            dire_norm = [scan.dire.rsa.mask,'sub_%02i/normalisation/'];
-            dire_real = [scan.dire.rsa.mask,'sub_%02i/realignment/'];
+            dire_norm = [scan.dire.mvpa.mask,'sub_%02i/normalisation/'];
+            dire_real = [scan.dire.mvpa.mask,'sub_%02i/realignment/'];
             mask_norm = [sprintf(dire_norm,subject),'mask'];
             mkdirp(sprintf(dire_norm,subject));
             if exist([mask_from,'.nii'],'file'), copyfile([mask_from,'.nii'],[mask_norm,'.nii']); end
@@ -56,7 +56,7 @@ function scan = scan_rsa_mni2sub(scan)
         [m,s] = scan_nifti_load([sprintf(dire_real,subject),'wmask.img']);
         m(isnan(m(:))) = 0;
         m = round(m);
-        scan.rsa.variable.mask{i_subject} = m;
-        scan.rsa.variable.size{i_subject} = s;
+        scan.mvpa.variable.mask{i_subject} = m;
+        scan.mvpa.variable.size{i_subject} = s;
     end
 end

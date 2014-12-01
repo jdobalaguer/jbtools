@@ -1,8 +1,8 @@
 
-function scan = scan_rsa_sl_sphere(scan)
-    %% scan = SCAN_RSA_SL_SPHERE(scan)
-    % create sphere masks for the searchlight (RSA)
-    % see also scan_rsa_searchlight
+function scan = scan_mvpa_searchlight_sphere(scan)
+    %% scan = SCAN_MVPA_SEARCHLIGHT_SPHERE(scan)
+    % create sphere masks for the searchlight
+    % see also scan_mvpa_searchlight
     
     %% WARNINGS
     %#ok<*AGROW>
@@ -10,16 +10,16 @@ function scan = scan_rsa_sl_sphere(scan)
     %% FUNCTION
     
     % assert
-    assert(scan.subject.n == length(scan.rsa.variable.file), 'scan_rsa_image: error. number of subjects doesnt match');
+    assert(scan.subject.n == length(scan.mvpa.variable.file), 'scan_mvpa_searchlight_sphere: error. number of subjects doesnt match');
     
     % create spheres
     for i_subject = 1:scan.subject.n
-        mask = scan.rsa.variable.mask{i_subject};
-        s    = scan.rsa.variable.size{i_subject};
+        mask = scan.mvpa.variable.mask{i_subject};
+        s    = scan.mvpa.variable.size{i_subject};
         
         % subject
         subject = scan.subject.u(i_subject);
-        fprintf('scan_rsa: creating spheres %02i: \n',subject);
+        fprintf('scan_mvpa: creating spheres %02i: \n',subject);
         
         % numbers
         n_voxel  = numel(mask);
@@ -35,7 +35,7 @@ function scan = scan_rsa_sl_sphere(scan)
         % create spheres
         u_sphere = false(n_sphere,n_voxel);
         f_voxel  = find(mask(:));
-        radius   = scan.rsa.sphere * scan.rsa.sphere;
+        radius   = scan.mvpa.sphere * scan.mvpa.sphere;
         jb_parallel_progress(n_sphere);
         for i_sphere = 1:n_sphere
             i_voxel = f_voxel(i_sphere);
@@ -49,7 +49,7 @@ function scan = scan_rsa_sl_sphere(scan)
         jb_parallel_progress(0);
         
         % save
-        scan.rsa.variable.sphere{i_subject} = u_sphere;
+        scan.mvpa.variable.sphere{i_subject} = u_sphere;
     end
     
 end
