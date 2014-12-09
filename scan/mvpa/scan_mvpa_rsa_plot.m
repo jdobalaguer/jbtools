@@ -16,6 +16,8 @@ function scan = scan_mvpa_rsa_plot(scan)
     do_average   = scan.mvpa.plot.average;
     u_subject    = scan.subject.u;
     n_subject    = scan.subject.n;
+    u_plot_sub   = scan.mvpa.plot.subject;
+    n_plot_sub   = length(u_plot_sub);
     
     % main RDM (at the level of trials)
     if scan.mvpa.plot.flag(1),
@@ -23,14 +25,18 @@ function scan = scan_mvpa_rsa_plot(scan)
         % individual
         if do_subject
             fig_figure();
+            j_subplot = 0;
             for i_subject = 1:n_subject
                 subject = u_subject(i_subject);
-                subplot(n_subject,1,i_subject);
-                imagesc(scan.mvpa.variable.rdm{i_subject});
-                sa = struct();
-                sa.title = sprintf('subject %02i',subject);
-                fig_axis(sa);
-                colorbar();
+                if any(subject == u_plot_sub)
+                    j_subplot = j_subplot + 1;
+                    subplot(n_plot_sub,1,j_subplot);
+                    imagesc(scan.mvpa.variable.rdm{i_subject});
+                    sa = struct();
+                    sa.title = sprintf('subject %02i',subject);
+                    fig_axis(sa);
+                    colorbar();
+                end
             end
         end
     end
@@ -56,23 +62,25 @@ function scan = scan_mvpa_rsa_plot(scan)
         if do_subject
             fig_figure();
             j_subplot = 0;
-            for i_subject = scan.subject.u
+            for i_subject = 1:n_subject
                 subject = u_subject(i_subject);
                 for i_regressor = 1:n_regressor
-                    j_subplot = j_subplot + 1;
-                    subplot(n_subject,n_regressor,j_subplot);
+                    if any(subject == u_plot_sub)
+                        j_subplot = j_subplot + 1;
+                        subplot(n_plot_sub,n_regressor,j_subplot);
 
-                    subrdm = scan.mvpa.variable.subrdm{i_subject}{i_regressor};
+                        subrdm = scan.mvpa.variable.subrdm{i_subject}{i_regressor};
 
-                    imagesc(subrdm.matrix);
-                    sa = struct();
-                    sa.title = sprintf('%02i "%s"',subject,subrdm.name);
-                    sa.xtick      = 1:subrdm.size;
-                    sa.ytick      = 1:subrdm.size;
-                    sa.xticklabel = num2leg(subrdm.level);
-                    sa.yticklabel = num2leg(subrdm.level);
-                    fig_axis(sa);
-                    colorbar();
+                        imagesc(subrdm.matrix);
+                        sa = struct();
+                        sa.title = sprintf('%02i "%s"',subject,subrdm.name);
+                        sa.xtick      = 1:subrdm.size;
+                        sa.ytick      = 1:subrdm.size;
+                        sa.xticklabel = num2leg(subrdm.level);
+                        sa.yticklabel = num2leg(subrdm.level);
+                        fig_axis(sa);
+                        colorbar();
+                    end
                 end
             end
         end
@@ -109,16 +117,18 @@ function scan = scan_mvpa_rsa_plot(scan)
             for i_subject = 1:n_subject
                 subject = u_subject(i_subject);
                 for i_model = 1:n_model
-                    j_subplot = j_subplot + 1;
-                    subplot(n_subject,length(scan.mvpa.variable.model{i_subject}),j_subplot);
+                    if any(subject == u_plot_sub)
+                        j_subplot = j_subplot + 1;
+                        subplot(n_plot_sub,length(scan.mvpa.variable.model{i_subject}),j_subplot);
 
-                    model = scan.mvpa.variable.model{i_subject}{i_model};
+                        model = scan.mvpa.variable.model{i_subject}{i_model};
 
-                    imagesc(model.matrix);
-                    sa = struct();
-                    sa.title = sprintf('%02i "%s"',subject,model.name);
-                    fig_axis(sa);
-                    colorbar();
+                        imagesc(model.matrix);
+                        sa = struct();
+                        sa.title = sprintf('%02i "%s"',subject,model.name);
+                        fig_axis(sa);
+                        colorbar();
+                    end
                 end
             end
         end

@@ -1,6 +1,6 @@
 
-function yfit = scan_mvpa_dx_class_glmval(varargin)
-    %% scan = SCAN_MVPA_DX_CLASS_GLMVAL(scan)
+function yfit = scan_mvpa_dx_class_glm_evaluate(varargin)
+    %% scan = SCAN_MVPA_DX_CLASS_GLM_EVALUATE(scan)
     % classifier for mvpa decoding
     % see also scan_mvpa_dx
     

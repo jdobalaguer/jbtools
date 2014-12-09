@@ -22,36 +22,46 @@ function scan = scan_mvpa_dx_crossval(scan)
         n_regressor = length(scan.mvpa.variable.regressor{i_subject});
         
         % do cross-validation
-        scan.mvpa.variable.result.dx{i_subject} = {};
+        scan.mvpa.variable.result.dx{i_subject} = struct();
+        scan.mvpa.variable.result.dx{i_subject}.crossval = {};
         
         for i_regressor = 1:n_regressor
-            scan.mvpa.variable.result.dx{i_subject}{i_regressor} = {};
+            scan.mvpa.variable.result.dx{i_subject}.crossval{i_regressor} = {};
             for i_crossval = 1:n_crossval
-                fprintf('scan_mvpa: do cross-validation %02i: list %d : \n',subject,i_crossval);
-                ii_training = u_crossval(i_crossval).training;
-                ii_evaluate = u_crossval(i_crossval).evaluate;
+                
+                scan_mvpa_verbose(scan,sprintf('scan_mvpa: do cross-validation %02i: list %d :',subject,i_crossval));
+                ii_training = logical(u_crossval(i_crossval).training);
+                ii_evaluate = logical(u_crossval(i_crossval).evaluate);
 
                 % training
-                x = scan.mvpa.variable.beta{i_subject}(:,ii_training)';
-                y = scan.mvpa.variable.regressor{i_subject}{i_regressor}.level(ii_training)';
-                f = scan.mvpa.decoder.training.function;
-                p = scan.mvpa.decoder.training.parameters;
-                b = f(x,y,p{:});
+                x_training = scan.mvpa.variable.beta{i_subject}(:,ii_training)';
+                y_training = scan.mvpa.variable.regressor{i_subject}{i_regressor}.level(ii_training)';
+                f_training = scan.mvpa.decoder.training.function;
+                p_training = scan.mvpa.decoder.training.parameters;
 
                 % evaluate
-                x = scan.mvpa.variable.beta{i_subject}(:,ii_evaluate)';
-                y = scan.mvpa.variable.regressor{i_subject}{i_regressor}.level(ii_evaluate)';
-                f = scan.mvpa.decoder.evaluate.function;
-                p = scan.mvpa.decoder.evaluate.parameters;
-                yfit = f(b,x,p{:});
-%                 yfit = round(yfit);
-
+                x_evaluate = scan.mvpa.variable.beta{i_subject}(:,ii_evaluate)';
+                y_evaluate = scan.mvpa.variable.regressor{i_subject}{i_regressor}.level(ii_evaluate)';
+                f_evaluate = scan.mvpa.decoder.evaluate.function;
+                p_evaluate = scan.mvpa.decoder.evaluate.parameters;
+                
+                if size(scan.mvpa.variable.beta{i_subject},1)
+                    % if voxels available
+                    b = f_training(x_training,y_training,p_training{:});
+                    y_predict  = f_evaluate(b,x_evaluate,p_evaluate{:});
+                else
+                    % if cross-validation impossible
+                    b = [];
+                    y_predict = nan(size(y_evaluate));
+                end
+                
                 % save
                 result = struct();
-                result.prediction = yfit;
-                result.target     = y;
-                result.error      = y - yfit;
-                scan.mvpa.variable.result.dx{i_subject}{i_regressor}{i_crossval} = result;
+                result.training_output     = b;
+                result.evaluate_prediction = y_predict;
+                result.evaluate_target     = y_evaluate;
+                result.evaluate_error      = y_evaluate - y_predict;
+                scan.mvpa.variable.result.dx{i_subject}.crossval{i_regressor}{i_crossval} = result;
             end
         end
     end

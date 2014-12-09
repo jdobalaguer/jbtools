@@ -1,15 +1,15 @@
 
-function scan = scan_mvpa_dx(scan)
-    %% scan = SCAN_MVPA_DX(scan)
-    % runs a multi-voxel pattern analysis (MVPA)
+function scan = scan_mvpa_uni(scan)
+    %% scan = SCAN_MVPA_UNI(scan)
+    % show univariate effects of data loaded with the MVPA scripts (helpful for debugging)
     % see also scan_initialize
     %          scan_glm_run
     %          scan_mvpa_glm
+    %          scan_mvpa_dx
     %          scan_mvpa_rsa
-    %          scan_mvpa_uni
     
     %% WARNINGS
-    %#ok<>
+    %#ok<*AGROW>
     
     %% FUNCTION
     
@@ -22,7 +22,7 @@ function scan = scan_mvpa_dx(scan)
     do_image       = redo(1);
     do_regressor   = redo(2);
     do_mask        = redo(3);
-    do_decoding    = redo(4);
+    do_uni         = redo(4);
     
     % load images
     if do_image
@@ -48,13 +48,11 @@ function scan = scan_mvpa_dx(scan)
         scan = scan_mvpa_runmean(scan);         % average for each run
     end
     
-    % decode
-    if do_decoding,
+    % plot univariate levels
+    if do_uni,
         scan = scan_mvpa_pooling(scan);         % merge all sessions
-        scan = scan_mvpa_dx_list(scan);         % create a list of possible train/test combinations
-        scan = scan_mvpa_dx_crossval(scan);     % cross-validation
-        scan = scan_mvpa_dx_performance(scan);  % performance
-        scan = scan_mvpa_dx_summarize(scan);    % summary
+        scan = scan_mvpa_uni_mean(scan);        % set univariate values
+        scan = scan_mvpa_uni_plot(scan);        % plot univariate effects
     end
     
 end

@@ -14,7 +14,7 @@ function scan = scan_mvpa_searchlight_sphere(scan)
     
     % create spheres
     for i_subject = 1:scan.subject.n
-        mask = scan.mvpa.variable.mask{i_subject};
+        mask = logical(scan.mvpa.variable.mask{i_subject});
         s    = scan.mvpa.variable.size{i_subject};
         
         % subject

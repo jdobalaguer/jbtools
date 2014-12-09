@@ -29,17 +29,6 @@ function scan = scan_mvpa_filename(scan)
         end
     end
     
-    % discard
-    for i_subject = 1:scan.subject.n
-        assert(length(betafiles{i_subject}) == length(scan.mvpa.variable.regressor{i_subject}{1}.discard), 'scan_mvpa_filename: error. unconsistent discard');
-        betafiles{i_subject}(scan.mvpa.variable.regressor{i_subject}{1}.discard) = [];
-    end
-    
-    % assert
-    for i_subject = 1:scan.subject.n
-        assert(length(betafiles{i_subject}) == length(scan.mvpa.variable.regressor{i_subject}{1}.session),'scan_mvpa_filename: error. unconsistent session');
-    end
-    
     % save
     scan.mvpa.variable.file = betafiles;
     

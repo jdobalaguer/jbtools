@@ -16,7 +16,7 @@ function scan = scan_mvpa_dx_list(scan)
         % subject
         subject = scan.subject.u(i_subject);
         x_session = scan.mvpa.variable.regressor{i_subject}{1}.session;
-        fprintf('scan_mvpa: list cross-validation %02i: \n',subject);
+        scan_mvpa_verbose(scan,sprintf('scan_mvpa: list cross-validation %02i:',subject));
         
         % numbers
         [u_session,n_session] = numbers(x_session);

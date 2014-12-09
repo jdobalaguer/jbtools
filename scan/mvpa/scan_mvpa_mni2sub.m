@@ -20,7 +20,7 @@ function scan = scan_mvpa_mni2sub(scan)
         fprintf('scan_mvpa: transform mask %02i: \n',subject);
         
         if isempty(scan.mvpa.mask{i_subject})
-            error('scan_mvpa_mni2sub: error. TODO write emtpy mask');
+            error('scan_mvpa_mni2sub: error. TODO write empty mask');
         else
             [dire_from,name_from,ext_from] = fileparts(scan.mvpa.mask{i_subject});
             mask_from = [scan.dire.mask,dire_from,filesep,name_from];
@@ -39,7 +39,7 @@ function scan = scan_mvpa_mni2sub(scan)
     tmp.subject.u = scan.subject.u;
     tmp.preprocess{1}.job  = 'normalisation_mni';
     tmp.preprocess{1}.from.path = dire_norm;
-    tmp.preprocess{1}.from.file = 'mask.*';
+    tmp.preprocess{1}.from.file = 'mask.img';
     tmp.preprocess{1}.norm.path = [pwd(),'/data/nii/sub_%02i/str/normalisation',sprintf('%d',tmp.pars.voxs)];
     tmp.preprocess{1}.norm.file = '*images*sn.mat';
     tmp.preprocess{1}.orig.path = [pwd(),'/data/nii/sub_%02i/epi3/run1/realignment'];

@@ -1,6 +1,6 @@
 
-function m = scan_mvpa_dx_class_glmfit(varargin)
-    %% scan = SCAN_MVPA_DX_CLASS_GLMFIT(scan)
+function o = scan_mvpa_dx_class_dist_training(varargin)
+    %% scan = SCAN_MVPA_DX_CLASS_DIST_TRAINING(scan)
     % classifier for mvpa decoding
     % see also scan_mvpa_dx
     
@@ -12,19 +12,20 @@ function m = scan_mvpa_dx_class_glmfit(varargin)
     x = varargin{1};
     y = varargin{2};
     p = varargin(3:end);
+    if isempty(p), p = {}; end
     
     % numbers
     [u_level,n_level] = numbers(y);
     
     % glmfit
-    b = {};
+    patterns = {};
     for i_level = 1:n_level
-        target = (y == u_level(i_level));
-        b{i_level} = glmfit(x,target,p{:});
+        ii_level = (y == u_level(i_level));
+        patterns{i_level} = x(ii_level,:);
     end
     
     %output
-    m.u_level = u_level;
-    m.b       = b;
+    o.patterns = patterns;
+    o.u_level = u_level;
     
 end
