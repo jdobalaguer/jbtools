@@ -10,9 +10,8 @@ function scan = scan_mvpa_rsa_plot(scan)
     %% FUNCTION
     if ~isfield(scan.mvpa,'plot'),           return; end
     if ~isfield(scan.mvpa.plot,'subject'),   return; end
-    if  isempty(scan.mvpa.plot.subject),     return; end
     
-    do_subject   = scan.mvpa.plot.subject;
+    do_subject   = ~isempty(scan.mvpa.plot.subject);
     do_average   = scan.mvpa.plot.average;
     u_subject    = scan.subject.u;
     n_subject    = scan.subject.n;

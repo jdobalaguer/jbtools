@@ -24,6 +24,9 @@ function scan = scan_mvpa_dx(scan)
     do_mask        = redo(3);
     do_decoding    = redo(4);
     
+    % rmdir
+    if do_mask, rmdirp(scan.dire.mvpa.mask); end
+    
     % load images
     if do_image
         scan = scan_mvpa_filename(scan);        % get beta files

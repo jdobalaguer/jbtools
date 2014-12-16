@@ -19,7 +19,7 @@ function cf = fig_figure(cf)
     fig_fontsize(cf,18);
     
     %% toolbar
-    set(cf,'ToolBar','none');
+    %set(cf,'ToolBar','none');
     
     %% docked
     %set(cf,'WindowStyle','docked');

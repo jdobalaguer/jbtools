@@ -38,9 +38,9 @@ function scan = scan_mvpa_uni_plot(scan)
     fig_figure();
     for i_regressor = 1:n_regressor
         subplot(n_regressor,1,i_regressor);
-        [u_level,~] = numbers(scan.mvpa.regressor.level{i_regressor});
-        m = mean(x_level{i_regressor},1);
-        e = ste( x_level{i_regressor},1);
+        [u_level,~] = numbers(scan.mvpa.regressor.level{i_regressor}(~scan.mvpa.regressor.discard));
+        m = nanmean(x_level{i_regressor},1);
+        e = nanste( x_level{i_regressor},1);
         
         % remove nan
         ii_nan = isnan(m);
@@ -57,7 +57,7 @@ function scan = scan_mvpa_uni_plot(scan)
                             scan.mvpa.regressor.name{i_regressor},...               title
                             [],...                                                  xlabel
                             'beta weights',...                                      ylabel
-                            fig_color('jet',n_level)./255,...                       colour
+                            fig_color('bw',n_level)./255,...                        colour
                             [],...                                                  grid
                             num2leg(u_level),...                                    legend
                             [],...                                                  error sides (1, 2)

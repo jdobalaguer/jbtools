@@ -25,6 +25,10 @@ function scan = scan_mvpa_dx_searchlight(scan)
     do_decoding    = redo(4);
     do_dmap        = redo(5);
     
+    % rmdir
+    if do_mask, rmdirp(scan.dire.mvpa.mask); end
+    if do_dmap, rmdirp(scan.dire.mvpa.map);  end
+    
     % load images
     if do_image
         scan = scan_mvpa_filename(scan);            % get beta files

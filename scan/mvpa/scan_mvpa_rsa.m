@@ -16,24 +16,33 @@ function scan = scan_mvpa_rsa(scan)
     if ~exist('spm.m','file'), spm8_add_paths(); end
     
     % redo
-    redo = true(1,3);
+    redo = true(1,4);
     if isfield(scan.mvpa,'redo'), redo(1:scan.mvpa.redo-1) = false; end
-    do_regressor   = redo(1) || ~exist(scan.dire.glm.regressor ,'dir');
-    do_image       = redo(2) || ~exist(scan.dire.glm.firstlevel,'dir');
-    do_rsa         = redo(3) || ~exist(scan.dire.glm.firstlevel,'dir');
-    
-    
-    % set regressors
-    if do_regressor,
-        scan = scan_mvpa_regressor(scan);       % set regressors
-    end
+    do_image       = redo(1);
+    do_regressor   = redo(2);
+    do_mask        = redo(3);
+    do_rsa         = redo(4);
     
     % load images
     if do_image
         scan = scan_mvpa_filename(scan);        % get beta files
-        scan = scan_mvpa_mask(scan);            % load mask
+        scan = scan_mvpa_image(scan);           % get images
+        scan = scan_mvpa_image_save(scan);      % save images
+    else
+        scan = scan_mvpa_image_load(scan);      % load images
+    end
+    
+    % set regressors
+    if do_regressor,
+        scan = scan_mvpa_regressor(scan);       % set regressors
+        scan = scan_mvpa_discard(scan);         % discard beta images
+    end
+    
+    % apply mask
+    if do_mask,
+        scan = scan_mvpa_getmask(scan);         % get mask
         scan = scan_mvpa_mni2sub(scan);         % reverse normalization for subject
-        scan = scan_mvpa_image(scan);           % load images
+        scan = scan_mvpa_applymask(scan);       % apply mask
         scan = scan_mvpa_unnan(scan);           % remove nans
         scan = scan_mvpa_runmean(scan);         % average for each run
     end

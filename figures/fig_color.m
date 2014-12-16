@@ -29,6 +29,7 @@ function color = fig_color(scheme,n)
         case 'y';       color = repmat(255*[1,1,0],[n,1]);
         case 'k';       color = repmat(255*[0,0,0],[n,1]);
         case 'w';       color = repmat(255*[1,1,1],[n,1]);
+        case 'bw';      color = repmat(170*[1,1,1],[n,1]);
         case 'default'; color = [000,000,255;000,255,000;255,000,000;000,255,255;255,000,255;255,255,000;000,000,000;255,255,255];
         % colours
         case 'gray';    color = zeros(n,3); color(:,1) = linspace(255,0,n);
