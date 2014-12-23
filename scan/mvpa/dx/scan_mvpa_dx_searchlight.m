@@ -66,7 +66,7 @@ function scan = scan_mvpa_dx_searchlight(scan)
             scan = scan_mvpa_unnan(scan);                       % remove nans
             scan = scan_mvpa_dx_crossval(scan);                 % cross-validation
             scan = scan_mvpa_dx_performance(scan);              % performance
-            scan = scan_mvpa_searchlight_save(scan,i_sphere);   % save searchlight iteration
+            scan = scan_mvpa_searchlight_dx_save(scan,i_sphere);% save searchlight iteration
             jb_parallel_progress();
         end
         jb_parallel_progress(0);

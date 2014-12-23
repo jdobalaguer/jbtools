@@ -83,7 +83,13 @@ function scan = scan_initialize_set(scan)
     function dire_mvpa()
         scan.dire.mvpa              = struct();
         scan.dire.mvpa.root         = [scan.dire.root,filesep,'data',filesep,'mvpa',filesep,scan.mvpa.name,filesep];
-        scan.dire.mvpa.glm          = [scan.dire.root,filesep,'data',filesep,'mvpa',filesep,'glm', filesep,scan.mvpa.glm,filesep];
+        if isempty(scan.mvpa.glm),
+            % this comes from "scan_mvpa_glmdx" or "scan_mvpa_glmrsa"
+            scan.dire.mvpa.glm      = [scan.dire.mvpa.root,'glm',filesep];
+        else
+            % this comes from scan_mvpa_glm
+            scan.dire.mvpa.glm      = [scan.dire.root,filesep,'data',filesep,'mvpa',filesep,'glm', filesep,scan.mvpa.glm,filesep];
+        end
         scan.dire.mvpa.template     = [scan.dire.root,filesep,'data',filesep,'mvpa',filesep,'template', filesep];
         scan.dire.mvpa.mvpa         = [scan.dire.mvpa.root,'mvpa',filesep];
         scan.dire.mvpa.mask         = [scan.dire.mvpa.root,'mask',filesep];

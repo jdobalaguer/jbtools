@@ -13,6 +13,9 @@ function scan = scan_mvpa_dx(scan)
     
     %% FUNCTION
     
+    % assert
+    assert(~isempty(scan.mvpa.glm), 'scan_mvpa_glm: error. name cannot be empty. sorry!');
+    
     % SPM toolbox
     if ~exist('spm.m','file'), spm8_add_paths(); end
     

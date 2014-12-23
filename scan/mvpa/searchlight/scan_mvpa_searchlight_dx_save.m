@@ -1,7 +1,7 @@
 
-function scan = scan_mvpa_searchlight_save(scan,i_sphere)
-    %% scan = SCAN_MVPA_SEARCHLIGHT_SAVE(scan)
-    % save iteration for searchlight
+function scan = scan_mvpa_searchlight_dx_save(scan,i_sphere)
+    %% scan = SCAN_MVPA_SEARCHLIGHT_DX_SAVE(scan)
+    % save iteration for dx_searchlight
     % see also scan_mvpa_dx_searchlight
     
     %% WARNINGS

@@ -14,7 +14,7 @@ function scan = scan_mvpa_uni_plot(scan)
     n_regressor = length(scan.mvpa.regressor.level);
     x_level = {};
     for i_regressor = 1:n_regressor
-        [u_level,n_level] = numbers(scan.mvpa.regressor.level{i_regressor}(~scan.mvpa.regressor.discard));
+        [u_level,n_level] = numbers(jb_filter(scan.mvpa.regressor.level{i_regressor}(~scan.mvpa.regressor.discard)));
         assert(~any(isnan(u_level)),'scan_mvpa_uni_plot: error. some nan within regressor %d "%s"',i_regressor,scan.mvpa.regressor.name{i_regressor});
         x_level{i_regressor} = nan(scan.subject.n,n_level);
         for i_subject = 1:scan.subject.n
@@ -37,8 +37,16 @@ function scan = scan_mvpa_uni_plot(scan)
     % plot values
     fig_figure();
     for i_regressor = 1:n_regressor
-        subplot(n_regressor,1,i_regressor);
-        [u_level,~] = numbers(scan.mvpa.regressor.level{i_regressor}(~scan.mvpa.regressor.discard));
+        if ~isfield(scan.mvpa,'plot') || ~isfield(scan.mvpa.plot,'dimension')
+            scan.mvpa.plot.dimension = 'horizontal';
+        end
+        switch(scan.mvpa.plot.dimension)
+            case 'horizontal'
+                subplot(1,n_regressor,i_regressor);
+            case 'vertical'
+                subplot(n_regressor,1,i_regressor);
+        end
+        [u_level,~] = numbers(jb_filter(scan.mvpa.regressor.level{i_regressor}(~scan.mvpa.regressor.discard)));
         m = nanmean(x_level{i_regressor},1);
         e = nanste( x_level{i_regressor},1);
         
@@ -53,7 +61,7 @@ function scan = scan_mvpa_uni_plot(scan)
         web = fig_barweb(   m,...                                                   mean
                             e,...                                                   error
                             [],...                                                  width
-                            {},...                                                  group names
+                            {''},...                                                group names
                             scan.mvpa.regressor.name{i_regressor},...               title
                             [],...                                                  xlabel
                             'beta weights',...                                      ylabel
@@ -67,4 +75,7 @@ function scan = scan_mvpa_uni_plot(scan)
 %         fig_steplot(u_level,m,e);
         
     end
+    
+    % figure name
+    set(gcf,'Name',scan.mvpa.mask{1});
 end

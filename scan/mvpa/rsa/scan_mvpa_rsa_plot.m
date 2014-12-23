@@ -29,7 +29,7 @@ function scan = scan_mvpa_rsa_plot(scan)
                 subject = u_subject(i_subject);
                 if any(subject == u_plot_sub)
                     j_subplot = j_subplot + 1;
-                    subplot(n_plot_sub,1,j_subplot);
+                    subplot(1,n_plot_sub,j_subplot);
                     imagesc(scan.mvpa.variable.rdm{i_subject});
                     sa = struct();
                     sa.title = sprintf('subject %02i',subject);
@@ -66,7 +66,7 @@ function scan = scan_mvpa_rsa_plot(scan)
                 for i_regressor = 1:n_regressor
                     if any(subject == u_plot_sub)
                         j_subplot = j_subplot + 1;
-                        subplot(n_plot_sub,n_regressor,j_subplot);
+                        subplot(n_regressor,n_plot_sub,j_subplot);
 
                         subrdm = scan.mvpa.variable.subrdm{i_subject}{i_regressor};
 
@@ -118,7 +118,7 @@ function scan = scan_mvpa_rsa_plot(scan)
                 for i_model = 1:n_model
                     if any(subject == u_plot_sub)
                         j_subplot = j_subplot + 1;
-                        subplot(n_plot_sub,length(scan.mvpa.variable.model{i_subject}),j_subplot);
+                        subplot(length(scan.mvpa.variable.model{i_subject}),n_plot_sub,j_subplot);
 
                         model = scan.mvpa.variable.model{i_subject}{i_model};
 

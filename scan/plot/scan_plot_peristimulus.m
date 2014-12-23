@@ -1,5 +1,5 @@
 
-function scan_plot_peristimulus(varargin)
+function scan = scan_plot_peristimulus(varargin)
     %% SCAN_PLOT_PERISTIMULUS(LEVEL,SCAN)
     % SCAN_PLOT_PERISTIMULUS(LEVEL,PATH_TO_GLM,MASK,CONTRASTS)
     % Plot peristimulus BOLD signal

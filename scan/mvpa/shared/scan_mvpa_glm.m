@@ -16,14 +16,15 @@ function scan = scan_mvpa_glm(scan)
     assert(isfield(scan,'glm'),             'scan_mvpa_glm: error. glm not defined');
     assert( strcmp(scan.glm.function,'hrf'),'scan_mvpa_glm: error. this only works with glm.function = ''hrf''');
     assert(scan.glm.pooling,                'scan_mvpa_glm: error. pooling required');
+    assert(~isempty(scan.mvpa.glm),          'scan_mvpa_glm: error. mvpa.glm field cannot be empty');
     
     % GLM flags
-    glm_redo = false(1,4);
-    if isfield(scan.glm,'redo'), glm_redo(scan.glm.redo : end) = true; end
-    do_glm_regressor   = glm_redo(1)  || ~exist(scan.dire.glm.regressor ,'dir');
-    do_glm_regression  = glm_redo(2)  || ~exist(scan.dire.glm.firstlevel,'dir');
-    do_glm_firstlevel  = glm_redo(3)  || ~exist(scan.dire.glm.firstlevel,'dir');
-    do_glm_copy        = glm_redo(4)  || ~exist(scan.dire.glm.beta1,'dir');
+    redo = false(1,4);
+    if isfield(scan.glm,'redo'), redo(scan.glm.redo : end) = true; end
+    do_glm_regressor   = redo(1)  || ~exist(scan.dire.glm.regressor ,'dir');
+    do_glm_regression  = redo(2)  || ~exist(scan.dire.glm.firstlevel,'dir');
+    do_glm_firstlevel  = redo(3)  || ~exist(scan.dire.glm.firstlevel,'dir');
+    do_glm_copy        = redo(4)  || ~exist(scan.dire.glm.beta1,'dir');
     
     % delete
     if do_glm_regressor   && exist(scan.dire.glm.regressor,  'dir'); rmdir(scan.dire.glm.regressor,  's'); end

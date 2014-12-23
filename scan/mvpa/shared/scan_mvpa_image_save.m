@@ -9,6 +9,6 @@ function scan = scan_mvpa_image_save(scan)
     %#ok<*AGROW>
     
     %% FUNCTION
-    save('-v7.3',sprintf('%simage_%s%s.mat',scan.dire.mvpa.glm,scan.mvpa.image,sprintf('_%d',scan.subject.u)),'scan');
+    save('-v7.3',sprintf('%simage_%s%s.mat',scan.dire.mvpa.glm,strcat(scan.mvpa.image{:}),sprintf('_%d',scan.subject.u)),'scan');
     
 end

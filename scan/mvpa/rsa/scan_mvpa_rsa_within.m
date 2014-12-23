@@ -22,7 +22,7 @@ function scan = scan_mvpa_rsa_within(scan)
         n_beta = size(rdm,1);
         
         % set between sessions
-        ii_session = scan.mvpa.regressor{i_subject}{1}.session;
+        ii_session = scan.mvpa.variable.regressor{i_subject}{1}.session;
         scan.mvpa.variable.session{i_subject} = ii_session;
         x = repmat(ii_session,[n_beta,1]);
         y = x';
