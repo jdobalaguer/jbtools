@@ -1,6 +1,6 @@
 
 function [v,s] = scan_nifti_load(file,mask)
-    %% nii = SCAN_NIFTI_LOAD(file[,mask])
+    %% [v,s] = SCAN_NIFTI_LOAD(file[,mask])
     % Load a NIFTI image
     % see also scan_plot_peristimulus
     

@@ -27,6 +27,7 @@ function [data] = mturk_parsejson(json)
                 case '"'
                     json(1) = [];
                     value = parse_string();
+                    if isempty(value), value = ' '; end
 
                 case '{'
                     json(1) = [];

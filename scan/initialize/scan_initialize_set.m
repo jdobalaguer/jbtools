@@ -89,6 +89,7 @@ function scan = scan_initialize_set(scan)
         else
             % this comes from scan_mvpa_glm
             scan.dire.mvpa.glm      = [scan.dire.root,filesep,'data',filesep,'mvpa',filesep,'glm', filesep,scan.mvpa.glm,filesep];
+            scan.mvpa.variable.glm = scan.mvpa.glm;
         end
         scan.dire.mvpa.template     = [scan.dire.root,filesep,'data',filesep,'mvpa',filesep,'template', filesep];
         scan.dire.mvpa.mvpa         = [scan.dire.mvpa.root,'mvpa',filesep];
