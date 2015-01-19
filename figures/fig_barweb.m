@@ -112,6 +112,7 @@ function handles = fig_barweb(barvalues, errors, width, groupnames, bw_title, bw
     if strcmp(legend_type, 'axis')
         for i = 1:numbars
             xdata = get(handles.errors(i),'xdata');
+            xdata(end) = []; % i dont know why labels show up twice..
             for j = 1:length(xdata)
                 text(xdata(j),  -0.03*ymax*1.1, bw_legend(i), 'Rotation', 45, 'fontsize', 12, 'HorizontalAlignment', 'right');
             end

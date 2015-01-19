@@ -4,7 +4,8 @@
 %#ok<*ASGLU>
 
 %% function
-function jb_ttest(varargin)
+function varargout = jb_ttest(varargin)
     [h,p,ci,stats] = ttest(varargin{:});
     fprintf('t(%d) = %+.2f, p = %.3f \n',stats.df,stats.tstat,p);
+    if nargout, varargout = {stats}; end
 end
