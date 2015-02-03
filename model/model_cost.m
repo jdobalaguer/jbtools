@@ -5,7 +5,7 @@ function model = model_cost(model)
     % see also: model_simulation
     
     %% warnings
-    %#ok<*ASGLU>
+    %#ok<*ASGLU,*PFBNS>
     
     %% assert
     assert(isfield(model.simu,'result'), 'model_cost: error. no "model.simu.result" field');
@@ -43,23 +43,29 @@ function model = model_cost(model)
             
             assert(all(ii_simu(ii_cost & ii_subject)),'model_cost: error. some simu(%d) doesnt cover index(%d)',model.cost.simu{i_index},i_index);
             
+            % data
+            data = struct_filter(model.simu.data,ii_subject & ii_cost);
+            
+            % pars
+            pars = model.cost.pars;
+            
+            % parfor
+            parfor_simu   = model.simu.result(i_subject,i_simu,:);
+            parfor_ii     = ii_cost(ii_subject & ii_simu);
+            parfor_result = model.cost.result.cost(i_subject,i_index,:);
+            parfor_func   = model.cost.func;
             parfor i_comb = 1:n_comb
                 
-                % data
-                data = struct_filter(model.simu.data,ii_subject & ii_cost);
-                
                 % simu
-                simu = struct_filter(model.simu.result(i_subject,i_simu,i_comb),ii_cost(ii_subject & ii_simu));
-                
-                % pars
-                pars = model.cost.pars;
+                simu = struct_filter(parfor_simu(i_comb),parfor_ii);
                 
                 % run
-                model.cost.result.cost(i_subject,i_index,i_comb) = model.cost.func(data,simu,pars);
+                parfor_result(i_comb) = parfor_func(data,simu,pars);
                 
                 % progress
                 jb_parallel_progress();
             end
+            model.cost.result.cost(i_subject,i_index,:) = parfor_result;
         end
     end
     jb_parallel_progress(0);

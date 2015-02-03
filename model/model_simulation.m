@@ -4,6 +4,7 @@ function model = model_simulation(model)
     % run a simulation of a model
     
     %% warnings
+    %#ok<*PFBNS>
 
     %% function
     
@@ -41,30 +42,35 @@ function model = model_simulation(model)
     % simulations
     jb_parallel_progress(n_subject * n_index * n_comb);
     for i_subject = 1:n_subject
-        for i_index = 1:n_index
-            parfor i_comb = 1:n_comb
 
-                % subject
-                subject = u_subject(i_subject);
-                ii_subject = (model.simu.subject == subject);
+        % subject
+        subject = u_subject(i_subject);
+        ii_subject = (model.simu.subject == subject);
+        for i_index = 1:n_index
                 
-                % index
-                ii_index   = u_index{i_index};
-                ii = (ii_subject & ii_index);
+            % index
+            ii_index   = u_index{i_index};
+            ii = (ii_subject & ii_index);
+            
+            % data
+            data = struct_filter(model.simu.data,ii);
+                
+            % parfor
+            parfor_result = model.simu.result(i_subject,i_index,:);
+            parfor_func   = model.simu.func;
+            parfor i_comb = 1:n_comb
                 
                 % comb
                 pars = [u_pars';num2cell(u_comb(i_comb,:))];
                 pars = struct(pars{:});
                 
-                % data
-                data = struct_filter(model.simu.data,ii);
-                
                 % run
-                model.simu.result(i_subject,i_index,i_comb) = model.simu.func(data,pars);
+                parfor_result(i_comb) = parfor_func(data,pars);
                 
                 % progress
                 jb_parallel_progress();
             end
+            model.simu.result(i_subject,i_index,:) = parfor_result;
         end
     end
     jb_parallel_progress(0);
