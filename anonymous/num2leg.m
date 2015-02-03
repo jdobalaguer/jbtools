@@ -1,5 +1,7 @@
 
 function leg = num2leg(num,str)
+    %leg = NUM2LEG(num[,str])
+
     % numbers to legend (cell of string)
     assert(isvector(num),'num2leg: error. not a vector');
     leg = cell(1,length(num));

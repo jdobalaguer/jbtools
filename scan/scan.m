@@ -2,6 +2,7 @@
 function scan()
     %% SCAN toolbox
     % perform standard analyses for fMRI data
+    %
     % see also scan_dcm2nii
     %          scan_expand
     %          scan_preprocess_run
