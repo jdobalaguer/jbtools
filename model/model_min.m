@@ -1,6 +1,8 @@
 
 function model = model_min(model)
     %% model = MODEL_MIN(model)
+    % find fitting with smaller cost
+    % see also: model_cost
     
     %% warnings
     %#ok<*ASGLU>
@@ -11,35 +13,44 @@ function model = model_min(model)
     
     %% function
 
+    % numbers
+    n_subject   = size(model.cost.result.cost,1);
+    n_index     = size(model.cost.result.cost,2);
+    s_comb      = size(model.cost.result.cost); s_comb(1:2) = [];
+    u_pars      = fieldnames(model.simu.pars);
+    n_pars      = length(u_pars);
+        
     % find minima subject
-    [model.cost.result.min_subject.i_min,model.cost.result.min_subject.v_min] = jb_findmin(model.cost.result.cost);
-    model.cost.result.min_subject.u_min = nan(size(model.cost.result.min_subject.i_min));
-
-    u_sub = unique(model.simu.subject);
-    model.cost.result.min_subject.u_min(:,1) = u_sub(model.cost.result.min_subject.i_min(:,1));
-    
-    u_min = fieldnames(model.simu.pars);
-    n_min = length(u_min);
-    
-    model.cost.result.min_subject.i_min(:,end+1:n_min+2) = 1;
-    
-    for i_min = 1:n_min
-        model.simu.pars.(u_min{i_min})(model.cost.result.min_subject.i_min(:,i_min+2));
-        model.cost.result.min_subject.u_min(:,i_min+2) = model.simu.pars.(u_min{i_min})(model.cost.result.min_subject.i_min(:,i_min+2));
+    model.cost.result.min_subject = cell(n_subject,n_index);
+    cost = model.cost.result.cost;
+    for i_subject = 1:n_subject
+        for i_index = 1:n_index
+            tmp_cost = reshape(cost(i_subject,i_index,:),s_comb);
+            tmp_min  = struct();
+            [tmp_min.i_min,tmp_min.v_min] = jb_findmin(tmp_cost);
+            tmp_min.i_min(:,end+1:n_pars) = 1;
+            tmp_min.u_min = nan(size(tmp_min.i_min));
+            for i_pars = 1:n_pars
+                tmp_min.u_min(:,i_pars) = model.simu.pars.(u_pars{i_pars})(tmp_min.i_min(:,i_pars));
+            end
+            model.cost.result.min_subject{i_subject,i_index} = tmp_min;
+        end
     end
     
     % find minima group
-    [model.cost.result.min_group.i_min,model.cost.result.min_group.v_min] = jb_findmin(mean(model.cost.result.cost,1));
-    model.cost.result.min_group.u_min = nan(size(model.cost.result.min_group.i_min));
-
-    u_min = fieldnames(model.simu.pars);
-    n_min = length(u_min);
-    
-    model.cost.result.min_group.i_min(:,end+1:n_min+2) = 1;
-    
-    for i_min = 1:n_min
-        model.simu.pars.(u_min{i_min})(model.cost.result.min_group.i_min(:,i_min+2));
-        model.cost.result.min_group.u_min(:,i_min+2) = model.simu.pars.(u_min{i_min})(model.cost.result.min_group.i_min(:,i_min+2));
+    model.cost.result.min_group = cell(n_index,1);
+    cost = mean(model.cost.result.cost,1);
+    for i_index = 1:n_index
+        tmp_cost = reshape(cost(1,i_index,:),s_comb);
+        tmp_min  = struct();
+        [tmp_min.i_min,tmp_min.v_min] = jb_findmin(tmp_cost);
+        tmp_min.i_min(:,end+1:n_pars) = 1;
+        tmp_min.u_min = nan(size(tmp_min.i_min));
+        for i_pars = 1:n_pars
+            tmp_min.u_min(:,i_pars) = model.simu.pars.(u_pars{i_pars})(tmp_min.i_min(:,i_pars));
+        end
+        model.cost.result.min_group{i_index,1} = tmp_min;
     end
+    
 
 end

@@ -5,11 +5,13 @@ function model()
     %
     % see also model_simulation
     %          model_cost
+    %          model_min
+    %          model_landscape
     %          model_gradient
 
     %%  WARNINGS
     %#ok<>
     
     %% FUNCTION
-    help('scan');
+    help('model');
 end

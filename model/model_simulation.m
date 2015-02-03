@@ -36,38 +36,36 @@ function model = model_simulation(model)
     for i_result = 1:n_result
         model.simu.result.(u_result{i_result}) = [];
     end
-    model.simu.result = repmat(model.simu.result,s_comb);
+    model.simu.result = repmat(model.simu.result,[n_subject,n_index,s_comb]);
     
     % simulations
-    jb_parallel_progress(n_comb);
-    for i_comb = 1:n_comb
-        
-        % comb
-        pars = [u_pars';num2cell(u_comb(i_comb,:))];
-        pars = struct(pars{:});
-        
-        for i_subject = 1:n_subject
-            
-            % subject
-            subject = u_subject(i_subject);
-            ii_subject = (model.simu.subject == subject);
-            for i_index = 1:n_index
+    jb_parallel_progress(n_subject * n_index * n_comb);
+    for i_subject = 1:n_subject
+        for i_index = 1:n_index
+            parfor i_comb = 1:n_comb
+
+                % subject
+                subject = u_subject(i_subject);
+                ii_subject = (model.simu.subject == subject);
                 
                 % index
                 ii_index   = u_index{i_index};
-                ii         = (ii_subject & ii_index);
+                ii = (ii_subject & ii_index);
+                
+                % comb
+                pars = [u_pars';num2cell(u_comb(i_comb,:))];
+                pars = struct(pars{:});
                 
                 % data
                 data = struct_filter(model.simu.data,ii);
                 
                 % run
-                result = model.simu.func(data,pars);
-                for i_result = 1:n_result
-                    model.simu.result(i_comb).(u_result{i_result})(ii,:) = result.(u_result{i_result});
-                end
+                model.simu.result(i_subject,i_index,i_comb) = model.simu.func(data,pars);
+                
+                % progress
+                jb_parallel_progress();
             end
         end
-        jb_parallel_progress();
     end
     jb_parallel_progress(0);
 
