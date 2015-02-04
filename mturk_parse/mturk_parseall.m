@@ -1,8 +1,5 @@
 function mturk_parseall(pathname)
 
-    %% parallel
-    jb_parallel_start;
-    
     %% directories
     allfiles = mturk_parseall_dirs(pathname);
     nb_allfiles = length(allfiles);
@@ -23,7 +20,4 @@ function mturk_parseall(pathname)
     if nb_allfiles<2; return; end
     mturk_parseall_concat(pathname,allfiles);
     
-    %% parallel
-    jb_parallel_stop;
-
 end

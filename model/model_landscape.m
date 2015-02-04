@@ -35,13 +35,15 @@ function model_landscape(model,c_pars)
         end
         
         % assert
-        assert(length(f_pars)<3, 'model_landscape: error. too many dimensions!');
+        assert(length(f_pars)<4, 'model_landscape: error. too many dimensions!');
 
         % squeeze
-        cost = mean(model.cost.result.cost,1); ... subject
+        mean_cost = nanmean(model.cost.result.cost,1); ... subject
+        ste_cost  = nanste( model.cost.result.cost,1); ... subject
         for i = 1:n_pars
             if ~jb_anyof(i,f_pars)
-                cost = min(cost,[],i+2);
+                mean_cost = nanmin(mean_cost,[],i+2);
+                ste_cost  = nanmin(ste_cost, [],i+2);
             end
         end
 
@@ -49,18 +51,39 @@ function model_landscape(model,c_pars)
         for i_index = 1:n_index
             j_subplot = j_subplot + 1;
             subplot(n_cpars,n_index,j_subplot);
-            imagesc(reshape(cost(1,i_index,:),s_comb(f_pars)))
-            sa = struct();
-            if i_cpars == 1, sa.title = sprintf('index %d',i_index); end
-            sa.xtick      = 1:length(model.simu.pars.(u_pars{f_pars(2)}));
-            sa.xticklabel = num2leg(model.simu.pars.(u_pars{f_pars(2)}),'%.2f');
-            sa.xlabel     = u_pars{f_pars(2)};
-            sa.ytick      = 1:length(model.simu.pars.(u_pars{f_pars(1)}));
-            sa.yticklabel = num2leg(model.simu.pars.(u_pars{f_pars(1)}),'%.2f');
-            sa.ylabel     = u_pars{f_pars(1)};
-            fig_axis(sa);
-            %set(gca(),'clim',[0,1]);
-            colorbar();
+            switch(length(f_pars))
+                case 1
+                    x = model.simu.pars.(u_pars{f_pars});
+                    m = reshape(mean_cost(1,i_index,:),[s_comb(f_pars),1]);
+                    e = reshape( ste_cost(1,i_index,:),[s_comb(f_pars),1]);
+                    fig_steplot(x,m,e);
+                case 2
+                    imagesc(reshape(mean_cost(1,i_index,:),s_comb(f_pars)))
+                    sa = struct();
+                    sa.xtick      = 1:length(model.simu.pars.(u_pars{f_pars(2)}));
+                    sa.xticklabel = num2leg(model.simu.pars.(u_pars{f_pars(2)}),'%.2f');
+                    sa.xlabel     = u_pars{f_pars(2)};
+                    sa.ytick      = 1:length(model.simu.pars.(u_pars{f_pars(1)}));
+                    sa.yticklabel = num2leg(model.simu.pars.(u_pars{f_pars(1)}),'%.2f');
+                    sa.ylabel     = u_pars{f_pars(1)};
+                    fig_axis(sa);
+                    %set(gca(),'clim',[0,1]);
+                    colorbar();
+                case 3
+                    fig_4d(reshape(mean_cost(1,i_index,:),s_comb(f_pars)));
+                    sa.xtick      = 1:length(model.simu.pars.(u_pars{f_pars(3)}));
+                    sa.xticklabel = num2leg(model.simu.pars.(u_pars{f_pars(3)}),'%.2f');
+                    sa.xlabel     = u_pars{f_pars(3)};
+                    sa.ytick      = 1:length(model.simu.pars.(u_pars{f_pars(2)}));
+                    sa.yticklabel = num2leg(model.simu.pars.(u_pars{f_pars(2)}),'%.2f');
+                    sa.ylabel     = u_pars{f_pars(2)};
+                    sa.ztick      = 1:length(model.simu.pars.(u_pars{f_pars(1)}));
+                    sa.zticklabel = num2leg(model.simu.pars.(u_pars{f_pars(1)}),'%.2f');
+                    sa.zlabel     = u_pars{f_pars(1)};
+                    fig_axis(sa);
+                    colorbar();
+            end
+            if i_cpars == 1, title(sprintf('index %d',i_index)); end
         end
     end
     

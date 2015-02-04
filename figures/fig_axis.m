@@ -8,14 +8,19 @@ function varargout = fig_axis(sa,ca)
   % 
   % sa.xtick   = -1:0.5:+1;
   % sa.ytick   = -1:0.5:+1;
+  % sa.ztick   = -1:0.5:+1;
   % sa.xticklabel = {'-1',...}
   % sa.yticklabel = {'-1',...}
+  % sa.zticklabel = {'-1',...}
   % sa.xgrid   = 'off';
   % sa.ygrid   = 'on';
+  % sa.zgrid   = 'on';
   % sa.xlim    = [-1,+1];
   % sa.ylim    = [-1,+1];
+  % sa.zlim    = [-1,+1];
   % sa.xlabel = 'xlabel';
   % sa.ylabel = 'ylabel';
+  % sa.zlabel = 'zlabel';
   % sa.ilegend = [obj1, obj2, ...];
   % sa.tlegend = {object 1','object 2'};
   % sa.title   = 'title';
@@ -77,6 +82,27 @@ function varargout = fig_axis(sa,ca)
   if isfield(sa,{'ylim'})
       ylim(sa.ylim);
   end
+  % ztick
+  if isfield(sa,{'ztick'})
+    set(ca,   'ZMinorTick', 'on', ...
+              'ZTick'     , sa.ztick);
+  end
+  % zminor
+  if isfield(sa,{'zminor'})
+    set(ca,   'ZMinorTick',sa.zminor);
+  end
+  % zgrid
+  if isfield(sa,{'zgrid'})
+    set(ca,   'ZGrid'     , sa.zgrid);
+  end
+  % zticklabel
+  if isfield(sa,{'zticklabel'})
+    set(ca,   'ZTickLabel',sa.zticklabel);
+  end
+  % zlim
+  if isfield(sa,{'zlim'})
+      zlim(sa.zlim);
+  end
   % xlabel
   if isfield(sa,{'xlabel'})
     va.xlabel = xlabel(sa.xlabel);
@@ -88,6 +114,12 @@ function varargout = fig_axis(sa,ca)
     va.ylabel = ylabel(sa.ylabel);
     set(va.ylabel,'FontName','Verdana');
     set(va.ylabel,'FontSize',14);
+  end
+  % zlabel
+  if isfield(sa,{'zlabel'})
+    va.zlabel = zlabel(sa.zlabel);
+    set(va.zlabel,'FontName','Verdana');
+    set(va.zlabel,'FontSize',14);
   end
   % title
   if isfield(sa,{'title'})

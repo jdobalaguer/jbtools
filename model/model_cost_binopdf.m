@@ -16,5 +16,5 @@ function cost = model_cost_binopdf(data,simu,pars)
     human_mean = nanmean(v_data);
     likelihood = 0.05 + 0.95 *binopdf(model_sum,frame_sum,human_mean);
 
-    cost = 1 - likelihood;
+    cost = 1 - log(likelihood);
 end
