@@ -1,8 +1,9 @@
 
 function model = model_cost(model)
     %% model = model_cost(model)
-    % calculate the cost of each fitting
+    % calculate the cost of each parameterisation
     % see also: model_simulation
+    %           model_gradient
     
     %% warnings
     %#ok<*ASGLU,*PFBNS>
@@ -20,6 +21,7 @@ function model = model_cost(model)
     [u_subject,n_subject] = numbers(model.simu.subject);
     
     % index
+    if ~isfield(model.cost,'index'), model.cost.index = model.simu.index; end
     u_index = model.cost.index;
     n_index = length(u_index);
     

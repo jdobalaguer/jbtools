@@ -1,5 +1,5 @@
-function z = struct_filter(s,ii)
-    %% z = STRUCT_FILTER(s,ii)
+function s = struct_filter(s,ii)
+    %% s = STRUCT_FILTER(s,ii)
     
     %% warnings
     
@@ -8,7 +8,7 @@ function z = struct_filter(s,ii)
     n_field = length(u_field);
     for i_field = 1:n_field
         field = u_field{i_field};
-        z.(field) = s.(field)(ii,:);
+        s.(field) = s.(field)(ii,:);
     end
     
 end

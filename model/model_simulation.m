@@ -1,7 +1,9 @@
 
 function model = model_simulation(model)
     %% model = model_simulation(model)
-    % run a simulation of a model
+    % run a (grid of) simulation(s) of a model
+    % see also: model_cost
+    %           model_gradient
     
     %% warnings
     %#ok<*PFBNS>
