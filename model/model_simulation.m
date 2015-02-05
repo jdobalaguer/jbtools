@@ -56,7 +56,7 @@ function model = model_simulation(model)
             
             % data
             data = struct_filter(model.simu.data,ii);
-                
+            
             % parfor
             parfor_result = model.simu.result(i_subject,i_index,:);
             parfor_func   = model.simu.func;

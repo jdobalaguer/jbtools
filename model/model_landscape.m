@@ -57,6 +57,9 @@ function model_landscape(model,c_pars)
                     m = reshape(mean_cost(1,i_index,:),[s_comb(f_pars),1]);
                     e = reshape( ste_cost(1,i_index,:),[s_comb(f_pars),1]);
                     fig_steplot(x,m,e);
+                    sa.xlabel     = u_pars{f_pars};
+                    sa.ylabel     = 'cost';
+                    fig_axis(sa);
                 case 2
                     imagesc(reshape(mean_cost(1,i_index,:),s_comb(f_pars)))
                     sa = struct();
@@ -70,7 +73,8 @@ function model_landscape(model,c_pars)
                     %set(gca(),'clim',[0,1]);
                     colorbar();
                 case 3
-                    fig_4d(reshape(mean_cost(1,i_index,:),s_comb(f_pars)));
+                    m = reshape(mean_cost(1,i_index,:),s_comb(f_pars));
+                    fig_4d(m,0.8);
                     sa.xtick      = 1:length(model.simu.pars.(u_pars{f_pars(3)}));
                     sa.xticklabel = num2leg(model.simu.pars.(u_pars{f_pars(3)}),'%.2f');
                     sa.xlabel     = u_pars{f_pars(3)};

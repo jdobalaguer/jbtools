@@ -1,10 +1,14 @@
-function hdl = fig_4d(m,a,xtick,ytick,ztick,xlabel,ylabel,zlabel)
-    %% [hdl] = FIG_4D(m,xtick,ytick,ztick,xlabel,ylabel,zlabel)
+function hdl = fig_4d(m,t,xtick,ytick,ztick,xlabel,ylabel,zlabel)
+    %% [hdl] = FIG_4D(m,a,xtick,ytick,ztick,xlabel,ylabel,zlabel)
     % display 4-dimensional data as a transparent cube
     % originally writen by santiago
+    % [m]     = data matrix
+    % [t]     = opacity threshold
+    % [tick]  = axis range/scale
+    % [label] = axis label
 
     %% default
-    if ~exist('a','var'),      a      = 0.5; end
+    if ~exist('t','var'),      t      = 0; end
     if ~exist('xtick','var'),  xtick  = 1:size(m,1); end
     if ~exist('ytick','var'),  ytick  = 1:size(m,2); end
     if ~exist('ztick','var'),  ztick  = 1:size(m,3); end
@@ -31,12 +35,15 @@ function hdl = fig_4d(m,a,xtick,ytick,ztick,xlabel,ylabel,zlabel)
     % plot box
     hdl = slice(m,i_x,i_y,i_z);
     
-    % alphas
+    % alphas 
     set(hdl,'EdgeColor','none','FaceColor','interp','FaceAlpha','interp');
-    alpha('color'); ...alpha(a);
-    alphamap('rampdown')
-    alphamap('increase',.01)
+    alpha('color');
+    alphamap('rampdown');
+    alphamap('decrease',t);
+    
+    % camera
     view(80,10);
+    camproj('orthographic'); % or 'perspective'
 
     % axis
     sa = struct('xtick',i_y,'xticklabel',xtick,'ytick',i_y,'yticklabel',ytick,'ztick',i_y,'zticklabel',ztick,'xlabel',xlabel,'ylabel',ylabel,'zlabel',zlabel);
