@@ -22,7 +22,7 @@ function model = model_minimum(model)
     n_pars      = length(u_pars);
         
     % find minima subject
-    model.cost.result.min_subject = cell(n_subject,n_index);
+    model.cost.result.min_subject = repmat(struct('i_min',[],'v_min',[],'u_min',[]),[n_subject,n_index]);
     cost = model.cost.result.cost;
     for i_subject = 1:n_subject
         for i_index = 1:n_index
@@ -34,12 +34,12 @@ function model = model_minimum(model)
             for i_pars = 1:n_pars
                 tmp_min.u_min(:,i_pars) = model.simu.pars.(u_pars{i_pars})(tmp_min.i_min(:,i_pars));
             end
-            model.cost.result.min_subject{i_subject,i_index} = tmp_min;
+            model.cost.result.min_subject(i_subject,i_index) = tmp_min;
         end
     end
     
     % find minima group
-    model.cost.result.min_group = cell(n_index,1);
+    model.cost.result.min_group = repmat(struct('i_min',[],'v_min',[],'u_min',[],'message',[]),[n_index,1]);
     cost = mean(model.cost.result.cost,1);
     for i_index = 1:n_index
         tmp_cost = reshape(cost(1,i_index,:),s_comb);
@@ -51,7 +51,15 @@ function model = model_minimum(model)
             tmp_min.u_min(:,i_pars) = model.simu.pars.(u_pars{i_pars})(tmp_min.i_min(:,i_pars));
         end
         tmp_min.message = 'THIS IS NOT A FITTING MEASURE!';
-        model.cost.result.min_group{i_index,1} = tmp_min;
+        model.cost.result.min_group(i_index,1) = tmp_min;
+    end
+    
+    % average parameters per subject
+    model.cost.result.avg_subject = nan(n_subject,n_index,n_pars);
+    for i_subject = 1:n_subject
+        for i_index = 1:n_index
+            model.cost.result.avg_subject(i_subject,i_index,:) = nanmean(model.cost.result.min_subject(i_subject,i_index).u_min);
+        end
     end
     
 end
