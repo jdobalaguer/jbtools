@@ -8,15 +8,16 @@ function model = model_minimum(model)
     %#ok<*ASGLU>
     
     %% assert
-    assert(isfield(model.simu,'result'), 'model_min: error. no "model.simu.result" field');
-    assert(isfield(model.cost,'result'), 'model_min: error. no "model.cost.result" field');
+    assert(isfieldp(model,'simu.result'), 'model_min: error. no "model.simu.result" field');
+    assert(isfieldp(model,'cost.result'), 'model_min: error. no "model.cost.result" field');
     
     %% function
 
     % numbers
     n_subject   = size(model.cost.result.cost,1);
     n_index     = size(model.cost.result.cost,2);
-    s_comb      = size(model.cost.result.cost); s_comb(1:2) = []; if length(s_comb)==1, s_comb(2) = 1;
+    s_comb      = size(model.cost.result.cost); s_comb(1:2) = [];
+    if length(s_comb)==1, s_comb(2) = 1; end
     u_pars      = fieldnames(model.simu.pars);
     n_pars      = length(u_pars);
         
