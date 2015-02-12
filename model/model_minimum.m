@@ -1,6 +1,6 @@
 
-function model = model_min(model)
-    %% model = MODEL_MIN(model)
+function model = model_minimum(model)
+    %% model = MODEL_MINIMUM(model)
     % find fitting with smaller cost
     % see also: model_cost
     
@@ -37,20 +37,20 @@ function model = model_min(model)
         end
     end
     
-%     % find minima group
-%     model.cost.result.min_group = cell(n_index,1);
-%     cost = mean(model.cost.result.cost,1);
-%     for i_index = 1:n_index
-%         tmp_cost = reshape(cost(1,i_index,:),s_comb);
-%         tmp_min  = struct();
-%         [tmp_min.i_min,tmp_min.v_min] = jb_findmin(tmp_cost);
-%         tmp_min.i_min(:,end+1:n_pars) = 1;
-%         tmp_min.u_min = nan(size(tmp_min.i_min));
-%         for i_pars = 1:n_pars
-%             tmp_min.u_min(:,i_pars) = model.simu.pars.(u_pars{i_pars})(tmp_min.i_min(:,i_pars));
-%         end
-%         model.cost.result.min_group{i_index,1} = tmp_min;
-%     end
+    % find minima group
+    model.cost.result.min_group = cell(n_index,1);
+    cost = mean(model.cost.result.cost,1);
+    for i_index = 1:n_index
+        tmp_cost = reshape(cost(1,i_index,:),s_comb);
+        tmp_min  = struct();
+        [tmp_min.i_min,tmp_min.v_min] = jb_findmin(tmp_cost);
+        tmp_min.i_min(:,end+1:n_pars) = 1;
+        tmp_min.u_min = nan(size(tmp_min.i_min));
+        for i_pars = 1:n_pars
+            tmp_min.u_min(:,i_pars) = model.simu.pars.(u_pars{i_pars})(tmp_min.i_min(:,i_pars));
+        end
+        tmp_min.message = 'THIS IS NOT A FITTING MEASURE!';
+        model.cost.result.min_group{i_index,1} = tmp_min;
+    end
     
-
 end

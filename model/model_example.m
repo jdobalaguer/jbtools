@@ -4,14 +4,16 @@ function model = model_example()
     % example showing how to use the toolbox
 
     %% warnings
+    %#ok<*INUSL,*INUSD>
 
     %% function
-    N = 1;
-    k = 20;
+    N =  4;
+    t =  5;
+    k = 10;
     
     model = struct();
-    data.subject = (1:N)';
-    data.noise   = randn(N,1);
+    data.subject = mat2vec(repmat(1:N,[t,1]));
+   data.noise   = mat2vec(randn(t,N));
 
     % exhaustive search
     model.simu.func     = @test_simufunc;
@@ -21,13 +23,14 @@ function model = model_example()
     model.simu.data     = data;
     model.simu.subject  = data.subject;
     model = model_simulation(model);
+%     model = model_reconstruction(model);
 
     model.cost.func     = @test_costfunc;
     model.cost.pars     = struct();
     model.cost.simu     = {1};
-    model.cost.index    = model.simu.index;
+   model.cost.index    = model.simu.index;
     model = model_cost(model);
-    model = model_min(model);
+    model = model_minimum(model);
 
     % plot grid
     model_landscape(model,{{'a'},{'a','b'},{'a','b','c'}});
@@ -43,10 +46,16 @@ end
 
 %% model
 function result = test_simufunc(data,pars)
-    result.pars = [data.noise,pars.a,pars.b,pars.c];
+    a = pars.a;
+    b = pars.b;
+    c = pars.c;
+    n = data.noise;
+    result.cost = n + mean(power([a;b;c],2));
+    result.pars = pars;
+    result.data = data;
 end
 
 %% cost function
-function cost = test_costfunc(~,simu,~)
-    cost = mod(5*sqrt(mean(power(simu.pars,2))),1);
+function cost = test_costfunc(data,simu,pars)
+    cost = mean(simu.cost);
 end

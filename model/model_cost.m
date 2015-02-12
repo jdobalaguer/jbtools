@@ -2,26 +2,29 @@
 function model = model_cost(model)
     %% model = model_cost(model)
     % calculate the cost of each parameterisation
+    % this can work in parallel: use matlabpool('open')
     % see also: model_simulation
+    %           model_minimum
     %           model_gradient
     
     %% warnings
     %#ok<*ASGLU,*PFBNS>
     
     %% assert
-    assert(isfield(model.simu,'result'), 'model_cost: error. no "model.simu.result" field');
+    assert(isfieldp(model,'simu.result.simulation'), 'model_cost: error. no "model.simu.result.simulation" field');
     assert(length(model.cost.index) == length(model.cost.simu), 'model_cost: error. "index" and "simu" have different length');
     
     %% function
+    
     % numbers
-    s_comb = size(model.simu.result); s_comb(1:2) = [];
+    s_comb = size(model.simu.result.simulation); s_comb(1:2) = [];
     n_comb = prod(s_comb);
     
     % subject
     [u_subject,n_subject] = numbers(model.simu.subject);
     
     % index
-    if ~isfield(model.cost,'index'), model.cost.index = model.simu.index; end
+    if ~isfieldp(model,'cost.index'), model.cost.index = model.simu.index; end
     u_index = model.cost.index;
     n_index = length(u_index);
     
@@ -43,7 +46,7 @@ function model = model_cost(model)
             ii_simu = model.simu.index{i_simu};
             ii_cost = u_index{i_index};
             
-            assert(all(ii_simu(ii_cost & ii_subject)),'model_cost: error. some simu(%d) doesnt cover index(%d)',model.cost.simu{i_index},i_index);
+            assert(all(ii_simu(ii_cost & ii_subject)),'model_cost: error. simu(%d) doesnt cover index(%d)',model.cost.simu{i_index},i_index);
             
             % data
             data = struct_filter(model.simu.data,ii_subject & ii_cost);
@@ -52,7 +55,7 @@ function model = model_cost(model)
             pars = model.cost.pars;
             
             % parfor
-            parfor_simu   = model.simu.result(i_subject,i_simu,:);
+            parfor_simu   = model.simu.result.simulation(i_subject,i_simu,:);
             parfor_ii     = ii_cost(ii_subject & ii_simu);
             parfor_result = model.cost.result.cost(i_subject,i_index,:);
             parfor_func   = model.cost.func;

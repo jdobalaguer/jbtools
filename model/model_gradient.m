@@ -3,6 +3,7 @@ function model = model_gradient(model)
     %% model = model_gradient(model)
     % apply gradient descent on each point of a grid
     % the result is the best of them
+    % this can work in parallel: use matlabpool('open')
     
     %% warnings
     %#ok<>
@@ -49,9 +50,10 @@ function model = model_gradient(model)
             
             % parfor
             parfor_result = repmat(struct('u_min',[],'v_min',[]),[n_comb,1]);
-            parfor_pars   = u_pars;
-            parfor_simu   = model.simu.func;
-            parfor_cost   = model.cost.func;
+            parfor_simu_pars   = u_pars;
+            parfor_simu_func   = model.simu.func;
+            parfor_cost_pars   = model.cost.pars;
+            parfor_cost_func   = model.cost.func;
             parfor_data   = data;
             
             parfor i_comb = 1:n_comb
@@ -59,7 +61,7 @@ function model = model_gradient(model)
                 parfor_x0 = u_comb(i_comb,:)';
                 
                 % gradiend
-                parfor_result(i_comb) = model_gradient_parfor(problem,parfor_x0,parfor_pars,parfor_simu,parfor_cost,parfor_data);
+                parfor_result(i_comb) = model_gradient_parfor(problem,parfor_x0,parfor_simu_pars,parfor_simu_func,parfor_cost_pars,parfor_cost_func,parfor_data);
                 
                 % progress
                 jb_parallel_progress();
