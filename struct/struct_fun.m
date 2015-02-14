@@ -10,5 +10,4 @@ function z = struct_fun(s,f)
         field = u_field{i_field};
         z.(field) = f(s.(field));
     end
-    
 end

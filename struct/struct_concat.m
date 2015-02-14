@@ -1,5 +1,10 @@
-%% concat many structs
 function ret = struct_concat(varargin)
+    %% s = STRUCT_CONCAT(dim,s1,s2,..)
+    % concat many structs
+    
+    %% warnings
+    
+    %% function
     dim = varargin{1};
     ret = varargin{2};
     for i_struct = 3:length(varargin)
@@ -7,8 +12,10 @@ function ret = struct_concat(varargin)
     end
 end
 
-%% concat two structs
+%% AUXILIAR: concat two structs
 function ret = struct_concat_two(dim,s1,s2)
+    if isempty(s2), ret  = s1; return; end
+    
     u_field = fieldnames(s1);
     nb_fields = length(u_field);
     
