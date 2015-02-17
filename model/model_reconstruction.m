@@ -23,14 +23,19 @@ function model = model_reconstruction(model)
     n_index = length(u_index);
     
     % result
-    model.simu.result.reconstruction = struct_filter(model.simu.result.simulation(1));
-    model.simu.result.reconstruction = repmat(model.simu.result.simulation(1),[n_index,n_comb]);
+    model.simu.result.reconstruction = struct_filter(model.simu.result.simulation(1),1);
+    model.simu.result.reconstruction = repmat(model.simu.result.reconstruction,[n_index,s_comb]);
     for i_index = 1:n_index
         for i_comb = 1:n_comb
-            reconstruction = 
-            
-            
-            
+            reconstruction = struct_fun(model.simu.result.reconstruction(i_index,i_comb),@(x)repmat(x,[length(u_index{i_index}),1]));
+            for i_subject = 1:n_subject
+                ii_index   = u_index{i_index};
+                ii_subject = (model.simu.subject == u_subject(i_subject));
+                ii = (ii_index & ii_subject);
+                simulation = model.simu.result.simulation(i_subject,i_index,i_comb);
+                reconstruction = struct_set(reconstruction,simulation,ii);
+            end
+            model.simu.result.reconstruction(i_index,i_comb) = reconstruction;
         end
     end
     
