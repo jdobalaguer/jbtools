@@ -60,7 +60,9 @@ function color = fig_color(scheme,n)
             color_hsv(:,3) = 1;
             color = 255 * hsv2rgb(color_hsv);
     % otherwise
-        otherwise       error('fig_color: scheme "%s" not valid',scheme);
+        otherwise
+            assert(logical(exist('get_color.m','file')),sprintf('fig_color: scheme "%s" not valid',scheme));
+            color = repmat(255*get_color(scheme),[n,1]);
     end
     
     % resize
