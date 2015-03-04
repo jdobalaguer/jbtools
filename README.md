@@ -23,20 +23,20 @@ If you want to update the toolbox (only from UNIX/Linux), simply do
 [rebuilt](rebuilt) are overloaded functions that matlab already includes.
 
 #### analysis
-[analysis_tool](analysis) is a graphical tool for basic data analysis & plotting
+[analysis](analysis_tool) is a graphical tool for basic data analysis & plotting
 
 #### jb & jbtools
-[console](jb) is a single function that aims to enhance some features of the current matlab console (but sacrifices too many good other things)
-[jb_tools](jbtools) is a set of functions (similar to anonymous) that are useful for very specific tasks. Having the "jb_" prefix makes them easy to be found!
+[jb](console) is a single function that aims to enhance some features of the current matlab console (but sacrifices too many good other things)
+[jbtools](jb_tools) is a set of functions (similar to anonymous) that are useful for very specific tasks. Having the "jb_" prefix makes them easy to be found!
 
 #### fig
-[figures](fig) is a set of functions that help you make nicer figures out of your data
+[fig](figures) is a set of functions that help you make nicer figures out of your data
 
 #### matd3
 [matd3](matd3) IN CONSTRUCTION. aims for the same as fig, but does it through javascript d3!
 
 #### get_matrix
-[getm](get_matrix) is a set of functions that shrink your data (i.e. it takes indexed vectors as an input and returns a matrix). extremely useful for behavioural analyses.
+[get_matrix](getm) is a set of functions that shrink your data (i.e. it takes indexed vectors as an input and returns a matrix). extremely useful for behavioural analyses.
 
 #### model
 [model](model) is a framework for model fitting
