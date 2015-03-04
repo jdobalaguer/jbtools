@@ -59,7 +59,7 @@ function model = model_cost(model)
             parfor_ii     = ii_cost(ii_subject & ii_simu);
             parfor_result = model.cost.result.cost(i_subject,i_index,:);
             parfor_func   = model.cost.func;
-            parfor i_comb = 1:n_comb
+            parfor (i_comb = 1:n_comb, jb_parallel_pool())
                 
                 % simu
                 simu = struct_filter(parfor_simu(i_comb),parfor_ii);

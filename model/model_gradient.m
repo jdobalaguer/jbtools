@@ -56,7 +56,7 @@ function model = model_gradient(model)
             parfor_cost_func   = model.cost.func;
             parfor_data   = data;
             
-            parfor i_comb = 1:n_comb
+            parfor (i_comb = 1:n_comb, jb_parallel_pool())
                 % comb
                 parfor_x0 = u_comb(i_comb,:)';
                 

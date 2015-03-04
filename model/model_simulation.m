@@ -13,6 +13,9 @@ function model = model_simulation(model)
     %% function
     
     % set up parameters
+    if ~isfieldp(model,'simu.pars')
+        model.simu.pars = struct('null',0);
+    end
     model.simu.pars = struct_mat2vec(model.simu.pars);
     u_pars = fieldnames(model.simu.pars);
     n_pars = length(u_pars);
@@ -62,7 +65,7 @@ function model = model_simulation(model)
             % parfor
             parfor_result = model.simu.result.simulation(i_subject,i_index,:);
             parfor_func   = model.simu.func;
-            parfor i_comb = 1:n_comb
+            parfor (i_comb = 1:n_comb, jb_parallel_pool())
                 
                 % comb
                 pars = [u_pars';num2cell(u_comb(i_comb,:))];

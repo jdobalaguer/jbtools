@@ -1,5 +1,14 @@
 
 function git(varargin)
+    %% GIT(cmd)
+    % execute a git command
+    
+    %% warnings
+    
+    %% function
+    assertUnix('this function only works in unix');
+    assert(nargin>0,'git: error. no input given');
+    
     % parse
     if strcmp(varargin{1},'pum'),
         cmd{1} = 'git commit -m "automatic upload"';

@@ -26,7 +26,12 @@ function jb(varargin)
             ops = parse(ops);       % parse
             cmd = concat(ops{:});   % concat
 %                 print(cmd);         % print
-            evalin('caller', cmd);  % eval
+            try
+                evalin('caller', cmd);  % eval
+            catch err
+                cprintf([0.8,0.5,0.1],err.message);
+                fprintf('\n');
+            end
         end
         cmd = enter(one,ind);       % input
         out = leave(cmd);           % leave

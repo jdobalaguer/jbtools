@@ -12,8 +12,8 @@ function h = fig_pimage(varargin)
     switch nargin
         case 1
             C = varargin{1};
-            X = 1:size(C,2)+0.5;
-            Y = 1:size(C,1)+0.5;
+            X = 0.5:size(C,2)+0.5;
+            Y = 0.5:size(C,1)+0.5;
         case 3
             C = varargin{3};
             X = varargin{1} - 0.5;
