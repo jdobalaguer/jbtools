@@ -33,7 +33,7 @@ If you want to update the toolbox (only from UNIX/Linux), simply do
 [fig](figures) is a set of functions that help you make nicer figures out of your data
 
 #### matd3
-[matd3](matd3) IN CONSTRUCTION. aims for the same as fig, but does it through javascript d3!
+[d3](d3) IN CONSTRUCTION. aims for the same as fig, but does it through d3.js!
 
 #### get_matrix
 [get_matrix](getm) is a set of functions that shrink your data (i.e. it takes indexed vectors as an input and returns a matrix). extremely useful for behavioural analyses.
