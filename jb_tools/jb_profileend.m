@@ -1,2 +1,2 @@
-profsave(profile('info'),'profile_results');
 profile('off');
+profsave(profile('info'),'profile_results');

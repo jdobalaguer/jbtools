@@ -1,6 +1,6 @@
 
-function d3_figure(varargin)
-    %% D3_FIGURE(data,[pars,vals,])
+function d3_example(varargin)
+    %% D3_EXAMPLE([pars,vals,])
     % open a figure with d3
     % see also d3_start
     %          d3_defaults
@@ -14,11 +14,12 @@ function d3_figure(varargin)
     %#ok<*UNRCH>
     
     %% function
-    d3 = d3_start(varargin{2:end});
-    d3.opts.data = varargin{1};
-    d3_browser(sprintf('localhost:%d/',d3.opts.port));
-    while(d3.TCP.socket ~= -1)
-        d3 = d3_reply(d3);
-    end
+    n = 50;
+    t = linspace(0,4*pi,n);
+    y1 = sin(t);
+    y2 = cos(t);
+    data(1) = d3_data(1,'plot',t,y1);
+    data(2) = d3_data(2,'plot',t,y2);
+    d3_figure(data,varargin{:});
     
 end

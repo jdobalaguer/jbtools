@@ -8,31 +8,25 @@ function [TCP,data] = JavaTcpServer(action,TCP,data,config)
     
     %% function
     
-    % initialize java
-    import java.net.Socket;
-    import java.io.*;
-    import java.net.ServerSocket;
+    % import java
+    import('java.net.Socket');
+    import('java.io.*');
+    import('java.net.ServerSocket');
 
-    % global variables
-    global GlobalserverSocket;
-    
     switch(action)
         case 'initialize'
-            try
-                serverSocket = ServerSocket(config.port);
-            catch 
+            serverSocket = [];
+            while isempty(serverSocket)
                 try
-                    GlobalserverSocket.close();
                     serverSocket = ServerSocket(config.port);
                 catch
-                    error('JavaTcpServer : error(initialize). Failed to open server port.');
+                    config.port = config.port + 1;
                 end
             end
             serverSocket.setSoTimeout(config.timeout);
             TCP.port = config.port;
             TCP.socket = nan;
             TCP.serverSocket = serverSocket;
-            GlobalserverSocket = serverSocket;
             if(config.verbose),
                 cprintf('*black','JavaTcpServer: initialize: ');
                 fprintf('webserver available on http://localhost:%d \n',config.port);

@@ -1,0 +1,6 @@
+<script>
+    function menu_save() {
+    }
+    function menu_print() {
+    }
+</script>
