@@ -11,7 +11,7 @@ function d3 = d3_reply(d3)
     %          d3_example
     
     %% warnings
-    %#ok<*>
+    %#ok<>
     
     %% function
     

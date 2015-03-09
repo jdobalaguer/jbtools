@@ -13,9 +13,37 @@ function defs = d3_data_default()
     %% warnings
 
     %% function
-    defs = struct();
-    defs.fig    =  1;
-    defs.chart  = '';
-    defs.axis   = [];
-    defs.vals   = [];
+    
+    % figure
+    defs.fig.handle =  1;
+    defs.fig.title  =  '';
+    defs.fig.size.x =  800;
+    defs.fig.size.y =  600;
+    
+    % axis
+    defs.axis.rng.x = [nan,nan];        % range
+    defs.axis.rng.y = [nan,nan]; 
+%     defs.axis.boz.x = false;            % both sides
+%     defs.axis.boz.y = false;
+%     defs.axis.thk.x = 2;                % thick
+%     defs.axis.thk.y = 2;
+%     defs.axis.fon.x = 'Arial';          % text font
+%     defs.axis.fon.y = 'Arial';
+%     defs.axis.lab.x = 'defs.axis.lab.x'; % label
+%     defs.axis.lab.y = 'defs.axis.lab.y';
+%     defs.axis.tik.x = []; % tick
+%     defs.axis.tik.y = []; 
+%     defs.axis.til.x = []; % tick label
+%     defs.axis.til.y = []; 
+    
+    % values
+    defs.vals.x = [];
+    defs.vals.y = [];
+    defs.vals.e = [];
+    
+    % style
+    defs.styl.chart = [];
+    defs.styl.color = [];
+    defs.styl.interp = 'linear';
+    
 end

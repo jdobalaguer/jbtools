@@ -1,15 +1,15 @@
 
-function html = d3_tab(d3,request)
-    %% html = D3_TAB(d3,request)
+function html = d3_tab(d3)
+    %% html = D3_TAB(d3)
     % create tabs
     % see d3_html
 
     %% warnings
-    %#ok<*INUSD>
     %#ok<*AGROW>
 
     %% function
-    u_tab = unique([d3.opts.data.fig]);
+    u_tab = unique(d3.opts.summ.fig.handle);
+    n_tab = length(u_tab);
     
     html = '';
     
@@ -31,7 +31,18 @@ function html = d3_tab(d3,request)
         if tab==u_tab(1),
             html = [html,' active'];
         end
-        html = [html,'"></div>',10];
+        html = [html,'">',10];
+        % fig
+        html = [html,'  <div id="fig',num2str(tab),'" ></div>'];
+        % menu
+        html = [html,'    <div class="tabs">',10];
+        html = [html,'      <a class="tab" href="javascript:menu_showSVG(',num2str(tab),');">Show SVG</a>',10];
+        html = [html,'      <a class="tab" href="javascript:menu_showPNG(',num2str(tab),');">Show PNG</a>',10];
+        html = [html,'      <a class="tab" href="javascript:menu_saveSVG(',num2str(tab),');">Save SVG</a>',10];
+        html = [html,'      <a class="tab" href="javascript:menu_savePNG(',num2str(tab),');">Save PNG</a>',10];
+        html = [html,'    </div>',10];
+        % /content
+        html = [html,'</div>',10];
     end
     
     % tail
@@ -40,15 +51,12 @@ function html = d3_tab(d3,request)
     % canvas
     html = [html,'<script type="text/javascript">',10];
     html = [html,'  svg = [];',10];
-    for tab = u_tab
-        html = [html,'  svg[',num2str(tab),'] = dimple.newSvg("#tab',num2str(tab),'", 590, 400);',10];
+    for i_tab = 1:n_tab
+        tab = u_tab(i_tab);
+        html = [html,'  svg[',num2str(tab),'] = dimple.newSvg("#fig',num2str(tab),'",',num2str(d3.opts.summ.fig.size.x(i_tab)),',',num2str(d3.opts.summ.fig.size.y(i_tab)),');',10];
+        html = [html,'  jQuery($(fig',num2str(tab),').children()[0]).attr("id","svg',num2str(tab),'");',10];
     end
     html = [html,'</script>',10];
     
-    % menu
-    html = [html,'  <div class="tabs">',10];
-    html = [html,'    <a class="tab" href="javascript:void(0);">Save</a>',10];
-    html = [html,'    <a class="tab" href="javascript:void(0);">Print</a>',10];
-    html = [html,'  </div>',10];
     
 end

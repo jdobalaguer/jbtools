@@ -15,7 +15,7 @@ function d3_figure(varargin)
     
     %% function
     d3 = d3_start(varargin{2:end});
-    d3.opts.data = varargin{1};
+    [d3.opts.data,d3.opts.summ] = d3_summ(varargin{1});
     d3_browser(sprintf('localhost:%d/',d3.opts.port));
     while(d3.TCP.socket ~= -1)
         d3 = d3_reply(d3);

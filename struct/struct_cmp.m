@@ -1,11 +1,16 @@
 
-function b = struct_cmp(s1,s2)
+function b = struct_cmp(s1,s2,depth)
     %% b = STRUCT_CMP(s1,s2)
     % compare the fields between two structures
     
     %% warnings
     
     %% function
+    if ~exist('depth','var'), depth = false; end
+    if depth
+        s1 = struct_flat(s1);
+        s2 = struct_flat(s2);
+    end
     u1 = fieldnames(s1);
     u2 = fieldnames(s2);
     n1 = length(u1);

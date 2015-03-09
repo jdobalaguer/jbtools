@@ -4,12 +4,14 @@ function z = struct_flat(s)
     % transforms hierarchical (deep) struct into a single (flat) struct
     
     %% warnings
+    %#ok<*AGROW>
     
     %% function
-    
     assert(isstruct(s), 'struct_flat: error. s not a struct');
-    assert(isscalar(s), 'struct_flat: error. s not scalar');
-    z = flatten(s);
+    assert(isvector(s), 'struct_flat: error. s not vector');
+    for i = 1:length(s)
+        z(i) = flatten(s(i));
+    end
 end
 
 

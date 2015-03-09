@@ -15,23 +15,30 @@ function [optout,ret] = parser(optin,def)
     %% function
     
     % assert
-    assert(isstruct(def),                   'parser: error. [default] is not a struct');
+    assert(isstruct(def),                       'parser: error. [default] is not a struct');
     assert(isstruct(optin) || iscell(optin),    'parser: error. [optin] has wrong format');
     
     % default
     optout = def;
     ret    = false;
+    nowa   = false;
     
-    % help
-    if strcmp(optin,'parameters')
-        print_parameters(def);
-        ret = true;
-        return;
-    end
-    if strcmp(optin,'default')
-        print_default(def);
-        ret = true;
-        return;
+    % meta
+    if iscell(optin)
+        if strcmp(optin,'parameters')
+            print_parameters(def);
+            ret = true;
+            return;
+        end
+        if strcmp(optin,'default')
+            print_default(def);
+            ret = true;
+            return;
+        end
+        if any(strcmp(optin,'no_warning'))
+            optin(strcmp(optin,'no_warning')) = [];
+            nowa = true;
+        end
     end
     
     % optin = optin{1}
@@ -54,7 +61,7 @@ function [optout,ret] = parser(optin,def)
     optout = struct_add(def,optin);
     
     % extra
-    assertWarning(struct_cmp(optout,def),'parser: warning. some parameters were not included as default');
+    assertWarning(nowa || struct_cmp(optout,def),'parser: warning. some parameters were not included as default');
     
 end
 

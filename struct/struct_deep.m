@@ -4,11 +4,14 @@ function z = struct_deep(s)
     % transforms single (flat) struct into a hierarchical (deep) struct
     
     %% warnings
+    %#ok<*AGROW>
     
     %% function
     assert(isstruct(s), 'struct_deep: error. s not a struct');
-    assert(isscalar(s), 'struct_deep: error. s not scalar');
-    z = deepen(s);
+    assert(isvector(s), 'struct_flat: error. s not vector');
+    for i = 1:length(s)
+        z(i) = deepen(s(i));
+    end
 end
 
 function z = deepen(s)

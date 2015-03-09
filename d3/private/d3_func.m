@@ -42,7 +42,7 @@ function [d3,response] = d3_func(d3,request)
             addpath(pathstr);
             fhandle = str2func(name);
             try
-                html = feval(fhandle,d3,request);
+                html = feval(fhandle,d3);
             catch ME
                 rmpath(pathstr);
                 fullfilename = [d3.opts.www_folder,d3.opts.defaulterr];
