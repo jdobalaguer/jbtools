@@ -18,9 +18,9 @@ function scan = scan_glm_second_contrast(scan)
         % design
         job = struct();
         job.spm.stats.factorial_design.dir                      = {dir_datglm2};
-        job.spm.stats.factorial_design.des.t1.scans             = cellstr(spm_select('FPlist', dir_datglm2, '^spmT_.*\.img$'));
+        job.spm.stats.factorial_design.des.t1.scans             = cellstr(spm_select('FPlist', dir_datglm2, '^con_.*\.img$')); %'^spmT_.*\.img$'));
         if isempty(job.spm.stats.factorial_design.des.t1.scans{1}),
-            job.spm.stats.factorial_design.des.t1.scans             = cellstr(spm_select('FPlist', dir_datglm2, '^spmT_.*\.nii$'));
+            job.spm.stats.factorial_design.des.t1.scans             = cellstr(spm_select('FPlist', dir_datglm2, '^con_.*\.nii$')); %'^spmT_.*\.nii$'));
         end
         job.spm.stats.factorial_design.cov                      = struct('c', {}, 'cname', {}, 'iCFI', {}, 'iCC', {});
         job.spm.stats.factorial_design.masking.tm.tm_none       = 1;    % threshold masking

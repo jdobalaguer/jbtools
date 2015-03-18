@@ -17,7 +17,7 @@ function [z,u] = getm_func(varargin)
     end
     %% set inputs
     y = y(:);
-    for i=1:nargin-2, x{i} = x{i}(:); end
+    for i=1:nargin-2, x{i} = double(x{i}(:)); end
     x = cell2mat(x);
     
     %% numbers

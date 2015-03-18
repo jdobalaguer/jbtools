@@ -18,6 +18,7 @@ function varargout = fig_axis(sa,ca)
   % sa.xlim    = [-1,+1];
   % sa.ylim    = [-1,+1];
   % sa.zlim    = [-1,+1];
+  % sa.clim    = [-1,+1];
   % sa.xlabel = 'xlabel';
   % sa.ylabel = 'ylabel';
   % sa.zlabel = 'zlabel';
@@ -102,6 +103,10 @@ function varargout = fig_axis(sa,ca)
   % zlim
   if isfield(sa,{'zlim'})
       zlim(sa.zlim);
+  end
+  % clim
+  if isfield(sa,{'clim'})
+      set(gca(),'clim',sa.clim);
   end
   % xlabel
   if isfield(sa,{'xlabel'})

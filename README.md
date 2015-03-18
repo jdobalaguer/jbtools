@@ -53,9 +53,6 @@ If you want to update the toolbox (only from UNIX/Linux), simply do
 #### struct
 [struct](struct) set of functions useful for manipulation of struct variables
 
-#### web
-[web](web) set of functions that allow you to use MATLAB as a web server
-
 
 ## Last stuff
 

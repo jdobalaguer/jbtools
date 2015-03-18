@@ -44,9 +44,9 @@ function scan = scan_glm_regressor_merge(scan)
         for i_run = 1:nb_runs-1
             onset = onset + scan.pars.tr * nb_volumes(i_run);
             for i_cond = 1:length(C_merged)
-                C_merged{i_cond}.onset = [C_merged{i_cond}.onset, C_unmerged{i_run+1}{i_cond}.onset + onset];
+                C_merged{i_cond}.onset = jb_vectorcat(C_merged{i_cond}.onset, C_unmerged{i_run+1}{i_cond}.onset + onset);
                 for i_level = 1:length(C_merged{i_cond}.level)
-                    C_merged{i_cond}.level{i_level} = [C_merged{i_cond}.level{i_level}, C_unmerged{i_run+1}{i_cond}.level{i_level}];
+                    C_merged{i_cond}.level{i_level} = jb_vectorcat(C_merged{i_cond}.level{i_level}, C_unmerged{i_run+1}{i_cond}.level{i_level});
                 end
             end
 

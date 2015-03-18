@@ -60,7 +60,7 @@ function scan = scan_glm_run(scan)
     glm_copy = false(6); if isfield(scan.glm,'copy'), glm_copy = scan.glm.copy; end
     if glm_copy(1),     scan = scan_glm_copy_beta1(scan);       save_scan(); end    % COPY:         beta      (first level)
     if glm_copy(2),     scan = scan_glm_copy_contrast1(scan);   save_scan(); end    % COPY:         contrast  (first level)
-    if glm_copy(3),     scan = scan_glm_copy_statistic1(scan);  save_scan(); end    % COPY:         statistic (first level)
+%     if glm_copy(3),     scan = scan_glm_copy_statistic1(scan);  save_scan(); end    % COPY:         statistic (first level)
     if glm_copy(4),     scan = scan_glm_copy_beta2(scan);       save_scan(); end    % COPY:         beta      (second level)
     if glm_copy(5),     scan = scan_glm_copy_contrast2(scan);   save_scan(); end    % COPY:         contrast  (second level)
     if glm_copy(6),     scan = scan_glm_copy_statistic2(scan);  save_scan(); end    % COPY:         statistic (second level)
