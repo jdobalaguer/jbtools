@@ -32,8 +32,6 @@ function ret = struct_concat_two(dim,s1,s2)
         end
         if ischar(v1),   v1 = {v1}; end
         if ischar(v2),   v2 = {v2}; end
-        if isvector(v1), v1 = mat2vec(v1); end
-        if isvector(v2), v2 = mat2vec(v2); end
         % concat values
         v = cat(dim,v1,v2);
         % save value

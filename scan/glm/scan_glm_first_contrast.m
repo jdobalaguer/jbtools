@@ -18,7 +18,7 @@ function scan = scan_glm_first_contrast(scan)
         for i_contrast = 1:length(scan.glm.contrast{i_subject})
             job.spm.stats.con.consess{i_contrast}.tcon.name      = scan.glm.contrast{i_subject}{i_contrast}.name;
             job.spm.stats.con.consess{i_contrast}.tcon.convec    = scan.glm.contrast{i_subject}{i_contrast}.convec;
-            job.spm.stats.con.consess{i_contrast}.tcon.sessrep   = 'replsc';
+            job.spm.stats.con.consess{i_contrast}.tcon.sessrep   = scan.glm.contrast{i_subject}{i_contrast}.sessrep;
         end
         job.spm.stats.con.delete = 1;
         jobs{end+1} = job;

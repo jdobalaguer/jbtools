@@ -16,9 +16,13 @@ function scan = scan_initialize_set(scan)
     
     dire_dicom();
     dire_nii();
+    if isfield(scan,'glm'),     dire_glm([scan.dire.root,filesep,'data',filesep,'glm',filesep,scan.glm.name,filesep]);
+    end
+    if isfield(scan,'ppi'),     dire_ppi([scan.dire.root,filesep,'data',filesep,'ppi',filesep,scan.glm.name,filesep]);
+                                dire_glm(scan.dire.ppi.glm);
+    end
     if isfield(scan,'mvpa'),    dire_mvpa();
                                 dire_glm(scan.dire.mvpa.glm);
-    elseif isfield(scan,'glm'), dire_glm([scan.dire.root,filesep,'data',filesep,'glm',filesep,scan.glm.name,filesep]);
     end
     
     % file
@@ -77,6 +81,13 @@ function scan = scan_initialize_set(scan)
         scan.dire.glm.contrast2     = [scan.dire.glm.root,'copy',filesep,'contrast_2',filesep];
         scan.dire.glm.statistic1    = [scan.dire.glm.root,'copy',filesep,'statistic_1',filesep];
         scan.dire.glm.statistic2    = [scan.dire.glm.root,'copy',filesep,'statistic_2',filesep];
+    end
+
+    % ppi
+    function dire_ppi(root)
+        scan.dire.ppi               = struct();
+        scan.dire.ppi.root          = root;
+        scan.dire.ppi.glm           = scan.dire.ppi.root;
     end
     
     % mvpa

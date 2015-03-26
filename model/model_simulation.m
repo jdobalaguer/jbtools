@@ -22,6 +22,7 @@ function model = model_simulation(model)
     c_pars = cell(1,n_pars);
     for i_pars = 1:n_pars
         c_pars{i_pars} =  model.simu.pars.(u_pars{i_pars});
+        if ~iscell(c_pars{i_pars}), c_pars{i_pars} = num2cell(c_pars{i_pars}); end % convert to cell
     end
     u_comb = fliplr(jb_allcomb(c_pars{end:-1:1}));
     n_comb = size(u_comb,1);
@@ -37,7 +38,8 @@ function model = model_simulation(model)
     
     % initialize result
     data = struct_filter(model.simu.data,[]);
-    pars = struct_filter(model.simu.pars,1);
+    pars = [u_pars';num2cell(u_comb(1,:))];
+    pars = struct(pars{:});
     model.simu.result.simulation = model.simu.func(data,pars);
     u_result = fieldnames(model.simu.result.simulation);
     n_result = length(u_result);

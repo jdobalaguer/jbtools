@@ -1,6 +1,6 @@
 
-function editwith(filewith,fileedit)
-    %% EDITWITH(filewith,fileedit)
+function with_edit(filewith,fileedit)
+    %% WITH_EDIT(filewith,fileedit)
     
     %% warnings
     
