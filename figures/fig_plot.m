@@ -2,7 +2,7 @@ function varargout = fig_plot(varargin)
   
   % set colours
   original_colours = get(0,'DefaultAxesColorOrder');
-  set(gcf,'DefaultAxesColorOrder',fig_color('clovers')./255);
+  set(gcf,'DefaultAxesColorOrder',fig_color('clovers'));
   
   % plot
   defaults = {'LineStyle','--','Marker','.', 'MarkerSize', 26};

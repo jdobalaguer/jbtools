@@ -100,7 +100,10 @@ function scan = scan_glm_first_design(scan)
                 job.spm.stats.fmri_spec.bases.fir.order  = scan.glm.fir.ord;
         end
         job.spm.stats.fmri_spec.volt = 1;
-        job.spm.stats.fmri_spec.global = 'Scaling'; %'None';
+        if ~isfieldp(scan,'glm.global')
+            scan.glm.global = 'None';
+        end
+        job.spm.stats.fmri_spec.global = scan.glm.global;
         job.spm.stats.fmri_spec.mask = {''};
         job.spm.stats.fmri_spec.cvi = 'AR(1)';
         

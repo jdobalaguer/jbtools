@@ -19,7 +19,7 @@ function scan_plot_peristimulus_1(scan,directory)
     % figure
     fig_figure();
     hold('on');
-    colours = fig_color('hsv',length(scan.glm.plot.contrast))./255;
+    colours = fig_color('hsv',length(scan.glm.plot.contrast));
     handles = nan(1,length(scan.glm.plot.contrast));
     for i_contrast = 1:length(scan.glm.plot.contrast)
         % list files
@@ -67,7 +67,5 @@ function scan_plot_peristimulus_1(scan,directory)
     fig_axis(sa);
     set(legend,'location','Best');
     fig_figure(gcf());
-    fig_fontname();
-    fig_fontsize();
 
 end

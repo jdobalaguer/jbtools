@@ -7,8 +7,8 @@ function with_edit(filewith,fileedit)
     %% function
     assertExist(filewith);
     dirwith = fileparts(which(filewith));
-    assert(isdir(dirwith),'editwith: error. directory "%s" doesn''t exist',dirwith);
+    assert(isdir(dirwith),'with_edit: error. directory "%s" doesn''t exist',dirwith);
     pathedit = [dirwith,filesep(),fileedit];
-    fprintf('editwith: editing path "%s" \n',pathedit);
+    fprintf('with_edit: editing path "%s" \n',pathedit);
     edit(pathedit);
 end

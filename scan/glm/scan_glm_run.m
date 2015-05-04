@@ -41,8 +41,10 @@ function scan = scan_glm_run(scan)
     
     % 1 = regressors
     if do_regressor,    scan = scan_glm_regressor_build(scan);  save_scan(); end    % REGRESSOR:    build
+    if do_regressor,    scan = scan_glm_regressor_outer(scan);  save_scan(); end    % REGRESSOR:    outside covariate
     if do_regressor,    scan = scan_glm_regressor_check(scan);  save_scan(); end    % REGRESSOR:    check
     if do_regressor,    scan = scan_glm_regressor_merge(scan);  save_scan(); end    % REGRESSOR:    merge
+    if do_regressor,    scan = scan_glm_regressor_outKF(scan);   save_scan(); end   % REGRESSOR:    outside filtering
     
     % 2 = first level (regression)
     if do_regression,   scan = scan_glm_first_design(scan);     save_scan(); end    % REGRESSION:   design

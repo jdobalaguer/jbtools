@@ -21,14 +21,19 @@ function scan = scan_ppi_run(scan)
     scan = scan_ppi_glm_init(scan);
     scan = scan_ppi_glm_design(scan);
     
-    % get seed activity
+    % add seed activity
     scan = scan_ppi_seed(scan);
     scan = scan_ppi_pooling(scan);
     scan = scan_ppi_filter(scan);
     scan = scan_ppi_zscore(scan);
-    
-    % edit design & set contrasts
     scan = scan_ppi_append(scan);
+    
+    % set contrasts
+    if ~scan.ppi.do.seed,
+        tmp = load([scan.dire.glm.root,'scan.mat']);
+        tmp = tmp.scan;
+        scan.ppi.variables = tmp.ppi.variables;
+    end
     scan = scan_glm_setcontrasts(scan);
     scan = scan_ppi_setcontrasts(scan);
     

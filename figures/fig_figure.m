@@ -14,12 +14,11 @@ function cf = fig_figure(cf)
     %% smooth
     fig_smooth(cf);
     
-    %% text
-    fig_fontname(cf,'Verdana');
-    fig_fontsize(cf,18);
-    
     %% toolbar
-    %set(cf,'ToolBar','none');
+    set(cf,'ToolBar','none');
+    
+    %% hold
+    hold('on');
     
     %% docked
     %set(cf,'WindowStyle','docked');

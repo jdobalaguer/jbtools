@@ -12,7 +12,7 @@ function scan = scan_ppi_append(scan)
     assert(all(scan.glm.hrf.ord==[0,0]));
 
     %% FUNCTION
-    if ~scan.ppi.do.regression, return; end
+    if ~scan.ppi.do.seed, return; end
     
     scan.ppi.variables.bid = {};
     scan.ppi.variables.regressor = {};
@@ -92,4 +92,7 @@ function scan = scan_ppi_append(scan)
         save(file_SPM,'SPM','-append');
         
     end
+    
+    % save
+    save([scan.dire.glm.root,'scan.mat'],'scan');
 end

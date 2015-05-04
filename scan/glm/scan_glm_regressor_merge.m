@@ -21,7 +21,7 @@ function scan = scan_glm_regressor_merge(scan)
         nb_volumes = nan(size(u_run));
         tmp_cond = load(sprintf('%sfinal_realignment_sub_%02i.mat',  scan.dire.glm.regressor,sub),'realignment');
         tmp_cond = tmp_cond.realignment;
-        R_merged   = zeros(0,6);
+        R_merged   = zeros(0,size(tmp_cond{1},2));
         for i_run = u_run
             run = u_run(i_run);
             % run onset

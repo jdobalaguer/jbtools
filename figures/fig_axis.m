@@ -9,6 +9,9 @@ function varargout = fig_axis(sa,ca)
   % sa.xtick   = -1:0.5:+1;
   % sa.ytick   = -1:0.5:+1;
   % sa.ztick   = -1:0.5:+1;
+  % sa.xminor  = 'on';
+  % sa.yminor  = 'on';
+  % sa.zminor  = 'on';
   % sa.xticklabel = {'-1',...}
   % sa.yticklabel = {'-1',...}
   % sa.zticklabel = {'-1',...}
@@ -25,7 +28,6 @@ function varargout = fig_axis(sa,ca)
   % sa.ilegend = [obj1, obj2, ...];
   % sa.tlegend = {object 1','object 2'};
   % sa.title   = 'title';
-  %
 
   if ~exist('sa','var') || isempty(sa); sa = struct(); end
   if ~exist('ca','var') || isempty(ca); ca = gca();    end
@@ -43,8 +45,7 @@ function varargout = fig_axis(sa,ca)
         
   % xtick
   if isfield(sa,{'xtick'})
-    set(ca,   'XMinorTick','on', ...
-              'XTick',sa.xtick);
+    set(ca,   'XTick',sa.xtick);
   end
   % xminor
   if isfield(sa,{'xminor'})
@@ -64,8 +65,7 @@ function varargout = fig_axis(sa,ca)
   end
   % ytick
   if isfield(sa,{'ytick'})
-    set(ca,   'YMinorTick', 'on', ...
-              'YTick'     , sa.ytick);
+    set(ca,   'YTick'     , sa.ytick);
   end
   % yminor
   if isfield(sa,{'yminor'})
@@ -85,8 +85,7 @@ function varargout = fig_axis(sa,ca)
   end
   % ztick
   if isfield(sa,{'ztick'})
-    set(ca,   'ZMinorTick', 'on', ...
-              'ZTick'     , sa.ztick);
+    set(ca,   'ZTick'     , sa.ztick);
   end
   % zminor
   if isfield(sa,{'zminor'})
@@ -111,33 +110,23 @@ function varargout = fig_axis(sa,ca)
   % xlabel
   if isfield(sa,{'xlabel'})
     va.xlabel = xlabel(sa.xlabel);
-    set(va.xlabel,'FontName','Verdana');
-    set(va.xlabel,'FontSize',14);
   end
   % ylabel
   if isfield(sa,{'ylabel'})
     va.ylabel = ylabel(sa.ylabel);
-    set(va.ylabel,'FontName','Verdana');
-    set(va.ylabel,'FontSize',14);
   end
   % zlabel
   if isfield(sa,{'zlabel'})
     va.zlabel = zlabel(sa.zlabel);
-    set(va.zlabel,'FontName','Verdana');
-    set(va.zlabel,'FontSize',14);
   end
   % title
   if isfield(sa,{'title'})
     va.title  = title (sa.title);
-    set(va.title,'FontName','Verdana');
     set(va.title,'FontWeight','bold');
-    set(va.title,'FontSize',14);
   end
   % legend
   if isfield(sa,{'ilegend','tlegend'})
     va.hlegend = legend(sa.ilegend,sa.tlegend,'location','NorthWest');
-    set(va.hlegend,'FontName','Verdana');
-    set(va.hlegend,'FontSize',14);
   end
   
   %% output

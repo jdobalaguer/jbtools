@@ -15,8 +15,16 @@ function scan = scan_plot_peristimulus(varargin)
     if isstr(varargin{2}) && nargin==4,
         assert(exist([varargin{2},'/scan.mat'],'file')>0, 'scan_plot_peristimulus: error. no "scan.mat" file found');
         load([varargin{2},'/scan.mat']);
-        scan.glm.plot.mask     = varargin{3};
-        scan.glm.plot.contrast = varargin{4};
+        scan.glm.plot.mask       = varargin{3};
+        scan.glm.plot.contrast   = varargin{4};
+        scan.dire.glm.root       = varargin{2};
+        scan.dire.glm.beta1      = [scan.dire.glm.root,'copy/beta_1/'];
+        scan.dire.glm.beta2      = [scan.dire.glm.root,'copy/beta_2/'];
+        scan.dire.glm.contrast1  = [scan.dire.glm.root,'copy/contrast_1/'];
+        scan.dire.glm.contrast2  = [scan.dire.glm.root,'copy/contrast_2/'];
+        scan.dire.glm.statistic1 = [scan.dire.glm.root,'copy/statistic_1/'];
+        scan.dire.glm.statistic2 = [scan.dire.glm.root,'copy/statistic_2/'];
+        scan.dire.mask           = [pwd(),'/data/mask/'];
     elseif isstruct(varargin{2}) && nargin==2
         scan = varargin{2};
     else

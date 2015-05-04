@@ -58,21 +58,12 @@ function scan = scan_mvpa_uni_plot(scan)
         e(ii_nan) = [];
         
         % plot
-        web = fig_barweb(   m,...                                                   mean
+        web = fig_bare(     m,...                                                   mean
                             e,...                                                   error
-                            [],...                                                  width
+                            fig_color('bw',n_level),...                             colour
                             {''},...                                                group names
-                            scan.mvpa.regressor.name{i_regressor},...               title
-                            [],...                                                  xlabel
-                            'beta weights',...                                      ylabel
-                            fig_color('bw',n_level)./255,...                        colour
-                            [],...                                                  grid
-                            num2leg(u_level),...                                    legend
-                            [],...                                                  error sides (1, 2)
-                            'axis'...                                               legend ('plot','axis')
-                            );
-
-%         fig_steplot(u_level,m,e);
+                            num2leg(u_level));...                                   bars
+%         fig_steplot(u_level',m,e);
         
     end
     

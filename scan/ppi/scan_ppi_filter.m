@@ -8,7 +8,7 @@ function scan = scan_ppi_filter(scan)
     %#ok<*NUSED,*AGROW,*FPARK,*NASGU>
     
     %% FUNCTION
-    if ~scan.ppi.do.regression, return; end
+    if ~scan.ppi.do.seed, return; end
     
     scan.ppi.variables.vols_f = {};
     for i_subject = 1:length(scan.ppi.variables.final)
@@ -33,5 +33,8 @@ function scan = scan_ppi_filter(scan)
     end
     
     scan.ppi.variables.final = scan.ppi.variables.vols_f;
+    
+    % save
+    save([scan.dire.glm.root,'scan.mat'],'scan');
     
 end

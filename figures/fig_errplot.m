@@ -38,6 +38,6 @@ end
 
 %% plot
 function hdl = plot_errorbar(x,my,sy,c)
-    if ischar(c); c = fig_color(c,1)./255; end
+    if ischar(c); c = fig_color(c,1); end
     hdl = errorbar(x,my,-sy,+sy,'Color',c,'linewidth',2);
 end

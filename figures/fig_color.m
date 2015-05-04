@@ -1,15 +1,15 @@
 
 function color = fig_color(scheme,n)
     %% color = fig_color([scheme])
-    %
-    % get color schemes
-    %
+    % get color schemes (in the range [0,1])
     
-    %% default
+    %% warnings
+    
+    % default
     if ~exist('scheme', 'var'); scheme = 'default'; end
     if ~exist('n',      'var'); n      = 5;         end
     
-    %% numerical scheme
+    % numerical scheme
     if isnumeric(scheme)
         assert(isvector(scheme));
         assert(any(size(scheme,2)==[1,3]));
@@ -18,7 +18,7 @@ function color = fig_color(scheme,n)
         return;
     end
     
-    %% prototype scheme
+    % prototype scheme
     switch scheme
         % matlab default
         case 'b';       color = repmat(255*[0,0,1],[n,1]);
@@ -69,4 +69,8 @@ function color = fig_color(scheme,n)
     s = size(color,1);
     color = repmat(color , ceil(n./s) , 1);
     color(n+1:end , :) = [];
+    
+    % range [0,1]
+    color = color ./ 255;
+    
 end

@@ -9,22 +9,11 @@ function fig_example()
 
     %% barweb
     subplot(2,1,1);
-    % fig_barweb
+    % fig_bare
     y   = randi(10,2,5);
     e   = y .* 0.2 .* rand(2,5);
-    c   = fig_color('work')./255;
-    web = fig_barweb(   y,e,...                                                height and error
-                        [],...                                                 width
-                        {'condition A','condition B'},...                      group names
-                        [],...                                                 title
-                        [],...                                                 xlabel
-                        [],...                                                 ylabel
-                        c,...                                                  colour
-                        [],...                                                 grid
-                        {'Alice','Bob','Charlie','Denver','Ellie'},...         legend
-                        [],...                                                 error sides (1, 2)
-                        'axis'...                                              legend ('plot','axis')
-                        );
+    c   = fig_color('work');
+    web = fig_bare(y,e,'work',{'group A','group B'},{'Alice','Bob','Charlie','Denver','Ellie'});
     % fig_axis
     sa_barweb = struct();
     sa_barweb.title   = 'FIGURE BAR WEB';

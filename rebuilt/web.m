@@ -1,12 +1,12 @@
 
-function varargout = web(varargin)
-    %% web(url)
+function varargout = web(url)
+    %% WEB(url)
+    % open a web page
     
     %% warnings
     
     %% function
     varargout = repmat({[]},1,nargout);
-    url = varargin{1};
     import('java.awt.Desktop');
     import('java.net.URI');
     desktop = Desktop.getDesktop();

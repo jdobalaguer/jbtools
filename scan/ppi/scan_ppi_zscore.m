@@ -6,7 +6,7 @@ function scan = scan_ppi_zscore(scan)
     %% warnings
     
     %% function
-    if ~scan.ppi.do.regression, return; end
+    if ~scan.ppi.do.seed, return; end
     
     scan.ppi.variables.vols_z = {};
     for i_subject = 1:length(scan.ppi.variables.final)
@@ -18,4 +18,6 @@ function scan = scan_ppi_zscore(scan)
     
     scan.ppi.variables.final = scan.ppi.variables.vols_z;
     
+    % save
+    save([scan.dire.glm.root,'scan.mat'],'scan');
 end

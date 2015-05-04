@@ -158,33 +158,21 @@ switch(s_style)
     case 'scatter'
         plot(u_x,m_y,   'Marker',           '.', ...
                         'LineStyle',        'none', ...
-                        'MarkerEdgeColor',  fig_color(s_colour,1)./255 );
+                        'MarkerEdgeColor',  fig_color(s_colour,1));
     case 'plot'
         plot(u_x,m_y,   'Marker',           'none', ...
                         'LineStyle',        '-', ...
-                        'Color',            fig_color(s_colour,1)./255 );
+                        'Color',            fig_color(s_colour,1));
     case 'fig_plot'
-        fig_plot(u_x,m_y,fig_color(s_colour,1)./255);
+        fig_plot(u_x,m_y,fig_color(s_colour,1));
     case 'fig_steplot'
-        fig_steplot(u_x,m_y,e_y,fig_color(s_colour,1)./255);
+        fig_steplot(u_x,m_y,e_y,fig_color(s_colour,1));
     case 'fig_spline'
-        fig_steplot(u_x,m_y,e_y,fig_color(s_colour,1)./255);
-    case 'fig_barweb'
+        fig_steplot(u_x,m_y,e_y,fig_color(s_colour,1));
+    case 'fig_bare'
         m_y = m_y';
         e_y = e_y';
-        web = fig_barweb(   m_y,... height
-                            e_y,... error
-                            [], ... width
-                            [], ... group
-                            sa.title, ... title
-                            sa.xlabel, ... xlabel
-                            sa.ylabel, ... ylabel
-                            fig_color(s_colour,nb_x)./255, ... colour
-                            [], ... grid
-                            num2leg(u_x), ... legend
-                            [], ... error sides (1, 2)
-                            'axis' ... legend style ('plot','axis')
-                            );
+        web = fig_bare(m_y,e_y,s_colour,[],num2leg(u_x));
     otherwise
         obj.error(sprintf('unknown style "%s"',s_style));
         return;
@@ -192,9 +180,7 @@ switch(s_style)
 end
 
 %% fig_axis
-%if ~strcmp(s_style,'fig_barweb')
-    fig_axis(sa);
-%end
+fig_axis(sa);
 
 %% fig_figure
 fig_figure(gcf());

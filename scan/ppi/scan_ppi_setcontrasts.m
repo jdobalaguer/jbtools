@@ -38,7 +38,7 @@ function scan = scan_ppi_setcontrasts(scan)
             contrast = scan.ppi.contrasts.extra(i_contrast);
             name_contrast = contrast.name;
             conv_contrast = zeros(1,size(SPM.xX.X,2));
-            for i_regressor = 1:length(scan.glm.contrasts.extra(i_extra).regressor)
+            for i_regressor = 1:length(scan.ppi.contrasts.extra(i_contrast).regressor)
                 for i_ppi = 1:length(scan.ppi.variables.bid{i_subject})
                     regressor = contrast.regressor{i_regressor};
                     ppi       = scan.ppi.variables.bid{i_subject}(i_ppi);
@@ -47,7 +47,6 @@ function scan = scan_ppi_setcontrasts(scan)
                     end
                 end
             end
-            assertWarning(all(logical(conv_contrast)),'eing? %s',name_contrast);
             scan.glm.contrast{i_subject}{end+1} = struct('name',name_contrast,'convec',conv_contrast,'sessrep','none');
         end
     end

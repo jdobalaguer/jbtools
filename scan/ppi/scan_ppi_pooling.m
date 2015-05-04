@@ -7,7 +7,7 @@ function scan = scan_ppi_pooling(scan)
     %#ok<*AGROW>
     
     %% function
-    if ~scan.ppi.do.regression, return; end
+    if ~scan.ppi.do.seed, return; end
     if ~scan.glm.pooling, return; end
     
     scan.ppi.variables.vols_p = {};
@@ -23,4 +23,6 @@ function scan = scan_ppi_pooling(scan)
     
     scan.ppi.variables.final = scan.ppi.variables.vols_p;
     
+    % save
+    save([scan.dire.glm.root,'scan.mat'],'scan');
 end

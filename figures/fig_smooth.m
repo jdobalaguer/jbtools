@@ -16,7 +16,7 @@ function fig_smooth(cf)
 end
 
 function children_smooth(hdls)
-    for hdl = 1:allchild(hdls)
+    for hdl = allchild(hdls)' %1:allchild(hdls)
         if ishandle(hdl)
             g = get(hdl);
             if isfield(g,'LineSmoothing');  set(hdl,'LineSmoothing','on'); end

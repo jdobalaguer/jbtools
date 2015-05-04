@@ -8,7 +8,7 @@ function scan = scan_ppi_seed(scan)
     %#ok<*NUSED,*AGROW,*FPARK,*NASGU>
     
     %% FUNCTION
-    if ~scan.ppi.do.regression, return; end
+    if ~scan.ppi.do.seed, return; end
     
     scan.ppi.variables = struct();
     scan.ppi.variables.seed = scan_nifti_load([scan.dire.mask,scan.ppi.seed]);
@@ -61,9 +61,7 @@ function scan = scan_ppi_seed(scan)
     % set as final
     scan.ppi.variables.final = scan.ppi.variables.vols;
     
-    save_scan();
-    
-    %% NESTED
-    function save_scan(), save([scan.dire.glm.root,'scan.mat'],'scan'); end
+    % save
+    save([scan.dire.glm.root,'scan.mat'],'scan');
 end
 

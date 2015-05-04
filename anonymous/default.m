@@ -3,6 +3,7 @@ function default(var,val)
     %% default(var,val)
     % if [var] doesn't exist, define it as [val]
     % [var] and [val] can be cells
+    % TODO: allow struct fields.
     
     %% warning
     
@@ -23,11 +24,12 @@ function default(var,val)
     
     % do
     for i = 1:length(var)
-        if ~evalin('caller',sprintf('exist(''%s'',''var'')',var{i})) ...
-           || evalin('caller',sprintf('isempty(%s)',var{i}))
-       
-                assignin('caller',var{i},val{i});
-                
+        if any(var{i}=='.')
+            warning('default: warning. struct field "%s" not allowed',var{i});
+            continue;
+        end
+        if ~evalin('caller',sprintf('exist(''%s'',''var'')',var{i})) || evalin('caller',sprintf('isempty(%s)',var{i}))
+            assignin('caller',var{i},val{i});
         end
     end
     

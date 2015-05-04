@@ -62,7 +62,7 @@ function scan = scan_glm_setcontrasts(scan)
                     end
                     conv_contrast = mat2vec(conv_contrast)';
                     j_contrast = j_contrast + 1;
-                    scan.glm.contrast{i_subject}{j_contrast} = struct('name',name_contrast, 'convec',conv_contrast);
+                    scan.glm.contrast{i_subject}{j_contrast} = struct('name',name_contrast, 'convec',conv_contrast,'sessrep','replsc');
                 end
             end
         end

@@ -33,22 +33,11 @@ function scan_plot_bar_1(scan,directory)
     end
     m = meeze(values);
     e = steeze(values);
-    c = fig_color('hsv',length(scan.glm.plot.contrast))./255;
+    c = fig_color('hsv',length(scan.glm.plot.contrast));
     
     % plot
     f = figure();
-    fig_barweb(m,e,...
-            [],...                                                  width
-            {''},...                                                group names
-            '',...                                                  title
-            '',...                                                  xlabel
-            '',...                                                  ylabel
-            c,...                                                   colour
-            'y',...                                                 grid
-            strrep(scan.glm.plot.contrast,'_',' '),...              legend
-            2,...                                                   error sides (1, 2)
-            'axis'...                                               legend ('plot','axis')
-            );
+    fig_bare(m,e,'hsv',{''},strrep(scan.glm.plot.contrast,'_',' '));
     fig_axis();
     fig_figure(f);
     fig_fontname(f);
