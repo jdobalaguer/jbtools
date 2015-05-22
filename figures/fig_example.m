@@ -33,6 +33,7 @@ function fig_example()
     sy = nanstd(yy);
     sp = fig_steplot(t,my,sy);
     ep = fig_errplot(t,my,sy);
+    pp = fig_pipplot(t,my,sy);
     % fig_axis
     sa_plot = struct();
     sa_plot.ilegend = sp.shade;
