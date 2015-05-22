@@ -17,23 +17,24 @@ function scan = scan_mvpa_rsa_rdm(scan)
     for i_subject = 1:scan.subject.n
         subject = scan.subject.u(i_subject);
         fprintf('scan_mvpa: create rdm %02i: \n',subject);
+        beta = cell2mat(scan.mvpa.variable.beta(i_subject,:))';
         switch(scan.mvpa.distance)
             case 'pearson'
-                scan.mvpa.variable.rdm{i_subject} = 1-corr(scan.mvpa.variable.beta{i_subject},'type','Pearson');
+                scan.mvpa.variable.rdm{i_subject} = 1-corr(beta,'type','Pearson');
             case 'spearman'
-                scan.mvpa.variable.rdm{i_subject} = squareform(pdist(scan.mvpa.variable.beta{i_subject}','spearman'));
+                scan.mvpa.variable.rdm{i_subject} = squareform(pdist(beta,'spearman'));
             case 'manhattan'
-                scan.mvpa.variable.rdm{i_subject} = squareform(pdist(scan.mvpa.variable.beta{i_subject}','minkowski',1));
+                scan.mvpa.variable.rdm{i_subject} = squareform(pdist(beta,'minkowski',1));
             case 'euclidean'
-                scan.mvpa.variable.rdm{i_subject} = squareform(pdist(scan.mvpa.variable.beta{i_subject}','euclidean'));
+                scan.mvpa.variable.rdm{i_subject} = squareform(pdist(beta,'euclidean'));
             case 'seuclidean'
-                scan.mvpa.variable.rdm{i_subject} = squareform(pdist(scan.mvpa.variable.beta{i_subject}','seuclidean'));
+                scan.mvpa.variable.rdm{i_subject} = squareform(pdist(beta,'seuclidean'));
             case 'cosine'
-                scan.mvpa.variable.rdm{i_subject} = squareform(pdist(scan.mvpa.variable.beta{i_subject}','cosine'));
+                scan.mvpa.variable.rdm{i_subject} = squareform(pdist(beta,'cosine'));
             case 'univariate'
-                 scan.mvpa.variable.rdm{i_subject} = squareform(pdist(mean(scan.mvpa.variable.beta{i_subject})','euclidean'));
+                 scan.mvpa.variable.rdm{i_subject} = squareform(pdist(mean(beta,2),'euclidean'));
             case 'dot'
-                scan.mvpa.variable.rdm{i_subject} = 1./ (scan.mvpa.variable.beta{i_subject}' * scan.mvpa.variable.beta{i_subject});
+                scan.mvpa.variable.rdm{i_subject} = 1./ (beta * beta');
             otherwise
                 error('scan_mvpa_rsa_rdm: error. distance "%s" unknown',scan.mvpa.distance);
         end
