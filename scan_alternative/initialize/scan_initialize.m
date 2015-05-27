@@ -13,6 +13,7 @@ function scan = scan_initialize(scan)
     switch scan.job.type
         case 'dicom'
         case 'glm'
+            scan = scan_initialize_autocomplete_nii(scan);
             scan = scan_initialize_autocomplete_glm(scan);
         case 'tbte'
         case 'mvpa'

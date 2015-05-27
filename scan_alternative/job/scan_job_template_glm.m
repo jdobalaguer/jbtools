@@ -17,8 +17,10 @@ function job = scan_job_template_glm(type)
     job.function   = 'hrf';
     job.hrf.ord    = [0,0];
     job.fir        = struct('ord',8,'len',14);
+    job.global     = 'none';
     job.image      = 'smooth';
     job.marge      = 0;
+    job.outside    = 'ROI_gnone/mask/Outside.img';
     job.pooling    = false;
     job.redo       = 'all';
     

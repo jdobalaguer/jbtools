@@ -15,12 +15,13 @@ function scan = scan_glm_run(scan)
     scan = scan_job_save_caller(scan);      % save caller
     scan = scan_glm_flag(scan);             % redo flags
     scan = scan_glm_rmdir(scan);            % delete old directories
+    scan = scan_glm_mkdir(scan);            % create new directories
     spm_jobman('initcfg');                  % SPM
     file_mkdir(scan.running.directory.job); % create folder
     scan = scan_job_save_scan(scan);        % save scan
     
     % regressors
-%     if do_regressor,    scan = scan_glm_regressor_build(scan);  save_scan(); end    % REGRESSOR:    build
+    scan = scan_glm_regressor_build(scan); % build
 %     if do_regressor,    scan = scan_glm_regressor_outer(scan);  save_scan(); end    % REGRESSOR:    outside covariate
 %     if do_regressor,    scan = scan_glm_regressor_check(scan);  save_scan(); end    % REGRESSOR:    check
 %     if do_regressor,    scan = scan_glm_regressor_merge(scan);  save_scan(); end    % REGRESSOR:    merge

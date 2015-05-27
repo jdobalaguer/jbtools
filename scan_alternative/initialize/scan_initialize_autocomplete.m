@@ -8,11 +8,15 @@ function scan = scan_initialize_autocomplete(scan)
     %% function
     
     % subject
-    scan.running.subject.unique = scan.subject.selection;
+    scan.running.subject.unique  = scan.subject.selection;
     scan.running.subject.unique(ismember(scan.running.subject.unique,scan.subject.remove)) = [];
-    scan.running.subject.number = length(scan.running.subject.unique);
+    scan.running.subject.number  = length(scan.running.subject.unique);
+    scan.running.subject.session = scan.subject.session;
     
+    % directory
     scan.running.directory.job      = scan.directory.(scan.job.type);
+    
+    % file
     scan.running.file.save.scan     = [scan.running.directory.job,'scan.mat'];
     scan.running.file.save.caller   = [scan.running.directory.job,'caller.m'];
 end
