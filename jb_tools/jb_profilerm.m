@@ -1,1 +1,0 @@
-rmdirp('profile_results');
