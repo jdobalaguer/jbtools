@@ -36,7 +36,7 @@ function scan = scan_glm_run(scan)
     spm_jobman('initcfg');
     
     % create folder
-    mkdirp(scan.dire.glm.root);
+    file_mkdir(scan.dire.glm.root);
     save_scan();
     
     % 1 = regressors

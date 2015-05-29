@@ -1,15 +1,15 @@
 
-function job = scan_job_template(type)
-    %% job = SCAN_JOB_TEMPLATE(type)
+function job = scan_initialize_template_job(type)
+    %% job = SCAN_INITIALIZE_TEMPLATE_JOB(type)
     % create job template
     % to list main functions, try
-    %   >> scan;
+    %   >> help scan;
     
     %% function
     switch type
         case 'dicom'
         case 'glm'
-            job = scan_job_template_glm(type);
+            job = scan_initialize_template_job_glm(type);
         case 'tbte'
         case 'mvpa'
         case 'rsa'

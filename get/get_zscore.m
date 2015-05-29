@@ -8,7 +8,7 @@ function y = get_zscore(x,s)
     %% function
     
     % defaults
-    default('s',ones(size(x)));
+    func_default('s',ones(size(x)));
     
     % assert
     assert(isvector(x), 'get_discrete: error. [x] must be a vector.');

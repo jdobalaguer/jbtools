@@ -1,0 +1,40 @@
+
+function scan = scan_glm_regressor_filter(scan)
+    %% scan = SCAN_GLM_REGRESSOR_FILTER(scan)
+    % apply high-pass filter to the regressor (as it's done with the neural signal)
+    % to list main functions, try
+    %   >> help scan;
+
+    %% function
+    if ~scan.running.flag.design, return; end
+    
+    % SPM
+    global defaults;
+    
+    % print
+    fprintf('Filter regressors : \n');
+    func_wait(sum(scan.running.subject.session));
+    
+    % subject
+    for i_subject = 1:scan.running.subject.number
+        
+        % session
+        for i_session = 1:length(scan.running.regressor{i_subject})
+            
+            % regressor
+            for i_regressor = 1:size(scan.running.regressor{i_subject}{i_session}.regressor,2)
+                if scan.running.regressor{i_subject}{i_session}.filter,
+                    r = scan.running.regressor{i_subject}{i_session}.regressor(:,i_regressor);
+                    K = struct('HParam',defaults.stats.fmri.hpf,'row',1:size(r,1),'RT',scan.parameter.scanner.tr);
+                    K = spm_filter(K);
+                    r = spm_filter(K,r);
+                    scan.running.regressor{i_subject}{i_session}.regressor(:,i_regressor) = r;
+                end
+            end
+            
+            % wait
+            func_wait();
+        end
+    end
+    func_wait(0);
+end

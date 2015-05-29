@@ -1,35 +1,28 @@
-%ztransforms a matrix.
-% 
-% function z=ztransf(x,trim);
-% 
-% a=size(x);
-% numdim=ndims(x);
-% 
-% stdlx=std(x(:));
-% meanlx=mean(x(:));
-% z=(x(:)-meanlx)./stdlx;
-% 
-% if nargin>1
-% z(find(z>trim))=trim;
-% z(find(z<trim*-1))=trim*-1;
-% end
-% 
-% 
-% if numdim==2;
-% z=reshape(z,a(1),a(2));    
-% elseif numdim==3;
-% z=reshape(z,a(1),a(2),a(3));
-% elseif numdim==4;
-% z=reshape(z,a(1),a(2),a(3),a(4));
-% elseif numdim==5;
-% z=reshape(z,a(1),a(2),a(3),a(4),a(5));
-% end
-% 
-%     
 
-function z = ztransf(x,m,s)
-    if ~exist('m','var'), m = nanmean(x(:)); end
-    if ~exist('s','var'), s = nanstd( x(:)); end
-    if s==0,              s = 1;             end
+function z = ztransf(x,d)
+    %% z = ZTRANSF(x,d)
+    % x : vector/matrix to z-score
+    % d : dimension. if none specified, global z-scoring will be used
+    % z : resulting z-score
+    
+    %% function
+    
+    % default
+    func_default('d',[]);
+    
+    % global z-scoring
+    if isempty(d)
+        m = nanmean(x(:));
+        s = nanstd (x(:));
+    % dimension specific
+    else
+        r = ones(1,ndims(x));
+        r(d) = size(x,d);
+        m = repmat(nanmean(x,d),r);
+        s = repmat(nanstd (x,[],d),r);
+    end
+        
+    % z-score
     z = (x - m) ./ s;
+    if ~s, z(:) = nan; end
 end

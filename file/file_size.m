@@ -12,7 +12,7 @@ function size = file_size(path)
     
     % fix path
     if file_ndire(path)==1 && ~file_isdire(path)
-        path = file_endsep(file_match(path));
+        path = file_endsep(file_match(path,'relative'));
     end
         
     % list
@@ -29,7 +29,7 @@ function size = file_size(path)
     size = 0;
     for i = 1:length(file)
         if dirs(i)
-            size = size + file_size([path,file{i}]);
+            size = size + file_size(fullfile(path,file{i}));
         else
             size = size + byts(i);
         end

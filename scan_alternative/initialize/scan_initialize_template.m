@@ -3,7 +3,7 @@ function scan = scan_initialize_template(type)
     %% scan = SCAN_INITIALIZE_TEMPLATE()
     % template with default values of [scan]
     % to list main functions, try
-    %   >> scan;
+    %   >> help scan;
     
     %% function
     
@@ -20,6 +20,7 @@ function scan = scan_initialize_template(type)
     % subject
     scan.subject.selection = [];
     scan.subject.remove    = [];
+    scan.subject.session   = [];
     
     % directory
     scan.directory.root             = [pwd(),filesep];
@@ -40,7 +41,7 @@ function scan = scan_initialize_template(type)
     scan.file.nii                   = struct();
     
     % job
-    scan.job                        = scan_job_template(type);
+    scan.job                        = scan_initialize_template_job(type);
     
     % running
     scan.running.subject.unique     = [];

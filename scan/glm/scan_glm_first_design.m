@@ -8,7 +8,7 @@ function scan = scan_glm_first_design(scan)
     %#ok<*NUSED,*AGROW,*FPARK>
     
     %% FUNCTION
-    if ~exist(scan.dire.glm.firstlevel,'dir'); mkdirp(scan.dire.glm.firstlevel); end
+    if ~exist(scan.dire.glm.firstlevel,'dir'); file_mkdir(scan.dire.glm.firstlevel); end
 
     jobs = {};
     for i_subject = 1:scan.subject.n
@@ -16,7 +16,7 @@ function scan = scan_glm_first_design(scan)
         dire_nii_epi3 = strtrim(scan.dire.nii.epi3(subject,:));
         dire_dat_glm1 = sprintf('%ssub_%02i/',scan.dire.glm.firstlevel,subject);
         fprintf('GLM design for:          %s\n',dire_dat_glm1);
-        if ~exist(dire_dat_glm1,'dir'); mkdirp(dire_dat_glm1); end
+        if ~exist(dire_dat_glm1,'dir'); file_mkdir(dire_dat_glm1); end
         
         %% JOB
         job = struct();

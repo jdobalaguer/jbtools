@@ -3,7 +3,7 @@ function scan = scan_glm_run(scan)
     %% scan = SCAN_GLM_RUN(scan)
     % runs a General Linear Model (GLM)
     % to list main functions, try
-    %   >> scan;
+    %   >> help scan;
 
     %% function
     
@@ -11,29 +11,25 @@ function scan = scan_glm_run(scan)
     scan.job.type = 'glm';
     
     % initialize
-    scan = scan_initialize(scan);           % initialize scan
+    scan = scan_initialize(scan);           % initialize scan / SPM
     scan = scan_job_save_caller(scan);      % save caller
     scan = scan_glm_flag(scan);             % redo flags
     scan = scan_glm_rmdir(scan);            % delete old directories
     scan = scan_glm_mkdir(scan);            % create new directories
-    spm_jobman('initcfg');                  % SPM
-    file_mkdir(scan.running.directory.job); % create folder
     scan = scan_job_save_scan(scan);        % save scan
     
-    % regressors
-    scan = scan_glm_regressor_build(scan); % build
-%     if do_regressor,    scan = scan_glm_regressor_outer(scan);  save_scan(); end    % REGRESSOR:    outside covariate
-%     if do_regressor,    scan = scan_glm_regressor_check(scan);  save_scan(); end    % REGRESSOR:    check
-%     if do_regressor,    scan = scan_glm_regressor_merge(scan);  save_scan(); end    % REGRESSOR:    merge
-%     if do_regressor,    scan = scan_glm_regressor_outKF(scan);   save_scan(); end   % REGRESSOR:    outside filtering
-    
     % design
-%     if do_regression,   scan = scan_glm_first_design(scan);     save_scan(); end    % REGRESSION:   design
+    scan = scan_glm_condition_check(scan);  % check
+    scan = scan_glm_condition_concat(scan); % concatenate sessions (condition)
+    scan = scan_glm_regressor_add(scan);    % add
+    scan = scan_glm_regressor_concat(scan); % concatenate sessions and add offset
+    scan = scan_glm_regressor_filter(scan); % filter
+    scan = scan_glm_concat(scan);           % concatenate sessions (extra: file & running.subject.session)
+    scan = scan_glm_design(scan);           % SPM design
 
     % estimation
-%     if do_regression,   scan = scan_glm_first_estimate(scan);   save_scan(); end    % REGRESSION:   estimate
-%     
-
+    scan = scan_glm_estimation(scan);       % SPM estimation
+    
     % first level contrast and first level statistic
 %                         scan = scan_glm_setcontrasts(scan);     save_scan();        % FIRST LEVEL:  set contrasts
 %     if do_firstlevel,   scan = scan_glm_first_contrast(scan);   save_scan(); end    % FIRST LEVEL:  run contrasts and statistics
@@ -50,5 +46,4 @@ function scan = scan_glm_run(scan)
 %     if glm_copy(4),     scan = scan_glm_copy_beta2(scan);       save_scan(); end    % COPY:         beta      (second level)
 %     if glm_copy(5),     scan = scan_glm_copy_contrast2(scan);   save_scan(); end    % COPY:         contrast  (second level)
 %     if glm_copy(6),     scan = scan_glm_copy_statistic2(scan);  save_scan(); end    % COPY:         statistic (second level)
-
 end

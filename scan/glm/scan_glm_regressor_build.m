@@ -8,7 +8,7 @@ function scan = scan_glm_regressor_build(scan)
     %#ok<*NUSED,*AGROW,*FPARK,*NASGU>
     
     %% FUNCTION
-    mkdirp(scan.dire.glm.regressor);
+    file_mkdir(scan.dire.glm.regressor);
     for sub = scan.subject.u
         condition   = {};
         realignment = {};

@@ -35,7 +35,7 @@ function scan = scan_initialize_set(scan)
     if ~isfield(scan.subject,'u')
         if ~isfield(scan.subject,'r'),      scan.subject.r = []; end
         if ~isfield(scan.dire.nii,'subs'),  scan.subject.u = [];
-        else                                scan.subject.u   = 1:size(scan.dire.nii.subs, 1);  scan.subject.u(jb_anyof(scan.subject.u,scan.subject.r)) = [];
+        else                                scan.subject.u   = 1:size(scan.dire.nii.subs, 1);  scan.subject.u(ismember(scan.subject.u,scan.subject.r)) = [];
         end
         scan.subject     = rmfield(scan.subject,'r');
     end

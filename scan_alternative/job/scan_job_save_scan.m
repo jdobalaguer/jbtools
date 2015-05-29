@@ -3,7 +3,7 @@ function scan = scan_job_save_scan(scan)
     %% scan = SCAN_JOB_SAVE_SCAN(scan)
     % save the [scan] struct
     % to list main functions, try
-    %   >> scan;
+    %   >> help scan;
 
     %% function
     file_mkdir(fileparts(scan.running.file.save.scan));

@@ -3,18 +3,18 @@ function scan = scan_initialize_autocomplete(scan)
     %% scan = SCAN_INITIALIZE_AUTOCOMPLETE(scan)
     % autocomplete initial values of [scan]
     % to list main functions, try
-    %   >> scan;
+    %   >> help scan;
     
     %% function
     
     % subject
-    scan.running.subject.unique  = scan.subject.selection;
+    scan.running.subject.unique     = scan.subject.selection;
     scan.running.subject.unique(ismember(scan.running.subject.unique,scan.subject.remove)) = [];
-    scan.running.subject.number  = length(scan.running.subject.unique);
-    scan.running.subject.session = scan.subject.session;
+    scan.running.subject.number     = length(scan.running.subject.unique);
+    scan.running.subject.session    = scan.subject.session(scan.running.subject.unique);
     
     % directory
-    scan.running.directory.job      = scan.directory.(scan.job.type);
+    scan.running.directory.job      = file_endsep(fullfile(scan.directory.(scan.job.type),scan.job.name));
     
     % file
     scan.running.file.save.scan     = [scan.running.directory.job,'scan.mat'];
