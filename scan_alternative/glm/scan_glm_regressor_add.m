@@ -10,7 +10,7 @@ function scan = scan_glm_regressor_add(scan)
     if isempty(scan.job.regressor), return; end
     
     % print
-    fprintf('Add regressors : \n');
+    scan_tool_print(scan,false,'\nAdd regressor : ');
     
     % regressor
     for i_regressor = 1:length(scan.job.regressor)
@@ -19,7 +19,7 @@ function scan = scan_glm_regressor_add(scan)
             case 'mask'
                 % type mask
                 mask = scan_nifti_load(fullfile(scan.directory.mask,scan.job.regressor(i_regressor).file));
-                func_wait(sum(scan.running.subject.session));
+                scan_tool_progress(scan,sum(scan.running.subject.session));
                 for i_subject = 1:scan.running.subject.number
                     for i_session = 1:scan.running.subject.session(i_subject)
                         vols = scan_nifti_load(scan.running.file.nii.epi3.(scan.job.image){i_subject}{i_session},mask);
@@ -27,23 +27,16 @@ function scan = scan_glm_regressor_add(scan)
                         scan.running.regressor{i_subject}{i_session}.name{end+1}        = scan.job.regressor(i_regressor).name;
                         scan.running.regressor{i_subject}{i_session}.regressor(:,end+1) = vols;
                         scan.running.regressor{i_subject}{i_session}.filter(end+1)      = scan.job.regressor(i_regressor).filter;
-                        func_wait();
+                        scan.running.regressor{i_subject}{i_session}.covariate(end+1)   = scan.job.regressor(i_regressor).covariate;
+                        scan_tool_progress(scan,[]);
                     end
                 end
-                func_wait(0);
+                scan_tool_progress(scan,0);
             
             case 'mat',
                 % type mat-file
-                func_wait(0);
-                error('todo');
-                
-            case 'csv',
-                % type csv-file
-                func_wait(0);
+                scan_tool_progress(scan,0);
                 error('todo');
         end
     end
-    
-    % save scan
-    scan_job_save_scan(scan);
 end

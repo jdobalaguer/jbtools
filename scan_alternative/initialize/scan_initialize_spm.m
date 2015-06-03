@@ -10,8 +10,4 @@ function scan = scan_initialize_spm(scan)
     % initialize the job manager
     spm_jobman('initcfg');
     
-    % enforce default format to NIFTI
-    global defaults;
-    defaults.images.format = 'nii';
-    
 end

@@ -1,7 +1,7 @@
 
-function scan_tool_warning(varargin)
-    %% SCAN_TOOL_WARNING(scan,progress,text,val1,val2,..)
-    % print a warning, and pause if required
+function scan_tool_print(varargin)
+    %% SCAN_TOOL_PRINT(scan,progress,text,val1,val2,..)
+    % print a message
     % scan      : [scan] struct
     % progress  : are you currently using scan_tool_progress() ?
     % text      : text to print (see sprintf)
@@ -14,20 +14,14 @@ function scan_tool_warning(varargin)
     % default
     scan = varargin{1};
     progress = varargin{2};
-    text = sprintf('%s: warning. %s',func_caller(),varargin{3});
+    text = varargin{3};
     vals = varargin(4:end);
-    warning_colour = [1,0.5,0];
+    print_colour = 'blue';
     
-    % print warning
+    % print message
     if scan.parameter.analysis.verbose
-        cprintf(warning_colour,text,vals{:});
+        cprintf(print_colour,text,vals{:});
         fprintf('\n');
-    end
-    
-    % warning pause
-    if scan.parameter.analysis.wpause
-        cprintf(warning_colour,'Press return to continue. ');
-        input('');
     end
     
     % progress bar marge

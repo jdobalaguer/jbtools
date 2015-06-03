@@ -11,16 +11,4 @@ function scan = scan_initialize(scan)
     scan     = struct_default(scan,template);
     scan     = scan_initialize_autocomplete(scan);
     
-    switch scan.job.type
-        case 'dicom'
-        case 'glm'
-            scan = scan_initialize_autocomplete_nii(scan);
-            scan = scan_initialize_autocomplete_glm(scan);
-        case 'tbte'
-        case 'mvpa'
-        case 'rsa'
-        otherwise
-            warning('scan_job_template: error. type "%s" unknown',scan.job.type);
-    end
-    
 end

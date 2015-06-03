@@ -16,16 +16,19 @@ function scan = scan_glm_flag(scan)
     switch scan.job.restartFrom
         case 'all'
             redo = [1,1,1,1,1];
-        case 'estimation'
+            if ~isempty(file_list(file_nendsep(scan.running.directory.job)))
+                scan_tool_warning(scan,false,'folder "%s" already exists.\nFiles in "%s" wont be deleted',scan.running.directory.job,scan.running.directory.copy.root);
+            end
+        case 'from_estimation'
             redo = [0,1,1,1,1];
-        case 'contrast'
+        case 'from_contrast'
             redo = [0,0,1,1,1];
-        case 'first'
+        case 'from_first'
             redo = [0,0,0,1,1];
-        case 'second'
+        case 'from_second'
             redo = [0,0,0,0,1];
         otherwise
-            error('scan_glm_flag: error. redo "%s" unknown',scan.job.redo);
+            error('scan_glm_flag: error. job.restartFrom "%s" unknown',scan.job.restartFrom);
     end
     
     if redo(1), scan.running.flag.design     = true; end

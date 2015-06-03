@@ -1,7 +1,7 @@
 
-function scan = scan_initialize_autocomplete_nii(scan)
-    %% scan = SCAN_INITIALIZE_AUTOCOMPLETE_NII(scan)
-    % autocomplete initial values
+function scan = scan_autocomplete_nii(scan)
+    %% scan = SCAN_AUTOCOMPLETE_NII(scan)
+    % autocomplete [scan] struct
     % to list main functions, try
     %   >> help scan;
     

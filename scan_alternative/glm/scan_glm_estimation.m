@@ -9,8 +9,8 @@ function scan = scan_glm_estimation(scan)
     if ~scan.running.flag.estimation, return; end
     
     % print
-    fprintf('SPM Estimation : \n');
-    func_wait(scan.running.subject.number);
+    scan_tool_print(scan,false,'\nSPM Estimation : ');
+    scan_tool_progress(scan,scan.running.subject.number);
     
     % subject
     for i_subject = 1:scan.running.subject.number
@@ -19,11 +19,11 @@ function scan = scan_glm_estimation(scan)
         spm{i_subject}.spm.stats.fmri_est.spmmat = {fullfile(scan.running.directory.original.first{i_subject},'SPM.mat')}; %#ok<*AGROW>
         spm{i_subject}.spm.stats.fmri_est.method.Classical = 1;
         
+        % SPM
+        spm_jobman('run',spm(i_subject));
+
        % wait
-        func_wait();
+        scan_tool_progress(scan,[]);
     end
-    func_wait(0);
-    
-    % SPM
-    spm_jobman('run',spm);
+    scan_tool_progress(scan,0);
 end

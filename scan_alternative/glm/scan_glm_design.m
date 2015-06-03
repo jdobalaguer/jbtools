@@ -12,8 +12,8 @@ function scan = scan_glm_design(scan)
     global defaults;
     
     % print
-    fprintf('SPM Design : \n');
-    func_wait(sum(scan.running.subject.session));
+    scan_tool_print(scan,false,'\nSPM Design : ');
+    scan_tool_progress(scan,scan.running.subject.number);
     
     % subject
     for i_subject = 1:scan.running.subject.number
@@ -40,14 +40,14 @@ function scan = scan_glm_design(scan)
             
             % condition
             for i_condition = 1:length(scan.running.condition{i_subject}{i_session})
-                spm{i_subject}.spm.stats.fmri_spec.sess(i_session).cond(i_condition).name     = scan.running.condition{i_subject}{i_session}{i_condition}.name;
-                spm{i_subject}.spm.stats.fmri_spec.sess(i_session).cond(i_condition).onset    = scan.running.condition{i_subject}{i_session}{i_condition}.onset;
-                spm{i_subject}.spm.stats.fmri_spec.sess(i_session).cond(i_condition).duration = scan.running.condition{i_subject}{i_session}{i_condition}.duration;
+                spm{i_subject}.spm.stats.fmri_spec.sess(i_session).cond(i_condition).name     = scan.running.condition{i_subject}{i_session}(i_condition).name;
+                spm{i_subject}.spm.stats.fmri_spec.sess(i_session).cond(i_condition).onset    = scan.running.condition{i_subject}{i_session}(i_condition).onset;
+                spm{i_subject}.spm.stats.fmri_spec.sess(i_session).cond(i_condition).duration = scan.running.condition{i_subject}{i_session}(i_condition).duration;
                 spm{i_subject}.spm.stats.fmri_spec.sess(i_session).cond(i_condition).tmod     = 0;
                 spm{i_subject}.spm.stats.fmri_spec.sess(i_session).cond(i_condition).pmod     = struct('name', {}, 'param', {}, 'poly', {});
-                for i_level = 1:length(scan.running.condition{i_subject}{i_session}{i_condition}.subname)
-                    spm{i_subject}.spm.stats.fmri_spec.sess(i_session).cond(i_condition).pmod(i_level).name  = scan.running.condition{i_subject}{i_session}{i_condition}.subname{i_level};
-                    spm{i_subject}.spm.stats.fmri_spec.sess(i_session).cond(i_condition).pmod(i_level).param = scan.running.condition{i_subject}{i_session}{i_condition}.level(:,i_level);
+                for i_level = 1:length(scan.running.condition{i_subject}{i_session}(i_condition).subname)
+                    spm{i_subject}.spm.stats.fmri_spec.sess(i_session).cond(i_condition).pmod(i_level).name  = scan.running.condition{i_subject}{i_session}(i_condition).subname{i_level};
+                    spm{i_subject}.spm.stats.fmri_spec.sess(i_session).cond(i_condition).pmod(i_level).param = scan.running.condition{i_subject}{i_session}(i_condition).level(:,i_level);
                     spm{i_subject}.spm.stats.fmri_spec.sess(i_session).cond(i_condition).pmod(i_level).poly = 1;
                 end
             end
@@ -59,11 +59,11 @@ function scan = scan_glm_design(scan)
             end
         end
     
+        % SPM
+        spm_jobman('run',spm(i_subject));
+        
         % wait
-        func_wait();
+        scan_tool_progress(scan,[]);
     end
-    func_wait(0);
-    
-    % SPM
-    spm_jobman('run',spm);
+    scan_tool_progress(scan,0);
 end

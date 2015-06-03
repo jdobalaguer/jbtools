@@ -14,6 +14,8 @@ function scan = scan_initialize_autocomplete(scan)
     scan.running.subject.session    = scan.subject.session(scan.running.subject.unique);
     
     % directory
+    scan.running.directory.root    = scan.directory.root;
+    scan.running.directory.job      = file_endsep(fullfile(scan.directory.(scan.job.type),scan.job.name));
     scan.running.directory.job      = file_endsep(fullfile(scan.directory.(scan.job.type),scan.job.name));
     
     % file

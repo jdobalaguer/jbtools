@@ -8,14 +8,17 @@ function scan = scan_initialize_template(type)
     %% function
     
     % parameter
-    scan.parameter.scanner.nslices = []; ... scanner
-    scan.parameter.scanner.tr      = [];
-    scan.parameter.scanner.ordsl   = [];
-    scan.parameter.scanner.refsl   = [];
-    scan.parameter.scanner.reft0   = [];
-    scan.parameter.analysis.voxs   = 4;  ... analysis
-    scan.parameter.path.subject    = {}; ... path
-    scan.parameter.path.session    = {};
+    scan.parameter.scanner.nslices      = []; ... scanner
+    scan.parameter.scanner.tr           = [];
+    scan.parameter.scanner.ordsl        = [];
+    scan.parameter.scanner.refsl        = [];
+    scan.parameter.scanner.reft0        = [];
+    scan.parameter.analysis.voxs        = 4;  ... analysis
+    scan.parameter.analysis.verbose     = true;
+    scan.parameter.analysis.wpause      = true;
+    scan.parameter.analysis.progress    = true;
+    scan.parameter.path.subject         = {}; ... path
+    scan.parameter.path.session         = {};
     
     % subject
     scan.subject.selection = [];
@@ -38,7 +41,6 @@ function scan = scan_initialize_template(type)
     scan.file.template.t1           = [scan.directory.spm,'templates',filesep,'T1.nii'];
     scan.file.template.t2           = [scan.directory.spm,'templates',filesep,'T2.nii'];
     scan.file.template.epi          = [scan.directory.spm,'templates',filesep,'EPI.nii'];
-    scan.file.nii                   = struct();
     
     % job
     scan.job                        = scan_initialize_template_job(type);
@@ -53,4 +55,7 @@ function scan = scan_initialize_template(type)
     
     % result
     scan.result = struct();
+    
+    % function
+    scan.function = struct();
 end

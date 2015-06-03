@@ -10,8 +10,8 @@ function scan = scan_glm_concat(scan)
     if ~scan.job.concatSessions,  return; end
     
     % print
-    fprintf('Conatenate sessions (file) : \n');
-    func_wait(sum(scan.running.subject.session));
+    scan_tool_print(scan,false,'\nConatenate session (file) : ');
+    scan_tool_progress(scan,sum(scan.running.subject.session));
     
     % concatenate files
     for i_subject = 1:scan.running.subject.number
@@ -19,13 +19,10 @@ function scan = scan_glm_concat(scan)
         for i_image = 1:length(u_image)
             scan.running.file.nii.epi3.(u_image{i_image}){i_subject} = {vertcat(scan.running.file.nii.epi3.(u_image{i_image}){i_subject}{:})};
         end
-        func_wait();
+        scan_tool_progress(scan,[]);
     end
-    func_wait(0);
+    scan_tool_progress(scan,0);
     
     % change sessions
     scan.running.subject.session(:) = 1;
-    
-    % save scan
-    scan_job_save_scan(scan);
 end

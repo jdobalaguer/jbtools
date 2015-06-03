@@ -12,8 +12,8 @@ function scan = scan_glm_regressor_filter(scan)
     global defaults;
     
     % print
-    fprintf('Filter regressors : \n');
-    func_wait(sum(scan.running.subject.session));
+    scan_tool_print(scan,false,'\nFilter regressor : ');
+    scan_tool_progress(scan,sum(scan.running.subject.session));
     
     % subject
     for i_subject = 1:scan.running.subject.number
@@ -33,8 +33,8 @@ function scan = scan_glm_regressor_filter(scan)
             end
             
             % wait
-            func_wait();
+            scan_tool_progress(scan,[]);
         end
     end
-    func_wait(0);
+    scan_tool_progress(scan,0);
 end

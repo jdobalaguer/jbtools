@@ -1,17 +1,17 @@
 
-function scan = scan_glm_run(scan)
-    %% scan = SCAN_GLM_RUN(scan)
-    % General Linear Model (GLM) script
+function scan = scan_ppi_run(scan)
+    %% scan = SCAN_PPI_RUN(scan)
+    % runs a PsychoPhysical Interaction (PPI)
     % to list main functions, try
     %   >> help scan;
 
     %% function
     
     % job type
-    scan.job.type = 'glm';
+    scan.job.type = 'ppi';
     
     % summary
-    scan_tool_summary(scan,'General Linear Model (GLM)',...
+    scan_tool_summary(scan,'PsychoPhysical Interaction (PPI)',...
         'Check condition',...
         'Conatenate session (condition)',...
         'Add regressor',...
@@ -19,6 +19,9 @@ function scan = scan_glm_run(scan)
         'Filter regressor',...
         'Conatenate session (file)',...
         'SPM Design',...
+        'Set matrix',...
+        ...
+        'Add psychophysical interactions',...
         'Set matrix',...
         ...
         'SPM Estimation',...
@@ -35,18 +38,13 @@ function scan = scan_glm_run(scan)
         'Copy beta file (second level)',...
         'Copy contrast file (second level)',...
         'Copy statistic file (second level)',...
-        'Copy SPM mat-file (second level)',...
-        ...
-        'Add function (cd)',...
-        'Add function (xjview)',...
-        'Add function (design)',...
-        'Add function (roi)',...
-        'Add function (fir)');
+        'Copy SPM mat-file (second level)');
     
     % initialize
     scan = scan_initialize(scan);           % initialize scan / SPM
     scan = scan_autocomplete_nii(scan);     % autocomplete (nii)
     scan = scan_autocomplete_glm(scan);     % autocomplete (glm)
+    scan = scan_autocomplete_ppi(scan);     % autocomplete (ppi)
     scan = scan_glm_flag(scan);             % redo flags
     scan = scan_glm_rmdir(scan);            % delete old directories
     scan = scan_glm_mkdir(scan);            % create new directories
@@ -62,6 +60,11 @@ function scan = scan_glm_run(scan)
     scan = scan_glm_concat(scan);           % concatenate sessions (extra: file & running.subject.session)
     scan = scan_glm_design(scan);           % SPM design
     scan = scan_glm_matrix(scan);           % set matrix
+    scan_job_save_scan(scan);               % save scan
+    
+    % psychophysical interaction
+    scan = scan_ppi_add(scan);              % add
+    scan = scan_glm_matrix(scan);           % set matrix (again)
     scan_job_save_scan(scan);               % save scan
 
     % estimation
@@ -89,10 +92,5 @@ function scan = scan_glm_run(scan)
     scan = rmfield(scan,'result');          % remove field
     
     % function
-    scan = scan_function_glm_cd(scan);      % change directory
-    scan = scan_function_glm_xjview(scan);  % launch xjview
-    scan = scan_function_glm_design(scan);  % review design
-    scan = scan_function_glm_roi(scan);     % region of interest
-    scan = scan_function_glm_fir(scan);     % finite impulse response
-    scan_job_save_scan(scan);               % save scan
+    % TO DO
 end

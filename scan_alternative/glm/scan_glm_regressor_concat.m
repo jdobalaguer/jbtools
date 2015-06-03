@@ -10,8 +10,8 @@ function scan = scan_glm_regressor_concat(scan)
     if ~scan.job.concatSessions,  return; end
     
     % print
-    fprintf('Conatenate sessions (regressor) : \n');
-    func_wait(scan.running.subject.number);
+    scan_tool_print(scan,false,'\nConatenate session (regressor) : ');
+    scan_tool_progress(scan,scan.running.subject.number);
     
     % subject
     for i_subject = 1:scan.running.subject.number
@@ -28,8 +28,10 @@ function scan = scan_glm_regressor_concat(scan)
         s_volume = size(scan.running.regressor{i_subject}{1}.regressor,1);
         for i_session = 2:scan.running.subject.session(i_subject)
             n_volume = size(scan.running.regressor{i_subject}{i_session}.regressor,1);
-            u_regressor.name{end+1} = sprintf('offset %03i',i_session);
+            u_regressor.name{end+1} = 'constant';
             u_regressor.regressor(s_volume+(1:n_volume),end+1) = 1;
+            u_regressor.filter(end+1) = false;
+            u_regressor.covariate(end+1) = true;
             s_volume = s_volume + n_volume;
         end
         
@@ -37,10 +39,7 @@ function scan = scan_glm_regressor_concat(scan)
         scan.running.regressor{i_subject} = {u_regressor};
             
         % wait
-        func_wait();
+        scan_tool_progress(scan,[]);
     end
-    func_wait(0);
-    
-    % save scan
-    scan_job_save_scan(scan);
+    scan_tool_progress(scan,0);
 end

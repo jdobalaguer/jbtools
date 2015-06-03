@@ -7,12 +7,10 @@ function job = scan_initialize_template_job(type)
     
     %% function
     switch type
-        case 'dicom'
         case 'glm'
             job = scan_initialize_template_job_glm(type);
         case 'tbte'
-        case 'mvpa'
-        case 'rsa'
+            job = scan_initialize_template_job_tbte(type);
         otherwise
             warning('scan_job_template: error. type "%s" unknown',scan.job.type);
     end
