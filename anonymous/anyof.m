@@ -5,6 +5,7 @@ function ii = anyof(v,u)
     % it's actually the same than ismember().
 
     %% function
+    error('anyof: error. don''t use me. call @ismember instead');
     ii = ismember(v,u);
 %     ii = false(size(v));
 %     for i=1:length(u)

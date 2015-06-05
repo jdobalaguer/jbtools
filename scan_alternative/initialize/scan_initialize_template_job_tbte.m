@@ -12,13 +12,13 @@ function job = scan_initialize_template_job_tbte(type)
     job.name       = '';
     
     % setting
-    job.copyFolder         = {'beta_1'};
+    job.copyFolder         = {'beta_1','spm_1'};
     job.delayOnset         = 0;
     job.functionBasis      = struct('name',{'hrf'},'parameters',{struct('derivs',{[0,0]})});
     job.globalScaling      = false;
     job.image              = 'smooth';
     job.margeFromEnd       = 0;
-    job.restartFrom        = 'design';
+    job.whatToDo           = 'all';
     
     % condition
     job.condition = struct('subject',{},'session',{},'onset',{},'discard',{},'name',{},'duration',{});

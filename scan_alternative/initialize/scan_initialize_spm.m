@@ -8,6 +8,8 @@ function scan = scan_initialize_spm(scan)
     %% function
     
     % initialize the job manager
-    spm_jobman('initcfg');
+    if any(strcmp(scan.job.type,{'glm','tbte'}))
+        spm_jobman('initcfg');
+    end
     
 end

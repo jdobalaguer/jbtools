@@ -53,5 +53,4 @@ function scan = scan_autocomplete_tbte(scan)
     
     % contrast
     scan.running.contrast = {};
-    
 end

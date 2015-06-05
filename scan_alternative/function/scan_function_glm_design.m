@@ -6,12 +6,18 @@ function scan = scan_function_glm_design(scan)
     %   >> help scan;
 
     %% function
+    if ~scan.running.flag.function, return; end
+    
     scan_tool_print(scan,false,'\nAdd function (design) : ');
     scan.function.design = @auxiliar_design;
     
     %% nested
-    function auxiliar_design(subject)
-        SPM = file_loadvar(fullfile(scan.running.directory.copy.first.spm,sprintf('subject_%03i',subject),'SPM.mat'),'SPM');
+    function auxiliar_design(varargin)
+        if nargin~=1 || strcmp(varargin{1},'help')
+            scan_tool_help('@design(subject)','This function opens the SPM Design Report (spm_DesRep) interface for the participant [subject]. You can use it to see the design matrix, the covariation between regressors');
+            return;
+        end
+        SPM = file_loadvar(fullfile(scan.running.directory.copy.first.spm,sprintf('subject_%03i',varargin{1}),'SPM.mat'),'SPM');
         spm_DesRep('DesRepUI',SPM);
     end
 end

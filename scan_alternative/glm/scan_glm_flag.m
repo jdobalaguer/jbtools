@@ -7,33 +7,43 @@ function scan = scan_glm_flag(scan)
     
     %% function
     
-    scan.running.flag.design     = false;
-    scan.running.flag.estimation = false;
-    scan.running.flag.contrast   = false;
-    scan.running.flag.first      = false;
-    scan.running.flag.second     = false;
-    
-    switch scan.job.restartFrom
-        case 'all'
-            redo = [1,1,1,1,1];
-            if ~isempty(file_list(file_nendsep(scan.running.directory.job)))
-                scan_tool_warning(scan,false,'folder "%s" already exists.\nFiles in "%s" wont be deleted',scan.running.directory.job,scan.running.directory.copy.root);
-            end
-        case 'from_estimation'
-            redo = [0,1,1,1,1];
-        case 'from_contrast'
-            redo = [0,0,1,1,1];
-        case 'from_first'
-            redo = [0,0,0,1,1];
-        case 'from_second'
-            redo = [0,0,0,0,1];
-        otherwise
-            error('scan_glm_flag: error. job.restartFrom "%s" unknown',scan.job.restartFrom);
+    % warning
+    if ~isempty(file_list(file_nendsep(scan.running.directory.job)))
+        scan_tool_warning(scan,false,'folder "%s" already exists.\nFiles in "%s" wont be deleted',scan.running.directory.job,scan.running.directory.copy.root);
     end
     
-    if redo(1), scan.running.flag.design     = true; end
-    if redo(2), scan.running.flag.estimation = true; end
-    if redo(3), scan.running.flag.contrast   = true; end
-    if redo(4), scan.running.flag.first      = true; end
-    if redo(5), scan.running.flag.second     = true; end
+    % switch
+    switch scan.job.whatToDo
+        case 'all'
+            redo = [1,1,1,1,1];
+        case 'from estimation'
+            redo = [0,1,1,1,1,1];
+        case 'from first'
+            redo = [0,0,1,1,1];
+        case 'from second'
+            redo = [0,0,0,1,1];
+        case 'no function'
+            redo = [1,1,1,1,0];
+        case 'to first'
+            redo = [1,1,1,0,0];
+        case 'to estimation'
+            redo = [1,1,0,0,0];
+        case 'only design'
+            redo = [1,0,0,0,0];
+        case 'only estimation'
+            redo = [0,1,0,0,0];
+        case 'only first'
+            redo = [0,0,1,0,0];
+        case 'only second'
+            redo = [0,0,0,1,0];
+        case 'only function'
+            redo = [0,0,0,0,1];
+        otherwise
+            error('scan_glm_flag: error. [scan.job.whatToDo] "%s" unknown',scan.job.whatToDo);
+    end
+    
+    % build flags
+    flag_args = [{'design','estimation','first','second','function'};num2cell(redo)];
+    scan.running.flag = struct(flag_args{:});
+    
 end

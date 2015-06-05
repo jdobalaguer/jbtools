@@ -15,7 +15,7 @@ function scan_tool_copy(file1,file2)
         % check extension
         [~,~,e1] = fileparts(file1);
         [~,~,e2] = fileparts(file2);
-        if any(strcmp(e1,{'.img'})) && any(strcmp(e2,{'.img'}))
+        if any(strcmp(e1,{'.img'})) || any(strcmp(e2,{'.img'}))
             % MRI image
             spm_imcalc_ui(file1,file2,'i1');
         else

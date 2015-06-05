@@ -13,13 +13,10 @@ function scan = scan_glm_secondlevel(scan)
     scan_tool_progress(scan,scan.running.subject.number);
     for i_subject = 1:scan.running.subject.number
         for i_contrast = 1:length(scan.running.contrast{i_subject})
-            file_first_img  = fullfile(scan.running.directory.original.first{i_subject},sprintf('%s_%04i.img',scan.job.secondLevel,i_contrast));
-            file_first_hdr  = fullfile(scan.running.directory.original.first{i_subject},sprintf('%s_%04i.hdr',scan.job.secondLevel,i_contrast));
-            file_second_img = fullfile(scan.running.directory.original.second,scan.running.contrast{i_subject}(i_contrast).name,sprintf('%s_subject_%03i.img',scan.job.secondLevel,i_subject));
-            file_second_hdr = fullfile(scan.running.directory.original.second,scan.running.contrast{i_subject}(i_contrast).name,sprintf('%s_subject_%03i.hdr',scan.job.secondLevel,i_subject));
-            file_mkdir(fileparts(file_second_img));
-            copyfile(file_first_img,file_second_img);
-            copyfile(file_first_hdr,file_second_hdr);
+            file_first  = fullfile(scan.running.directory.original.first{i_subject},sprintf('%s_%04i.img',scan.job.secondLevel,i_contrast));
+            file_second = fullfile(scan.running.directory.original.second,sprintf('%s_%03i',scan.running.contrast{i_subject}(i_contrast).name,scan.running.contrast{i_subject}(i_contrast).order),sprintf('%s_subject_%03i.img',scan.job.secondLevel,i_subject));
+            file_mkdir(fileparts(file_second));
+            scan_tool_copy(file_first,file_second);
         end
         scan_tool_progress(scan,[]);
     end
@@ -30,7 +27,7 @@ function scan = scan_glm_secondlevel(scan)
     scan_tool_progress(scan,length(scan.running.contrast{1}));
     j_job = 0;
     for i_contrast = 1:length(scan.running.contrast{1})
-        directory_second = fullfile(scan.running.directory.original.second,scan.running.contrast{i_subject}(i_contrast).name);
+        directory_second = fullfile(scan.running.directory.original.second,sprintf('%s_%03i',scan.running.contrast{i_subject}(i_contrast).name,scan.running.contrast{i_subject}(i_contrast).order));
         % design
         j_job = j_job + 1;
         spm{j_job}.spm.stats.factorial_design.dir                      = {directory_second}; %#ok<*AGROW>
@@ -49,7 +46,7 @@ function scan = scan_glm_secondlevel(scan)
         % contrast
         j_job = j_job + 1;
         spm{j_job}.spm.stats.con.spmmat                    = {fullfile(directory_second,'SPM.mat')};
-        spm{j_job}.spm.stats.con.consess{1}.tcon.name      = scan.running.contrast{1}(i_contrast).name;
+        spm{j_job}.spm.stats.con.consess{1}.tcon.name      = sprintf('%s_%03i',scan.running.contrast{i_subject}(i_contrast).name,scan.running.contrast{i_subject}(i_contrast).order);
         spm{j_job}.spm.stats.con.consess{1}.tcon.convec    = 1; % contrast vector, here just 1, (simple T)
         spm{j_job}.spm.stats.con.consess{1}.tcon.sessrep   = 'none';
         spm{j_job}.spm.stats.con.delete = 1;

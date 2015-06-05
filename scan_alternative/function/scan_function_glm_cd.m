@@ -6,6 +6,8 @@ function scan = scan_function_glm_cd(scan)
     %   >> help scan;
 
     %% function
+    if ~scan.running.flag.function, return; end
+    
     scan_tool_print(scan,false,'\nAdd function (cd) : ');
     scan.function.cd = auxiliar(scan.running.directory);
 
@@ -25,6 +27,12 @@ function scan = scan_function_glm_cd(scan)
                     f{i} = auxiliar(v{i});
                 end
         end
-        function auxiliar_cd(), cd(v); end
+        function auxiliar_cd(varargin)
+            if nargin~=0 % || strcmp(varargin{1},'help')
+                scan_tool_help('@cd()','This function changes to a given directory matched in [scan.running.directory]');
+                return;
+            end
+            cd(v);
+        end
     end
 end

@@ -18,6 +18,7 @@ function scan = scan_glm_copy(scan,level,type)
             scan_tool_progress(scan,scan.running.subject.number);
             for i_subject = 1:scan.running.subject.number
                 for i_column = 1:length(scan.running.design(i_subject).column.name)
+                    if scan.running.design(i_subject).column.covariate(i_column), continue; end
                     original  = fullfile(scan.running.directory.original.first{i_subject},sprintf('beta_%04i.img',i_column));
                     copy      = fullfile(scan.running.directory.copy.first.beta,scan.running.design(i_subject).column.name{i_column},sprintf('subject_%03i session_%03i order_%03i.nii',scan.running.subject.unique(i_subject),scan.running.design(i_subject).column.session(i_column),scan.running.design(i_subject).column.order(i_column)));
                     file_mkdir(fileparts(copy));
@@ -79,8 +80,8 @@ function scan = scan_glm_copy(scan,level,type)
             scan_tool_print(scan,false,'\nCopy beta file (second level) : ');
             scan_tool_progress(scan,length(scan.running.contrast{1}));
             for i_contrast = 1:length(scan.running.contrast{1})
-                original = fullfile(scan.running.directory.original.second,scan.running.contrast{1}(i_contrast).name,'beta_0001.img');
-                copy     = fullfile(scan.running.directory.copy.second.beta,sprintf('%s_%03i.nii',scan.running.contrast{i_subject}(i_contrast).name,scan.running.contrast{i_subject}(i_contrast).order));
+                original = fullfile(scan.running.directory.original.second,sprintf('%s_%03i',scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order),'beta_0001.img');
+                copy     = fullfile(scan.running.directory.copy.second.beta,sprintf('%s_%03i.nii',scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order));
                 file_mkdir(fileparts(copy));
                 scan_tool_copy(original,copy);
                 scan_tool_progress(scan,[]);
@@ -93,8 +94,8 @@ function scan = scan_glm_copy(scan,level,type)
             scan_tool_print(scan,false,'\nCopy contrast file (second level) : ');
             scan_tool_progress(scan,length(scan.running.contrast{1}));
             for i_contrast = 1:length(scan.running.contrast{1})
-                original = fullfile(scan.running.directory.original.second,scan.running.contrast{1}(i_contrast).name,'con_0001.img');
-                copy     = fullfile(scan.running.directory.copy.second.contrast,sprintf('%s_%03i.nii',scan.running.contrast{i_subject}(i_contrast).name,scan.running.contrast{i_subject}(i_contrast).order));
+                original = fullfile(scan.running.directory.original.second,sprintf('%s_%03i',scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order),'con_0001.img');
+                copy     = fullfile(scan.running.directory.copy.second.contrast,sprintf('%s_%03i.nii',scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order));
                 file_mkdir(fileparts(copy));
                 scan_tool_copy(original,copy);
                 scan_tool_progress(scan,[]);
@@ -107,8 +108,8 @@ function scan = scan_glm_copy(scan,level,type)
             scan_tool_print(scan,false,'\nCopy statistic file (second level) : ');
             scan_tool_progress(scan,length(scan.running.contrast{1}));
             for i_contrast = 1:length(scan.running.contrast{1})
-                original = fullfile(scan.running.directory.original.second,scan.running.contrast{1}(i_contrast).name,'spmT_0001.img');
-                copy     = fullfile(scan.running.directory.copy.second.statistic,sprintf('%s_%03i.nii',scan.running.contrast{i_subject}(i_contrast).name,scan.running.contrast{i_subject}(i_contrast).order));
+                original = fullfile(scan.running.directory.original.second,sprintf('%s_%03i',scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order),'spmT_0001.img');
+                copy     = fullfile(scan.running.directory.copy.second.statistic,sprintf('%s_%03i.nii',scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order));
                 file_mkdir(fileparts(copy));
                 scan_tool_copy(original,copy);
                 scan_tool_progress(scan,[]);
@@ -121,8 +122,8 @@ function scan = scan_glm_copy(scan,level,type)
             scan_tool_print(scan,false,'\nCopy SPM mat-file (second level) : ');
             scan_tool_progress(scan,length(scan.running.contrast{1}));
             for i_contrast = 1:length(scan.running.contrast{1})
-                original = fullfile(scan.running.directory.original.second,scan.running.contrast{1}(i_contrast).name,'SPM.mat');
-                copy     = fullfile(scan.running.directory.copy.second.spm,[scan.running.contrast{1}(i_contrast).name,'.mat']);
+                original = fullfile(scan.running.directory.original.second,sprintf('%s_%03i',scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order),'SPM.mat');
+                copy     = fullfile(scan.running.directory.copy.second.spm,sprintf('%s_%03i',scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order),'SPM.mat');
                 file_mkdir(fileparts(copy));
                 scan_tool_copy(original,copy);
                 scan_tool_progress(scan,[]);

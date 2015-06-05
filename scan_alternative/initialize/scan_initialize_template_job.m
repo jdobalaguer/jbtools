@@ -11,6 +11,8 @@ function job = scan_initialize_template_job(type)
             job = scan_initialize_template_job_glm(type);
         case 'tbte'
             job = scan_initialize_template_job_tbte(type);
+        case 'rsa'
+            job = scan_initialize_template_job_rsa(type);
         otherwise
             warning('scan_job_template: error. type "%s" unknown',scan.job.type);
     end

@@ -6,7 +6,7 @@ function cf = fig_figure(cf)
     % 
     
     %% default
-    if ~exist('cf','var')||isempty(cf); cf = figure(); end
+    if ~exist('cf','var') || isempty(cf); cf = figure(); end
     
     %% colour
     set(cf,'Color',[1,1,1]);

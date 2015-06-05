@@ -5,14 +5,8 @@ function scan = scan_glm_contrast(scan)
     % to list main functions, try
     %   >> help scan;
     
-    %% note
-    % don't add the _001 to the [scan.running.contrast.name]
-    % keep it as a different field, and you can add it later when you save it in files.
-    % this will make some things easier (like getting the FIR for contrasts)
-    % it may break some stuff. you'll need to check where you've been using the contrasts' names.
-
     %% function
-    if ~scan.running.flag.contrast, return; end
+    if ~scan.running.flag.first, return; end
     
     % print
     scan_tool_print(scan,false,'\nSet contrast : ');
@@ -28,17 +22,19 @@ function scan = scan_glm_contrast(scan)
         % generic
         u_column = unique(scan.running.design(i_subject).column.name);
         for i_column = 1:length(u_column)
+            ii_column = strcmp(u_column{i_column},scan.running.design(i_subject).column.name);
+            if all(scan.running.design(i_subject).column.covariate(ii_column)), continue; end
             for i_order = 1:length(scan.job.contrast.generic)
-                ii_column = strcmp(u_column{i_column},scan.running.design(i_subject).column.name);
                 ii_order  = (scan.running.design(i_subject).column.order == scan.job.contrast.generic(i_order));
                 vector = (ii_column & ii_order) / sum(ii_column & ii_order);
                 if any(vector),
                     j_contrast = j_contrast + 1;
-                    scan.running.contrast{i_subject}(j_contrast) = struct('name',{u_column{i_column}},'vector',{vector},'order',{i_order});
+                    scan.running.contrast{i_subject}(j_contrast) = struct('name',u_column(i_column),'vector',{vector},'order',{i_order});
+                else
+                    scan_tool_warning(scan,true,'generic contrast "%s" with order "%03i" is ignored for subject "%03i"',u_column{i_column},i_order,i_subject);
                 end
             end
         end
-        clear u_column;
         
         % extra
         for i_extra = 1:length(scan.job.contrast.extra)
@@ -55,6 +51,8 @@ function scan = scan_glm_contrast(scan)
                 if any(vector)
                     j_contrast = j_contrast + 1;
                     scan.running.contrast{i_subject}(j_contrast) = struct('name',{scan.job.contrast.extra(i_extra).name},'vector',{vector},'order',i_order);
+                else
+                    scan_tool_warning(scan,true,'extra contrast "%s" with order "%d" is ignored for subject "%03i"',u_column{i_column},i_order,i_subject);
                 end
             end
         end

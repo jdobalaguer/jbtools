@@ -11,11 +11,11 @@ function h = fig_bare(m,e,c,g,b,w)
     n = size(m);
     r = isrow(m);
 
-    % default
-    default('c',fig_color('hsv',n(2)));
-    default('g','');
-    default('b','');
-    default('w',1);
+    % func_default
+    func_default('c',fig_color('hsv',n(2)));
+    func_default('g','');
+    func_default('b','');
+    func_default('w',1);
 
     % assert
     assertSize(m,e);
