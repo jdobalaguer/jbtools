@@ -9,7 +9,7 @@ function scan = scan_glm_regressor_filter(scan)
     if ~scan.running.flag.design, return; end
     
     % SPM
-    global defaults;
+    hpf = spm_get_defaults('stats.fmri.hpf');
     
     % print
     scan_tool_print(scan,false,'\nFilter regressor : ');
@@ -25,7 +25,7 @@ function scan = scan_glm_regressor_filter(scan)
             for i_regressor = 1:size(scan.running.regressor{i_subject}{i_session}.regressor,2)
                 if scan.running.regressor{i_subject}{i_session}.filter,
                     r = scan.running.regressor{i_subject}{i_session}.regressor(:,i_regressor);
-                    K = struct('HParam',defaults.stats.fmri.hpf,'row',1:size(r,1),'RT',scan.parameter.scanner.tr);
+                    K = struct('HParam',hpf,'row',1:size(r,1),'RT',scan.parameter.scanner.tr);
                     K = spm_filter(K);
                     r = spm_filter(K,r);
                     scan.running.regressor{i_subject}{i_session}.regressor(:,i_regressor) = r;

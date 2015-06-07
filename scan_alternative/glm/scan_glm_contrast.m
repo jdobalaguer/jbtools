@@ -31,7 +31,7 @@ function scan = scan_glm_contrast(scan)
                     j_contrast = j_contrast + 1;
                     scan.running.contrast{i_subject}(j_contrast) = struct('name',u_column(i_column),'vector',{vector},'order',{i_order});
                 else
-                    scan_tool_warning(scan,true,'generic contrast "%s" with order "%03i" is ignored for subject "%03i"',u_column{i_column},i_order,i_subject);
+%                     scan_tool_warning(scan,true,'generic contrast "%s" with order "%03i" is ignored for subject "%03i"',u_column{i_column},i_order,i_subject);
                 end
             end
         end

@@ -14,7 +14,7 @@ function job = scan_initialize_template_job_tbte(type)
     % setting
     job.copyFolder         = {'beta_1','spm_1'};
     job.delayOnset         = 0;
-    job.functionBasis      = struct('name',{'hrf'},'parameters',{struct('derivs',{[0,0]})});
+    job.basisFunction      = struct('name',{'hrf'},'parameters',{struct('derivs',{[0,0]})});
     job.globalScaling      = false;
     job.image              = 'smooth';
     job.margeFromEnd       = 0;

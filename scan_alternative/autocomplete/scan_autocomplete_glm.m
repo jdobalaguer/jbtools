@@ -8,7 +8,7 @@ function scan = scan_autocomplete_glm(scan)
     %% function
     
     % original
-    scan.running.directory.original.first        = fullfile(scan.running.directory.job,'original','first_level',num2leg(1:6,'subject_%03i')',filesep);
+    scan.running.directory.original.first        = fullfile(scan.running.directory.job,'original','first_level',num2leg(scan.running.subject.unique,'subject_%03i')',filesep);
     scan.running.directory.original.second       = fullfile(scan.running.directory.job,'original','second_level',filesep);
     
     % copy
@@ -49,6 +49,7 @@ function scan = scan_autocomplete_glm(scan)
             scan.running.regressor{i_subject}{i_session}.name      = num2leg(1:6,'realignment %03i');
             scan.running.regressor{i_subject}{i_session}.regressor = load(file_match([scan.running.directory.nii.epi3.realignment{i_subject}{i_session},'*.txt'],'absolute'));
             scan.running.regressor{i_subject}{i_session}.filter    = false(1,6);
+            scan.running.regressor{i_subject}{i_session}.zscore    = false(1,6);
             scan.running.regressor{i_subject}{i_session}.covariate = true (1,6);
             assert(size(scan.running.regressor{i_subject}{i_session}.regressor,1) == length(scan.running.file.nii.epi3.(scan.job.image){i_subject}{i_session}), 'scan_initialize_autocomplete_glm: error. realignment file doesnt match number of files');
         end

@@ -16,28 +16,18 @@ function scan = scan_glm_flag(scan)
     switch scan.job.whatToDo
         case 'all'
             redo = [1,1,1,1,1];
-        case 'from estimation'
-            redo = [0,1,1,1,1,1];
-        case 'from first'
-            redo = [0,0,1,1,1];
-        case 'from second'
-            redo = [0,0,0,1,1];
         case 'no function'
+            redo = [1,1,1,1,0];
+        case 'to second'
             redo = [1,1,1,1,0];
         case 'to first'
             redo = [1,1,1,0,0];
         case 'to estimation'
             redo = [1,1,0,0,0];
+        case 'to design'
+            redo = [1,0,0,0,0];
         case 'only design'
             redo = [1,0,0,0,0];
-        case 'only estimation'
-            redo = [0,1,0,0,0];
-        case 'only first'
-            redo = [0,0,1,0,0];
-        case 'only second'
-            redo = [0,0,0,1,0];
-        case 'only function'
-            redo = [0,0,0,0,1];
         otherwise
             error('scan_glm_flag: error. [scan.job.whatToDo] "%s" unknown',scan.job.whatToDo);
     end

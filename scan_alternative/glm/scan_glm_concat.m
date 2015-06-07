@@ -17,7 +17,9 @@ function scan = scan_glm_concat(scan)
     for i_subject = 1:scan.running.subject.number
         u_image = {'image','realignment','normalisation','smooth'};
         for i_image = 1:length(u_image)
-            scan.running.file.nii.epi3.(u_image{i_image}){i_subject} = {vertcat(scan.running.file.nii.epi3.(u_image{i_image}){i_subject}{:})};
+            if isfield(scan.running.file.nii.epi3,u_image{i_image})
+                scan.running.file.nii.epi3.(u_image{i_image}){i_subject} = {vertcat(scan.running.file.nii.epi3.(u_image{i_image}){i_subject}{:})};
+            end
         end
         scan_tool_progress(scan,[]);
     end

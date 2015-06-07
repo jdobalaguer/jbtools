@@ -31,4 +31,7 @@ function scan = scan_glm_firstlevel(scan)
         scan_tool_progress(scan,[]);
     end
     scan_tool_progress(scan,0);
+    
+    % save
+    scan.running.jobs.first = spm;
 end

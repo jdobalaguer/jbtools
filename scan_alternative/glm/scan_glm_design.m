@@ -8,9 +8,6 @@ function scan = scan_glm_design(scan)
     %% function
     if ~scan.running.flag.design, return; end
     
-    % SPM
-    global defaults;
-    
     % print
     scan_tool_print(scan,false,'\nSPM Design : ');
     scan_tool_progress(scan,scan.running.subject.number);
@@ -22,20 +19,20 @@ function scan = scan_glm_design(scan)
         spm{i_subject}.spm.stats.fmri_spec.dir = scan.running.directory.original.first(i_subject); %#ok<*AGROW>
         spm{i_subject}.spm.stats.fmri_spec.timing.units  = 'secs';
         spm{i_subject}.spm.stats.fmri_spec.timing.RT      = scan.parameter.scanner.tr;
-        spm{i_subject}.spm.stats.fmri_spec.timing.fmri_t  = defaults.stats.fmri.fmri_t;
-        spm{i_subject}.spm.stats.fmri_spec.timing.fmri_t0 = defaults.stats.fmri.fmri_t0;
+        spm{i_subject}.spm.stats.fmri_spec.timing.fmri_t  = spm_get_defaults('stats.fmri.t');
+        spm{i_subject}.spm.stats.fmri_spec.timing.fmri_t0 = spm_get_defaults('stats.fmri.t0');
         spm{i_subject}.spm.stats.fmri_spec.fact = struct('name',{},'levels',{});
-        spm{i_subject}.spm.stats.fmri_spec.bases.(scan.job.functionBasis.name) = scan.job.functionBasis.parameters;
+        spm{i_subject}.spm.stats.fmri_spec.bases.(scan.job.basisFunction.name) = scan.job.basisFunction.parameters;
         spm{i_subject}.spm.stats.fmri_spec.volt = 1;
         spm{i_subject}.spm.stats.fmri_spec.global = 'none';
         if scan.job.globalScaling, spm{i_subject}.spm.stats.fmri_spec.global = 'scaling'; end
         spm{i_subject}.spm.stats.fmri_spec.mask = {''};
-        spm{i_subject}.spm.stats.fmri_spec.cvi = defaults.stats.fmri.cvi;
+        spm{i_subject}.spm.stats.fmri_spec.cvi = spm_get_defaults('stats.fmri.cvi');
         
         % session
         for i_session = 1:scan.running.subject.session(i_subject)
             spm{i_subject}.spm.stats.fmri_spec.sess(i_session).scans = scan.running.file.nii.epi3.(scan.job.image){i_subject}{i_session};
-            spm{i_subject}.spm.stats.fmri_spec.sess(i_session).hpf   = defaults.stats.fmri.hpf;
+            spm{i_subject}.spm.stats.fmri_spec.sess(i_session).hpf   = spm_get_defaults('stats.fmri.hpf');
             spm{i_subject}.spm.stats.fmri_spec.sess(i_session).cond  = struct('name',{},'onset',{},'duration',{},'tmod',{},'pmod',{});
             
             % condition
@@ -66,4 +63,7 @@ function scan = scan_glm_design(scan)
         scan_tool_progress(scan,[]);
     end
     scan_tool_progress(scan,0);
+    
+    % save
+    scan.running.jobs.design = spm;
 end

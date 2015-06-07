@@ -13,8 +13,8 @@ function scan = scan_glm_secondlevel(scan)
     scan_tool_progress(scan,scan.running.subject.number);
     for i_subject = 1:scan.running.subject.number
         for i_contrast = 1:length(scan.running.contrast{i_subject})
-            file_first  = fullfile(scan.running.directory.original.first{i_subject},sprintf('%s_%04i.img',scan.job.secondLevel,i_contrast));
-            file_second = fullfile(scan.running.directory.original.second,sprintf('%s_%03i',scan.running.contrast{i_subject}(i_contrast).name,scan.running.contrast{i_subject}(i_contrast).order),sprintf('%s_subject_%03i.img',scan.job.secondLevel,i_subject));
+            file_first  = fullfile(scan.running.directory.original.first{i_subject},sprintf('%s_%04i.nii',scan.job.secondLevel,i_contrast));
+            file_second = fullfile(scan.running.directory.original.second,sprintf('%s_%03i',scan.running.contrast{i_subject}(i_contrast).name,scan.running.contrast{i_subject}(i_contrast).order),sprintf('%s_subject_%03i.nii',scan.job.secondLevel,i_subject));
             file_mkdir(fileparts(file_second));
             scan_tool_copy(file_first,file_second);
         end
@@ -31,7 +31,7 @@ function scan = scan_glm_secondlevel(scan)
         % design
         j_job = j_job + 1;
         spm{j_job}.spm.stats.factorial_design.dir                      = {directory_second}; %#ok<*AGROW>
-        spm{j_job}.spm.stats.factorial_design.des.t1.scans             = file_list(fullfile(directory_second,'*.img'),'absolute');
+        spm{j_job}.spm.stats.factorial_design.des.t1.scans             = file_list(fullfile(directory_second,'*.nii'),'absolute');
         spm{j_job}.spm.stats.factorial_design.cov                      = struct('c', {}, 'cname', {}, 'iCFI', {}, 'iCC', {});
         spm{j_job}.spm.stats.factorial_design.masking.tm.tm_none       = 1;    % threshold masking
         spm{j_job}.spm.stats.factorial_design.masking.im               = 1;    % implicit mask
@@ -56,4 +56,7 @@ function scan = scan_glm_secondlevel(scan)
         scan_tool_progress(scan,[]);
     end
     scan_tool_progress(scan,0);
+    
+    % save
+    scan.running.jobs.second = spm;
 end

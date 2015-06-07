@@ -5,9 +5,6 @@ function scan = scan_glm(scan)
     % to list main functions, try
     %   >> help scan;
 
-    %% notes
-    % check the multiple ways of using flags : second without first, first without second, pre-loading old scan...
-    
     %% function
     
     % job type
@@ -15,11 +12,15 @@ function scan = scan_glm(scan)
     
     % summary
     scan_tool_summary(scan,'General Linear Model (GLM)',...
+        'Initialize',...
+        ...
         'Check condition',...
         'Conatenate session (condition)',...
         'Add regressor',...
         'Conatenate session (regressor)',...
         'Filter regressor',...
+        'Z-score regressor',...
+        'Add PPI',...
         'Conatenate session (file)',...
         'SPM Design',...
         'Set matrix',...
@@ -49,7 +50,8 @@ function scan = scan_glm(scan)
     try
         % initialize
         scan = scan_initialize(scan);           % initialize scan / SPM
-        scan = scan_autocomplete_nii(scan);     % autocomplete (nii)
+        scan = scan_autocomplete_nii(scan,['epi3:',scan.job.image]); % autocomplete (nii)
+        scan = scan_autocomplete_nii(scan,'epi3:realignment'); % autocomplete (nii)
         scan = scan_autocomplete_glm(scan);     % autocomplete (glm)
         scan = scan_glm_flag(scan);             % redo flags
         scan = scan_glm_rmdir(scan);            % delete old directories
@@ -62,6 +64,8 @@ function scan = scan_glm(scan)
         scan = scan_glm_regressor_add(scan);    % add
         scan = scan_glm_regressor_concat(scan); % concatenate sessions and add offset
         scan = scan_glm_regressor_filter(scan); % filter
+        scan = scan_glm_regressor_zscore(scan); % zscore
+        scan = scan_glm_ppi(scan);              % ppi
         scan = scan_glm_concat(scan);           % concatenate sessions (extra: file & running.subject.session)
         scan = scan_glm_design(scan);           % SPM design
         scan = scan_glm_matrix(scan);           % set matrix
@@ -98,6 +102,7 @@ function scan = scan_glm(scan)
         scan_job_save_scan(scan);
         
     catch e
+        scan_tool_warning(scan,false,'GLM not completed');
         scan_job_save_scan(scan);
         rethrow(e);
     end

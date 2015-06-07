@@ -27,6 +27,7 @@ function scan = scan_glm_regressor_add(scan)
                         scan.running.regressor{i_subject}{i_session}.name{end+1}        = scan.job.regressor(i_regressor).name;
                         scan.running.regressor{i_subject}{i_session}.regressor(:,end+1) = vols;
                         scan.running.regressor{i_subject}{i_session}.filter(end+1)      = scan.job.regressor(i_regressor).filter;
+                        scan.running.regressor{i_subject}{i_session}.zscore(end+1)      = scan.job.regressor(i_regressor).zscore;
                         scan.running.regressor{i_subject}{i_session}.covariate(end+1)   = scan.job.regressor(i_regressor).covariate;
                         scan_tool_progress(scan,[]);
                     end

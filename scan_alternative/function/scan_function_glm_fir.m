@@ -75,8 +75,9 @@ function scan = scan_function_glm_fir(scan)
         if ~nargout,
             switch level
                 case 'first'
-                    fir = meeze(fir,[2,4]);
-                    [m,e] = deal(nanmean(fir,1),nanste(fir,1));
+                    fir = nanmean(fir,4);
+                    fir = nanmean(fir,2);
+                    [m,e] = deal(mat2vec(nanmean(fir,1))',mat2vec(nanste(fir,1))');
                     fig_figure();
                     fig_steplot(m,e);
                     fig_pipplot(m,e);

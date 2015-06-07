@@ -17,7 +17,23 @@ function scan = scan_rsa_rdm(scan)
     for i_subject = 1:scan.running.subject.number
         for i_session = 1:scan.running.subject.session(i_subject)
             for i_mask = 1:length(scan.running.mask)
-                scan.running.rdm{i_subject}{i_session}(i_mask).vector = pdist(scan.running.bm{i_subject}{i_session}(i_mask).matrix',scan.job.distance);
+                % rdm
+                switch scan.job.distance
+                    case 'function_handle'
+                        scan.running.rdm{i_subject}{i_session}(i_mask).vector = pdist(scan.running.bm{i_subject}{i_session}(i_mask).matrix',scan.job.distance);
+                    case 'char'
+                        switch scan.job.distance
+                            case {'euclidean','seuclidean','cityblock''minkowski','chebychev','mahalanobis','cosine','correlation','spearman','hamming','jaccard'}
+                                scan.running.rdm{i_subject}{i_session}(i_mask).vector = pdist(scan.running.bm{i_subject}{i_session}(i_mask).matrix',scan.job.distance);
+                            case {'linear0','linear1'}
+                                scan_tool_error('distance "%s" has not been implemented yet',scan.job.distance);
+                            otherwise
+                                scan_tool_error('distance "%s" is not valid',scan.job.distance);
+                        end
+                    otherwise
+                        scan_tool_error('[scan.job.distance] must be of class "char" or "function_handle"');
+                end
+                % column
                 scan.running.rdm{i_subject}{i_session}(i_mask).column = scan.running.bm{i_subject}{i_session}(i_mask).column;
             end
             scan_tool_progress(scan,[]);

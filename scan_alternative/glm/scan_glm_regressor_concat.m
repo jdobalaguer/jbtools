@@ -24,13 +24,14 @@ function scan = scan_glm_regressor_concat(scan)
             u_regressor.regressor = [u_regressor.regressor ; scan.running.regressor{i_subject}{i_session}.regressor];
         end
         
-        % offset
+        % constant
         s_volume = size(scan.running.regressor{i_subject}{1}.regressor,1);
         for i_session = 2:scan.running.subject.session(i_subject)
             n_volume = size(scan.running.regressor{i_subject}{i_session}.regressor,1);
             u_regressor.name{end+1} = 'constant';
             u_regressor.regressor(s_volume+(1:n_volume),end+1) = 1;
             u_regressor.filter(end+1) = false;
+            u_regressor.zscore(end+1) = false;
             u_regressor.covariate(end+1) = true;
             s_volume = s_volume + n_volume;
         end
