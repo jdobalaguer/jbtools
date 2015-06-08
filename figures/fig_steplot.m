@@ -1,39 +1,32 @@
 
 function hdl = fig_steplot(varargin)
     %% hdl = fig_steplot([x,]my,sy[,c][,a])
-    %
-    % splines plot with nan standard error shade
-    %
+    % plot with nan standard error shade
     
-    %% map inputs
-    if isempty(varargin);   error('fig_steplot: error. no input.'); end
-    if length(varargin)==1; error('fig_steplot: error. fig_steplot(my,sy).'); end
-    if length(varargin)==2
-        my = varargin{1};
-        sy = varargin{2};
+    %% function
+    
+    % mapping
+    if nargin == 2
+        [my,sy] = deal(varargin{1:2});
     else
-        x = varargin{1};
-        my = varargin{2};
-        sy = varargin{3};
-        if length(varargin)>=4; c = varargin{4}; end
-        if length(varargin)>=5; a = varargin{5}; end
+        varargin(end+1:5) = {[]};
+        [x,my,sy,c,a] = deal(varargin{1:5});
     end
     
-    %% default
-    if ~exist('x','var')||isempty(x); x=1:size(my,2); end
-    if ~exist('c','var')||isempty(c); c='b'; end
-    if ~exist('a','var')||isempty(a); a=0.15; end
+    % default
+    func_default('x',1:length(my));
+    func_default('c','b');
+    func_default('a',0.15);
         
-    %% asserts
-    assert(size(x,2)==size(my,2),'x and my must have same number of columns');
-    assert(size(x,2)==size(sy,2),'x and sy must have same number of columns');
+    % assert
+    assertSize(x,my,sy);
     
-    %% variables
+    % variables
     sb = my-sy;
     su = my+sy;
     
-    %% plot
-    hold on;
+    % plot
+    hold('on');
     hdl = struct();
     hdl.shade = plot_shade(x,sb,su,c,a);
     hdl.line  = plot_line(x,my,c);

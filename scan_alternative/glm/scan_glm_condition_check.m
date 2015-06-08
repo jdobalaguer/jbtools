@@ -19,25 +19,25 @@ function scan = scan_glm_condition_check(scan)
         for i_session = 1:scan.running.subject.session(i_subject)
             
             % number of volumes (the from covariate)
-            n_volume = size(scan.running.regressor{i_subject}{i_session}.regressor,1);
+            n_volume = length(scan.running.file.nii.epi3.(scan.job.image){i_subject}{i_session});
             
             % check condition length
-            for i_condition = 1:length(length(scan.running.condition{i_subject}{i_session}))
-                scans_condition = (scan.running.condition{i_subject}{i_session}(i_condition).onset ./ scan.parameter.scanner.tr);
-                scans_to_remove = (scans_condition + scan.job.margeFromEnd - scan.job.delayOnset > n_volume);
+            for i_condition = 1:length(scan.running.condition{i_subject}{i_session})
+                scans_to_remove = (scan.running.condition{i_subject}{i_session}(i_condition).onset - scan.job.delayOnset > n_volume .* scan.parameter.scanner.tr - scan.job.margeFromEnd);
                 
                 % remove trials
                 if any(scans_to_remove)
                     scan.running.condition{i_subject}{i_session}(i_condition).onset(scans_to_remove) = [];
-                    for i_level = 1:length(scan.running.condition{i_subject}{i_session}(i_condition).level)
+                    if ~isempty(scan.running.condition{i_subject}{i_session}(i_condition).level),
                         scan.running.condition{i_subject}{i_session}(i_condition).level(scans_to_remove,:) = [];
                     end
                     scan_tool_warning(scan,true,'subject "%03i" session "%03i" condition "%s" removed %d samples',scan.running.subject.unique(i_subject),i_session,scan.running.condition{i_subject}{i_session}(i_condition).name,sum(scans_to_remove));
                 end
                 
-                % wait
-                scan_tool_progress(scan,[]);
             end
+            
+            % wait
+            scan_tool_progress(scan,[]);
         end
     end
     scan_tool_progress(scan,0);

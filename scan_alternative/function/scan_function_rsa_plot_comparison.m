@@ -13,13 +13,14 @@ function scan = scan_function_rsa_plot_comparison(scan)
 
     %% nested
     function beta = auxiliar_plot_comparison(varargin)
-        if nargin~=1 || strcmp(varargin{1},'help')
+        if nargin<1 || strcmp(varargin{1},'help')
             scan_tool_help('@plot.comparison(i_mask)','This function plots the result of the comparison for a certain mask. The mask is an index that corresponds to a possibly modified by the searchlight (see [scan.running.mask]).');
             return;
         end
         
         % default
         i_mask = varargin{1};
+        plot_args = struct_default(pair2struct(varargin{5:end}),scan_function_plot_args);
         
         % assert
         if ~isscalar(i_mask) || ~isnumeric(i_mask), auxiliar_plot_comparison('help'); return; end
@@ -37,10 +38,10 @@ function scan = scan_function_rsa_plot_comparison(scan)
             beta = mean(beta,2);
             m = meeze (beta,1);
             e = steeze(beta,1);
-            fig_figure();
-            fig_bare(m,e,ones(1,3)*5/6,{scan.job.model.model});
-            fig_fontname([],'Calibri');
-            fig_fontsize([],16);
+            fig_figure(plot_args.figure);
+            fig_bare(m,e,plot_args.color_fill,{scan.job.model.model});
+            fig_fontname([],plot_args.fontname);
+            fig_fontsize([],plot_args.fontsize);
         end
     end
 end

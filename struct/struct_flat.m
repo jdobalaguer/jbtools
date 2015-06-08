@@ -8,13 +8,13 @@ function z = struct_flat(s)
     
     %% function
     assert(isstruct(s), 'struct_flat: error. s not a struct');
-    assert(isvector(s), 'struct_flat: error. s not vector');
-    for i = 1:length(s)
+    for i = 1:numel(s)
         z(i) = flatten(s(i));
     end
+    z = reshape(z,size(s));
 end
 
-
+%% auxiliar
 function z = flatten(s1)
     u1 = fieldnames(s1);
     n1 = length(u1);

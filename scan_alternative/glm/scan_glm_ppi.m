@@ -25,7 +25,8 @@ function scan = scan_glm_ppi(scan)
             for i_session = 1:length(scan.running.regressor{i_subject})
             
                 % regressor (i.e. physiological)
-                i_regressor = strcmp(scan.job.ppi(i_ppi).condition,scan.running.regressor{i_subject}{i_session}.name);
+                i_regressor = strcmp(scan.job.ppi(i_ppi).regressor,scan.running.regressor{i_subject}{i_session}.name);
+                scan_tool_assert(scan,sum(i_regressor)==1,'none or multiple regressors found for subject "%03i" session "%03i" with the same name "%s"',i_subject,i_session,scan.job.ppi(i_ppi).regressor);
                 regressor   = scan.running.regressor{i_subject}{i_session}.regressor(:,i_regressor);
                 
                 % add interaction

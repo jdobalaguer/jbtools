@@ -5,16 +5,13 @@ function scan = scan_glm_copy(scan,level,type)
     % to list main functions, try
     %   >> help scan;
 
-    %% note
-    % 1) i need to add [column.covariate] flag that specifies whether to copy (e.g. condition or ppi) or not (e.g. realignment or constant)
-
     %% function
     
     switch [level,':',type]
         % first level beta
         case 'first:beta'
             if ~any(ismember('beta_1',scan.job.copyFolder)), return; end
-            if ~scan.running.flag.first, return; end
+            if ~scan.running.flag.estimation, return; end
             scan_tool_print(scan,false,'\nCopy beta (first level) : ');
             scan_tool_progress(scan,scan.running.subject.number);
             for i_subject = 1:scan.running.subject.number
@@ -66,7 +63,7 @@ function scan = scan_glm_copy(scan,level,type)
         % first level SPM mat-file
         case 'first:spm'
             if ~any(ismember('spm_1',scan.job.copyFolder)), return; end
-            if ~(scan.running.flag.design || scan.running.flag.estimation || scan.running.flag.first), return; end
+            if ~scan.running.flag.design, return; end
             scan_tool_print(scan,false,'\nCopy SPM mat-file (first level) : ');
             scan_tool_progress(scan,scan.running.subject.number);
             for i_subject = 1:scan.running.subject.number

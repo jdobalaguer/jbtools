@@ -18,6 +18,7 @@ function job = scan_initialize_template_job_tbte(type)
     job.globalScaling      = false;
     job.image              = 'smooth';
     job.margeFromEnd       = 0;
+    job.realignCovariate   = true;
     job.whatToDo           = 'all';
     
     % condition

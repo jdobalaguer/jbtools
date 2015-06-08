@@ -45,7 +45,8 @@ function scan = scan_glm(scan)
         'Add function (xjview)',...
         'Add function (design)',...
         'Add function (roi)',...
-        'Add function (fir)');
+        'Add function (fir)',...
+        'Add function (saveRegressor)');
      
     try
         % initialize
@@ -65,8 +66,8 @@ function scan = scan_glm(scan)
         scan = scan_glm_regressor_concat(scan); % concatenate sessions and add offset
         scan = scan_glm_regressor_filter(scan); % filter
         scan = scan_glm_regressor_zscore(scan); % zscore
-        scan = scan_glm_ppi(scan);              % ppi
         scan = scan_glm_concat(scan);           % concatenate sessions (extra: file & running.subject.session)
+        scan = scan_glm_ppi(scan);              % ppi
         scan = scan_glm_design(scan);           % SPM design
         scan = scan_glm_matrix(scan);           % set matrix
 
@@ -94,6 +95,7 @@ function scan = scan_glm(scan)
         scan = scan_function_glm_design(scan);  % review design
         scan = scan_function_glm_roi(scan);     % region of interest
         scan = scan_function_glm_fir(scan);     % finite impulse response
+        scan = scan_function_glm_saveregressor(scan); % save regressor
         
         % result
         scan = rmfield(scan,'result');          % remove field
@@ -103,7 +105,9 @@ function scan = scan_glm(scan)
         
     catch e
         scan_tool_warning(scan,false,'GLM not completed');
+        cd(scan.directory.root);
         scan_job_save_scan(scan);
-        rethrow(e);
+        scan_tool_warning(scan,false,e.message);
+        scan.result.error = e;
     end
 end

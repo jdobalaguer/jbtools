@@ -17,13 +17,14 @@ function scan = scan_function_glm_fir(scan)
     %% nested
     function fir = auxiliar_fir(varargin)
         fir = [];
-        if nargin~=4 || strcmp(varargin{1},'help')
+        if nargin<4 || strcmp(varargin{1},'help')
             scan_tool_help('fir = @fir(level,type,mask,contrast)','This function loads the [type] values estimated by the [level] analysis within a region of interest and a column/contrast for every [order] of your basis function. It''s particularly useful when using FIRs. [level] is a string {''first'',''second''}. [type] is a string {''beta'',''cont'',''spmt''}. [mask] is a the path to a nii/img file relative to [scan.directory.mask]. [contrast] is a string with the name of the column/contrast. If no output is captured, the data is displayed within a figure.');
             return;
         end
         
         % default
         [level,type,mask,contrast] = deal(varargin{1:4});
+        plot_args = struct_default(pair2struct(varargin{5:end}),scan_function_plot_args);
         
         % assert
         if ~any(strcmp(level,{'first','second'})),              auxiliar_fir('help'); return; end
@@ -78,15 +79,16 @@ function scan = scan_function_glm_fir(scan)
                     fir = nanmean(fir,4);
                     fir = nanmean(fir,2);
                     [m,e] = deal(mat2vec(nanmean(fir,1))',mat2vec(nanste(fir,1))');
-                    fig_figure();
-                    fig_steplot(m,e);
-                    fig_pipplot(m,e);
+                    x = 1:length(m);
+                    fig_figure(plot_args.figure);
+                    fig_steplot(x,m,e,plot_args.color);
+                    fig_pipplot(x,m,e,plot_args.color);
                     plot(zeros(size(m)),'k--');
                 case 'second'
                     fir = meeze(fir,[2,4]);
                     fir = fir';
-                    fig_figure();
-                    plot(fir,'marker','.','color','b');
+                    fig_figure(plot_args.figure);
+                    plot(fir,'marker','.','color',plot_args.color);
                     plot(zeros(size(fir)),'k--');
             end
         end

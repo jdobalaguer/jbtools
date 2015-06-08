@@ -2,6 +2,8 @@
 function scan = scan_autocomplete_nii(scan,folder)
     %% scan = SCAN_AUTOCOMPLETE_NII(scan)
     % autocomplete [scan] struct
+    % scan   : [scan] struct
+    % folder : folder to analyse (edit this file to see options)
     % to list main functions, try
     %   >> help scan;
     
@@ -75,5 +77,8 @@ function scan = scan_autocomplete_nii(scan,folder)
                     scan.running.file.nii.epi3.smooth{i_subject}{i_session}(cellfun(@isscalar,strfind(scan.running.file.nii.epi3.smooth{i_subject}{i_session},'mean'))) = []; % remove mean image
                 end
             end
+            
+        otherwise
+            scan_tool_error(scan,'unknown folder "%s"',folder);
     end
 end
