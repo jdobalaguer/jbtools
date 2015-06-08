@@ -7,6 +7,9 @@ function scan = scan_autocomplete_rsa(scan)
     
     %% function
     
+    % job
+    scan.running.directory.job = file_endsep(fullfile(scan.directory.(scan.job.type),scan.job.name));
+    
     % glm
     scan.running.glm = file_loadvar(fullfile(scan.directory.(scan.job.glm.type),scan.job.glm.name,'scan.mat'),'scan');
     

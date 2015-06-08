@@ -39,9 +39,10 @@ function color = fig_color(scheme,n)
         case 'green';   color = zeros(n,3); color(:,2) = linspace(255,51,n);
         case 'blue';    color = zeros(n,3); color(:,3) = linspace(255,51,n);
         % matlab colormaps
-        case 'hot';     f = figure(); color = 255.*hot(n);  close(f);
-        case 'cool';    f = figure(); color = 255.*cool(n); close(f);
-        case 'jet';     f = figure(); color = 255.*jet(n);  close(f);
+        case 'hot';     f = figure(); color = 255.*hot(n);    close(f);
+        case 'cool';    f = figure(); color = 255.*cool(n);   close(f);
+        case 'jet';     f = figure(); color = 255.*jet(n);    close(f);
+        case 'parula';  f = figure(); color = 255.*parula(n); close(f);
         % palettes (see http://www.colourlovers.com)
         case 'cegato';  color = [029,012,108;237,131,046;233,199,234;061,197,184;215,250,015];
         case 'cucumber';color = [110,009,041;201,215,104;231,247,174;087,080,052;001,201,182];

@@ -56,9 +56,8 @@ function scan = scan_tbte(scan)
         scan = scan_function_glm_cd(scan);      % change directory
         scan = scan_function_glm_design(scan);  % review design
         scan = scan_function_glm_roi(scan);     % region of interest
-
-        % result
-        scan = rmfield(scan,'result');          % remove field
+        scan = scan_function_glm_saveregressor(scan); % save regressor
+        scan = scan_function_glm_foldermanager(scan); % folder manager
 
         % save
         scan_job_save_scan(scan);

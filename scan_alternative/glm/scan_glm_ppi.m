@@ -30,11 +30,11 @@ function scan = scan_glm_ppi(scan)
                 regressor   = scan.running.regressor{i_subject}{i_session}.regressor(:,i_regressor);
                 
                 % add interaction
-                interaction = condition{i_subject}{i_session} .* regressor;
+                interaction = ztransf(condition{i_subject}{i_session} .* regressor);
                 scan.running.regressor{i_subject}{i_session}.name{end+1}        = scan.job.ppi(i_ppi).name;
                 scan.running.regressor{i_subject}{i_session}.regressor(:,end+1) = interaction;
                 scan.running.regressor{i_subject}{i_session}.filter(end+1)      = false;
-                scan.running.regressor{i_subject}{i_session}.zscore(end+1)      = false;
+                scan.running.regressor{i_subject}{i_session}.zscore(end+1)      = true;
                 scan.running.regressor{i_subject}{i_session}.covariate(end+1)   = false;
             end
             

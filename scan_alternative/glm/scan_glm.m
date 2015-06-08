@@ -46,7 +46,8 @@ function scan = scan_glm(scan)
         'Add function (design)',...
         'Add function (roi)',...
         'Add function (fir)',...
-        'Add function (saveRegressor)');
+        'Add function (saveRegressor)',...
+        'Add function (folderManager)');
      
     try
         % initialize
@@ -96,10 +97,8 @@ function scan = scan_glm(scan)
         scan = scan_function_glm_roi(scan);     % region of interest
         scan = scan_function_glm_fir(scan);     % finite impulse response
         scan = scan_function_glm_saveregressor(scan); % save regressor
+        scan = scan_function_glm_foldermanager(scan); % folder manager
         
-        % result
-        scan = rmfield(scan,'result');          % remove field
-
         % save
         scan_job_save_scan(scan);
         

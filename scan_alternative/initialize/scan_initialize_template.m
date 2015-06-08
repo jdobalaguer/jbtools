@@ -17,6 +17,7 @@ function scan = scan_initialize_template(type)
     scan.parameter.analysis.verbose     = true;
     scan.parameter.analysis.wpause      = true;
     scan.parameter.analysis.progress    = true;
+    scan.parameter.analysis.hdd         = inf;
     scan.parameter.path.subject         = {}; ... path
     scan.parameter.path.session         = {};
     
@@ -26,16 +27,18 @@ function scan = scan_initialize_template(type)
     scan.subject.session   = [];
     
     % directory
-    scan.directory.root             = [pwd(),filesep];
-    scan.directory.spm              = [fileparts(which('spm.m')),filesep()];
-    scan.directory.dicom            = [scan.directory.root,'data',filesep,'dicom',filesep];
-    scan.directory.nii              = [scan.directory.root,'data',filesep,'nii',filesep];
-    scan.directory.regressor        = [scan.directory.root,'data',filesep,'regressor',filesep];
-    scan.directory.mask             = [scan.directory.root,'data',filesep,'mask',filesep];
-    scan.directory.glm              = [scan.directory.root,'data',filesep,'glm',filesep];
-    scan.directory.tbte             = [scan.directory.root,'data',filesep,'tbte',filesep];
-    scan.directory.mvpa             = [scan.directory.root,'data',filesep,'mvpa',filesep];
-    scan.directory.rsa              = [scan.directory.root,'data',filesep,'rsa',filesep];
+    scan.directory.root             = file_endsep(pwd());
+    scan.directory.spm              = file_endsep(fileparts(which('spm.m')));
+    scan.directory.data             = file_endsep(fullfile(scan.directory.root,'data'));
+    scan.directory.dicom            = file_endsep(fullfile(scan.directory.data,'dicom'));
+    scan.directory.nii              = file_endsep(fullfile(scan.directory.data,'nii'));
+    scan.directory.preprocess       = file_endsep(fullfile(scan.directory.data,'preprocess'));
+    scan.directory.regressor        = file_endsep(fullfile(scan.directory.data,'regressor'));
+    scan.directory.mask             = file_endsep(fullfile(scan.directory.data,'mask'));
+    scan.directory.glm              = file_endsep(fullfile(scan.directory.data,'glm'));
+    scan.directory.tbte             = file_endsep(fullfile(scan.directory.data,'tbte'));
+    scan.directory.mvpa             = file_endsep(fullfile(scan.directory.data,'mvpa'));
+    scan.directory.rsa              = file_endsep(fullfile(scan.directory.data,'rsa'));
     
     % file
     scan.file.template.t1           = [scan.directory.spm,'templates',filesep,'T1.nii'];
@@ -49,7 +52,6 @@ function scan = scan_initialize_template(type)
     scan.running.subject.unique     = [];
     scan.running.subject.number     = 0;
     scan.running.subject.session    = [];
-    scan.running.directory.job      = '';
     scan.running.file.save.scan     = '';
     scan.running.file.save.caller   = '';
     

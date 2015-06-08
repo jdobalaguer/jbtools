@@ -7,6 +7,10 @@ function job = scan_initialize_template_job(type)
     
     %% function
     switch type
+        case 'conversion'
+            job = scan_initialize_template_job_conversion(type);
+        case 'preprocess'
+            job = scan_initialize_template_job_preprocess(type);
         case 'glm'
             job = scan_initialize_template_job_glm(type);
         case 'tbte'

@@ -18,10 +18,12 @@ function scan = scan_initialize_autocomplete(scan)
     
     % directory
     scan.running.directory.root    = scan.directory.root;
-    scan.running.directory.job      = file_endsep(fullfile(scan.directory.(scan.job.type),scan.job.name));
-    scan.running.directory.job      = file_endsep(fullfile(scan.directory.(scan.job.type),scan.job.name));
     
-    % file
-    scan.running.file.save.scan     = [scan.running.directory.job,'scan.mat'];
-    scan.running.file.save.caller   = [scan.running.directory.job,'caller.m'];
+    % job stuff
+    if ~any(strcmp(scan.job.type,{'conversion'}))
+        scan.running.directory.job      = file_endsep(fullfile(scan.directory.(scan.job.type),scan.job.name));
+        scan.running.file.save.scan     = [scan.running.directory.job,'scan.mat'];
+        scan.running.file.save.caller   = [scan.running.directory.job,'caller.m'];
+        scan.running.file.save.hdd      = [scan.running.directory.job,'hdd.mat'];
+    end
 end

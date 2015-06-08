@@ -33,9 +33,11 @@ function scan = scan_autocomplete_nii(scan,folder)
 
         case 'epi4'
             for i_subject = 1:scan.running.subject.number
-                subject = scan.running.subject.unique(i_subject);
-                scan.running.directory.nii.epi4{i_subject} = file_endsep(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi4'));
-                scan.running.file.nii.epi4{i_subject} = file_list(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi4','*.nii'),'absolute');
+                for i_session = 1:scan.running.subject.session(i_subject)
+                    subject = scan.running.subject.unique(i_subject);
+                    scan.running.directory.nii.epi4{i_subject}{i_session} = file_endsep(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi4',scan.parameter.path.session{i_session}));
+                    scan.running.file.nii.epi4{i_subject}{i_session} = file_match(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi4',scan.parameter.path.session{i_session},'*.nii'),'absolute');
+                end
             end
 
         case 'epi3:image'

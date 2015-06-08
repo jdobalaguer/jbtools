@@ -11,11 +11,11 @@ function scan = scan_glm_concat(scan)
     
     % print
     scan_tool_print(scan,false,'\nConatenate session (file) : ');
-    scan_tool_progress(scan,sum(scan.running.subject.session));
+    scan_tool_progress(scan,scan.running.subject.number);
     
     % concatenate files
     for i_subject = 1:scan.running.subject.number
-        u_image = {'image','realignment','normalisation','smooth'};
+        u_image = fieldnames(scan.running.file.nii.epi3);
         for i_image = 1:length(u_image)
             if isfield(scan.running.file.nii.epi3,u_image{i_image})
                 scan.running.file.nii.epi3.(u_image{i_image}){i_subject} = {vertcat(scan.running.file.nii.epi3.(u_image{i_image}){i_subject}{:})};

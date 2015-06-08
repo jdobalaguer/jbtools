@@ -1,17 +1,14 @@
 
-2. in tbte all information about the onset type is lost. this is crucial when using this information for the RSA - find a better way
-4. filter RSA, concatenate RSA
-5. re-sort RDMs, shrink RDMs
 6. handle HDD writing depending on the size of [scan]
-9. preprocessing / dicom
-A. MVPA
+9. preprocessing
 B. TBTE functions
 M. see notes in [scan_rsa]
-R. in RSA we should recycle the onset information from the TBTE.
+T. warnings in scan_rmdir instead
 
 LONG TERM
 8. scan_merge and scan_from
 P. subject masks, mask tools (mni2subject)
+A. MVPA
 
 DONE
 1. *fix* the glm FIR function yields different results for equivalent first beta/contrast - and I don't know why
@@ -30,4 +27,4 @@ O. regressors from mat-file
 L. move everything to private? nah. at least not for now
 Q. template mask library? no. there are multiple voxs possiblities, and all masks are relative to data/mask/
 C. plot options parser
-
+9. dicom, expansion

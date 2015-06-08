@@ -16,16 +16,16 @@ function scan = scan_rsa_flag(scan)
     switch scan.job.whatToDo
         case 'all'
             redo = [1,1,1,1,1,1,1];
-        case 'from concatenation'
-            redo = [0,1,1,1,1,1,1];
-        case 'from searchlight'
-            redo = [0,0,1,1,1,1,1];
-        case 'from rdm'
-            redo = [0,0,0,1,1,1,1];
-        case 'from model'
-            redo = [0,0,0,0,1,1,1];
-        case 'from comparison'
-            redo = [0,0,0,0,0,1,1];
+%         case 'from concatenation'
+%             redo = [0,1,1,1,1,1,1];
+%         case 'from searchlight'
+%             redo = [0,0,1,1,1,1,1];
+%         case 'from rdm'
+%             redo = [0,0,0,1,1,1,1];
+%         case 'from model'
+%             redo = [0,0,0,0,1,1,1];
+%         case 'from comparison'
+%             redo = [0,0,0,0,0,1,1];
         case 'no function'
             redo = [0,0,0,0,0,0,1];
         case 'to comparison'

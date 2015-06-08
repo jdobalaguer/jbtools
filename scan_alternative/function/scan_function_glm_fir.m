@@ -5,9 +5,6 @@ function scan = scan_function_glm_fir(scan)
     % to list main functions, try
     %   >> help scan;
 
-    %% note
-    % 1. something seems wrong. 'first:beta' and 'first:contrast' should be equivalent, but they're not.
-    
     %% function
     if ~scan.running.flag.function, return; end
     

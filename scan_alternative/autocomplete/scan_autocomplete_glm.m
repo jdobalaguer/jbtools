@@ -7,6 +7,9 @@ function scan = scan_autocomplete_glm(scan)
     
     %% function
     
+    % job
+    scan.running.directory.job                   = file_endsep(fullfile(scan.directory.(scan.job.type),scan.job.name));
+    
     % original
     scan.running.directory.original.first        = fullfile(scan.running.directory.job,'original','first_level',num2leg(scan.running.subject.unique,'subject_%03i')',filesep);
     scan.running.directory.original.second       = fullfile(scan.running.directory.job,'original','second_level',filesep);

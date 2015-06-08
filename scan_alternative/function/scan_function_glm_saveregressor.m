@@ -33,7 +33,7 @@ function scan = scan_function_glm_saveregressor(scan)
         end
         
         % concatenation
-        if scan.job.concatSessions
+        if isfield(scan.job,'concatSessions') && scan.job.concatSessions
             scam = scan;
             scam.running.subject.session = scam.subject.session(scam.running.subject.unique);
             scam = scan_autocomplete_nii(scam,['epi3:',scam.job.image]);

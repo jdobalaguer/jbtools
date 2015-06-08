@@ -3,7 +3,7 @@ function scan_tool_zip(scan,mode,folder)
     %% SCAN_TOOL_ZIP(scan,mode,folder)
     % zip/unzip folders
     % scan   : [scan] struct
-    % mode   : string with mode (either 'zip' or 'unzip')
+    % mode   : string with mode (either 'zip' or 'unzip' or 'delete')
     % folder : folder to analyse (edit this file to see options)
     % to list main functions, try
     %   >> help scan;
@@ -25,35 +25,41 @@ function scan_tool_zip(scan,mode,folder)
             
             % folder
             switch(folder)
-                case 'structural:image'
+                case 'dicom:structural'
+                    directory{i_subject} = fullfile(scan.directory.dicom,scan.parameter.path.subject{i_subject},'structural');
+                    zip_file{i_subject} = [directory{i_subject},'.zip'];
+                case 'dicom:epi'
+                    directory{i_subject}{i_session} = fullfile(scan.directory.dicom,scan.parameter.path.subject{i_subject},'epi',scan.parameter.path.session{i_session});
+                    zip_file{i_subject}{i_session} = [directory{i_subject}{i_session},'.zip'];
+                case 'nii:structural:image'
                     directory{i_subject} = fullfile(scan.directory.nii,scan.parameter.path.subject{i_subject},'structural','image');
                     zip_file{i_subject} = [directory{i_subject},'.zip'];
 
-                case 'structural:coregistration'
+                case 'nii:structural:coregistration'
                     directory{i_subject} = fullfile(scan.directory.nii,scan.parameter.path.subject{i_subject},'structural','coregistration');
                     zip_file{i_subject} = [directory{i_subject},'.zip'];
 
-                case 'structural:normalisation'
+                case 'nii:structural:normalisation'
                     directory{i_subject} = fullfile(scan.directory.nii,scan.parameter.path.subject{i_subject},'structural','normalisation',num2str(scan.parameter.analysis.voxs));
                     zip_file{i_subject} = [directory{i_subject},'.zip'];
 
-                case 'epi4'
-                    directory{i_subject} = fullfile(scan.directory.nii,scan.parameter.path.subject{i_subject},'epi4');
-                    zip_file{i_subject} = [directory{i_subject},'.zip'];
+                case 'nii:epi4'
+                    directory{i_subject}{i_session} = fullfile(scan.directory.nii,scan.parameter.path.subject{i_subject},'epi4',scan.parameter.path.session{i_session});
+                    zip_file{i_subject}{i_session} = [directory{i_subject}{i_session},'.zip'];
 
-                case 'epi3:image'
+                case 'nii:epi3:image'
                     directory{i_subject}{i_session} = fullfile(scan.directory.nii,scan.parameter.path.subject{i_subject},'epi3',scan.parameter.path.session{i_session},'image');
                     zip_file{i_subject}{i_session} = [directory{i_subject}{i_session},'.zip'];
 
-                case 'epi3:realignment'
+                case 'nii:epi3:realignment'
                     directory{i_subject}{i_session} = fullfile(scan.directory.nii,scan.parameter.path.subject{i_subject},'epi3',scan.parameter.path.session{i_session},'realignment');
                     zip_file{i_subject}{i_session} = [directory{i_subject}{i_session},'.zip'];
 
-                case 'epi3:normalisation'
+                case 'nii:epi3:normalisation'
                     directory{i_subject}{i_session} = fullfile(scan.directory.nii,scan.parameter.path.subject{i_subject},'epi3',scan.parameter.path.session{i_session},'normalisation',num2str(scan.parameter.analysis.voxs));
                     zip_file{i_subject}{i_session} = [directory{i_subject}{i_session},'.zip'];
 
-                case 'epi3:smooth'
+                case 'nii:epi3:smooth'
                     directory{i_subject}{i_session} = fullfile(scan.directory.nii,scan.parameter.path.subject{i_subject},'epi3',scan.parameter.path.session{i_session},'smooth',num2str(scan.parameter.analysis.voxs));
                     zip_file{i_subject}{i_session} = [directory{i_subject}{i_session},'.zip'];
                     
@@ -78,6 +84,9 @@ function scan_tool_zip(scan,mode,folder)
             case 'unzip'
                 unzip(zip_file{i},fileparts(directory{i}));
                 delete(zip_file{i});
+            case 'delete'
+                file_rmdir(file_match(directory{i},'absolute'));
+                delete(file_match(zip_file{i},'absolute'));
             otherwise
                 scan_tool_error(scan,'unknown mode "%s"',mode);
         end

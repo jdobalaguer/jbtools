@@ -29,7 +29,7 @@ function scan = scan_glm_flag(scan)
         case 'only design'
             redo = [1,0,0,0,0];
         otherwise
-            error('scan_glm_flag: error. [scan.job.whatToDo] "%s" unknown',scan.job.whatToDo);
+            scan_tool_error(scan,'[scan.job.whatToDo] "%s" unknown',scan.job.whatToDo);
     end
     
     % build flags
