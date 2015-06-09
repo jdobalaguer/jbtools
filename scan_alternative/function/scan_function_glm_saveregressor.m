@@ -7,6 +7,7 @@ function scan = scan_function_glm_saveregressor(scan)
 
     %% function
     if ~scan.running.flag.function, return; end
+    if ~scan.running.flag.design,   return; end
     
     scan_tool_print(scan,false,'\nAdd function (saveRegressor) : ');
     scan.function.saveRegressor = @auxiliar_saveRegressor;

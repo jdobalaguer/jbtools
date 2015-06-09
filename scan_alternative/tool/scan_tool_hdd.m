@@ -9,8 +9,7 @@ function scan = scan_tool_hdd(scan,mode,field)
     % field : cell of strings with the fields that left behind (in the HDD)
     
     %% function
-    w = whos('scan');
-    if w.bytes < scan.parameter.analysis.hdd, return; end
+    if bytes(scan) < scan.parameter.analysis.hdd, return; end
     
     % warning
     scan_tool_warning(scan,false,'this has not been implemented yet.');

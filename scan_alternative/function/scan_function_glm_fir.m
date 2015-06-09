@@ -6,7 +6,8 @@ function scan = scan_function_glm_fir(scan)
     %   >> help scan;
 
     %% function
-    if ~scan.running.flag.function, return; end
+    if ~scan.running.flag.function,   return; end
+    if ~scan.running.flag.estimation, return; end
     
     scan_tool_print(scan,false,'\nAdd function (fir) : ');
     scan.function.fir = @auxiliar_fir;

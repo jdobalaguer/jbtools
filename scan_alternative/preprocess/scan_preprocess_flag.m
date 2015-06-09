@@ -9,8 +9,10 @@ function scan = scan_preprocess_flag(scan)
     
     % switch
     switch scan.job.whatToDo
+        % all
         case 'all'
             redo = [1,1,1,1,1,1,1];
+        % to
         case 'to slicetime'
             redo = [1,0,0,0,0,0,0];
         case 'to realignment'
@@ -25,8 +27,23 @@ function scan = scan_preprocess_flag(scan)
             redo = [1,1,1,1,1,1,0];
         case 'to function'
             redo = [1,1,1,1,1,1,1];
+        % to-and-function
+        case 'taf slicetime'
+            redo = [1,0,0,0,0,0,1];
+        case 'taf realignment'
+            redo = [1,1,0,0,0,0,1];
+        case 'taf coregistration'
+            redo = [1,1,1,0,0,0,1];
+        case 'taf estimation'
+            redo = [1,1,1,1,0,0,1];
+        case 'taf normalisation'
+            redo = [1,1,1,1,1,0,1];
+        case 'taf smooth'
+            redo = [1,1,1,1,1,1,1];
+        % no
         case 'no function'
             redo = [1,1,1,1,1,1,0];
+        % only
         case 'only slicetime'
             redo = [1,0,0,0,0,0,0];
         case 'only realignment'
@@ -41,6 +58,7 @@ function scan = scan_preprocess_flag(scan)
             redo = [0,0,0,0,0,1,0];
         case 'only function'
             redo = [0,0,0,0,0,0,1];
+        % from
         case 'from slicetime'
             redo = [1,0,0,0,0,0,0];
         case 'from realignment'

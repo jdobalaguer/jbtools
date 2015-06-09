@@ -21,19 +21,11 @@ function scan = scan_glm_condition_concat(scan)
     for i_subject = 1:scan.running.subject.number
         
         % variables
-        u_name = cellfun(@(c){c.name},scan.running.condition{i_subject},'UniformOutput',false);
-        u_name = unique([u_name{:}]);
+        u_name = {scan.job.condition.name};
         n_volume = 0;
         
         % condition struct
-        condition = struct('name',u_name,'onset',{[]},'subname',{{}},'level',{[]},'duration',{[]});
-        for i_session = 1:scan.running.subject.session(i_subject)
-            for i_condition = 1:length(scan.running.condition{i_subject}{i_session})
-                name = scan.running.condition{i_subject}{i_session}(i_condition).name;
-                condition(strcmp(name,{condition.name})).subname  = scan.running.condition{i_subject}{i_session}(i_condition).subname;
-                condition(strcmp(name,{condition.name})).duration = scan.running.condition{i_subject}{i_session}(i_condition).duration;
-            end
-        end
+        condition = struct('name',u_name,'onset',{[]},'subname',{scan.job.condition.subname},'level',{[]},'duration',{scan.job.condition.duration});
         
         % session
         for i_session = 1:scan.running.subject.session(i_subject)
@@ -47,7 +39,7 @@ function scan = scan_glm_condition_concat(scan)
             end
             
             % increase cumulative volumes
-            n_volume = n_volume + size(scan.running.regressor{i_subject}{i_session}.regressor,1);
+            n_volume = n_volume + length(scan.running.file.nii.epi3.(scan.job.image){i_subject}{i_session});
             
             % wait
             scan_tool_progress(scan,[]);

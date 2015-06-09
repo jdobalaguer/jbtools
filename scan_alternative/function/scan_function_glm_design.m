@@ -7,6 +7,7 @@ function scan = scan_function_glm_design(scan)
 
     %% function
     if ~scan.running.flag.function, return; end
+    if ~scan.running.flag.design,   return; end
     
     scan_tool_print(scan,false,'\nAdd function (design) : ');
     scan.function.design = @auxiliar_design;

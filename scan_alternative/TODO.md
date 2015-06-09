@@ -9,6 +9,7 @@ LONG TERM
 8. scan_merge and scan_from
 P. subject masks, mask tools (mni2subject)
 A. MVPA
+V. leave-one-subject-out (LOSO) roi analysis
 
 DONE
 1. *fix* the glm FIR function yields different results for equivalent first beta/contrast - and I don't know why
@@ -28,3 +29,5 @@ L. move everything to private? nah. at least not for now
 Q. template mask library? no. there are multiple voxs possiblities, and all masks are relative to data/mask/
 C. plot options parser
 9. dicom, expansion
+U. constants from concatenation fail if there's no realignment covariates
+U. fix concatenation

@@ -33,9 +33,6 @@ function scan = scan_conversion(scan)
         scan = scan_conversion_expansion(scan);
 
     catch e
-        scan_tool_warning(scan,false,'Conversion not completed');
-        cd(scan.directory.root);
-        scan_tool_warning(scan,false,e.message);
-        scan.result.error = e;
+        scan = scan_tool_catch(scan,e);
     end
 end

@@ -7,7 +7,7 @@ function scan = scan_glm_regressor_add(scan)
 
     %% function
     if ~scan.running.flag.design,   return; end
-    if isempty(scan.job.regressor), return; end
+    if ~scan.job.realignCovariate && isempty(scan.job.regressor), return; end
     
     % print
     scan_tool_print(scan,false,'\nAdd regressor : ');

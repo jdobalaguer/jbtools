@@ -7,5 +7,9 @@ function scan = scan_job_save_scan(scan)
 
     %% function
     file_mkdir(fileparts(scan.running.file.save.scan));
-    save(scan.running.file.save.scan,'scan','-v7.3');
+    if bytes(scan) < 2e9
+        save(scan.running.file.save.scan,'scan');
+    else
+        save(scan.running.file.save.scan,'scan','-v7.3');
+    end
 end

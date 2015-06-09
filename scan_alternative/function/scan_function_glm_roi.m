@@ -6,7 +6,8 @@ function scan = scan_function_glm_roi(scan)
     %   >> help scan;
 
     %% function
-    if ~scan.running.flag.function, return; end
+    if ~scan.running.flag.function,   return; end
+    if ~scan.running.flag.estimation, return; end
     
     scan_tool_print(scan,false,'\nAdd function (roi) : ');
     scan.function.roi = @auxiliar_roi;

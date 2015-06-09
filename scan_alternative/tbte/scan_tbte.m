@@ -63,10 +63,6 @@ function scan = scan_tbte(scan)
         scan_job_save_scan(scan);
         
     catch e
-        scan_tool_warning(scan,false,'TBTE not completed');
-        cd(scan.directory.root);
-        scan_job_save_scan(scan);
-        scan_tool_warning(scan,false,e.message);
-        scan.result.error = e;
+        scan = scan_tool_catch(scan,e);
     end
 end
