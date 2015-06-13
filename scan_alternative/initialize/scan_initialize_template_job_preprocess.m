@@ -5,9 +5,6 @@ function job = scan_initialize_template_job_preprocess(type)
     % to list main functions, try
     %   >> help scan;
     
-    %% notes
-    % add extra options here, like slice-time correction etc...
-    
     %% function
     
     % job
@@ -15,6 +12,8 @@ function job = scan_initialize_template_job_preprocess(type)
     job.name       = '';
     
     % setting
-    job.whatToDo   = 'all';
-    scan.job.sliceTimeCorrection = false;
+    job.last                = struct('epi3',{'image'},'structural',{'image'});
+    job.sliceTimeCorrection = false;
+    job.unwarp              = 'no';
+    job.whatToDo            = 'all';
 end

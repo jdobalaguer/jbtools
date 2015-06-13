@@ -57,7 +57,11 @@ function X = scan_tool_convolution(scan,i_order,condition)
 
             % get inputs, neuronal causes or stimulus functions U
             i_condition = strcmp({scan.running.condition{i_subject}{i_session}.name},condition);
-            scan_tool_assert(sum(i_condition)==1,'none or multiple conditions found for subject "%03i" session "%03i" with the same name "%s"',i_subject,i_session,condition);
+            scan_tool_assert(scan,sum(i_condition)<2,'none or multiple conditions found for subject "%03i" session "%03i" with the same name "%s"',i_subject,i_session,condition);
+            
+            % no condition matched, skip
+            if ~sum(i_condition), continue; end
+            
             %(this bit is based in "config/spm_run_fmri_spec.m" line 199)
             U = [];
             U.name = {scan.running.condition{i_subject}{i_session}(i_condition).name};

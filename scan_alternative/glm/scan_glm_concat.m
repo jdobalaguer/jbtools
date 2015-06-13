@@ -10,7 +10,7 @@ function scan = scan_glm_concat(scan)
     if ~scan.job.concatSessions,  return; end
     
     % print
-    scan_tool_print(scan,false,'\nConatenate session (file) : ');
+    scan_tool_print(scan,false,'\nConcatenate session (file) : ');
     scan_tool_progress(scan,scan.running.subject.number);
     
     % concatenate files

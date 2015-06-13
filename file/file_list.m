@@ -23,7 +23,7 @@ function [file,dirs] = file_list(path,mode)
             case 'relative'
                 file = {path};
             case 'absolute'
-                file = {file_rel2abs(path)};
+                file = {file_2absolute(path)};
             otherwise
                 error('file_list: mode "%s" not valid',mode);
         end
@@ -48,7 +48,7 @@ function [file,dirs] = file_list(path,mode)
             end
         case 'absolute'
             for i = 1:length(file)
-                file{i} = file_rel2abs([fileparts(path),filesep,file{i}]);
+                file{i} = file_2absolute([fileparts(path),filesep,file{i}]);
             end
         otherwise
             error('file_list: mode "%s" not valid',mode);

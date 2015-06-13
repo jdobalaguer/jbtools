@@ -41,9 +41,9 @@ function scan = scan_initialize_template(type)
     scan.directory.rsa              = file_endsep(fullfile(scan.directory.data,'rsa'));
     
     % file
-    scan.file.template.t1           = [scan.directory.spm,'templates',filesep,'T1.nii'];
-    scan.file.template.t2           = [scan.directory.spm,'templates',filesep,'T2.nii'];
-    scan.file.template.epi          = [scan.directory.spm,'templates',filesep,'EPI.nii'];
+    scan.file.template.t1           = fullfile(scan.directory.spm,'canonical','avg152T1.nii');
+    scan.file.template.t2           = fullfile(scan.directory.spm,'canonical','avg152T2.nii');
+    scan.file.template.tpm          = fullfile(scan.directory.spm,'tpm','TPM.nii');
     
     % job
     scan.job                        = scan_initialize_template_job(type);

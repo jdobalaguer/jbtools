@@ -8,7 +8,7 @@ function scan = scan_initialize_spm(scan)
     %% function
     
     % initialize the job manager
-    if any(strcmp(scan.job.type,{'glm','tbte'}))
+    if any(strcmp(scan.job.type,{'preprocess','glm','tbte'}))
         spm_jobman('initcfg');
     end
     

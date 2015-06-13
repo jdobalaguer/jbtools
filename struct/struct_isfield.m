@@ -1,18 +1,16 @@
 
-function b = isfieldp(s,f)
-    %% ISFIELDP(s,f)
+function b = struct_isfield(s,f)
+    %% STRUCT_ISFIELD(s,f)
     % check whether all (sub)fields exist (recursively)
+    % s : struct
+    % f : string with format "field1.field2.field3.."
 
-    %% warning
-    %#ok<>
-    
     %% function
-    error('isfieldp: error. use struct_isfield');
     
     % assert
     re = regexp(f,'(\w*.)*\w*','match');
-    assert(length(re)==1,  'isfieldp: error. f not in right format "*.*.*"');
-    assert(strcmp(f,re{1}),'isfieldp: error. f not in right format "*.*.*"');
+    assert(length(re)==1,  'struct_isfield: error. f not in right format "*.*.*"');
+    assert(strcmp(f,re{1}),'struct_isfield: error. f not in right format "*.*.*"');
     
     b = false;
     f = regexp(f,'\.','split');

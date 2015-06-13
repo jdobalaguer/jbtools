@@ -1,6 +1,6 @@
 
-function scan = scan_job_save_caller(scan)
-    %% scan = SCAN_JOB_SAVE_CALLER(scan)
+function scan = scan_save_caller(scan)
+    %% scan = SCAN_SAVE_CALLER(scan)
     % save the caller script
     % to list main functions, try
     %   >> help scan;

@@ -5,6 +5,6 @@ function addgenpath(path)
     %% warnings
     
     %% function
-    path = file_rel2abs(path);
+    path = file_2absolute(path);
     addpath(genpath(path));
 end

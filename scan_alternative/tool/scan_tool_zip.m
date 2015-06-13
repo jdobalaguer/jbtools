@@ -51,6 +51,10 @@ function scan_tool_zip(scan,mode,folder)
                     directory{i_subject}{i_session} = fullfile(scan.directory.nii,scan.parameter.path.subject{i_subject},'epi3',scan.parameter.path.session{i_session},'image');
                     zip_file{i_subject}{i_session} = [directory{i_subject}{i_session},'.zip'];
 
+                case 'nii:epi3:slicetime'
+                    directory{i_subject}{i_session} = fullfile(scan.directory.nii,scan.parameter.path.subject{i_subject},'epi3',scan.parameter.path.session{i_session},'slicetime');
+                    zip_file{i_subject}{i_session} = [directory{i_subject}{i_session},'.zip'];
+
                 case 'nii:epi3:realignment'
                     directory{i_subject}{i_session} = fullfile(scan.directory.nii,scan.parameter.path.subject{i_subject},'epi3',scan.parameter.path.session{i_session},'realignment');
                     zip_file{i_subject}{i_session} = [directory{i_subject}{i_session},'.zip'];

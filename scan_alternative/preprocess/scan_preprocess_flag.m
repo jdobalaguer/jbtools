@@ -60,17 +60,17 @@ function scan = scan_preprocess_flag(scan)
             redo = [0,0,0,0,0,0,1];
         % from
         case 'from slicetime'
-            redo = [1,0,0,0,0,0,0];
+            redo = [1,1,1,1,1,1,1];
         case 'from realignment'
-            redo = [0,1,0,0,0,0,0];
+            redo = [0,1,1,1,1,1,1];
         case 'from coregistration'
-            redo = [0,0,1,0,0,0,0];
+            redo = [0,0,1,1,1,1,1];
         case 'from estimation'
-            redo = [0,0,0,1,0,0,0];
+            redo = [0,0,0,1,1,1,1];
         case 'from normalisation'
-            redo = [0,0,0,0,1,0,0];
+            redo = [0,0,0,0,1,1,1];
         case 'from smooth'
-            redo = [0,0,0,0,0,1,0];
+            redo = [0,0,0,0,0,1,1];
         case 'from function'
             redo = [0,0,0,0,0,0,1];
         otherwise

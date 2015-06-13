@@ -15,7 +15,7 @@ function scan_nifti_save(file,vol,template)
     template.fname = file;
     
     % volume
-    assert(numel(vol)==numel(double(template.private.dat)), 'scan_nifti_save: error. wrong numel');
+    scan_tool_assert(scan,numel(vol)==numel(double(template.private.dat)), 'wrong numel');
     vol = reshape(vol,template.dim);
     
     % write

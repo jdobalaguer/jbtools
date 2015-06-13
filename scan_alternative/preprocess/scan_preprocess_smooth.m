@@ -8,6 +8,9 @@ function scan = scan_preprocess_smooth(scan)
     %% function
     if ~scan.running.flag.smooth, return; end
     
+    % last
+    scan.running.last.epi3 = 'smooth';
+    
     % print
     scan_tool_print(scan,false,'\nSmoothing : ');
     scan_tool_progress(scan,sum(scan.running.subject.session));

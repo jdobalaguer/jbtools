@@ -12,11 +12,13 @@ function scan = scan_conversion_rmdir(scan)
         
         % structural
         for i_subject = 1:scan.running.subject.number
+            scan_tool_warning(scan,false,'will delete "nii:structural:image" folders');
             file_rmdir(scan.running.directory.nii.structural.image{i_subject});
         end
         
         % epi4
         for i_subject = 1:scan.running.subject.number
+            scan_tool_warning(scan,false,'will delete "nii:epi4" folders');
             for i_session = 1:scan.running.subject.session(i_subject)
                 file_rmdir(scan.running.directory.nii.epi4{i_subject}{i_session});
             end
@@ -28,6 +30,7 @@ function scan = scan_conversion_rmdir(scan)
         
         % epi3 - image
         for i_subject = 1:scan.running.subject.number
+            scan_tool_warning(scan,false,'will delete "nii:epi3:image" folders');
             for i_session = 1:scan.running.subject.session(i_subject)
                 file_rmdir(scan.running.directory.nii.epi3.image{i_subject}{i_session});
             end

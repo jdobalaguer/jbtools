@@ -7,7 +7,7 @@ function plot_args = scan_function_plot_args()
     
     %% funtion
     plot_args.figure       = [];
-    plot_args.color_strike = [0,     0,    1   ];
+    plot_args.color_stroke = [0,     0,    1   ];
     plot_args.color_fill   = [0.83 , 0.83, 0.83];
     plot_args.color_scheme = 'parula';
     plot_args.fontname     = 'Calibri';

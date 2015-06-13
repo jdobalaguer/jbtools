@@ -13,10 +13,11 @@ function scan = scan_glm_design(scan)
     scan_tool_progress(scan,scan.running.subject.number);
     
     % subject
+    spm = cell(1,scan.running.subject.number);
     for i_subject = 1:scan.running.subject.number
         
         % job
-        spm{i_subject}.spm.stats.fmri_spec.dir = scan.running.directory.original.first(i_subject); %#ok<*AGROW>
+        spm{i_subject}.spm.stats.fmri_spec.dir = scan.running.directory.original.first(i_subject);
         spm{i_subject}.spm.stats.fmri_spec.timing.units  = 'secs';
         spm{i_subject}.spm.stats.fmri_spec.timing.RT      = scan.parameter.scanner.tr;
         spm{i_subject}.spm.stats.fmri_spec.timing.fmri_t  = spm_get_defaults('stats.fmri.t');
@@ -57,7 +58,7 @@ function scan = scan_glm_design(scan)
         end
     
         % SPM
-        spm_jobman('run',spm(i_subject));
+        evalc('spm_jobman(''run'',spm(i_subject))');
         
         % wait
         scan_tool_progress(scan,[]);

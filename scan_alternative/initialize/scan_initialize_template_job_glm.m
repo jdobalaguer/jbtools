@@ -17,7 +17,7 @@ function job = scan_initialize_template_job_glm(type)
     job.delayOnset         = 0;         % add a delay to the onset
     job.basisFunction      = struct('name',{},'parameters',{}); % check SPM options
     job.globalScaling      = false;     % global scaling?
-    job.image              = 'smooth';  % {'image','realignment','normalisation','smooth'}
+    job.image              = 'smooth';  % {'image','slicetime','realignment','normalisation','smooth'}
     job.margeFromEnd       = 0;         % remove onsets close to the end
     job.realignCovariate   = true;      % add realignment parameters as covariates?
     job.secondLevel        = 'con';     % {'con','smpt'}
@@ -27,13 +27,13 @@ function job = scan_initialize_template_job_glm(type)
     job.condition = struct('subject',{},'session',{},'onset',{},'discard',{},'name',{},'subname',{},'level',{},'duration',{});
     
     % regressor
-    job.regressor = struct('name',{},'file',{},'type',{},'filter',{},'covariate',{});
+    job.regressor = struct('name',{},'file',{},'type',{},'filter',{},'zscore',{},'covariate',{});
     
     % ppi
     job.ppi = struct('name',{},'condition',{},'regressor',{},'order',{});
     
     % contrast
-    job.contrast.generic = 1;
+    job.contrast.generic = struct('name',{{}},'order',{[]});
     job.contrast.extra   = struct('name',{},'column',{},'weight',{},'order',{});
     
 end

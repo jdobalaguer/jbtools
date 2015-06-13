@@ -20,7 +20,7 @@ function scan = scan_glm_estimation(scan)
         spm{i_subject}.spm.stats.fmri_est.method.Classical = 1;
         
         % SPM
-        spm_jobman('run',spm(i_subject));
+        evalc('spm_jobman(''run'',spm(i_subject))');
 
        % wait
         scan_tool_progress(scan,[]);

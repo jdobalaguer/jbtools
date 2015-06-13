@@ -22,14 +22,15 @@ function scan = scan_glm_contrast(scan)
         % generic
         u_column = unique(scan.running.design(i_subject).column.name);
         for i_column = 1:length(u_column)
+            if ~isempty(scan.job.contrast.generic.name) && ~any(strcmp(u_column{i_column},scan.job.contrast.generic.name)), continue; end
             ii_column = strcmp(u_column{i_column},scan.running.design(i_subject).column.name);
             if all(scan.running.design(i_subject).column.covariate(ii_column)), continue; end
-            for i_order = 1:length(scan.job.contrast.generic)
-                ii_order  = (scan.running.design(i_subject).column.order == scan.job.contrast.generic(i_order));
+            for i_order = 1:length(scan.job.contrast.generic.order)
+                ii_order  = (scan.running.design(i_subject).column.order == scan.job.contrast.generic.order(i_order));
                 vector = (ii_column & ii_order) / sum(ii_column & ii_order);
                 if any(vector),
                     j_contrast = j_contrast + 1;
-                    scan.running.contrast{i_subject}(j_contrast) = struct('name',u_column(i_column),'vector',{vector},'order',{i_order});
+                    scan.running.contrast{i_subject}(j_contrast) = struct('name',u_column(i_column),'vector',{vector},'order',{scan.job.contrast.generic.order(i_order)});
                 else
 %                     scan_tool_warning(scan,true,'generic contrast "%s" with order "%03i" is ignored for subject "%03i"',u_column{i_column},i_order,i_subject);
                 end

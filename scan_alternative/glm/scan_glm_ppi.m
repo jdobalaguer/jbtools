@@ -11,7 +11,7 @@ function scan = scan_glm_ppi(scan)
     
     % print
     scan_tool_print(scan,false,'\nAdd PPI : ');
-    scan_tool_progress(scan,sum(scan.running.subject.session)*length(scan.job.ppi));
+    scan_tool_progress(scan,scan.running.subject.number*length(scan.job.ppi));
     
     % ppi
     for i_ppi = 1:length(scan.job.ppi)
@@ -23,6 +23,7 @@ function scan = scan_glm_ppi(scan)
 
             % session
             for i_session = 1:length(scan.running.regressor{i_subject})
+                if isempty(condition{i_subject}{i_session}), continue; end
             
                 % regressor (i.e. physiological)
                 i_regressor = strcmp(scan.job.ppi(i_ppi).regressor,scan.running.regressor{i_subject}{i_session}.name);

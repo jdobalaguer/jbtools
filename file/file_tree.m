@@ -53,7 +53,7 @@ function file = auxiliar2(file,mode)
                 case 'relative'
                 case 'absolute'
                     for i = 1:length(file)
-                        file{i} = file_rel2abs(file{i});
+                        file{i} = file_2absolute(file{i});
                     end
                 otherwise
                     error('file_tree: mode "%s" not valid',mode);

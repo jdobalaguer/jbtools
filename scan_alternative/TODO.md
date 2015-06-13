@@ -1,15 +1,16 @@
 
 6. handle HDD writing depending on the size of [scan]
-9. preprocessing
 B. TBTE functions
 M. see notes in [scan_rsa]
-T. warnings in scan_rmdir instead
+T. check warnings in scan_rmdir
 
 LONG TERM
 8. scan_merge and scan_from
 P. subject masks, mask tools (mni2subject)
 A. MVPA
 V. leave-one-subject-out (LOSO) roi analysis
+2. re-do the conversion with SPM's dicom importer
+9. preprocessing
 
 DONE
 1. *fix* the glm FIR function yields different results for equivalent first beta/contrast - and I don't know why
@@ -31,3 +32,11 @@ C. plot options parser
 9. dicom, expansion
 U. constants from concatenation fail if there's no realignment covariates
 U. fix concatenation
+Y. function scan_tool_physiological
+Z. fix PPI without concatenation
+0. new order
+1. add scan.function.rethrow
+X. add "slicetime" to all menus/options
+T. warnings in scan_rmdir
+W. using evalc around SPM function
+3. generic contrasts to specific names

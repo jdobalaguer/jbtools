@@ -28,7 +28,7 @@ function scan = scan_autocomplete_glm(scan)
     % condition
     for i_subject = 1:scan.running.subject.number
         for i_session = 1:scan.running.subject.session(i_subject)
-            scan.running.condition{i_subject}{i_session} = struct('name',{},'onset',{},'subname',{},'level',{},'duration',{});
+            scan.running.condition{i_subject}{i_session} = struct('main',{},'name',{},'onset',{},'subname',{},'level',{},'duration',{});
             for i_condition = 1:length(scan.job.condition)
                 ii_subject  = (scan.job.condition(i_condition).subject == scan.running.subject.unique(i_subject));
                 ii_session  = (scan.job.condition(i_condition).session == i_session);
@@ -37,6 +37,7 @@ function scan = scan_autocomplete_glm(scan)
                 ii_data  = (ii_subject & ii_session & ~ii_discard);
                 if ~any(ii_data), continue; end
                 scan.running.condition{i_subject}{i_session}(end+1) = struct( ...
+                    'main'     , scan.job.condition(i_condition).name, ...
                     'name'     , scan.job.condition(i_condition).name, ...
                     'onset'    , {scan.job.condition(i_condition).onset(ii_data) + scan.parameter.scanner.reft0 - scan.job.delayOnset}, ...
                     'subname'  , {scan.job.condition(i_condition).subname}, ...

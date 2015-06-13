@@ -51,7 +51,7 @@ function scan = scan_glm_secondlevel(scan)
         spm{j_job}.spm.stats.con.consess{1}.tcon.sessrep   = 'none';
         spm{j_job}.spm.stats.con.delete = 1;
         % SPM
-        spm_jobman('run',spm(j_job-2:j_job));
+        evalc('spm_jobman(''run'',spm(j_job-2:j_job))');
         % wait
         scan_tool_progress(scan,[]);
     end

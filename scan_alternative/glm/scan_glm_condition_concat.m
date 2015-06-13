@@ -6,26 +6,27 @@ function scan = scan_glm_condition_concat(scan)
     %   >> help scan;
     
     %% notes
-    % this function assumes similar structure for each session
-    % you'll need to re-do this
-
+    % this function doesn't work with TBTE ("main" is not [u_name])
+    
     %% function
     if ~scan.running.flag.design, return; end
     if ~scan.job.concatSessions,  return; end
     
     % print
-    scan_tool_print(scan,false,'\nConatenate session (condition) : ');
+    scan_tool_print(scan,false,'\nConcatenate session (condition) : ');
     scan_tool_progress(scan,sum(scan.running.subject.session));
     
     % subject
     for i_subject = 1:scan.running.subject.number
         
         % variables
-        u_name = {scan.job.condition.name};
+        u_name      = {scan.job.condition.name};
+        u_subname   = {scan.job.condition.subname};
+        u_duration  = {scan.job.condition.duration};
         n_volume = 0;
         
         % condition struct
-        condition = struct('name',u_name,'onset',{[]},'subname',{scan.job.condition.subname},'level',{[]},'duration',{scan.job.condition.duration});
+        condition = struct('main',u_name,'name',u_name,'onset',{[]},'subname',u_subname,'level',{[]},'duration',u_duration);
         
         % session
         for i_session = 1:scan.running.subject.session(i_subject)

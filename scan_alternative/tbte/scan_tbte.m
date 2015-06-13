@@ -37,13 +37,14 @@ function scan = scan_tbte(scan)
         scan = scan_tbte_flag(scan);            % redo flags
         scan = scan_tbte_rmdir(scan);           % delete old directories
         scan = scan_tbte_mkdir(scan);           % create new directories
-        scan = scan_job_save_caller(scan);      % save caller
+        scan = scan_save_caller(scan);          % save caller
 
         % design
         scan = scan_glm_condition_check(scan);  % check
         scan = scan_tbte_condition_split(scan); % split
         scan = scan_glm_regressor_add(scan);    % add
         scan = scan_glm_regressor_filter(scan); % filter
+        scan = scan_glm_regressor_zscore(scan); % zscore
         scan = scan_glm_design(scan);           % SPM design
         scan = scan_glm_matrix(scan);           % set matrix
 
@@ -60,7 +61,7 @@ function scan = scan_tbte(scan)
         scan = scan_function_glm_foldermanager(scan); % folder manager
 
         % save
-        scan_job_save_scan(scan);
+        scan_save_scan(scan);
         
     catch e
         scan = scan_tool_catch(scan,e);

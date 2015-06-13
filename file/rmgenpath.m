@@ -5,6 +5,6 @@ function rmgenpath(path)
     %% warnings
     
     %% function
-    path = file_rel2abs(path);
+    path = file_2absolute(path);
     rmpath(genpath(path));
 end

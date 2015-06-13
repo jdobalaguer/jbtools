@@ -9,6 +9,7 @@ function scan = scan_tbte_rmdir(scan)
     
     % first level analyses
     if scan.running.flag.design,
+        scan_tool_warning(scan,false,'will delete "original:first" folders');
         for i_subject = 1:scan.running.subject.number
             file_rmdir(scan.running.directory.original.first{i_subject});
         end

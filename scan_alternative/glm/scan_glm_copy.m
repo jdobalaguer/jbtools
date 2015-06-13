@@ -30,6 +30,7 @@ function scan = scan_glm_copy(scan,level,type)
         case 'first:contrast'
             if ~any(ismember('cont_1',scan.job.copyFolder)), return; end
             if ~scan.running.flag.first, return; end
+            if ~strcmp(scan.job.type,'glm'), return; end
             scan_tool_print(scan,false,'\nCopy contrast (first level) : ');
             scan_tool_progress(scan,scan.running.subject.number);
             for i_subject = 1:scan.running.subject.number
@@ -47,6 +48,7 @@ function scan = scan_glm_copy(scan,level,type)
         case 'first:statistic'
             if ~any(ismember('spmt_1',scan.job.copyFolder)), return; end
             if ~scan.running.flag.first, return; end
+            if ~strcmp(scan.job.type,'glm'), return; end
             scan_tool_print(scan,false,'\nCopy statistic (first level) : ');
             scan_tool_progress(scan,scan.running.subject.number);
             for i_subject = 1:scan.running.subject.number
@@ -79,6 +81,7 @@ function scan = scan_glm_copy(scan,level,type)
         case 'second:beta'
             if ~any(ismember('beta_2',scan.job.copyFolder)), return; end
             if ~scan.running.flag.second, return; end
+            if ~strcmp(scan.job.type,'glm'), return; end
             scan_tool_print(scan,false,'\nCopy beta file (second level) : ');
             scan_tool_progress(scan,length(scan.running.contrast{1}));
             for i_contrast = 1:length(scan.running.contrast{1})
@@ -94,6 +97,7 @@ function scan = scan_glm_copy(scan,level,type)
         case 'second:contrast'
             if ~any(ismember('cont_2',scan.job.copyFolder)), return; end
             if ~scan.running.flag.second, return; end
+            if ~strcmp(scan.job.type,'glm'), return; end
             scan_tool_print(scan,false,'\nCopy contrast file (second level) : ');
             scan_tool_progress(scan,length(scan.running.contrast{1}));
             for i_contrast = 1:length(scan.running.contrast{1})
@@ -109,6 +113,7 @@ function scan = scan_glm_copy(scan,level,type)
         case 'second:statistic'
             if ~any(ismember('spmt_2',scan.job.copyFolder)), return; end
             if ~scan.running.flag.second, return; end
+            if ~strcmp(scan.job.type,'glm'), return; end
             scan_tool_print(scan,false,'\nCopy statistic file (second level) : ');
             scan_tool_progress(scan,length(scan.running.contrast{1}));
             for i_contrast = 1:length(scan.running.contrast{1})
@@ -124,6 +129,7 @@ function scan = scan_glm_copy(scan,level,type)
         case 'second:spm'
             if ~any(ismember('spm_2',scan.job.copyFolder)), return; end
             if ~scan.running.flag.second, return; end
+            if ~strcmp(scan.job.type,'glm'), return; end
             scan_tool_print(scan,false,'\nCopy SPM mat-file (second level) : ');
             scan_tool_progress(scan,length(scan.running.contrast{1}));
             for i_contrast = 1:length(scan.running.contrast{1})

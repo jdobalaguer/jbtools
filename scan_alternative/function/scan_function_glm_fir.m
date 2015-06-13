@@ -13,16 +13,17 @@ function scan = scan_function_glm_fir(scan)
     scan.function.fir = @auxiliar_fir;
 
     %% nested
-    function fir = auxiliar_fir(varargin)
+    function varargout = auxiliar_fir(varargin)
         fir = [];
         if nargin<4 || strcmp(varargin{1},'help')
+            varargout = {};
             scan_tool_help('fir = @fir(level,type,mask,contrast)','This function loads the [type] values estimated by the [level] analysis within a region of interest and a column/contrast for every [order] of your basis function. It''s particularly useful when using FIRs. [level] is a string {''first'',''second''}. [type] is a string {''beta'',''cont'',''spmt''}. [mask] is a the path to a nii/img file relative to [scan.directory.mask]. [contrast] is a string with the name of the column/contrast. If no output is captured, the data is displayed within a figure.');
             return;
         end
         
         % default
         [level,type,mask,contrast] = deal(varargin{1:4});
-        plot_args = struct_default(pair2struct(varargin{5:end}),scan_function_plot_args);
+        plot_args = struct_default(pair2struct(varargin{5:end}),scan_function_plot_args());
         
         % assert
         if ~any(strcmp(level,{'first','second'})),              auxiliar_fir('help'); return; end
@@ -70,6 +71,9 @@ function scan = scan_function_glm_fir(scan)
                 fir(1,:,:) = roi.(matlab.lang.makeValidName(contrast));
         end
         
+        % return
+        varargout = {fir};
+        
         % plot
         if ~nargout,
             switch level
@@ -79,14 +83,14 @@ function scan = scan_function_glm_fir(scan)
                     [m,e] = deal(mat2vec(nanmean(fir,1))',mat2vec(nanste(fir,1))');
                     x = 1:length(m);
                     fig_figure(plot_args.figure);
-                    fig_steplot(x,m,e,plot_args.color);
-                    fig_pipplot(x,m,e,plot_args.color);
+                    fig_steplot(x,m,e,plot_args.color_stroke);
+                    fig_pipplot(x,m,e,plot_args.color_stroke);
                     plot(zeros(size(m)),'k--');
                 case 'second'
                     fir = meeze(fir,[2,4]);
                     fir = fir';
                     fig_figure(plot_args.figure);
-                    plot(fir,'marker','.','color',plot_args.color);
+                    plot(fir,'marker','.','color',plot_args.color_stroke);
                     plot(zeros(size(fir)),'k--');
             end
         end

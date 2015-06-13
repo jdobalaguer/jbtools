@@ -50,6 +50,16 @@ function scan = scan_autocomplete_nii(scan,folder)
                 end
             end
 
+        case 'epi3:slicetime'
+            for i_subject = 1:scan.running.subject.number
+                subject = scan.running.subject.unique(i_subject);
+                for i_session = 1:scan.running.subject.session(i_subject)
+                    scan.running.directory.nii.epi3.slicetime{i_subject}{i_session} = file_endsep(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi3',scan.parameter.path.session{i_session},'slicetime'));
+                    scan.running.file.nii.epi3.slicetime{i_subject}{i_session} = file_list(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi3',scan.parameter.path.session{i_session},'slicetime','*.nii'),'absolute');
+                    scan.running.file.nii.epi3.slicetime{i_subject}{i_session}(cellfun(@isscalar,strfind(scan.running.file.nii.epi3.slicetime{i_subject}{i_session},'mean'))) = []; % remove mean image
+                end
+            end
+
         case 'epi3:realignment'
             for i_subject = 1:scan.running.subject.number
                 subject = scan.running.subject.unique(i_subject);
@@ -64,7 +74,7 @@ function scan = scan_autocomplete_nii(scan,folder)
             for i_subject = 1:scan.running.subject.number
                 subject = scan.running.subject.unique(i_subject);
                 for i_session = 1:scan.running.subject.session(i_subject)
-                    scan.running.directory.nii.epi3.normalisation{i_subject}{i_session} = file_list(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi3',scan.parameter.path.session{i_session},'normalisation',num2str(scan.parameter.analysis.voxs)));
+                    scan.running.directory.nii.epi3.normalisation{i_subject}{i_session} = file_endsep(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi3',scan.parameter.path.session{i_session},'normalisation',num2str(scan.parameter.analysis.voxs)));
                     scan.running.file.nii.epi3.normalisation{i_subject}{i_session} = file_list(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi3',scan.parameter.path.session{i_session},'normalisation',num2str(scan.parameter.analysis.voxs),'*.nii'),'absolute');
                     scan.running.file.nii.epi3.normalisation{i_subject}{i_session}(cellfun(@isscalar,strfind(scan.running.file.nii.epi3.normalisation{i_subject}{i_session},'mean'))) = []; % remove mean image
                 end

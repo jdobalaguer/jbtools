@@ -1,6 +1,6 @@
 
-function scan = scan_preprocess_normalisation_mni(scan)
-    %% scan = SCAN_PREPROCESS_NORMALISATION_MNI(scan)
+function scan = scan_preprocess_normalisation(scan)
+    %% scan = SCAN_PREPROCESS_NORMALISATION(scan)
     % apply normalisation, from mean EPI to MNI space
     % to list main functions, try
     %   >> help scan;
@@ -11,6 +11,9 @@ function scan = scan_preprocess_normalisation_mni(scan)
     % print
     scan_tool_print(scan,false,'\nNormalisation (functional to MNI) : ');
     scan_tool_progress(scan,sum(scan.running.subject.session));
+    
+    % last
+    scan.running.last.epi3 = 'normalisation';
     
     % concatenate files
     for i_subject = 1:scan.running.subject.number
