@@ -1,6 +1,6 @@
 
-function scan = scan_function_glm(scan)
-    %% scan = SCAN_FUNCTION_GLM(scan)
+function scan = scan_glm_function(scan)
+    %% scan = SCAN_GLM_FUNCTION(scan)
     % define functions
     % to list main functions, try
     %   >> help scan;
@@ -20,8 +20,8 @@ function scan = scan_function_glm(scan)
     % function @get.*
     scan = scan_function_glm_get_roi(scan);             % region of interest
     scan = scan_function_glm_get_fir(scan);             % finite impulse response
-%     scan = scan_function_glm_get_beta(scan);            % beta
-%     scan = scan_function_glm_get_vector(scan);          % vector
+    scan = scan_function_glm_get_vector(scan);          % vector
+    scan = scan_function_glm_get_beta(scan);            % beta
     
     % function @plot.*
     scan = scan_function_glm_plot_design(scan);         % review design

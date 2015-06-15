@@ -7,7 +7,7 @@ function fig_rmtext(h)
     %#ok<*LAXES>
     
     %% function
-    default('h',gcf());
+    func_default('h',gcf());
     removeText(h);
     removeAxes(h);
 end

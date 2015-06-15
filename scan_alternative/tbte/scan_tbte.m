@@ -24,11 +24,7 @@ function scan = scan_tbte(scan)
         'Copy beta (first level)',...
         'Copy SPM mat-file (first level)',...
         ...
-        'Add function (cd)',...
-        'Add function (design)',...
-        'Add function (foldermanager)',...
-        'Add function (roi)',...
-        'Add function (meshgrid)');
+        'Add function');
     
     try
         % initialize
@@ -54,17 +50,13 @@ function scan = scan_tbte(scan)
         scan = scan_glm_estimation(scan);       % SPM estimation
         scan = scan_glm_copy(scan,'first','beta'); % copy
         scan = scan_glm_copy(scan,'first','spm'); % copy
-
+        
         % function
-        scan = scan_function_glm_cd(scan);      % change directory
-        scan = scan_function_glm_design(scan);  % review design
-        scan = scan_function_glm_foldermanager(scan); % folder manager
-        scan = scan_function_tbte_roi(scan);    % region of interest
-        scan = scan_function_tbte_meshgrid(scan); % meshgrid
-
+        scan = scan_tbte_function(scan);
+        
         % save
         scan_save_scan(scan);
-        
+        scan = scan_tool_time(scan);
     catch e
         scan = scan_tool_catch(scan,e);
     end

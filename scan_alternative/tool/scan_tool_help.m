@@ -1,6 +1,6 @@
 
-function scan = scan_tool_help(header,description)
-    %% scan = SCAN_TOOL_HELP(header,description)
+function scan_tool_help(header,description)
+    %% SCAN_TOOL_HELP(header,description)
     % print a descriptive help for functions in [scan.function]
     % to list main functions, try
     %   >> help scan;
@@ -26,5 +26,3 @@ function scan = scan_tool_help(header,description)
     end
     fprintf('\n');
 end
-
-

@@ -74,6 +74,7 @@ function scan = scan_glm_matrix(scan)
             j_column = j_column + 1;
             scan.running.design(i_subject).column.main{j_column}      = 'constant';
             scan.running.design(i_subject).column.name{j_column}      = 'constant';
+            scan.running.design(i_subject).column.version{j_column}   = '';
             scan.running.design(i_subject).column.session(j_column)   = i_session;
             scan.running.design(i_subject).column.order(j_column)     = 0;
             scan.running.design(i_subject).column.covariate(j_column) = true;

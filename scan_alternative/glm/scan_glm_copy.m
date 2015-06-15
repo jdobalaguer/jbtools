@@ -18,7 +18,7 @@ function scan = scan_glm_copy(scan,level,type)
                 for i_column = 1:length(scan.running.design(i_subject).column.name)
                     if scan.running.design(i_subject).column.covariate(i_column), continue; end
                     original  = fullfile(scan.running.directory.original.first{i_subject},sprintf('beta_%04i.nii',i_column));
-                    copy      = fullfile(scan.running.directory.copy.first.beta,scan.running.design(i_subject).column.name{i_column},sprintf('subject_%03i session_%03i order_%03i.nii',scan.running.subject.unique(i_subject),scan.running.design(i_subject).column.session(i_column),scan.running.design(i_subject).column.order(i_column)));
+                    copy      = fullfile(scan.running.directory.copy.first.beta,strcat(scan.running.design(i_subject).column.name{i_column},scan.running.design(i_subject).column.version{i_column}),sprintf('subject_%03i session_%03i order_%03i.nii',scan.running.subject.unique(i_subject),scan.running.design(i_subject).column.session(i_column),scan.running.design(i_subject).column.order(i_column)));
                     file_mkdir(fileparts(copy));
                     scan_tool_copy(original,copy);
                 end

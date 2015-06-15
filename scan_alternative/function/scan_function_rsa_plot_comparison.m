@@ -7,12 +7,11 @@ function scan = scan_function_rsa_plot_comparison(scan)
 
     %% function
     if ~scan.running.flag.function, return; end
-    
-    scan_tool_print(scan,false,'\nAdd function (plot.comparison) : ');
     scan.function.plot.comparison = @auxiliar_plot_comparison;
 
     %% nested
-    function beta = auxiliar_plot_comparison(varargin)
+    function varargout = auxiliar_plot_comparison(varargin)
+        varargout = cell(1,nargout);
         if nargin<1 || strcmp(varargin{1},'help')
             scan_tool_help('@plot.comparison(i_mask)','This function plots the result of the comparison for a certain mask. The mask is an index that corresponds to a possibly modified by the searchlight (see [scan.running.mask]).');
             return;
@@ -32,6 +31,9 @@ function scan = scan_function_rsa_plot_comparison(scan)
                 beta(i_subject,i_session,:) = scan.running.comparison{i_subject}{i_session}(i_mask).beta;
             end
         end
+        
+        % return
+        varargout = {beta};
         
         % plot
         if ~nargout

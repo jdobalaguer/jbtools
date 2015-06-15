@@ -6,7 +6,7 @@ function color = fig_color(scheme,n)
     %% function
     
     % default
-    if ~exist('scheme', 'var'); scheme = 'default'; end
+    if ~exist('scheme', 'var'); scheme = 'parula';  end
     if ~exist('n',      'var'); n      = 5;         end
     
     % numerical scheme

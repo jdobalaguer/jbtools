@@ -2,17 +2,17 @@
 function hdl = fig_spline(varargin)
     %% hdl = fig_spline(mode,[x,]my,sy[,c][,a])
     % plot whatever using splines
-    % mode : what kind of plot
+    % mode : what kind of plot. a string or a cell of strings. one or more of {'line','pip','error','shade'}
     % x    : x-values
-    % my   : center of y-value of the shade
-    % sy   : half-height of the shade
-    % c    : color of the shade
-    % a    : alpha of the shade
+    % my   : center of y-value
+    % sy   : half-height of area
+    % c    : color
+    % a    : alpha
     % h    : handle of the plot
     
     %% function
     
-    assert(nargin>3, 'fig_shade: error. not enough arguments');
+    assert(nargin>2, 'fig_spline: error. not enough arguments');
     
     % default
     varargin(end+1:6) = {[]};
@@ -25,29 +25,32 @@ function hdl = fig_spline(varargin)
     func_default('a',0.15);
     if ischar(c); c = fig_color(c,1); end
     
-    
     % assert
+    assertClass(mode,{'char','cell'});
     assertSize(x,my,sy);
+    assertVector(x,my,sy);
     
     % variables
-    [xx,sb] = get_spline(x,my-sy);
-    [xx,su] = get_spline(x,my+sy);
-    mm = 0.5 * (su+sb);
-    ss = 0.5 * (su-sb);
-    
-    %% plot
-    switch mode
-        case 'line'
-            fig_line(xx,mm,c,varargin{7:end});
-        case 'pip'
-            fig_pip(xx,mm,ss,c,varargin{7:end});
-        case 'error'
-            fig_error(xx,mm,ss,c,varargin{7:end});
-        case 'shade'
-            fig_shade(xx,mm,ss,c,varargin{7:end});
-        otherwise
-            error('fig_spline: error. mode "%s" not valid',mode);
+    if numel(x) > 1
+        [xx,sb] = get_spline(x,my-sy);
+        [xx,su] = get_spline(x,my+sy);
+        mm = 0.5 * (su+sb);
+        ss = 0.5 * (su-sb);
+    else
+        [xx,mm,ss] = deal(x,my,sy);
     end
+    
+    % hold on
+    if iscellstr(mode) && length(mode)>1
+        hold('on');
+    end
+    
+    % plot
+    if any(strcmp(mode,'line')),    fig_line  (xx,mm,c,varargin{7:end});      end
+    if any(strcmp(mode,'marker')),  fig_marker(xx,mm,c,varargin{7:end});      end
+    if any(strcmp(mode,'pip')),     fig_pip   (xx,mm,ss,c,varargin{7:end});   end
+    if any(strcmp(mode,'error')),   fig_error (xx,mm,ss,c,varargin{7:end});   end
+    if any(strcmp(mode,'shade')),   fig_shade (xx,mm,ss,c,a,varargin{7:end}); end
 end
 
 %% auxiliar

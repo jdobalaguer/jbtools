@@ -1,7 +1,7 @@
 
-function h = fig_line(varargin)
-    %% h = FIG_LINE([x,]my[,c])
-    % plot a line
+function h = fig_marker(varargin)
+    %% h = FIG_MARKER([x,]my[,c])
+    % plot markers
     % x  : x-values
     % my : center of y-value of the error
     % c  : color
@@ -9,7 +9,7 @@ function h = fig_line(varargin)
     
     %% function
     
-    assert(nargin>1, 'fig_line: error. not enough arguments');
+    assert(nargin>1, 'fig_marker: error. not enough arguments');
     
     % default
     varargin(end+1:3) = {[]};
@@ -23,5 +23,5 @@ function h = fig_line(varargin)
     assertSize(x,y);
     
     % plot
-    h = plot(x,y,'color',c,'marker','none','linestyle','-','linewidth',2,varargin{4:end});
+    h = plot(x,y,'color',c,'marker','o','linestyle','none','linewidth',2,varargin{4:end});
 end

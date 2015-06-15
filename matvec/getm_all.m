@@ -1,7 +1,12 @@
 
 function [z,u] = getm_all(varargin)
-    %% [z,u] = GETM_ALL(varargin)
-    % get cell [z] with all values per combination [u]
+    %% [z,u] = GETM_ALL(y,x1[,x2][,..])
+    % get cell [z] with all y values per each combination [u] of the regressors {x}
+    % y : can be a matrix of size [n*l]
+    % x : vectors of regressors
+    
+    %% note
+    % the permute bit specifically fails when the first dimension has length 1..
     
     %% function
     
@@ -11,11 +16,11 @@ function [z,u] = getm_all(varargin)
     l = length(y);
     
     % assert
-    assertVector(y,x{:});
-    assertSize(y,x{:});
+    assertVector(y(:,1),x{:});
+    assertSize(y(:,1),x{:});
     
     % set inputs
-    y = mat2vec(y);
+    if isvector(y), y = mat2vec(y); end
     x = cellfun(@double, x,'UniformOutput',false);
     x = cellfun(@mat2vec,x,'UniformOutput',false);
     x = cell2mat(x);
@@ -29,7 +34,7 @@ function [z,u] = getm_all(varargin)
     for i = 1:n
         row = u(i,:);
         ii = findrow(row,x);
-        z{i} = y(ii);
+        z{i} = y(ii,:);
     end
     
     % reshape
@@ -41,7 +46,7 @@ function [z,u] = getm_all(varargin)
         % complete reshape
         qu = cell(1,size(u,2));
         for i = 1:size(u,2), qu{i} = unique(u(:,i)); end
-        qu = jb_allcomb(qu{:});
+        qu = vec_combination(qu{:});
         qz = cell(size(qu,1),1);
         for i = 1:size(u,1)
             row = u(i,:);

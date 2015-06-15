@@ -19,9 +19,7 @@ function scan = scan_glm_regressor_concat(scan)
         % variables
         u_name = [scan.running.regressor{i_subject}{:}];
         u_name = [u_name.name];
-        [~,s_name] = unique(u_name,'first');
-        u_name = u_name(sort(s_name));
-%         u_regressor = scan.running.regressor{i_subject}{1};
+        u_name = unique(u_name,'stable'); % [~,s_name] = unique(u_name,'first'); u_name = u_name(sort(s_name));
         u_regressor = struct();
         u_regressor.name      = u_name;
         u_regressor.regressor = [];

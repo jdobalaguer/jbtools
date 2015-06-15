@@ -31,7 +31,9 @@ function scan = scan_conversion(scan)
         % conversion
         scan = scan_conversion_dicom(scan);
         scan = scan_conversion_expansion(scan);
-
+        
+        % time
+        scan = scan_tool_time(scan);
     catch e
         scan = scan_tool_catch(scan,e);
     end

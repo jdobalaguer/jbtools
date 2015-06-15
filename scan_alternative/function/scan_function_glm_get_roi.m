@@ -12,8 +12,8 @@ function scan = scan_function_glm_get_roi(scan)
     
     %% nested
     function varargout = auxiliar_roi(varargin)
+        varargout = cell(1,nargout);
         if nargin~=3 || strcmp(varargin{1},'help')
-            varargout = {};
             scan_tool_help('roi = @get.roi(level,type,mask)','This function loads the [type] values estimated by the [level] analysis within a region of interest for every column/contrast. [level] is a string {''first'',''second''}. [type] is a string {''beta'',''cont'',''spmt''}. [mask] is a the path to a nii/img file relative to [scan.directory.mask]');
             return;
         end

@@ -1,9 +1,8 @@
 
 06. handle HDD writing depending on the size of [scan]
-#B. TBTE functions
 #M. see notes in [scan_rsa]
 #T. check warnings in scan_rmdir
-16 @function.vector/beta
+20. make @get.vector a struct with multiple fields? (legend, etc...)
 
 LONG TERM
 08. scan_merge and scan_from
@@ -19,6 +18,7 @@ DONE
 07. zip/unzip
 09. dicom, expansion
 #A. ppi (for real)
+#B. TBTE functions
 #C. plot options parser
 #D. is it good that everything works with absolute paths? yeah. why not.
 #E. it's "basis functions", not "function basis"
@@ -43,6 +43,7 @@ DONE
 13. generic contrasts to specific names
 14. total elapsed time
 15. glm column version
-17. split get/plot functions
+16 @function.vector/beta
+-17. split get/plot functions
 18. create a getv_/mat_/vec_ library, 
 19. re-code the steplot/pipplot/errplot

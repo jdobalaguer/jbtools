@@ -85,7 +85,7 @@ function scan = scan_glm(scan)
         scan = scan_glm_copy(scan,'second','spm');      % copy
 
         % function
-        scan = scan_function_glm(scan);
+        scan = scan_glm_function(scan);
         
         % save
         scan_save_scan(scan);

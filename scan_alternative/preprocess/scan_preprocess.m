@@ -49,7 +49,7 @@ function scan = scan_preprocess(scan)
         
         % save
         scan_save_scan(scan);
-        
+        scan = scan_tool_time(scan);
     catch e
         scan = scan_tool_catch(scan,e);
     end

@@ -7,8 +7,6 @@ function scan = scan_function_preprocess_check(scan)
 
     %% function
     if ~scan.running.flag.function, return; end
-    
-    scan_tool_print(scan,false,'\nAdd function (check) : ');
     scan.function.check = @auxiliar_check;
 
     %% nested
