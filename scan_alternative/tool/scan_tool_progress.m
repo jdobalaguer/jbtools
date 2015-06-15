@@ -12,7 +12,9 @@ function scan_tool_progress(scan,progress)
     func_wait(progress);
     
     % time
-    if  progress, tic(); end
-    if ~progress, toc(); end
+    if scan.parameter.analysis.time
+        if  progress, tic(); end
+        if ~progress, toc(); end
+    end
     
 end

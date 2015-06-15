@@ -6,7 +6,7 @@ function scan = scan_glm_condition_concat(scan)
     %   >> help scan;
     
     %% notes
-    % this function doesn't work with TBTE ("main" is not [u_name])
+    % this function doesn't work with TBTE ("version" is always empty)
     
     %% function
     if ~scan.running.flag.design, return; end
@@ -26,7 +26,7 @@ function scan = scan_glm_condition_concat(scan)
         n_volume = 0;
         
         % condition struct
-        condition = struct('main',u_name,'name',u_name,'onset',{[]},'subname',u_subname,'level',{[]},'duration',u_duration);
+        condition = struct('main',u_name,'name',u_name,'version',{''},'onset',{[]},'subname',u_subname,'level',{[]},'duration',u_duration);
         
         % session
         for i_session = 1:scan.running.subject.session(i_subject)

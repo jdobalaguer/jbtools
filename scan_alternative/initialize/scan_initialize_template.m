@@ -17,6 +17,7 @@ function scan = scan_initialize_template(type)
     scan.parameter.analysis.verbose     = true;
     scan.parameter.analysis.wpause      = true;
     scan.parameter.analysis.progress    = true;
+    scan.parameter.analysis.time        = true;
     scan.parameter.analysis.hdd         = inf;
     scan.parameter.path.subject         = {}; ... path
     scan.parameter.path.session         = {};
@@ -54,6 +55,7 @@ function scan = scan_initialize_template(type)
     scan.running.subject.session    = [];
     scan.running.file.save.scan     = '';
     scan.running.file.save.caller   = '';
+    scan.running.time.start         = nan;
     
     % result
     scan.result = struct();

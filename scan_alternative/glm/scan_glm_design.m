@@ -23,7 +23,7 @@ function scan = scan_glm_design(scan)
         spm{i_subject}.spm.stats.fmri_spec.timing.fmri_t  = spm_get_defaults('stats.fmri.t');
         spm{i_subject}.spm.stats.fmri_spec.timing.fmri_t0 = spm_get_defaults('stats.fmri.t0');
         spm{i_subject}.spm.stats.fmri_spec.fact = struct('name',{},'levels',{});
-        spm{i_subject}.spm.stats.fmri_spec.bases.(scan.job.basisFunction.name) = scan.job.basisFunction.parameters;
+        spm{i_subject}.spm.stats.fmri_spec.bases = scan.running.bases; %spm{i_subject}.spm.stats.fmri_spec.bases.(scan.job.basisFunction.name) = scan.job.basisFunction.parameters;
         spm{i_subject}.spm.stats.fmri_spec.volt = 1;
         spm{i_subject}.spm.stats.fmri_spec.global = 'none';
         if scan.job.globalScaling, spm{i_subject}.spm.stats.fmri_spec.global = 'scaling'; end
@@ -38,7 +38,7 @@ function scan = scan_glm_design(scan)
             
             % condition
             for i_condition = 1:length(scan.running.condition{i_subject}{i_session})
-                spm{i_subject}.spm.stats.fmri_spec.sess(i_session).cond(i_condition).name     = scan.running.condition{i_subject}{i_session}(i_condition).name;
+                spm{i_subject}.spm.stats.fmri_spec.sess(i_session).cond(i_condition).name     = strcat(scan.running.condition{i_subject}{i_session}(i_condition).name,scan.running.condition{i_subject}{i_session}(i_condition).version);
                 spm{i_subject}.spm.stats.fmri_spec.sess(i_session).cond(i_condition).onset    = scan.running.condition{i_subject}{i_session}(i_condition).onset;
                 spm{i_subject}.spm.stats.fmri_spec.sess(i_session).cond(i_condition).duration = scan.running.condition{i_subject}{i_session}(i_condition).duration;
                 spm{i_subject}.spm.stats.fmri_spec.sess(i_session).cond(i_condition).tmod     = 0;

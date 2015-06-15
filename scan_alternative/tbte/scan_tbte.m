@@ -26,7 +26,9 @@ function scan = scan_tbte(scan)
         ...
         'Add function (cd)',...
         'Add function (design)',...
-        'Add function (roi)');
+        'Add function (foldermanager)',...
+        'Add function (roi)',...
+        'Add function (meshgrid)');
     
     try
         % initialize
@@ -56,9 +58,9 @@ function scan = scan_tbte(scan)
         % function
         scan = scan_function_glm_cd(scan);      % change directory
         scan = scan_function_glm_design(scan);  % review design
-        scan = scan_function_glm_roi(scan);     % region of interest
-        scan = scan_function_glm_saveregressor(scan); % save regressor
         scan = scan_function_glm_foldermanager(scan); % folder manager
+        scan = scan_function_tbte_roi(scan);    % region of interest
+        scan = scan_function_tbte_meshgrid(scan); % meshgrid
 
         % save
         scan_save_scan(scan);

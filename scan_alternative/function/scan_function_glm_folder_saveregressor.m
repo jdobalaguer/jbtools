@@ -1,19 +1,17 @@
 
-function scan = scan_function_glm_saveregressor(scan)
-    %% scan = SCAN_FUNCTION_GLM_SAVEREGRESSOR(scan)
-    % define "save regressor" function
+function scan = scan_function_glm_folder_saveregressor(scan)
+    %% scan = SCAN_FUNCTION_GLM_FOLDER_SAVEREGRESSOR(scan)
+    % define function @folder.saveRegressor
     % to list main functions, try
     %   >> help scan;
 
     %% function
     if ~scan.running.flag.function, return; end
     if ~scan.running.flag.design,   return; end
-    
-    scan_tool_print(scan,false,'\nAdd function (saveRegressor) : ');
-    scan.function.saveRegressor = @auxiliar_saveRegressor;
+    scan.function.folder.saveRegressor = @auxiliar_saveRegressor;
 
     %% nested
-    function regressor = auxiliar_saveRegressor(varargin)
+    function auxiliar_saveRegressor(varargin)
         if nargin~=2 || strcmp(varargin{1},'help')
             scan_tool_help('@saveRegressor(name,file)','This function saves a regressor specified in [scan.job.regressor] and loaded into [scan.running.regressor]. [name] is the name of the regressor. [file] is the path to the saved file, relative to [scan.directory.regressor]. Once the regressor is saved, it can be loaded directly using scan.job.regressor.type = ''mat''.');
             return;
@@ -22,8 +20,14 @@ function scan = scan_function_glm_saveregressor(scan)
         % default
         [name,file] = varargin{1:2};
         
+        % load
+        if file_match(fullfile(scan.directory.regressor,file))
+            regressor = file_loadvar(fullfile(scan.directory.regressor,file),'regressor');
+        else
+            regressor = cell(1,length(scan.parameter.path.subject));
+        end
+        
         % regressor
-        regressor = cell(1,length(scan.parameter.path.subject));
         for i_subject = 1:scan.running.subject.number
             subject = scan.running.subject.unique(i_subject);
             % load regressor

@@ -1,15 +1,13 @@
 
-function scan = scan_function_glm_cd(scan)
-    %% scan = SCAN_FUNCTION_GLM_CD(scan)
-    % define "change directory" functions to [scan.running.directory]
+function scan = scan_function_glm_folder_cd(scan)
+    %% scan = SCAN_FUNCTION_GLM_FOLDER_CD(scan)
+    % define functions @folder.cd
     % to list main functions, try
     %   >> help scan;
 
     %% function
     if ~scan.running.flag.function, return; end
-    
-    scan_tool_print(scan,false,'\nAdd function (cd) : ');
-    scan.function.cd = auxiliar(scan.running.directory);
+    scan.function.folder.cd = auxiliar(scan.running.directory);
 
     %% nested
     function f = auxiliar(v)

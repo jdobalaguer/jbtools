@@ -1,18 +1,16 @@
 
-function scan = scan_function_glm_foldermanager(scan)
-    %% scan = SCAN_FUNCTION_GLM_FOLDERMANAGER(scan)
-    % define "folder manager" function
+function scan = scan_function_glm_folder_manager(scan)
+    %% scan = SCAN_FUNCTION_GLM_FOLDER_MANAGER(scan)
+    % define function @folder.manager
     % to list main functions, try
     %   >> help scan;
 
     %% function
     if ~scan.running.flag.function, return; end
-    
-    scan_tool_print(scan,false,'\nAdd function (folderManager) : ');
-    scan.function.folderManager = @auxiliar_folderManager;
+    scan.function.folder.manager = @auxiliar_manager;
 
     %% nested
-    function auxiliar_folderManager(varargin)
+    function auxiliar_manager(varargin)
         if nargin~=2 || strcmp(varargin{1},'help')
             scan_tool_help('@folderManager(mode,folder)','This function manipulates the folders "original" and "copy" in [scan.running.directory]. [mode] is the operation (''zip''/''unzip''/''delete''). [folder] is the target folder (e.g. ''original:first'' or ''copy:first:beta'' or ''copy:second:contrast'').');
             return;
@@ -25,40 +23,40 @@ function scan = scan_function_glm_foldermanager(scan)
         switch folder
             % mix of folders
             case 'original'
-                auxiliar_folderManager(mode,'original:first');
-                auxiliar_folderManager(mode,'original:second');
+                auxiliar_manager(mode,'original:first');
+                auxiliar_manager(mode,'original:second');
                 return;
             case 'copy'
-                auxiliar_folderManager(mode,'copy:first');
-                auxiliar_folderManager(mode,'copy:second');
+                auxiliar_manager(mode,'copy:first');
+                auxiliar_manager(mode,'copy:second');
                 return;
             case 'copy:first'
-                auxiliar_folderManager(mode,'copy:first:beta');
-                auxiliar_folderManager(mode,'copy:first:contrast');
-                auxiliar_folderManager(mode,'copy:first:statistic');
-                auxiliar_folderManager(mode,'copy:first:spm');
+                auxiliar_manager(mode,'copy:first:beta');
+                auxiliar_manager(mode,'copy:first:contrast');
+                auxiliar_manager(mode,'copy:first:statistic');
+                auxiliar_manager(mode,'copy:first:spm');
                 return;
             case 'copy:second'
-                auxiliar_folderManager(mode,'copy:second:beta');
-                auxiliar_folderManager(mode,'copy:second:contrast');
-                auxiliar_folderManager(mode,'copy:second:statistic');
-                auxiliar_folderManager(mode,'copy:second:spm');
+                auxiliar_manager(mode,'copy:second:beta');
+                auxiliar_manager(mode,'copy:second:contrast');
+                auxiliar_manager(mode,'copy:second:statistic');
+                auxiliar_manager(mode,'copy:second:spm');
                 return;
             case 'copy:beta'
-                auxiliar_folderManager(mode,'copy:first:beta');
-                auxiliar_folderManager(mode,'copy:second:beta');
+                auxiliar_manager(mode,'copy:first:beta');
+                auxiliar_manager(mode,'copy:second:beta');
                 return;
             case 'copy:contrast'
-                auxiliar_folderManager(mode,'copy:first:contrast');
-                auxiliar_folderManager(mode,'copy:second:contrast');
+                auxiliar_manager(mode,'copy:first:contrast');
+                auxiliar_manager(mode,'copy:second:contrast');
                 return;
             case 'copy:statistic'
-                auxiliar_folderManager(mode,'copy:first:statistic');
-                auxiliar_folderManager(mode,'copy:second:statistic');
+                auxiliar_manager(mode,'copy:first:statistic');
+                auxiliar_manager(mode,'copy:second:statistic');
                 return;
             case 'copy:spm'
-                auxiliar_folderManager(mode,'copy:first:spm');
-                auxiliar_folderManager(mode,'copy:second:spm');
+                auxiliar_manager(mode,'copy:first:spm');
+                auxiliar_manager(mode,'copy:second:spm');
                 return;
             % basic folders
             case 'original:first'
@@ -83,7 +81,7 @@ function scan = scan_function_glm_foldermanager(scan)
                 u_directory = {scan.running.directory.copy.second.spm};
             otherwise
                 scan_tool_warning(scan,false,'folder "%s" not valid',folder);
-                auxiliar_folderManager('help');
+                auxiliar_manager('help');
                 return;
         end
         

@@ -73,25 +73,31 @@ function scan = scan_glm(scan)
         scan = scan_glm_matrix(scan);           % set matrix
 
         % estimation
-        scan = scan_glm_estimation(scan);               % SPM estimation
-        scan = scan_glm_copy(scan,'first','beta');      % copy
+        scan = scan_glm_estimation(scan);       % SPM estimation
+        scan = scan_glm_copy(scan,'first','beta'); % copy
 
         % first level analysis
-        scan = scan_glm_contrast(scan);                 % contrasts
-        scan = scan_glm_firstlevel(scan);               % SPM first level analyses
-        scan = scan_glm_copy(scan,'first','contrast');  % copy
+        scan = scan_glm_contrast(scan);         % contrasts
+        scan = scan_glm_firstlevel(scan);       % SPM first level analyses
+        scan = scan_glm_copy(scan,'first','contrast'); % copy
         scan = scan_glm_copy(scan,'first','statistic'); % copy
-        scan = scan_glm_copy(scan,'first','spm');       % copy
+        scan = scan_glm_copy(scan,'first','spm'); % copy
 
         % second level analysis
-        scan = scan_glm_secondlevel(scan);              % SPM second level analyses
-        scan = scan_glm_copy(scan,'second','beta');     % copy
+        scan = scan_glm_secondlevel(scan);      % SPM second level analyses
+        scan = scan_glm_copy(scan,'second','beta'); % copy
         scan = scan_glm_copy(scan,'second','contrast'); % copy
         scan = scan_glm_copy(scan,'second','statistic'); % copy
-        scan = scan_glm_copy(scan,'second','spm');      % copy
+        scan = scan_glm_copy(scan,'second','spm'); % copy
 
         % function
-        scan = scan_function_glm(scan);
+        scan = scan_function_glm_folder_cd(scan);      % change directory
+        scan = scan_function_glm_xjview(scan);  % launch xjview
+        scan = scan_function_glm_saveregressor(scan); % save regressor
+        scan = scan_function_glm_foldermanager(scan); % folder manager
+        scan = scan_function_glm_design(scan);  % review design
+        scan = scan_function_glm_roi(scan);     % region of interest
+        scan = scan_function_glm_fir(scan);     % finite impulse response
         
         % save
         scan_save_scan(scan);

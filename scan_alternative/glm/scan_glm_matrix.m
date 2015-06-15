@@ -32,7 +32,7 @@ function scan = scan_glm_matrix(scan)
         end
         
         % column
-        scan.running.design(i_subject).column = struct('main',{{}},'name',{{}},'session',{[]},'order',{[]},'covariate',{[]},'number',{size(scan.running.design(i_subject).matrix,2)});
+        scan.running.design(i_subject).column = struct('main',{{}},'name',{{}},'version',{{}},'session',{[]},'order',{[]},'covariate',{[]},'number',{size(scan.running.design(i_subject).matrix,2)});
         j_column = 0;
         for i_session = 1:scan.running.subject.session(i_subject)
             % condition
@@ -41,6 +41,7 @@ function scan = scan_glm_matrix(scan)
                     j_column = j_column + 1;
                     scan.running.design(i_subject).column.main{j_column}      = scan.running.condition{i_subject}{i_session}(i_condition).main;
                     scan.running.design(i_subject).column.name{j_column}      = scan.running.condition{i_subject}{i_session}(i_condition).name;
+                    scan.running.design(i_subject).column.version{j_column}   = scan.running.condition{i_subject}{i_session}(i_condition).version;
                     scan.running.design(i_subject).column.session(j_column)   = i_session;
                     scan.running.design(i_subject).column.order(j_column)     = i_order;
                     scan.running.design(i_subject).column.covariate(j_column) = false;
@@ -50,6 +51,7 @@ function scan = scan_glm_matrix(scan)
                         j_column = j_column + 1;
                         scan.running.design(i_subject).column.main{j_column}      = scan.running.condition{i_subject}{i_session}(i_condition).main;
                         scan.running.design(i_subject).column.name{j_column}      = scan.running.condition{i_subject}{i_session}(i_condition).subname{i_level};
+                        scan.running.design(i_subject).column.version{j_column}   = scan.running.condition{i_subject}{i_session}(i_condition).version;
                         scan.running.design(i_subject).column.session(j_column)   = i_session;
                         scan.running.design(i_subject).column.order(j_column)     = i_order;
                         scan.running.design(i_subject).column.covariate(j_column) = false;
@@ -61,6 +63,7 @@ function scan = scan_glm_matrix(scan)
                 j_column = j_column + 1;
                 scan.running.design(i_subject).column.main{j_column}      = scan.running.regressor{i_subject}{i_session}.name{i_regressor};
                 scan.running.design(i_subject).column.name{j_column}      = scan.running.regressor{i_subject}{i_session}.name{i_regressor};
+                scan.running.design(i_subject).column.version{j_column}   = '';
                 scan.running.design(i_subject).column.session(j_column)   = i_session;
                 scan.running.design(i_subject).column.order(j_column)     = 0;
                 scan.running.design(i_subject).column.covariate(j_column) = scan.running.regressor{i_subject}{i_session}.covariate(i_regressor);

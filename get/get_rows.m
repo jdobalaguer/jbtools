@@ -10,8 +10,8 @@ function [z,q] = get_rows(varargin)
     %% function
     assertSize(varargin{:});
     assertFunc(@isvector,varargin{:});
-    X = nan(length(varargin{1}),length(varargin));
-    for i = 1:nargin, X(:,i) = varargin{i}; end
+    X = cell2mat(cellfun(@mat2vec,varargin,'UniformOutput',false));
     [q,~,z] = unique(X,'rows');
+    z = reshape(z,size(varargin{1}));
 
 end

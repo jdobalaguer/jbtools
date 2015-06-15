@@ -1,15 +1,13 @@
 
-function scan = scan_function_glm_xjview(scan)
-    %% scan = SCAN_FUNCTION_GLM_XJVIEW(scan)
-    % define "xjview" functions to [scan.running.directory]
+function scan = scan_function_glm_folder_xjview(scan)
+    %% scan = SCAN_FUNCTION_GLM_FOLDER_XJVIEW(scan)
+    % define functions @folder.xjview
     % to list main functions, try
     %   >> help scan;
 
     %% function
     if ~scan.running.flag.function, return; end
-    
-    scan_tool_print(scan,false,'\nAdd function (xjview) : ');
-    scan.function.xjview = auxiliar(scan.running.directory);
+    scan.function.folder.xjview = auxiliar(scan.running.directory);
 
     %% nested
     function f = auxiliar(v)

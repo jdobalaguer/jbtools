@@ -14,6 +14,8 @@ function scan = scan_initialize(scan)
     scan = scan_initialize_spm(scan);
     template = scan_initialize_template(scan.job.type);
     scan     = struct_default(scan,template);
+    scan_tool_assert(scan,struct_cmp(scan,template),'some fields didnt match');
+    scan     = scan_initialize_time(scan);
     scan     = scan_initialize_autocomplete(scan);
     
 end
