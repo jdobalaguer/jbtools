@@ -1,8 +1,7 @@
 
 function with_copy(filewith,fileedit)
     %% WITH_COPY(filewith,fileedit)
-    
-    %% warnings
+    % copy a file from the path in the current directory
     
     %% function
     default('fileedit',filewith)
@@ -13,6 +12,6 @@ function with_copy(filewith,fileedit)
     assert(isdir(dirwith),'with_copy: error. directory "%s" doesn''t exist',dirwith);
     pathwith = [dirwith,filesep(),filewith,extwith];
     pathedit = [pwd(),  filesep(),fileedit,extedit];
-    fprintf('with_copy: copying file "%s" \n',pathwith);
+    fprintf('with_copy: copying file "%s" here \n',pathwith);
     copyfile(pathwith,pathedit);
 end

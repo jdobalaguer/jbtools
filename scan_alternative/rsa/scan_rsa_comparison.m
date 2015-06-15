@@ -17,10 +17,10 @@ function scan = scan_rsa_comparison(scan)
     for i_subject = 1:scan.running.subject.number
         for i_session = 1:scan.running.subject.session(i_subject)
             model = cell2mat(mat2vec({scan.running.model{i_subject}{i_session}.vector}));
-            model = ztransf(model,2);
+            model = mat_zscore(model,2);
             for i_mask = 1:length(scan.running.mask)
                 rdm = scan.running.rdm{i_subject}{i_session}(i_mask).vector;
-                rdm = ztransf(rdm,2);
+                rdm = mat_zscore(rdm,2);
                 scan.running.comparison{i_subject}{i_session}(i_mask).model = {scan.running.model{i_subject}{i_session}.model};
                 scan.running.comparison{i_subject}{i_session}(i_mask).beta  = glmfit(model',rdm','normal','constant','off');
             end

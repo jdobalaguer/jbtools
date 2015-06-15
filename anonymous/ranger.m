@@ -1,5 +1,8 @@
 
 function r = ranger(x)
-    x = x(:);
+    %% r = RANGER(x)
+    
+    %% function
+    x = mat2vec(x);
     r = [nanmin(x),nanmax(x)];
 end

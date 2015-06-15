@@ -1,7 +1,9 @@
+
 function s = struct_filter(s,ii)
     %% s = STRUCT_FILTER(s,ii)
-    
-    %% warnings
+    % apply a vector-like index within each field of a struct
+    % s  : struct
+    % ii : index
     
     %% function
     u_field = fieldnames(s);
@@ -10,5 +12,4 @@ function s = struct_filter(s,ii)
         field = u_field{i_field};
         s.(field) = s.(field)(ii,:);
     end
-    
 end

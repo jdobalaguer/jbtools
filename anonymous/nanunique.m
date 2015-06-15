@@ -8,8 +8,6 @@ function varargout = nanunique(varargin)
     % [C,IA,IC] = nanunique(A,OCCURRENCE) -specify the index to be returned in IA
     % [C,IA,IC] = nanunique(A,'legacy')   -use the old version of unique
     
-    %% warnings
-    
     %% function
     
     % assert inf
@@ -23,6 +21,4 @@ function varargout = nanunique(varargin)
     
     % replace inf with nan
     varargout{1}(isinf(varargout{1}(:))) = nan;
-    
-    
 end

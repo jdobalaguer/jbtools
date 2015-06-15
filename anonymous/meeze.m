@@ -1,8 +1,6 @@
 function y = meeze(x,dim)
     %% y = meeze(x,dim)
     
-    %% warnings
-    
     %% function
     if nargin==1
         y = squeeze(nanmean(x));

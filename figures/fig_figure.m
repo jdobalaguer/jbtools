@@ -1,26 +1,25 @@
 
 function cf = fig_figure(cf)
     %% fig_figure(cf)
-    % 
     % create and/or set figure [cf]
-    % 
     
-    %% default
-    if ~exist('cf','var') || isempty(cf); cf = figure(); end
+    %% function
     
-    %% colour
+    % default
+    func_default('cf',figure());
+    
+    % colour
     set(cf,'Color',[1,1,1]);
     
-    %% smooth
-    fig_smooth(cf);
+    % smooth
+    % fig_smooth(cf);
     
-    %% toolbar
+    % toolbar
     set(cf,'ToolBar','none');
     
-    %% hold
+    % hold
     hold('on');
     
-    %% docked
-    %set(cf,'WindowStyle','docked');
-    
+    % docked
+    % set(cf,'WindowStyle','docked');
 end

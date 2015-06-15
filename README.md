@@ -23,20 +23,16 @@ If you want to update the toolbox (only from UNIX/Linux), simply do
 [rebuilt](rebuilt) are overloaded functions that matlab already includes.
 
 #### analysis
-[analysis](analysis_tool) is a graphical tool for basic data analysis & plotting
-
-#### jb & jbtools
-[jb](console) is a single function that aims to enhance some features of the current matlab console (but sacrifices too many good other things)
-[jbtools](jb_tools) is a set of functions (similar to anonymous) that are useful for very specific tasks. Having the "jb_" prefix makes them easy to be found!
+[analysis](analysis_tool) BROKEN - is a graphical tool for basic data analysis & plotting.
 
 #### fig
 [fig](figures) is a set of functions that help you make nicer figures out of your data
 
-#### matd3
-[d3](d3) IN CONSTRUCTION. aims for the same as fig, but does it through d3.js!
+#### d3
+[d3](d3) IN CONSTRUCTION - aims for the same as fig, but does it through d3.js!
 
-#### get_matrix
-[get_matrix](getm) is a set of functions that shrink your data (i.e. it takes indexed vectors as an input and returns a matrix). extremely useful for behavioural analyses.
+#### matvec
+[matvec](matvec) is a set of functions help you go from matrix to vector format, and run some functions over these different kinds of data. extremely useful for behavioural analyses.
 
 #### model
 [model](model) is a framework for model fitting
@@ -45,22 +41,11 @@ If you want to update the toolbox (only from UNIX/Linux), simply do
 [mturk](mturk) is a toolbox to import javascript data into matlab. it is very specific to the webserver in our lab. if you don't know what this is for, you probably don't need to use it. 
 
 #### scan
-[scan](scan) is a pipeline that runs many kinds of fMRI analyses with minimal effort. it requires SPM8.
+[scan](scan) IN CONSTRUCTION - is a pipeline that runs many kinds of fMRI analyses with minimal effort. it requires SPM12.
 
 #### stats
-[stats](stats) IN CONSTRUCTION. is a set of functions useful for statistical analyses. it will hopefully include parametrical, non-parametrical and bayesian approaches (but who knows..)
+[stats](stats) IN CONSTRUCTION - is a set of functions for statistical analyses. it will hopefully include parametrical, non-parametrical and bayesian approaches (but who knows..)
 
-#### struct
-[struct](struct) set of functions useful for manipulation of struct variables
-
-
-## Last stuff
-
-A few functions you'll need to tweak (in case you want to use them):
-
-* jbtools/jb/jb_parallel_start.m : set your parallel toolbox manager
-* jbtools/jb/jb_alertmail.m      : set your email and your password
-
-It's also useful to edit your auto-completion settings:
-(TODO)
-
+#### struct & cell
+[struct](struct) set of functions for manipulation of struct variables.
+[cell](cell) set of functions for manipulation of cell variables.

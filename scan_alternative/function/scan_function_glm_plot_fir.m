@@ -39,16 +39,21 @@ function scan = scan_function_glm_plot_fir(scan)
                     [m,e] = deal(mat2vec(nanmean(fir,1))',mat2vec(nanste(fir,1))');
                     x = 1:length(m);
                     fig_figure(plot_args.figure);
-                    fig_steplot(x,m,e,plot_args.color_stroke);
-                    fig_pipplot(x,m,e,plot_args.color_stroke);
+                    fig_spline('shade',x,m,e,plot_args.color_stroke);
+                    fig_spline('pip',x,m,e,plot_args.color_stroke);
+                    fig_line(x,m,plot_args.color_stroke,'marker','o','linestyle','none');
+                    fig_spline('line',x,m,e,plot_args.color_stroke);
                     plot(zeros(size(m)),'k--');
                 case 'second'
                     fir = meeze(fir,[2,4]);
                     fir = fir';
                     fig_figure(plot_args.figure);
-                    plot(fir,'marker','.','color',plot_args.color_stroke);
+                    fig_line([],fir,plot_args.color_stroke,'marker','o','linestyle','none');
+                    fig_spline('line',[],fir,[],plot_args.color_stroke);
                     plot(zeros(size(fir)),'k--');
             end
         end
     end
 end
+
+

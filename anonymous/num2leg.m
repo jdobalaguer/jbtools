@@ -1,9 +1,10 @@
 
 function leg = num2leg(num,str)
-    %leg = NUM2LEG(num[,str])
-
+    %%leg = NUM2LEG(num[,str])
     % numbers to legend (cell of string)
-    assert(isvector(num),'num2leg: error. not a vector');
+    
+    %% function
+    assertVector(num);
     leg = cell(1,length(num));
     if ~exist('str','var')
         for i = 1:length(num), leg{i} = num2str(num(i)); end

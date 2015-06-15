@@ -3,8 +3,6 @@ function h = fig_bare(m,e,c,g,b,w)
     %% h = FIG_BARE(values,errors,color,groups,bars,width)
     % Create bars with standard errors
 
-    %% warnings
-    
     %% function
     
     % variables

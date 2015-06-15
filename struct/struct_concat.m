@@ -1,18 +1,19 @@
+
 function ret = struct_concat(varargin)
-    %% s = STRUCT_CONCAT(dim,s1,s2,..)
-    % concat many structs
-    
-    %% warnings
+    %% s = STRUCT_CONCAT(d,s1,s2,..)
+    % concatenate many structs, field by field
+    % d   : dimension of concatenation
+    % {s} : structs to concatenate
     
     %% function
-    dim = varargin{1};
+    d = varargin{1};
     ret = varargin{2};
     for i_struct = 3:length(varargin)
-        ret = struct_concat_two(dim, ret , varargin{i_struct});
+        ret = struct_concat_two(d, ret , varargin{i_struct});
     end
 end
 
-%% AUXILIAR: concat two structs
+%% auxiliar (concatenate two structs)
 function ret = struct_concat_two(dim,s1,s2)
     if isempty(s2), ret  = s1; return; end
     

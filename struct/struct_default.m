@@ -8,7 +8,6 @@ function s = struct_default(o,t)
     
     %% function
     s = recursive(o,t);
-    
 end
 
 %% auxiliar

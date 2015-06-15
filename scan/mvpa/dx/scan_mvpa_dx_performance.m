@@ -52,7 +52,7 @@ function scan = scan_mvpa_dx_performance(scan)
                 far(i_level) = mean(prediction(target~=level)==level);
             end
             
-            ii_level = jb_anyof(global_u_level{i_regressor},u_level);
+            ii_level = ismember(global_u_level{i_regressor},u_level);
             hit_rate(   ii_level) = hr;
             false_alarm(ii_level) = far;
             accuracy(   ii_level) = (hr) ./ (hr + far);

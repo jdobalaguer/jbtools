@@ -21,7 +21,7 @@ function scan = scan_glm_regressor_zscore(scan)
             % regressor
             for i_regressor = 1:size(scan.running.regressor{i_subject}{i_session}.regressor,2)
                 if scan.running.regressor{i_subject}{i_session}.zscore(i_regressor)
-                    scan.running.regressor{i_subject}{i_session}.regressor(:,i_regressor) = ztransf(scan.running.regressor{i_subject}{i_session}.regressor(:,i_regressor));
+                    scan.running.regressor{i_subject}{i_session}.regressor(:,i_regressor) = mat_zscore(scan.running.regressor{i_subject}{i_session}.regressor(:,i_regressor));
                 end
             end
             

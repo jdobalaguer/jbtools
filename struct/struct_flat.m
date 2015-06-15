@@ -7,7 +7,7 @@ function z = struct_flat(s)
     %#ok<*AGROW>
     
     %% function
-    assert(isstruct(s), 'struct_flat: error. s not a struct');
+    assertStruct(s);
     for i = 1:numel(s)
         z(i) = flatten(s(i));
     end

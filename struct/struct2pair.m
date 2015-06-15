@@ -8,7 +8,6 @@ function p = struct2pair(s)
     %% function
     f = fieldnames(s);
     v = struct2cell(s);
-    p = [f';v'];
-    p = p(:)';
-    
+    p = [mat2row(f);mat2row(v)];
+    p = mat2row(p);
 end

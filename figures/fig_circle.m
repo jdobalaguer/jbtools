@@ -15,5 +15,4 @@ function h = fig_circle(varargin)
     px = cx + rx .* cos(t);
     py = cy + ry .* sin(t);
     h = plot(px,py,'marker','none',varargin{5:end});
-    
 end

@@ -2,9 +2,8 @@ function varargout = fig_plot(varargin)
     %% fig_plot()
     % (please add a help description here)
     
-    %% warnings
-    
     %% function
+    error('this function looks old');
 
     % set colours
     original_colours = get(0,'DefaultAxesColorOrder');

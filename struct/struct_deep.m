@@ -7,13 +7,14 @@ function z = struct_deep(s)
     %#ok<*AGROW>
     
     %% function
-    assert(isstruct(s), 'struct_deep: error. s not a struct');
-    assert(isvector(s), 'struct_flat: error. s not vector');
+    assertStruct(s);
+    assertVector(s);
     for i = 1:length(s)
         z(i) = deepen(s(i));
     end
 end
 
+%% auxiliar
 function z = deepen(s)
     u = fieldnames(s);
     n = length(u);

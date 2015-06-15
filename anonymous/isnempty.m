@@ -7,5 +7,4 @@ function b = isnempty(x)
     
     %% function
     b = ~isempty(x);
-    
 end

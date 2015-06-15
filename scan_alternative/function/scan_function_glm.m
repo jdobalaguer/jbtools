@@ -20,6 +20,8 @@ function scan = scan_function_glm(scan)
     % function @get.*
     scan = scan_function_glm_get_roi(scan);             % region of interest
     scan = scan_function_glm_get_fir(scan);             % finite impulse response
+%     scan = scan_function_glm_get_beta(scan);            % beta
+%     scan = scan_function_glm_get_vector(scan);          % vector
     
     % function @plot.*
     scan = scan_function_glm_plot_design(scan);         % review design

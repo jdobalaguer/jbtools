@@ -3,8 +3,6 @@ function with_delete(filewith)
     %% WITH_DELETE(filewith)
     % delete whichever file in path
     
-    %% warnings
-    
     %% function
     assertFile(filewith);
     filewith = which(filewith);

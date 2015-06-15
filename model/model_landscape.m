@@ -41,7 +41,7 @@ function model_landscape(model,c_pars)
         mean_cost = nanmean(model.cost.result.cost,1); ... subject
         ste_cost  = nanste( model.cost.result.cost,1); ... subject
         for i = 1:n_pars
-            if ~jb_anyof(i,f_pars)
+            if ~ismember(i,f_pars)
                 mean_cost = nanmin(mean_cost,[],i+2);
                 ste_cost  = nanmin(ste_cost, [],i+2);
             end

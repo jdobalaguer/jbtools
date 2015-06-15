@@ -1,49 +1,56 @@
 
 function hdl = fig_spline(varargin)
-    %% hdl = fig_spline([x,]my,sy[,c][,a])
-    %
-    % splines plot with nan standard error shade
-    %
+    %% hdl = fig_spline(mode,[x,]my,sy[,c][,a])
+    % plot whatever using splines
+    % mode : what kind of plot
+    % x    : x-values
+    % my   : center of y-value of the shade
+    % sy   : half-height of the shade
+    % c    : color of the shade
+    % a    : alpha of the shade
+    % h    : handle of the plot
     
-    %% map inputs
-    if isempty(varargin);   error('fig_plot: error. no input.'); end
-    if length(varargin)==1; error('fig_plot: error. fig_plot(my,sy).'); end
-    if length(varargin)==2
-        my = varargin{1};
-        sy = varargin{2};
-    else
-        x = varargin{1};
-        my = varargin{2};
-        sy = varargin{3};
-        if length(varargin)>=4; c = varargin{4}; end
-        if length(varargin)>=5; a = varargin{5}; end
-    end
-        
-    %% default
-    if ~exist('x','var')||isempty(x); x=1:size(my,2); end
-    if ~exist('c','var')||isempty(c); c='b'; end
-    if ~exist('a','var')||isempty(a); a=0.15; end
+    %% function
     
-    %% asserts
-    assert(size(x,2)==size(my,2),'x and my must have same number of columns');
-    assert(size(x,2)==size(sy,2),'x and sy must have same number of columns');
+    assert(nargin>3, 'fig_shade: error. not enough arguments');
     
-    %% variables
+    % default
+    varargin(end+1:6) = {[]};
+    [mode,x,my,sy,c,a] = deal(varargin{1:6});
+    my = mat2row(my);
+    func_default('mode','line');
+    func_default('x',1:length(my));
+    func_default('sy',zeros(size(my)));
+    func_default('c','b');
+    func_default('a',0.15);
+    if ischar(c); c = fig_color(c,1); end
+    
+    
+    % assert
+    assertSize(x,my,sy);
+    
+    % variables
     [xx,sb] = get_spline(x,my-sy);
     [xx,su] = get_spline(x,my+sy);
+    mm = 0.5 * (su+sb);
+    ss = 0.5 * (su-sb);
     
     %% plot
-    hold on;
-    hdl = struct();
-    hdl.shade = plot_shade(xx,sb,su,c,a);
-    hdl.line  = plot_spline(x,my,c);
+    switch mode
+        case 'line'
+            fig_line(xx,mm,c,varargin{7:end});
+        case 'pip'
+            fig_pip(xx,mm,ss,c,varargin{7:end});
+        case 'error'
+            fig_error(xx,mm,ss,c,varargin{7:end});
+        case 'shade'
+            fig_shade(xx,mm,ss,c,varargin{7:end});
+        otherwise
+            error('fig_spline: error. mode "%s" not valid',mode);
+    end
 end
 
-%% spline
-function hdl = plot_spline(x,y,c)
-    [xx,yy] = get_spline(x,y);
-    hdl = plot(xx,yy,'color',c,'linewidth',2);
-end
+%% auxiliar
 
 function [xx,yy] = get_spline(x,y)
     s = cubic_spline(x,y);
@@ -83,17 +90,4 @@ function [xx,yy] = get_cubic_spline(x,s,res)
         xi = repmat(x(i),1,res);
         yy(ii) = s.s0(i) + s.s1(i)*(xx(ii)-xi) + s.s2(i)*(xx(ii)-xi).^2 + s.s3(i)*(xx(ii) - xi).^3;
     end
-end
-
-%% std shade
-function hdl = plot_shade(x,s1,s2,c,a)
-    x  = mat2vec(x)';
-    s1 = mat2vec(s1)';
-    s2 = mat2vec(s2)';
-    sx = [x,fliplr(x)];
-    sy = [s1 fliplr(s2)];
-    if ischar(c); c = fig_color(c,1); end
-    %sc = (1-a).*ones(1,3) + a.*c;
-    %hdl = fill(sx,sy,sc,'linestyle','none');
-    hdl = fill(sx,sy,c,'linestyle','none','facealpha',a);
 end

@@ -1,9 +1,7 @@
 
 function assertSize(varargin)
-    %% assertSize(x1,x2,..)
-    % assert all arguments have the same size
-    
-    %% warnings
+    %% ASSERTSIZE(x1,x2,..)
+    % assert that all arguments have the same size
     
     %% function
     c = func_caller();

@@ -1,15 +1,10 @@
 
-function assertUnix(msg)
-    %% ASSERTUNIX(msg)
+function assertUnix()
+    %% ASSERTUNIX()
+    % assert that the system is unix-friendly
 
-    
-    %% warnings
-    
     %% function
-    if ~nargout,
-        msg = 'this function only works in unix';
-    end
-    db = dbstack();
-    if ~isscalar(db), db(1) = []; end
-    assert(isunix(), '%s: error. %s',db(1).name,msg);
+    c = func_caller();
+    func_default('c',func_caller(0));
+    assert(isunix(), '%s: error. This is not a Unix/Linux system',c);
 end

@@ -12,6 +12,7 @@ function b = struct_isfield(s,f)
     assert(length(re)==1,  'struct_isfield: error. f not in right format "*.*.*"');
     assert(strcmp(f,re{1}),'struct_isfield: error. f not in right format "*.*.*"');
     
+    % do
     b = false;
     f = regexp(f,'\.','split');
     while ~isempty(f)

@@ -3,7 +3,7 @@ function color = fig_color(scheme,n)
     %% color = fig_color([scheme])
     % get color schemes (in the range [0,1])
     
-    %% warnings
+    %% function
     
     % default
     if ~exist('scheme', 'var'); scheme = 'default'; end
@@ -60,7 +60,7 @@ function color = fig_color(scheme,n)
             color_hsv(:,2) = 1;
             color_hsv(:,3) = 1;
             color = 255 * hsv2rgb(color_hsv);
-    % otherwise
+    % psychtoolbox
         otherwise
             assert(logical(exist('get_color.m','file')),sprintf('fig_color: scheme "%s" not valid',scheme));
             color = repmat(255*get_color(scheme),[n,1]);

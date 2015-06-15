@@ -5,8 +5,6 @@ function c = func_caller(n)
     % n : number of levels ahead (default 1)
     % c : string with the name of the caller
     
-    %% warnings
-    
     %% function
     
     % default

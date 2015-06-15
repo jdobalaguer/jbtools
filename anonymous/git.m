@@ -3,10 +3,8 @@ function git(varargin)
     %% GIT(cmd)
     % execute a git command
     
-    %% warnings
-    
     %% function
-    assertUnix('this function only works in unix');
+    assertUnix();
     assert(nargin>0,'git: error. no input given');
     
     % parse
@@ -17,6 +15,7 @@ function git(varargin)
         args = sprintf(' %s',varargin{:});
         cmd{1}  = ['git',args];
     end
+    
     % execute
     for i = 1:length(cmd);
         cprintf('*black','git: execute command "%s"\n',cmd{i});

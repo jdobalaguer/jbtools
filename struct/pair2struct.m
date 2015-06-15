@@ -5,5 +5,8 @@ function s = pair2struct(varargin)
     % s : resulting struct
     
     %% function
+    if isscalar(varargin) && iscell(varargin)
+        varargin = [varargin{:}];
+    end
     s = struct(varargin{:});
 end

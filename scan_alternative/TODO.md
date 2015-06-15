@@ -3,9 +3,7 @@
 #B. TBTE functions
 #M. see notes in [scan_rsa]
 #T. check warnings in scan_rmdir
-16 @function.vector
-18. create a getv_/mat_/vec_ library, 
-19. re-code the steplot/pipplot/errplot
+16 @function.vector/beta
 
 LONG TERM
 08. scan_merge and scan_from
@@ -46,3 +44,5 @@ DONE
 14. total elapsed time
 15. glm column version
 17. split get/plot functions
+18. create a getv_/mat_/vec_ library, 
+19. re-code the steplot/pipplot/errplot

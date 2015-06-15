@@ -1,10 +1,10 @@
 
-
 function [u,n,h] = numbers(s)
-    % [u,n,h] = NUMBERS(s)
+    %% [u,n,h] = NUMBERS(s)
     % s can be a single vector or a struct
     % if a struct, numbers will be applied to all fields within s
 
+    %% function
     % single vector
     if ~isstruct(s)
         [u,n,h] = get_unh(s,nargout);
@@ -21,6 +21,7 @@ function [u,n,h] = numbers(s)
     end
 end
 
+%% auxiliar
 function [u,n,h] = get_unh(x,k)
     if ~iscell(x), x = jb_filter(x); end
     u = unique(x);

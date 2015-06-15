@@ -1,4 +1,9 @@
+
 function ret = struct_sort(s)
+    %% ret = STRUCT_SORT(s)
+    % sort fields
+  
+    %% function
     u_field = sort(fieldnames(s));
     nb_fields = length(u_field);
     
