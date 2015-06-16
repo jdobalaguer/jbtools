@@ -12,7 +12,7 @@ function scan = scan_function_glm_folder_manager(scan)
     %% nested
     function auxiliar_manager(varargin)
         if nargin~=2 || strcmp(varargin{1},'help')
-            scan_tool_help('@folderManager(mode,folder)','This function manipulates the folders "original" and "copy" in [scan.running.directory]. [mode] is the operation (''zip''/''unzip''/''delete''). [folder] is the target folder (e.g. ''original:first'' or ''copy:first:beta'' or ''copy:second:contrast'').');
+            scan_tool_help(scan,'@folderManager(mode,folder)','This function manipulates the folders "original" and "copy" in [scan.running.directory]. [mode] is the operation (''zip''/''unzip''/''delete''). [folder] is the target folder (e.g. ''original:first'' or ''copy:first:beta'' or ''copy:second:contrast'').');
             return;
         end
         

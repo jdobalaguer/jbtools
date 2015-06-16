@@ -13,7 +13,7 @@ function scan = scan_function_tbte_plot_meshgrid(scan)
     function varargout = auxiliar_meshgrid(varargin)
         varargout = cell(1,nargout);
         if nargin<3 || strcmp(varargin{1},'help')
-            scan_tool_help('mesh = @meshgrid(name,mask,x[,y])','This function plots the estimated betas within the region of interest [mask] for a particular regressor [name]. [mask] is a the path to a nii/img file relative to [scan.directory.mask]. [v#] are vectors with integers that specifies how the data should be splitted (i.e. categorical regressors).');
+            scan_tool_help(scan,'mesh = @meshgrid(name,mask,x[,y])','This function plots the estimated betas within the region of interest [mask] for a particular regressor [name]. [mask] is a the path to a nii/img file relative to [scan.directory.mask]. [v#] are vectors with integers that specifies how the data should be splitted (i.e. categorical regressors).');
             return;
         end
         

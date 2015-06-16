@@ -24,47 +24,34 @@ function scan = scan_rsa(scan)
     scan_tool_summary(scan,'Representation Similarity Analysis (RSA)',...
         'Initialize',...
         ...
-        'Load file',...
-        'Concatenate session',...
-        'Enable searchlight',...
+        'Load beta',...
+        'Build model',...
         ...
         'Build beta matrix',...
         'Build RDM',...
-        'Build model',...
         'Compare model',...
         ...
-        'Add function (rdm.sort)',...
-        'Add function (plot.rdm)',...
-        'Add function (plot.model)',...
-        'Add function (plot.comparison)');
+        'Add function');
     
+    % initialize
+    scan = scan_initialize(scan);               % initialize scan / SPM
     try
-        % initialize
-        scan = scan_initialize(scan);           % initialize scan / SPM
         scan = scan_autocomplete_rsa(scan);     % autocomplete (rsa)
         scan = scan_rsa_flag(scan);             % redo flags
         scan = scan_rsa_mkdir(scan);            % create new directories
         scan = scan_save_caller(scan);          % save caller
 
-        % load files
-        scan = scan_rsa_load(scan);             % load GLM files
-
-        % concatenation
-    %     scan = scan_rsa_concat(scan);           % concatenate sessions
-
-        % searchlight
-    %     scan = scan_rsa_searchlight(scan);      % enable searchlight
-
-        % RDM
-        scan = scan_rsa_bm(scan);               % build beta matrix
-        scan = scan_rsa_rdm(scan);              % build representation dissimilarity matrix
+        % RSA
+        scan = scan_rsa_load(scan);             % load beta
         scan = scan_rsa_model(scan);            % build model
-        scan = scan_rsa_comparison(scan);       % compare models
+        
+%         % RDM
+%         scan = scan_rsa_bm(scan);               % build beta matrix
+%         scan = scan_rsa_rdm(scan);              % build representation dissimilarity matrix
+%         scan = scan_rsa_comparison(scan);       % compare models
 
         % function
-        scan = scan_function_rsa_plot_rdm(scan); % plot rdm
-        scan = scan_function_rsa_plot_model(scan); % plot model
-        scan = scan_function_rsa_plot_comparison(scan); % plot comparison
+        scan = scan_rsa_function(scan);
         
         % save
         scan_save_scan(scan);

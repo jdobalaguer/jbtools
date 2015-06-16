@@ -1,8 +1,6 @@
 
 06. handle HDD writing depending on the size of [scan]
 #M. see notes in [scan_rsa]
-#T. check warnings in scan_rmdir
-20. make @get.vector a struct with multiple fields? (legend, etc...)
 
 LONG TERM
 08. scan_merge and scan_from
@@ -11,6 +9,7 @@ LONG TERM
 #P. subject masks, mask tools (mni2subject)
 #V. leave-one-subject-out (LOSO) roi analysis
 12. re-do the conversion with SPM's dicom importer
+20. make @get.vector a struct with multiple fields? (legend, etc...)
 
 DONE
 01. *fix* the glm FIR function yields different results for equivalent first beta/contrast - and I don't know why
@@ -32,6 +31,7 @@ DONE
 #O. regressors from mat-file
 #Q. template mask library? no. there are multiple voxs possiblities, and all masks are relative to data/mask/
 #T. warnings in scan_rmdir
+#T. check warnings in scan_rmdir
 #U. constants from concatenation fail if there's no realignment covariates
 #U. fix concatenation
 #W. using evalc around SPM function

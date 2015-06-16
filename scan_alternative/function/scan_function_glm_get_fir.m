@@ -14,7 +14,7 @@ function scan = scan_function_glm_get_fir(scan)
     function varargout = auxiliar_fir(varargin)
         if nargin~=4 || strcmp(varargin{1},'help')
             varargout = {};
-            scan_tool_help('fir = @get.fir(level,type,mask,contrast)','This function loads the [type] values estimated by the [level] analysis within a region of interest and a column/contrast for every [order] of your basis function. It''s particularly useful when using FIRs. [level] is a string {''first'',''second''}. [type] is a string {''beta'',''cont'',''spmt''}. [mask] is a the path to a nii/img file relative to [scan.directory.mask]. [contrast] is a string with the name of the column/contrast.');
+            scan_tool_help(scan,'fir = @get.fir(level,type,mask,contrast)','This function loads the [type] values estimated by the [level] analysis within a region of interest and a column/contrast for every [order] of your basis function. It''s particularly useful when using FIRs. [level] is a string {''first'',''second''}. [type] is a string {''beta'',''cont'',''spmt''}. [mask] is a the path to a nii/img file relative to [scan.directory.mask]. [contrast] is a string with the name of the column/contrast.');
             return;
         end
         

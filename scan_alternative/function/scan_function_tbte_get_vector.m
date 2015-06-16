@@ -18,7 +18,7 @@ function scan = scan_function_tbte_get_vector(scan)
     function varargout = auxiliar_vector(varargin)
         varargout = cell(1,nargout);
         if nargin~=2 || strcmp(varargin{1},'help')
-            scan_tool_help('v = @get.vector(name,field)\nv = @get.vector(name,u)','This function loads or transform a vector so that it can index the vector of betas from @scan.function.get.beta. [name] is the name of a condition. [field] can be any of {''main'',''name'',''subject'',''session'',''version'',''order'',''covariate''}. [u] is a vector of same length than those in [scan.job.condition]. [v] is the the resulting vector.');
+            scan_tool_help(scan,'v = @get.vector(name,field)\nv = @get.vector(name,u)','This function loads or transform a vector so that it can index the vector of betas from @scan.function.get.beta. [name] is the name of a condition. [field] can be any of {''main'',''name'',''subject'',''session'',''version'',''order'',''covariate''}. [u] is a vector of same length than those in [scan.job.condition]. [v] is the the resulting vector.');
             return;
         end
         

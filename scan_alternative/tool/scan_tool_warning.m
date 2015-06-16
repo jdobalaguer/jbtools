@@ -16,17 +16,16 @@ function scan_tool_warning(varargin)
     progress = varargin{2};
     text = sprintf('%s: warning. %s',func_caller(),varargin{3});
     vals = varargin(4:end);
-    warning_colour = [1,0.5,0];
     
     % print warning
     if scan.parameter.analysis.verbose
-        cprintf(warning_colour,text,vals{:});
+        cprintf(scan.parameter.analysis.color.warning,text,vals{:});
         fprintf('\n');
     end
     
     % warning pause
     if scan.parameter.analysis.wpause
-        cprintf(warning_colour,'Press return to continue. ');
+        cprintf(scan.parameter.analysis.color.warning,'Press return to continue. ');
         input('');
     end
     

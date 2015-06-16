@@ -43,9 +43,9 @@ function scan = scan_glm(scan)
         ...
         'Add function');
      
+    % initialize
+    scan = scan_initialize(scan);               % initialize scan / SPM
     try
-        % initialize
-        scan = scan_initialize(scan);           % initialize scan / SPM
         scan = scan_autocomplete_nii(scan,['epi3:',scan.job.image]); % autocomplete (nii)
         scan = scan_autocomplete_nii(scan,'epi3:realignment'); % autocomplete (nii)
         scan = scan_autocomplete_glm(scan);     % autocomplete (glm)

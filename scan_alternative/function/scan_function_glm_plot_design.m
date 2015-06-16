@@ -13,7 +13,7 @@ function scan = scan_function_glm_plot_design(scan)
     %% nested
     function auxiliar_design(varargin)
         if nargin~=1 || strcmp(varargin{1},'help')
-            scan_tool_help('@design(subject)','This function opens the SPM Design Report (spm_DesRep) interface for the participant [subject]. You can use it to see the design matrix, the covariation between regressors');
+            scan_tool_help(scan,'@design(subject)','This function opens the SPM Design Report (spm_DesRep) interface for the participant [subject]. You can use it to see the design matrix, the covariation between regressors');
             return;
         end
         SPM = file_loadvar(fullfile(scan.running.directory.copy.first.spm,sprintf('subject_%03i',varargin{1}),'SPM.mat'),'SPM');

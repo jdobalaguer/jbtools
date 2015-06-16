@@ -14,7 +14,7 @@ function scan = scan_function_glm_get_vector(scan)
     function varargout = auxiliar_vector(varargin)
         varargout = cell(1,nargout);
         if nargin~=2 || strcmp(varargin{1},'help')
-            scan_tool_help('v = @get.vector(name,field)','This function loads or transform a vector so that it can index the vector of betas from @scan.function.get.beta. [name] is the name of a condition. [field] can be any of {''main'',''name'',''subject'',''session'',''version'',''order'',''covariate''}. [u] is a vector of same length than those in [scan.job.condition]. [v] is the the resulting vector.');
+            scan_tool_help(scan,'v = @get.vector(name,field)','This function loads or transform a vector so that it can index the vector of betas from @scan.function.get.beta. [name] is the name of a condition. [field] can be any of {''main'',''name'',''subject'',''session'',''version'',''order'',''covariate''}. [u] is a vector of same length than those in [scan.job.condition]. [v] is the the resulting vector.');
             return;
         end
         
@@ -26,7 +26,8 @@ function scan = scan_function_glm_get_vector(scan)
         % get vector
         switch field
             case {'subject','session','order','covariate'}, v = [];
-            case {'main','name','version','onset'},         v = {};
+            case {'main','name','version'},                 v = {};
+            case 'onset',                                   v = nan(size(auxiliar_vector(name,'subject'))); varargout = {mat2vec(v)}; return;
             otherwise,                                      auxiliar_vector('help'); return;
         end
         for i_subject = 1:scan.running.subject.number

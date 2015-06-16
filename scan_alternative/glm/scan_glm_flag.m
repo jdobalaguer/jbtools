@@ -9,7 +9,7 @@ function scan = scan_glm_flag(scan)
     
     % warning
     if ~isempty(file_list(file_nendsep(scan.running.directory.job)))
-        scan_tool_warning(scan,false,'folder "%s" already exists.\nFiles in "%s" wont be deleted',scan.running.directory.job,scan.running.directory.copy.root);
+        scan_tool_warning(scan,false,'folder "%s" already exists. Files in "%s" wont be deleted',scan.running.directory.job,scan.running.directory.copy.root);
     end
     
     % switch

@@ -7,6 +7,13 @@ function scan = scan_autocomplete_rsa(scan)
     
     %% function
     
+    % assert
+    if strcmp(scan.job.glm.type,'glm') && ~isempty(cell_flat({scan.job.model.subname}))
+        scan_tool_warning(scan,false,'conditions are not allowed with scan.job.glm.type = ''glm''');
+        [scan.job.model.subname] = deal({});
+        [scan.job.model.level] = deal({});
+    end
+    
     % job
     scan.running.directory.job = file_endsep(fullfile(scan.directory.(scan.job.type),scan.job.name));
     
@@ -16,9 +23,6 @@ function scan = scan_autocomplete_rsa(scan)
     % load
     scan.running.load = struct();
     
-    % mask
-    scan.running.mask = struct('name',{},'mask',{},'main',{},'voxel',{});
-    for i_mask = 1:length(scan.job.mask)
-        scan.running.mask(i_mask) = struct('name',scan.job.mask(i_mask),'mask',{scan_nifti_load(fullfile(scan.directory.mask,scan.job.mask{i_mask}))},'main',scan.job.mask(i_mask),'voxel',{nan});
-    end
+    % model
+    scan.running.model = struct('level',{},'column',{},'rdm',{});
 end

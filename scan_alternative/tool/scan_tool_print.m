@@ -16,11 +16,10 @@ function scan_tool_print(varargin)
     progress = varargin{2};
     text = varargin{3};
     vals = varargin(4:end);
-    print_colour = 'blue';
     
     % print message
     if scan.parameter.analysis.verbose
-        cprintf(print_colour,text,vals{:});
+        cprintf(scan.parameter.analysis.color.print,text,vals{:});
         fprintf('\n');
     end
     

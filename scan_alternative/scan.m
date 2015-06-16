@@ -4,7 +4,7 @@ function scan()
     %
     % scan_conversion    : conversion dicom, nifti-4d and nifti-3d
     % scan_preprocess    : run a preprocessing pipeline
-    % scan_glm           : GLM and PPI analysis
+    % scan_glm           : GLM / PPI analysis
     % scan_tbte          : trial-by-trial estimates
     % scan_mvpa          : multivoxel pattern analysis
     % scan_rsa           : representation similarity analysis

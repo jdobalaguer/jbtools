@@ -27,7 +27,7 @@ function scan = scan_function_glm_folder_cd(scan)
         end
         function auxiliar_cd(varargin)
             if nargin~=0 % || strcmp(varargin{1},'help')
-                scan_tool_help('@cd()','This function changes to a given directory matched in [scan.running.directory]');
+                scan_tool_help(scan,'@cd()','This function changes to a given directory matched in [scan.running.directory]');
                 return;
             end
             cd(v);

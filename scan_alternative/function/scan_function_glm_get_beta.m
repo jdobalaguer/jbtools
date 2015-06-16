@@ -14,7 +14,7 @@ function scan = scan_function_glm_get_beta(scan)
     function varargout = auxiliar_beta(varargin)
         if nargin~=2 || strcmp(varargin{1},'help')
             varargout = {};
-            scan_tool_help('beta = @get.beta(name,mask)','This function loads the estimated beta values within a region of interest [mask] and for a condition [name]. [name] is the name of the condition. [mask] is a the path to a nii/img file relative to [scan.directory.mask]. the resulting variable [beta] is a vector with all betas. to index this vector properly, see @scan.function.get.vector');
+            scan_tool_help(scan,'beta = @get.beta(name,mask)','This function loads the estimated beta values within a region of interest [mask] and for a condition [name]. [name] is the name of the condition. [mask] is a the path to a nii/img file relative to [scan.directory.mask]. the resulting variable [beta] is a vector with all betas. to index this vector properly, see @scan.function.get.vector');
             return;
         end
         
@@ -26,7 +26,9 @@ function scan = scan_function_glm_get_beta(scan)
         if ~ischar(mask), auxiliar_beta('help'); return; end
         
         % mask
-        mask = scan_nifti_load(fullfile(scan.directory.mask,mask));
+        if ~isempty(mask), mask = scan_nifti_load(fullfile(scan.directory.mask,mask));
+        else               mask = [];
+        end
         
         % variables
         version = scan.function.get.vector(name,'version');

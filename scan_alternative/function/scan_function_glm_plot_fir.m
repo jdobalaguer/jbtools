@@ -13,7 +13,7 @@ function scan = scan_function_glm_plot_fir(scan)
     %% nested
     function auxiliar_fir(varargin)
         if nargin<4 || strcmp(varargin{1},'help')
-            scan_tool_help('@plot.fir(level,type,mask,contrast)','This function plots the average [type] values estimated by the [level] analysis within a region of interest and a column/contrast for every [order] of your basis function. It''s particularly useful when using FIRs. [level] is a string {''first'',''second''}. [type] is a string {''beta'',''cont'',''spmt''}. [mask] is a the path to a nii/img file relative to [scan.directory.mask]. [contrast] is a string with the name of the column/contrast.');
+            scan_tool_help(scan,'@plot.fir(level,type,mask,contrast)','This function plots the average [type] values estimated by the [level] analysis within a region of interest and a column/contrast for every [order] of your basis function. It''s particularly useful when using FIRs. [level] is a string {''first'',''second''}. [type] is a string {''beta'',''cont'',''spmt''}. [mask] is a the path to a nii/img file relative to [scan.directory.mask]. [contrast] is a string with the name of the column/contrast.');
             return;
         end
         

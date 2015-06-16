@@ -17,16 +17,16 @@ function scan = scan_conversion(scan)
         'DICOM conversion',...
         'NIfTI expansion');
      
+    % initialize
+    scan = scan_initialize(scan);                   % initialize scan / SPM
     try
-        % initialize
-        scan = scan_initialize(scan);           % initialize scan / SPM
-        scan = scan_autocomplete_dicom(scan);   % autocomplete (dicom)
+        scan = scan_autocomplete_dicom(scan);       % autocomplete (dicom)
         scan = scan_autocomplete_nii(scan,'structural:image'); % autocomplete (nii)
-        scan = scan_autocomplete_nii(scan,'epi4'); % autocomplete (nii)
+        scan = scan_autocomplete_nii(scan,'epi4');  % autocomplete (nii)
         scan = scan_autocomplete_nii(scan,'epi3:image'); % autocomplete (nii)
-        scan = scan_conversion_flag(scan);           % redo flags
-        scan = scan_conversion_rmdir(scan);          % remove old directories
-        scan = scan_conversion_mkdir(scan);          % create new directories
+        scan = scan_conversion_flag(scan);          % redo flags
+        scan = scan_conversion_rmdir(scan);         % remove old directories
+        scan = scan_conversion_mkdir(scan);         % create new directories
 
         % conversion
         scan = scan_conversion_dicom(scan);

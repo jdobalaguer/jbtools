@@ -27,7 +27,7 @@ function scan = scan_function_glm_folder_xjview(scan)
         end
         function auxiliar_xjview(varargin)
             if nargin~=0 % || strcmp(varargin{1},'help')
-                scan_tool_help('@xjview()','This function changes to a given directory matched in [scan.running.directory] and opens xjview()');
+                scan_tool_help(scan,'@xjview()','This function changes to a given directory matched in [scan.running.directory] and opens xjview()');
                 return;
             end
             cd(v);

@@ -16,7 +16,7 @@ function scan_tool_summary(varargin)
     
     % print steps
     if scan.parameter.analysis.verbose
-        cprintf('*blue','%s :',title);
+        cprintf(scan.parameter.analysis.color.summary,'%s :',title);
         fprintf('\n');
         for i_text = 1:length(text)
             fprintf('  %02i. %s\n',i_text,text{i_text});

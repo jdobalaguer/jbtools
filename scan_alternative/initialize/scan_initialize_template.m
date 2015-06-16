@@ -19,6 +19,10 @@ function scan = scan_initialize_template(type)
     scan.parameter.analysis.progress    = true;
     scan.parameter.analysis.time        = true;
     scan.parameter.analysis.hdd         = inf;
+    scan.parameter.analysis.color.summary   = '*strings';
+    scan.parameter.analysis.color.print     = 'strings';
+    scan.parameter.analysis.color.warning   = [1,0.5,0];
+    scan.parameter.analysis.color.help      = '*strings';
     scan.parameter.path.subject         = {}; ... path
     scan.parameter.path.session         = {};
     

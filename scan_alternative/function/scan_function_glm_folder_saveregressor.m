@@ -13,7 +13,7 @@ function scan = scan_function_glm_folder_saveregressor(scan)
     %% nested
     function auxiliar_saveRegressor(varargin)
         if nargin~=2 || strcmp(varargin{1},'help')
-            scan_tool_help('@saveRegressor(name,file)','This function saves a regressor specified in [scan.job.regressor] and loaded into [scan.running.regressor]. [name] is the name of the regressor. [file] is the path to the saved file, relative to [scan.directory.regressor]. Once the regressor is saved, it can be loaded directly using scan.job.regressor.type = ''mat''.');
+            scan_tool_help(scan,'@saveRegressor(name,file)','This function saves a regressor specified in [scan.job.regressor] and loaded into [scan.running.regressor]. [name] is the name of the regressor. [file] is the path to the saved file, relative to [scan.directory.regressor]. Once the regressor is saved, it can be loaded directly using scan.job.regressor.type = ''mat''.');
             return;
         end
         

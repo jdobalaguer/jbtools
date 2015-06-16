@@ -27,9 +27,9 @@ function scan = scan_preprocess(scan)
         ...
         'Add function (check)');
      
+    % initialize
+    scan = scan_initialize(scan);                       % initialize scan / SPM
     try
-        % initialize
-        scan = scan_initialize(scan);                   % initialize scan / SPM
         scan = scan_autocomplete_preprocess(scan);      % autocomplete
         scan = scan_preprocess_flag(scan);              % redo flags
         scan = scan_preprocess_rmdir(scan);             % remove old directories

@@ -9,7 +9,7 @@ function scan = scan_preprocess_rmdir(scan)
     
     % slicetime
     if scan.running.flag.slicetime
-        if any(cellfun(@exist,cell_flat(scan.running.directory.nii.epi3.slicetime)))
+        if any(cellfun(@isdir,cell_flat(scan.running.directory.nii.epi3.slicetime)))
             scan_tool_warning(scan,false,'will delete "epi3:slicetime" folders');
         end
         for i_subject = 1:scan.running.subject.number
@@ -21,7 +21,7 @@ function scan = scan_preprocess_rmdir(scan)
         
     % realignment
     if scan.running.flag.realignment
-        if any(cellfun(@exist,cell_flat(scan.running.directory.nii.epi3.realignment)))
+        if any(cellfun(@isdir,cell_flat(scan.running.directory.nii.epi3.realignment)))
             scan_tool_warning(scan,false,'will delete "epi3:realignment" folders');
         end
         for i_subject = 1:scan.running.subject.number
@@ -33,7 +33,7 @@ function scan = scan_preprocess_rmdir(scan)
         
     % coregistration
     if scan.running.flag.coregistration
-        if any(cellfun(@exist,cell_flat(scan.running.directory.nii.structural.coregistration)))
+        if any(cellfun(@isdir,cell_flat(scan.running.directory.nii.structural.coregistration)))
             scan_tool_warning(scan,false,'will delete "structural:coregistration" folders');
         end
         for i_subject = 1:scan.running.subject.number
@@ -43,7 +43,7 @@ function scan = scan_preprocess_rmdir(scan)
         
     % estimation
     if scan.running.flag.estimation
-        if any(cellfun(@exist,cell_flat(scan.running.directory.nii.structural.normalisation)))
+        if any(cellfun(@idir,cell_flat(scan.running.directory.nii.structural.normalisation)))
             scan_tool_warning(scan,false,'will delete "structural:normalisation" folders');
         end
         for i_subject = 1:scan.running.subject.number
@@ -65,7 +65,7 @@ function scan = scan_preprocess_rmdir(scan)
         
     % smooth
     if scan.running.flag.smooth
-        if any(cellfun(@exist,cell_flat(scan.running.directory.nii.epi3.smooth)))
+        if any(cellfun(@isdir,cell_flat(scan.running.directory.nii.epi3.smooth)))
             scan_tool_warning(scan,false,'will delete "epi3:smooth" folders');
         end
         for i_subject = 1:scan.running.subject.number
