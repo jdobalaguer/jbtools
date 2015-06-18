@@ -20,7 +20,7 @@ function scan = scan_initialize_autocomplete(scan)
     scan.running.directory.root    = scan.directory.root;
     
     % job stuff
-    if ~any(strcmp(scan.job.type,{'conversion'}))
+    if ~any(strcmp(scan.job.type,{'none','conversion'}))
         scan.running.directory.job      = file_endsep(fullfile(scan.directory.(scan.job.type),scan.job.name));
         scan.running.file.save.scan     = [scan.running.directory.job,'scan.mat'];
         scan.running.file.save.caller   = [scan.running.directory.job,'caller.m'];

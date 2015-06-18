@@ -17,15 +17,29 @@ function scan = scan_rsa_model_column(scan)
         s_column = length(x_column.subject);
         x_subname = scan.running.model(i_model).level.name;
         s_subname = length(x_subname);
-        x_level = mat2cell(cell2mat(scan.running.model(i_model).level.value),s_column,ones(1,s_subname));
+        if ~s_subname,  x_level = cell(s_column,0);
+        else            x_level = mat2cell(cell2mat(scan.running.model(i_model).level.value),s_column,ones(1,s_subname));
+        end
         
         % columns
-        for i_column = 1:s_column
-            scan.running.model(i_model).column(i_column).subject = x_column.subject(i_column);
-            scan.running.model(i_model).column(i_column).session = x_column.session(i_column);
-            scan.running.model(i_model).column(i_column).name    = x_column.name{i_column};
-            scan.running.model(i_model).column(i_column).onset   = x_column.onset(i_column);
-            scan.running.model(i_model).column(i_column).level   = pair2struct(mat2vec([x_subname;num2cell(cellfun(@(x)x(i_column),x_level))]));
+        j_column = 0;
+        for i_subject = 1:scan.running.subject.number
+            ii_subject = (x_column.subject == i_subject);
+            for i_session = 1:scan.running.subject.session(i_subject)
+                ii_session = (x_column.session == i_session);
+                for i_condition = 1:length(scan.job.glm.condition)
+                    ii_condition = strcmp(x_column.name,scan.job.glm.condition{i_condition});
+                    f_column = find(ii_subject & ii_session & ii_condition);
+                    for i_column = 1:length(f_column)
+                        j_column = j_column + 1;
+                        scan.running.model(i_model).column(j_column).subject = x_column.subject(f_column(i_column));
+                        scan.running.model(i_model).column(j_column).session = x_column.session(f_column(i_column));
+                        scan.running.model(i_model).column(j_column).name    = x_column.name{f_column(i_column)};
+                        scan.running.model(i_model).column(j_column).onset   = x_column.onset(f_column(i_column));
+                        scan.running.model(i_model).column(j_column).level   = pair2struct(mat2vec([x_subname;num2cell(cellfun(@(x)x(f_column(i_column)),x_level))]));
+                    end
+                end
+            end
         end
     end
 end

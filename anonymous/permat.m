@@ -2,6 +2,7 @@
 function z = permat(x,s)
     %% z = permat(x,s)
     % repmat... the other way around!
+    % when using numbers/chars x, see also KRON (e.g. kron(x,ones(s)))
     
     %% function
     

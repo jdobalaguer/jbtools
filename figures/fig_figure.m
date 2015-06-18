@@ -6,7 +6,9 @@ function cf = fig_figure(cf)
     %% function
     
     % default
-    func_default('cf',figure());
+    func_default('cf',[]);
+    if isempty(cf), cf = figure(); end
+    if ~ismember(cf,double(fig_list)), figure(cf); end
     
     % colour
     set(cf,'Color',[1,1,1]);

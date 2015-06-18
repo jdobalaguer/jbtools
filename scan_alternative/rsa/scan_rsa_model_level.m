@@ -10,12 +10,12 @@ function scan = scan_rsa_model_level(scan)
     
     % build levels
     for i_model = 1:length(scan.job.model)
-       scan.running.model(i_model).level = {};
-         
-        % set level
+        % variables
         u_condition = scan.job.glm.condition;
         u_subname   = unique(cell_flat(scan.job.model(i_model).subname),'stable');
-        level     = cell(length(u_condition),length(u_subname));
+        level       = cell(length(u_condition),length(u_subname));
+       
+        % set level
         n = nan(1,length(u_condition));
         for i_condition = 1:length(u_condition)
             n(i_condition) = sum(strcmp(scan.running.load.name,u_condition{i_condition}));

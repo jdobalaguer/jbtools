@@ -6,14 +6,20 @@ function [z,u] = getm_all(varargin)
     % x : vectors of regressors
     
     %% note
-    % the permute bit specifically fails when the first dimension has length 1..
+    % 1. the permute bit specifically fails when the first dimension has length 1..
+    % 2. it's not robust to NaN
     
     %% function
+    
     
     % variables
     y = varargin{1};
     x = varargin(2:end);
     l = length(y);
+    
+    % columns & rows
+    if isvector(y), y = mat2vec(y); end
+    x = cellfun(@mat2vec,x,'UniformOutput',false);
     
     % assert
     assertVector(y(:,1),x{:});

@@ -37,7 +37,7 @@ function scan = scan_function_glm_get_beta(scan)
         order   = scan.function.get.vector(name,'order');
         
         % files
-        file = cellfun(@(s,r,o) sprintf('subject_%03i session_%03i order_%03i.nii',s,r,o),num2cell(subject),num2cell(session),num2cell(order),'UniformOutput',false);
+        file = cellfun(@(s,r,o) sprintf('subject_%03i session_%03i order_%03i.nii',s,r,o),num2cell(mat2vec(scan.running.subject.unique(subject))),num2cell(session),num2cell(order),'UniformOutput',false);
         file = fullfile(scan.running.directory.copy.first.beta,strcat(name,version),file);
         
         % beta

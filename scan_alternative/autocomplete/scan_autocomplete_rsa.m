@@ -23,6 +23,12 @@ function scan = scan_autocomplete_rsa(scan)
     % load
     scan.running.load = struct();
     
+    % mask
+    scan.running.mask = struct('file',{},'mask',{},'shape',{});
+    
     % model
     scan.running.model = struct('level',{},'column',{},'rdm',{});
+    
+    % toolbox
+    scan.running.toolbox = {};
 end

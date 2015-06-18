@@ -17,7 +17,9 @@ function h = fig_combination(varargin)
     % default
     varargin(end+1:6) = {[]};
     [mode,x,my,sy,c,a] = deal(varargin{1:6});
+    x  = mat2row(x);
     my = mat2row(my);
+    sy = mat2row(sy);
     func_default('mode','line');
     func_default('x',1:length(my));
     func_default('sy',zeros(size(my)));
@@ -35,9 +37,10 @@ function h = fig_combination(varargin)
     end
     
     % plot
-    if any(strcmp(mode,'line')),    fig_line(x,my,c,varargin{7:end});       end
-    if any(strcmp(mode,'marker')),  fig_marker(x,my,c,varargin{7:end});     end
-    if any(strcmp(mode,'pip')),     fig_pip(x,my,sy,c,varargin{7:end});     end
-    if any(strcmp(mode,'error')),   fig_error(x,my,sy,c,varargin{7:end});   end
-    if any(strcmp(mode,'shade')),   fig_shade(x,my,sy,c,a,varargin{7:end}); end
+    h = struct();
+    if any(strcmp(mode,'line')),    h.line   = fig_line(x,my,c,varargin{7:end});       end
+    if any(strcmp(mode,'marker')),  h.marker = fig_marker(x,my,c,varargin{7:end});     end
+    if any(strcmp(mode,'pip')),     h.pip    = fig_pip(x,my,sy,c,varargin{7:end});     end
+    if any(strcmp(mode,'error')),   h.error  = fig_error(x,my,sy,c,varargin{7:end});   end
+    if any(strcmp(mode,'shade')),   h.shade  = fig_shade(x,my,sy,c,a,varargin{7:end}); end
 end

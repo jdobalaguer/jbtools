@@ -9,6 +9,7 @@ function scan = scan_initialize(scan)
     
     % print
     scan_tool_print(scan,false,'\nInitialize : ');
+    scan_tool_progress(scan,1);
     
     % initialize
     scan = scan_initialize_spm(scan);
@@ -17,5 +18,9 @@ function scan = scan_initialize(scan)
     scan_tool_assert(scan,struct_cmp(scan,template),'some fields didnt match');
     scan     = scan_initialize_time(scan);
     scan     = scan_initialize_autocomplete(scan);
+    scan_tool_progress(scan,[]);
+    
+    % wait
+    scan_tool_progress(scan,0);
     
 end

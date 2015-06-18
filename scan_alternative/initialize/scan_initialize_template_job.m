@@ -7,6 +7,8 @@ function job = scan_initialize_template_job(type)
     
     %% function
     switch type
+        case 'none'
+            job = struct();
         case 'conversion'
             job = scan_initialize_template_job_conversion(type);
         case 'preprocess'

@@ -9,9 +9,6 @@ function scan = scan_rsa(scan)
     % 1. the different columns will only match between RDM/model if you're lucky. make this robust to the order, to concatenation, to the onset marge
     % 2. the models should be able to catch a cell instead of a scalar number
     % 3. enable concatenation
-    % 4. use hamed's toolbox
-    % 5. in TBTE all information about the onset type is lost. this is crucial when using this information for the RSA - find a better way
-    % 6. in RSA we should recycle the onset information from the TBTE.
     % 7. filter RSA, concatenate RSA
     % 8. re-sort RDMs, shrink RDMs
 
@@ -25,11 +22,10 @@ function scan = scan_rsa(scan)
         'Initialize',...
         ...
         'Load beta',...
+        'Load mask',...
         'Build model',...
         ...
-        'Build beta matrix',...
-        'Build RDM',...
-        'Compare model',...
+        'Toolbox',...
         ...
         'Add function');
     
@@ -41,20 +37,26 @@ function scan = scan_rsa(scan)
         scan = scan_rsa_mkdir(scan);            % create new directories
         scan = scan_save_caller(scan);          % save caller
 
-        % RSA
-        scan = scan_rsa_load(scan);             % load beta
+        % load
+        scan = scan_rsa_beta(scan);             % load beta
+        
+        % mask
+        scan = scan_rsa_mask(scan);             % load beta
+        
+        % model
         scan = scan_rsa_model(scan);            % build model
         
-%         % RDM
-%         scan = scan_rsa_bm(scan);               % build beta matrix
-%         scan = scan_rsa_rdm(scan);              % build representation dissimilarity matrix
-%         scan = scan_rsa_comparison(scan);       % compare models
+        % concatenation
+        scan.running.subject.session(:) = 1;
+        
+        % RDM
+        scan = scan_rsa_toolbox(scan);          % initialise RSA toolbox
 
         % function
-        scan = scan_rsa_function(scan);
+%         scan = scan_rsa_function(scan);
         
         % save
-        scan_save_scan(scan);
+%         scan_save_scan(scan);
         scan = scan_tool_time(scan);
     catch e
         scan = scan_tool_catch(scan,e);

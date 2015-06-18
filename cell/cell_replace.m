@@ -1,10 +1,10 @@
 
-function y = vec_replace(x,a,b)
-    %% y = VEC_REPLACE(x,a,b)
-    % x = input vector
+function y = cell_replace(x,a,b)
+    %% y = CELL_REPLACE(x,a,b)
+    % x = input cell
     % a = element (found) in x
     % b = element (replaced) in y
-    % y = output vector
+    % y = output cell
     
     %% function
     
@@ -16,10 +16,8 @@ function y = vec_replace(x,a,b)
     % replace
     y = x;
     for i = 1:length(a)
-        if isnan(a{i}), ii = isnan(x);
-        else            ii = (x == a{i});
-        end
+        ii = cellfun(@(x)isequaln(x,a{i}),x);
         assertWarning(any(ii),'vec_replace: warning. not any "%s"',num2str(a{i}));
-        y(ii) = b{i};
+        y(ii) = b(i);
     end
 end

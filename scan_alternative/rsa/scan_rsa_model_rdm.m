@@ -5,33 +5,46 @@ function scan = scan_rsa_model_rdm(scan)
     % to list main functions, try
     %   >> help scan;
     
+    %% notes
+    % this function is also responsible of the concatenation
+    
     %% function
     if ~scan.running.flag.model, return; end
     
-    % variables
-    x_subject = scan.running.load.subject;
-    x_session = scan.running.load.session;
-        
     % build RDMs
     scan_tool_progress(scan,length(scan.job.model) * scan.running.subject.number);
     for i_model = 1:length(scan.job.model)
+        % variables
+        x_subject = mat2vec([scan.running.model(i_model).column.subject]);
+        x_session = mat2vec([scan.running.model(i_model).column.session]);
         rdm = cell(1,scan.running.subject.number);
         
         % subject
         for i_subject = 1:scan.running.subject.number
             ii_subject = (x_subject == i_subject);
             
+            % concatenation
+            n_session = scan.running.subject.session(i_subject);
+            if scan.job.concatSessions, n_session = 1; end
+            rdm{i_subject} = cell(1,n_session);
+            
             % session
-            rdm{i_subject} = cell(1,scan.running.subject.session(i_subject));
-            for i_session = 1:scan.running.subject.session(i_subject)
+            for i_session = 1:n_session
                 ii_session = (x_session == i_session);
+                
+                % concatenation
+                if scan.job.concatSessions, ii_session(:) = 1; end
         
                 % build a big RDM
                 x = mat2vec(scan.running.model(i_model).column(ii_subject & ii_session));
                 [ix,iy] = meshgrid(1:length(x),1:length(x));
-                ix = tril(ix); ix(~ix) = [];
-                iy = tril(iy); iy(~iy) = [];
-                rdm{i_subject}{i_session} = arrayfun(scan.job.model(i_model).function,x(ix),x(iy));
+                ix = tril(ix,-1); ix(~ix) = [];
+                iy = tril(iy,-1); iy(~iy) = [];
+                rdm{i_subject}{i_session}.subject = {x.subject};
+                rdm{i_subject}{i_session}.session = {x.session};
+                rdm{i_subject}{i_session}.onset   = {x.onset};
+                rdm{i_subject}{i_session}.name    = {x.name};
+                rdm{i_subject}{i_session}.rdm     = double(arrayfun(scan.job.model(i_model).function,x(ix),x(iy)));
             end
             
             % wait
@@ -42,6 +55,9 @@ function scan = scan_rsa_model_rdm(scan)
         scan.running.model(i_model).rdm = rdm;
     end
     scan_tool_progress(scan,0);
-        
-%         scan.running.model{i_subject}{i_session}(i_model).vector = double(squareform(
+    
+%     % concatenation
+%     scan.running.subject.session(:) = 1;
+%     scan.running.load.version = strcat(mat2vec(num2leg(scan.running.load.session,'_%03i')),scan.running.load.version);
+%     scan.running.load.session(:) = 1;
 end
