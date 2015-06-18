@@ -1,6 +1,6 @@
 
 function models = scan_tool_rsa_constructModelRDMs(scan,i_subject,i_session)
-    %% scan = SCAN_TOOL_RSA_CONSTRUCTMODELRDMS(scan)
+    %% models = SCAN_TOOL_RSA_CONSTRUCTMODELRDMS(scan,i_subject,i_session)
     % RSA toolbox - constructModelRDMs
     % to list main functions, try
     %   >> help scan;

@@ -11,6 +11,9 @@ function scan = scan_rsa_model(scan)
     % print
     scan_tool_print(scan,false,'\nBuild model : ');
     
+    % name
+    scan = scan_rsa_model_name(scan);
+    
     % build level
     scan = scan_rsa_model_level(scan);
     

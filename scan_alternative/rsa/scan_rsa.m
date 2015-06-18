@@ -22,6 +22,7 @@ function scan = scan_rsa(scan)
         'Initialize',...
         ...
         'Load beta',...
+        'Load metadata',...
         'Load mask',...
         'Build model',...
         ...
@@ -33,30 +34,26 @@ function scan = scan_rsa(scan)
     scan = scan_initialize(scan);               % initialize scan / SPM
     try
         scan = scan_autocomplete_rsa(scan);     % autocomplete (rsa)
+        scan = scan_autocomplete_mask(scan,scan.running.glm.job.image); % autocomplete (mask)
         scan = scan_rsa_flag(scan);             % redo flags
         scan = scan_rsa_mkdir(scan);            % create new directories
         scan = scan_save_caller(scan);          % save caller
 
-        % load
+        % set stuff
         scan = scan_rsa_beta(scan);             % load beta
-        
-        % mask
-        scan = scan_rsa_mask(scan);             % load beta
-        
-        % model
+        scan = scan_rsa_meta(scan);             % load meta
+        scan = scan_rsa_mask(scan);             % load mask
         scan = scan_rsa_model(scan);            % build model
-        
-        % concatenation
         scan.running.subject.session(:) = 1;
         
         % RDM
         scan = scan_rsa_toolbox(scan);          % initialise RSA toolbox
 
         % function
-%         scan = scan_rsa_function(scan);
+        scan = scan_rsa_function(scan);
         
         % save
-%         scan_save_scan(scan);
+        scan_save_scan(scan);
         scan = scan_tool_time(scan);
     catch e
         scan = scan_tool_catch(scan,e);

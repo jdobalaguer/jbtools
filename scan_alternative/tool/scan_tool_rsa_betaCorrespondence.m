@@ -1,6 +1,6 @@
 
 function betaCorrespondence = scan_tool_rsa_betaCorrespondence(scan,i_session)
-    %% betas = SCAN_TOOL_RSA_BETACORRESPONDENCE(scan,i_session)
+    %% betaCorrespondence = SCAN_TOOL_RSA_BETACORRESPONDENCE(scan,i_session)
     % RSA toolbox - create betaCorrespondence
     % to list main functions, try
     %   >> help scan;

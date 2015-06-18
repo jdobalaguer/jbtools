@@ -32,6 +32,7 @@ function scan = scan_tbte(scan)
         scan = scan_autocomplete_nii(scan,['epi3:',scan.job.image]); % autocomplete (nii)
         scan = scan_autocomplete_nii(scan,'epi3:realignment'); % autocomplete (nii)
         scan = scan_autocomplete_tbte(scan);    % autocomplete (tbte)
+        scan = scan_autocomplete_mask(scan,scan.job.image); % autocomplete (mask)
         scan = scan_tbte_flag(scan);            % redo flags
         scan = scan_tbte_rmdir(scan);           % delete old directories
         scan = scan_tbte_mkdir(scan);           % create new directories
@@ -48,8 +49,9 @@ function scan = scan_tbte(scan)
 
         % estimation
         scan = scan_glm_estimation(scan);       % SPM estimation
+        scan = scan_glm_copy(scan,'first','mask'); % copy
         scan = scan_glm_copy(scan,'first','beta'); % copy
-        scan = scan_glm_copy(scan,'first','spm'); % copy
+        scan = scan_glm_copy(scan,'first','spm');  % copy
         
         % function
         scan = scan_tbte_function(scan);

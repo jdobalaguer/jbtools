@@ -12,11 +12,15 @@ function job = scan_initialize_template_job_rsa(type)
     job.name       = '';
     
     % setting
-    job.glm                = struct('type',{''},'name',{''},'order',{1});
-    job.mask               = {''};
-    job.distance           = 'euclidean';
+    job.concatSessions     = false;
+    job.glm                = struct('type',{''},'name',{''},'condition',{{}});
+    job.mask               = struct('type',{'individual'},'file',{'wholebrain.nii'});
+    job.distance           = 'mahalanobis';
     job.searchlight        = [];
     job.whatToDo           = 'all';
+    
+    % filter
+    job.filter = struct();
     
     % model
     job.model = struct('subject',{},'name',{},'matrix',{});

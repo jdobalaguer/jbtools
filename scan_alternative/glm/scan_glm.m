@@ -27,6 +27,7 @@ function scan = scan_glm(scan)
         ...
         'SPM Estimation',...
         'Copy beta (first level)',...
+        'Copy mask (first level)',...
         ...
         'Set contrast',...
         'SPM analysis (first level)',...
@@ -49,6 +50,7 @@ function scan = scan_glm(scan)
         scan = scan_autocomplete_nii(scan,['epi3:',scan.job.image]); % autocomplete (nii)
         scan = scan_autocomplete_nii(scan,'epi3:realignment'); % autocomplete (nii)
         scan = scan_autocomplete_glm(scan);     % autocomplete (glm)
+        scan = scan_autocomplete_mask(scan,scan.job.image); % autocomplete (mask)
         scan = scan_glm_flag(scan);             % redo flags
         scan = scan_glm_rmdir(scan);            % delete old directories
         scan = scan_glm_mkdir(scan);            % create new directories
@@ -69,6 +71,7 @@ function scan = scan_glm(scan)
         % estimation
         scan = scan_glm_estimation(scan);               % SPM estimation
         scan = scan_glm_copy(scan,'first','beta');      % copy
+        scan = scan_glm_copy(scan,'first','mask');      % copy
 
         % first level analysis
         scan = scan_glm_contrast(scan);                 % contrasts

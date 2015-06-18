@@ -13,7 +13,7 @@ function job = scan_initialize_template_job_glm(type)
     
     % setting
     job.concatSessions     = false;     % concatenate sessions?
-    job.copyFolder         = {'beta_1','cont_1','spmt_1','spm_1','beta_2','cont_2','spmt_2','spm_2'};
+    job.copyFolder         = {'mask','beta_1','cont_1','spmt_1','spm_1','beta_2','cont_2','spmt_2','spm_2'};
     job.delayOnset         = 0;         % add a delay to the onset
     job.basisFunction      = struct('name',{},'parameters',{}); % check SPM options
     job.globalScaling      = false;     % global scaling?

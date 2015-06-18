@@ -4,6 +4,7 @@ function [z,q] = vec_rows(varargin)
     % get unique value for each combination of (x1,x2,..)
     % z = resulting vector
     % q = matrix with the correspondence between z and (x1,x2,..)
+    % see also GRP2IDX
     
     %% function
     assertSize(varargin{:});

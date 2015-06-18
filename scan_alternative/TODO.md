@@ -1,17 +1,18 @@
 
 06. handle HDD writing depending on the size of [scan]
-21. scan.pregeneration option in functions ?
 23. add the order to the RSA vectors and to [scan.job.glm]
+26. new @xjview
+27. RSA don't ignore univariate/filter/searchlight
 
 LONG TERM
 08. scan_merge
 09. preprocessing
 #A. MVPA
-#P. subject masks, mask tools (mni2subject)
 #V. leave-one-subject-out (LOSO) roi analysis
 12. re-do the conversion with SPM's dicom importer
 20. make @get.vector a struct with multiple fields? (legend, etc...)
-22. update functions
+21. scan.pregeneration option in functions ?
+22. functions @update
 
 DONE
 01. *fix* the glm FIR function yields different results for equivalent first beta/contrast - and I don't know why
@@ -32,6 +33,7 @@ DONE
 #M. see notes in [scan_rsa]
 #N. option to add realignment (not in autocomplete)
 #O. regressors from mat-file
+#P. subject masks, mask tools (mni2subject)
 #Q. template mask library? no. there are multiple voxs possiblities, and all masks are relative to data/mask/
 #T. warnings in scan_rmdir
 #T. check warnings in scan_rmdir
@@ -53,3 +55,6 @@ R6. in RSA we should recycle the onset information from the TBTE.
 -17. split get/plot functions
 18. create a getv_/mat_/vec_ library, 
 19. re-code the steplot/pipplot/errplot
+25. scan.directory.mask
+24. scan_glm_copy mask
+27. RSA don't ignore distance/comparison

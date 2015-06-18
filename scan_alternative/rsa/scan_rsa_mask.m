@@ -12,18 +12,18 @@ function scan = scan_rsa_mask(scan)
     scan_tool_print(scan,false,'\nLoad mask : ');
     scan_tool_progress(scan,scan.running.subject.number);
     
+    % subject
     for i_subject = 1:scan.running.subject.number
         scan.running.mask(i_subject) = struct('file',{''},'mask',{[]},'shape',{[nan,nan,nan]});
-        if isempty(scan.job.mask)
-            % mask not defined, load whole-brain mask
-            scan.running.mask(i_subject).file = fullfile(scan.directory.mask,'individual',scan.parameter.path.subject{i_subject},scan.running.glm.job.image,'wholebrain.nii');
-            [scan.running.mask(i_subject).mask,scan.running.mask(i_subject).shape] = scan_nifti_load(scan.running.mask(i_subject).file);
-        else
-            % load mask
-            scan.running.mask(i_subject).file = fullfile(scan.directory.mask,'common',scan.job.mask);
-            [scan.running.mask(i_subject).mask,scan.running.mask(i_subject).shape] = scan_nifti_load(scan.running.mask(i_subject).file);
+        switch scan.job.mask.type
+            case 'individual'
+                scan.running.mask(i_subject).file = fullfile(scan.running.directory.mask.individual{i_subject},scan.job.mask.file);
+            case 'common'
+                scan.running.mask(i_subject).file = fullfile(scan.running.directory.mask.common,scan.job.mask.file);
+            otherwise
+                scan_tool_error(scan,'scan.job.mask.type not valid',scan.job.mask.type);
         end
-        
+        [scan.running.mask(i_subject).mask,scan.running.mask(i_subject).shape] = scan_nifti_load(scan.running.mask(i_subject).file);
         
         % wait
         scan_tool_progress(scan,[]);

@@ -12,7 +12,7 @@ function job = scan_initialize_template_job_tbte(type)
     job.name       = '';
     
     % setting
-    job.copyFolder         = {'beta_1','spm_1'};
+    job.copyFolder         = {'mask','beta_1','spm_1'};
     job.delayOnset         = 0;
     job.globalScaling      = false;
     job.image              = 'smooth';

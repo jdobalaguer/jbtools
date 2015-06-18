@@ -11,6 +11,7 @@ function scan = scan_rsa_function(scan)
     % print
     scan_tool_print(scan,false,'\nAdd function : ');
     
+    % warning
     scan_tool_warning(scan,false,'not implemented yet'); return;
     
     % function @folder.*

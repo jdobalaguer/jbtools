@@ -25,7 +25,10 @@ function scan = scan_rsa_toolbox(scan)
             toolbox.searchlightOptions  = struct('monitor',false,'fisher',true,'nSessions',1,'nConditions',size(toolbox.singleSubjectVols,2));
 
             % searchlight
-            [toolbox.result.rs, toolbox.result.ps, toolbox.result.ns, toolbox.result.searchlightRDMs] = evalc('searchlightMapping_fMRI(toolbox.singleSubjectVols,toolbox.models,toolbox.binaryMask,toolbox.userOptions,toolbox.searchlightOptions);');
+            [~,toolbox.result.rs, toolbox.result.ps, toolbox.result.ns, toolbox.result.searchlightRDMs] = evalc('searchlightMapping_fMRI(toolbox.singleSubjectVols,toolbox.models,toolbox.binaryMask,toolbox.userOptions,toolbox.searchlightOptions);');
+            
+            % visualisation
+            toolbox = scan_tool_rsa_maps(scan,toolbox,i_subject,i_session);
             
             % save
             scan.running.toolbox{i_subject}{i_session} = toolbox;

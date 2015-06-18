@@ -63,6 +63,23 @@ function scan = scan_glm_copy(scan,level,type)
             scan_tool_progress(scan,0);
             
         % first level SPM mat-file
+        case 'first:mask'
+            if ~any(ismember('mask',scan.job.copyFolder)), return; end
+            if ~scan.running.flag.estimation, return; end
+            scan_tool_print(scan,false,'\nCopy mask (first level) : ');
+            scan_tool_progress(scan,scan.running.subject.number + 1);
+            for i_subject = 1:scan.running.subject.number
+                original  = fullfile(scan.running.directory.original.first{i_subject},'mask.nii');
+                copy      = fullfile(scan.running.directory.mask.individual{i_subject},'wholebrain.nii');
+                file_mkdir(fileparts(copy));
+                scan_tool_copy(original,copy);
+                scan_tool_progress(scan,[]);
+            end
+            file_mkdir(scan.running.directory.mask.common);
+            spm_imcalc(fullfile(scan.running.directory.mask.individual,'wholebrain.nii'),fullfile(scan.running.directory.mask.common,'wholebrain.nii'),strcat('1',sprintf(' & i%d',1:scan.running.subject.number)));
+            scan_tool_progress(scan,0);
+        
+        % first level SPM mat-file
         case 'first:spm'
             if ~any(ismember('spm_1',scan.job.copyFolder)), return; end
             if ~scan.running.flag.design, return; end
