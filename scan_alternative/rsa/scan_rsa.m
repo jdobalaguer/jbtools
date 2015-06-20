@@ -6,11 +6,10 @@ function scan = scan_rsa(scan)
     %   >> help scan;
     
     %% note
-    % 1. the different columns will only match between RDM/model if you're lucky. make this robust to the order, to concatenation, to the onset marge
     % 2. the models should be able to catch a cell instead of a scalar number
-    % 3. enable concatenation
-    % 7. filter RSA, concatenate RSA
-    % 8. re-sort RDMs, shrink RDMs
+    % 7. filter RSA
+    % 8. re-sort RDMs
+    % 9. shrink RDMs
 
     %% function
     
@@ -26,7 +25,9 @@ function scan = scan_rsa(scan)
         'Load mask',...
         'Build model',...
         ...
-        'Toolbox',...
+        'RSA estimation',...
+        'RSA analysis (first level)',...
+        'RSA analysis (second level)',...
         ...
         'Add function');
     
@@ -39,15 +40,19 @@ function scan = scan_rsa(scan)
         scan = scan_rsa_mkdir(scan);            % create new directories
         scan = scan_save_caller(scan);          % save caller
 
-        % set stuff
+        % load data & models
         scan = scan_rsa_beta(scan);             % load beta
         scan = scan_rsa_meta(scan);             % load meta
         scan = scan_rsa_mask(scan);             % load mask
         scan = scan_rsa_model(scan);            % build model
         scan.running.subject.session(:) = 1;
         
-        % RDM
-        scan = scan_rsa_toolbox(scan);          % initialise RSA toolbox
+        % estimation
+        scan = scan_rsa_estimation(scan);
+        
+        % analysis
+        scan = scan_rsa_first(scan);
+        scan = scan_rsa_second(scan);
 
         % function
         scan = scan_rsa_function(scan);

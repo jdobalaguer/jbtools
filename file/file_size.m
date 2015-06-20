@@ -1,7 +1,7 @@
 
 function size = file_size(path)
     %% s = file_SIZE(path)
-    % get size of a file, set of files, or directory/ies
+    % get size of a file in bytes, set of files, or directory/ies
     % path : path to file/directorty (or pattern)
     % size : total size in bytes
     

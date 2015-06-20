@@ -6,7 +6,6 @@ function userOptions = scan_tool_rsa_userOptions(scan,i_subject)
     %   >> help scan;
     
     %% function
-    if ~scan.running.flag.toolbox, return; end
     
     userOptions.analysisName = scan.job.name;
     userOptions.rootPath = scan.running.directory.job;

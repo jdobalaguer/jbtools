@@ -1,8 +1,11 @@
 
+TODO
 06. handle HDD writing depending on the size of [scan]
 23. add the order to the RSA vectors and to [scan.job.glm]
 26. new @xjview
 27. RSA don't ignore univariate/filter/searchlight
+28. RSA flags
+30. rmdir directory.save.scan
 
 LONG TERM
 08. scan_merge
@@ -43,6 +46,8 @@ DONE
 #X. add "slicetime" to all menus/options
 #Y. function scan_tool_physiological
 #Z. fix PPI without concatenation
+R1. the different columns will only match between RDM/model if you're lucky. make this robust to the order, to concatenation, to the onset marge
+R3. enable concatenation
 R4. use hamed's toolbox
 R5. in TBTE all information about the onset type is lost. this is crucial when using this information for the RSA - find a better way
 R6. in RSA we should recycle the onset information from the TBTE.
@@ -52,9 +57,11 @@ R6. in RSA we should recycle the onset information from the TBTE.
 14. total elapsed time
 15. glm column version
 16 @function.vector/beta
--17. split get/plot functions
+17. split get/plot functions
 18. create a getv_/mat_/vec_ library, 
 19. re-code the steplot/pipplot/errplot
-25. scan.directory.mask
 24. scan_glm_copy mask
+25. scan.directory.mask
 27. RSA don't ignore distance/comparison
+29. scan_load_scan
+31. improved save

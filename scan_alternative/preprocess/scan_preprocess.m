@@ -45,7 +45,7 @@ function scan = scan_preprocess(scan)
         scan = scan_preprocess_smooth(scan);            % smoothing
         
         % function
-        scan = scan_function_preprocess_check(scan);
+%         scan = scan_function_preprocess_check(scan);
         
         % save
         scan_save_scan(scan);

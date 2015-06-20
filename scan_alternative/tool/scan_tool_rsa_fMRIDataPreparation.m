@@ -6,7 +6,6 @@ function singleSubjectVols = scan_tool_rsa_fMRIDataPreparation(scan,i_subject,i_
     %   >> help scan;
     
     %% function
-    if ~scan.running.flag.toolbox, return; end
     
     ii_subject = (scan.running.load.subject == i_subject);
     ii_session = (scan.running.load.session == i_session);

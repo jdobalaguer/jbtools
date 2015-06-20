@@ -14,12 +14,12 @@ function func_profile(file,path,args)
     
     % restart if on
     status = profile('status');
-    if strcmp(status.ProfilerStatus,'on'),
+    if strcmp(status.ProfilerStatus,'on')
         profile('off');
     end
     
     % start
-    rmdirp(path);
+    file_rmdir(path);
     profile('on');
     
     % run function
@@ -28,5 +28,4 @@ function func_profile(file,path,args)
     % stop
     profile('off');
     profsave(profile('info'),path);
-
 end

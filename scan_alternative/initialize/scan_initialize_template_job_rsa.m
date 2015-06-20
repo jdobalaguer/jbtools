@@ -15,8 +15,10 @@ function job = scan_initialize_template_job_rsa(type)
     job.concatSessions     = false;
     job.glm                = struct('type',{''},'name',{''},'condition',{{}});
     job.mask               = struct('type',{'individual'},'file',{'wholebrain.nii'});
-    job.distance           = 'mahalanobis';
+    job.distance           = 'seuclidean';
+    job.comparison         = 'spearman';
     job.searchlight        = [];
+    job.univariate         = false;
     job.whatToDo           = 'all';
     
     % filter

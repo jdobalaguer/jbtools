@@ -6,7 +6,6 @@ function binaryMask = scan_tool_rsa_fMRIMaskPreparation(scan,i_subject)
     %   >> help scan;
     
     %% function
-    if ~scan.running.flag.toolbox, return; end
     
     binaryMask = reshape(scan.running.mask(i_subject).mask,scan.running.mask(i_subject).shape);
 end

@@ -21,9 +21,9 @@ function scan = scan_initialize_autocomplete(scan)
     
     % job stuff
     if ~any(strcmp(scan.job.type,{'none','conversion'}))
-        scan.running.directory.job      = file_endsep(fullfile(scan.directory.(scan.job.type),scan.job.name));
-        scan.running.file.save.scan     = [scan.running.directory.job,'scan.mat'];
-        scan.running.file.save.caller   = [scan.running.directory.job,'caller.m'];
-        scan.running.file.save.hdd      = [scan.running.directory.job,'hdd.mat'];
+        scan.running.directory.job       = file_endsep(fullfile(scan.directory.(scan.job.type),scan.job.name));
+        scan.running.directory.save.scan = file_endsep(fullfile(scan.running.directory.job,'scan'));
+        scan.running.file.save.caller    = fullfile(scan.running.directory.job,'caller.m');
+        scan.running.file.save.hdd       = fullfile(scan.running.directory.job,'hdd.mat');
     end
 end

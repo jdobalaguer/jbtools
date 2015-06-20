@@ -3,15 +3,14 @@ function z = struct_flat(s)
     %% z = STRUCT_FLAT(s)
     % transforms hierarchical (deep) struct into a single (flat) struct
     
-    %% warnings
-    %#ok<*AGROW>
-    
     %% function
     assertStruct(s);
-    for i = 1:numel(s)
-        z(i) = flatten(s(i));
-    end
-    z = reshape(z,size(s));
+    assertScalar(s);
+    z = flatten(s);
+%     for i = 1:numel(s)
+%         z(i) = flatten(s(i));
+%     end
+%     z = reshape(z,size(s));
 end
 
 %% auxiliar
@@ -23,7 +22,7 @@ function z = flatten(s1)
     for i1 = 1:n1
         f1 = u1{i1};
         s2 = s1.(f1);
-        if isstruct(s2)
+        if isstruct(s2) && isscalar(s2) && ~isempty(fieldnames(s2));
             s2 = flatten(s2);
             u2 = fieldnames(s2);
             n2 = length(u2);

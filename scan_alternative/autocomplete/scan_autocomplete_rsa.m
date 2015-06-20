@@ -18,24 +18,19 @@ function scan = scan_autocomplete_rsa(scan)
     scan.running.directory.job = file_endsep(fullfile(scan.directory.(scan.job.type),scan.job.name));
     
     % directory.map
-    scan.running.directory.map.root = file_endsep(fullfile(scan.running.directory.job,'map'));
-    scan.running.directory.map.model   = cell(1,numel(scan.job.model));
-    scan.running.directory.map.subject = cell(1,numel(scan.job.model));
-    scan.running.directory.map.session = cell(1,numel(scan.job.model));
-    for i_model = 1:numel(scan.job.model);
-        scan.running.directory.map.model  {i_model} = file_endsep(fullfile(scan.running.directory.map.root,scan.job.model(i_model).name));
-        scan.running.directory.map.subject{i_model} = cell(1,numel(scan.running.subject.number));
-        scan.running.directory.map.session{i_model} = cell(1,numel(scan.running.subject.number));
-        for i_subject = 1:scan.running.subject.number
-            scan.running.directory.map.subject{i_model}{i_subject} = file_endsep(fullfile(scan.running.directory.map.model{i_model},scan.parameter.path.subject{i_subject}));
-            for i_session = 1:scan.running.subject.session(i_subject)
-                scan.running.directory.map.session{i_model}{i_subject}{i_session} = file_endsep(fullfile(scan.running.directory.map.subject{i_model}{i_subject},scan.parameter.path.session{i_session}));
-            end
-        end
-    end
+    scan.running.directory.estimation.root          = file_endsep(fullfile(scan.running.directory.job,'estimation'));
+    scan.running.directory.estimation.correlation   = file_endsep(fullfile(scan.running.directory.estimation.root,'correlation'));
+    scan.running.directory.estimation.probability   = file_endsep(fullfile(scan.running.directory.estimation.root,'probability'));
+    scan.running.directory.first.root               = file_endsep(fullfile(scan.running.directory.job,'first'));
+    scan.running.directory.first.correlation        = file_endsep(fullfile(scan.running.directory.first.root,'correlation'));
+    scan.running.directory.first.probability        = file_endsep(fullfile(scan.running.directory.first.root,'probability'));
+    scan.running.directory.second.root              = file_endsep(fullfile(scan.running.directory.job,'second'));
+    scan.running.directory.second.correlation       = file_endsep(fullfile(scan.running.directory.second.root,'correlation'));
+    scan.running.directory.second.tStatistic        = file_endsep(fullfile(scan.running.directory.second.root,'tStatistic'));
+    scan.running.directory.second.probability       = file_endsep(fullfile(scan.running.directory.second.root,'probability'));
     
     % glm
-    scan.running.glm = file_loadvar(fullfile(scan.directory.(scan.job.glm.type),scan.job.glm.name,'scan.mat'),'scan');
+    scan.running.glm = scan_load_scan(scan,file_endsep(fullfile(scan.directory.(scan.job.glm.type),scan.job.glm.name,'scan')));
     
     % load
     scan.running.load = struct();
@@ -51,4 +46,7 @@ function scan = scan_autocomplete_rsa(scan)
     
     % toolbox
     scan.running.toolbox = {};
+    
+    % first
+    scan.running.first = {};
 end

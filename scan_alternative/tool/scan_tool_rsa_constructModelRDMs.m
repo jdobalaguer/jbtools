@@ -6,7 +6,6 @@ function models = scan_tool_rsa_constructModelRDMs(scan,i_subject,i_session)
     %   >> help scan;
     
     %% function
-    if ~scan.running.flag.toolbox, return; end
     
     % variables
     colors = fig_color('hsv',length(scan.job.model));
