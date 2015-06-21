@@ -24,4 +24,6 @@ function scan = scan_rsa_flag(scan)
     flag_args = [{'load','model','estimation','first','second','function'};num2cell(redo)];
     scan.running.flag = struct(flag_args{:});
     
+    % one-subject
+    if scan.running.subject.number == 1, scan.running.flag.second = false; end
 end

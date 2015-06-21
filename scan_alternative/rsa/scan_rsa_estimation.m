@@ -25,7 +25,8 @@ function scan = scan_rsa_estimation(scan)
             toolbox.searchlightOptions  = struct('monitor',false,'fisher',true,'nSessions',1,'nConditions',size(toolbox.singleSubjectVols,2));
 
             % searchlight
-            [~,image_rs,image_ps, toolbox.result.zero.image.ns, toolbox.result.zero.image.searchlightRDMs] = evalc('searchlightMapping_fMRI(toolbox.singleSubjectVols,toolbox.models,toolbox.binaryMask,toolbox.userOptions,toolbox.searchlightOptions);');
+            % [~,image_rs,image_ps, toolbox.result.zero.image.ns, toolbox.result.zero.image.searchlightRDMs] = evalc('searchlightMapping_fMRI(toolbox.singleSubjectVols,toolbox.models,toolbox.binaryMask,toolbox.userOptions,toolbox.searchlightOptions);');
+            [~,image_rs,image_ps, toolbox.result.zero.image.ns] = evalc('searchlightMapping_fMRI(toolbox.singleSubjectVols,toolbox.models,toolbox.binaryMask,toolbox.userOptions,toolbox.searchlightOptions);');
             
             % write zero maps
             smooth_rs = nan(size(image_rs),'single');

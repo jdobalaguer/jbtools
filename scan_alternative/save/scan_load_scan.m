@@ -9,8 +9,9 @@ function lcan = scan_load_scan(scan,scan_directory)
     
     % variables
     u_field = file_next(file_list(scan_directory,'local'));
+    scan_tool_assert(scan,~isempty(u_field),'GLM not found in folder "%s"',scan_directory);
     file    = file_list(scan_directory,'absolute');
-    byts    = cellfun(@file_size,file);  byts = round(100 * byts / sum(byts));
+    byts    = cellfun(@file_size,file);  byts = ceil(100 * byts / sum(byts));
     
     % print
     scan_tool_print(scan,false,'\nLoading [scan] ');
@@ -41,6 +42,6 @@ function lcan = scan_load_scan(scan,scan_directory)
     end
     scan_tool_progress(scan,0);
     
-    % deepnes
+    % deepness
     lcan = struct_deep(lcan);
 end

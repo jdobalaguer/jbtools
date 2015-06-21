@@ -29,8 +29,8 @@ function scan = scan_rsa_second(scan)
         % group volumes
         [group_image_rs,group_smooth_rs] = deal(nan(scan.running.subject.number,prod(scan.running.meta.dim)));
         for i_subject = 1:scan.running.subject.number
-            group_image_rs (i_subject,:) = mat2vec(scan.running.first{i_subject}.image.rs (:,:,:,i_model));
-            group_smooth_rs(i_subject,:) = mat2vec(scan.running.first{i_subject}.smooth.rs(:,:,:,i_model));
+            group_image_rs (i_subject,:) = mat2vec(scan.result.first{i_subject}.image.rs (:,:,:,i_model));
+            group_smooth_rs(i_subject,:) = mat2vec(scan.result.first{i_subject}.smooth.rs(:,:,:,i_model));
         end
         mean_image_rs  = nanmean(group_image_rs, 1);
         mean_smooth_rs = nanmean(group_smooth_rs,1);

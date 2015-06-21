@@ -30,16 +30,14 @@ function varargout = auxiliar_vector(varargin)
     switch field
         case {'subject','session','order','covariate'}, v = [];
         case {'main','name','version'},                 v = {};
-        case 'onset',                                   v = nan(size(auxiliar_vector(name,'subject'))); varargout = {mat2vec(v)}; return;
-        otherwise,                                      auxiliar_vector('help'); return;
+        case 'onset',                                   v = nan(size(auxiliar_vector(tcan,name,'subject'))); varargout = {mat2vec(v)}; return;
+        otherwise,                                      auxiliar_vector(tcan,'help'); return;
     end
     for i_subject = 1:tcan.running.subject.number
         ii_column = strcmp(tcan.running.design(1).column.name,name);
         switch field
             case 'subject'
                 v = [v,repmat(i_subject,[1,sum(ii_column)])]; %#ok<*AGROW>
-            case 'onset'
-                scan_tool_error(tcan,'not implemented yet');
             otherwise
                 v = [v,tcan.running.design(i_subject).column.(field)(ii_column)];
         end

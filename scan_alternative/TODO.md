@@ -4,8 +4,10 @@ TODO
 23. add the order to the RSA vectors and to [scan.job.glm]
 26. new @xjview
 27. RSA don't ignore univariate/filter/searchlight
-28. RSA flags
+28. RSA flags / rmdir
 30. rmdir directory.save.scan
+32. license
+33. glm_*_assert
 
 LONG TERM
 08. scan_merge
@@ -13,7 +15,7 @@ LONG TERM
 #A. MVPA
 #V. leave-one-subject-out (LOSO) roi analysis
 12. re-do the conversion with SPM's dicom importer
-20. make @get.vector a struct with multiple fields? (legend, etc...)
+20. make @get.vector return a struct with multiple fields? (legend, etc...)
 21. scan.pregeneration option in functions ?
 22. functions @update
 

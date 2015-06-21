@@ -32,6 +32,8 @@ function scan = scan_rsa(scan)
         'Add function');
     
     % initialize
+    scan = scan_assert_spm(scan);               % assert (spm)
+    scan = scan_assert_rsa(scan);               % assert (rsa)
     scan = scan_initialize(scan);               % initialize scan / SPM
     try
         scan = scan_autocomplete_rsa(scan);     % autocomplete (rsa)
@@ -45,7 +47,7 @@ function scan = scan_rsa(scan)
         scan = scan_rsa_meta(scan);             % load meta
         scan = scan_rsa_mask(scan);             % load mask
         scan = scan_rsa_model(scan);            % build model
-        scan.running.subject.session(:) = 1;
+        if scan.job.concatSessions, scan.running.subject.session(:) = 1; end
         
         % estimation
         scan = scan_rsa_estimation(scan);

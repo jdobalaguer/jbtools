@@ -13,7 +13,7 @@ function scan_tool_assert(varargin)
     
     % default
     scan = varargin{1}; %#ok<*NASGU>
-    cond = varargin{2};
+    cond = logical(varargin{2});
     text = sprintf('%s: error. %s',func_caller(),varargin{3});
     vals = varargin(4:end);
     

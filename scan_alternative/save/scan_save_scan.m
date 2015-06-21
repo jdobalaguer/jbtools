@@ -12,7 +12,7 @@ function scan = scan_save_scan(scan)
     pair    = struct2pair(flat);
     u_field = pair(1:2:end);
     u_value = pair(2:2:end);
-    byts    = bytes(u_value{:}); byts = round(100 * byts / sum(byts));
+    byts    = bytes(u_value{:}); byts = ceil(100 * byts / sum(byts));
     
     % move previous folder
     if file_match(scan.running.directory.save.scan)
@@ -37,21 +37,12 @@ function scan = scan_save_scan(scan)
 
         % save
         try
-            assert(~strncmp(u_field{i_field},'function',8));
+            % fprintf('%02i %d %s \n',byts(i_field),allow_serialize(flat.(u_field{i_field})),u_field{i_field}); continue;
+            assert(allow_serialize(flat.(u_field{i_field})));
             auxiliar_fast(file,val);
-%                 scan_tool_warning(scan,true,'fast');
-        catch e
-%             scan_tool_warning(scan,false,sprintf('mess : %s',e.message));
-%             scan_tool_warning(scan,false,sprintf('file : %s',e.stack(1).file));
-%             scan_tool_warning(scan,false,sprintf('name : %s',e.stack(1).name));
-%             scan_tool_warning(scan,true, sprintf('line : %d',e.stack(1).line));
-            
-            if bytes(val) < 2e9
-                auxiliar_small(file,val);
-%                 scan_tool_warning(scan,true,'small');
-            else
-                auxiliar_big(file,val);
-%                 scan_tool_warning(scan,true,'big');
+        catch
+            if bytes(val) < 2e9,    auxiliar_small(file,val);
+            else                    auxiliar_big(file,val);
             end
         end
         
@@ -62,6 +53,16 @@ function scan = scan_save_scan(scan)
 end
 
 %% auxiliar
+
+function b = allow_serialize(v)
+    % can we serialize this variable?
+    switch class(v)
+        case {'double','single','logical','char','int8','uint8','int16','uint16','int32','uint32','int64','uint64'}, b = true;
+        case 'cell',    b = all(mat2vec(cellfun(@allow_serialize,v)));
+        case 'struct',  b = all(mat2vec(cellfun(@allow_serialize,struct2cell(v))));
+        otherwise,      b = false;
+    end
+end
 
 function auxiliar_fast(file,val)
     % fastest method but doesn't work with everything

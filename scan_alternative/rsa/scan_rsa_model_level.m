@@ -23,7 +23,7 @@ function scan = scan_rsa_model_level(scan)
                 ii_condition = strcmp(scan.job.model(i_model).condition,u_condition{i_condition});
                 ii_subname   = strcmp(scan.job.model(i_model).subname{ii_condition},u_subname{i_subname});
                 if any(ii_subname)
-                    level{i_condition,i_subname} = scan.running.glm.function.get.vector(u_condition{i_condition},scan.job.model(i_model).level{ii_condition}{ii_subname});
+                    level{i_condition,i_subname} = scan.running.glm.function.get.vector(scan.running.glm,u_condition{i_condition},scan.job.model(i_model).level{ii_condition}{ii_subname});
                 end
             end
         end
