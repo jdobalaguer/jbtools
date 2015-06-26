@@ -82,6 +82,8 @@ function [p,r,n] = runSearchlight(scan,x,y,z,u_sphere,mask,beta,u_model)
     if n < 2, [p,r] = deal(nan(1,size(u_model,2))); return; end
 
     % build RDM and compare it with models
-    rdm = scan_tool_rsa_buildrdm(scan,beta(f_voxel,:)');
+    beta = beta(f_voxel,:)';
+    beta = scan_tool_rsa_transformation(scan,beta);
+    rdm  = scan_tool_rsa_buildrdm(scan,beta);
     [r,p] = scan_tool_rsa_comparison(scan,rdm,u_model);
 end

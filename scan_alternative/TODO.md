@@ -9,7 +9,6 @@ TODO
 42. @scan_tool_mask_outside(image)
 45. RSA we may not need a mask at all
 46. RSA with less subjects
-47. RSA de-mean
 
 LONG TERM
 06. handle HDD writing depending on the size of [scan]
@@ -82,4 +81,5 @@ R6. in RSA we should recycle the onset information from the TBTE.
 41. save the Y from the GLM
 44. fisher's Z = 0.5 * log((1+R)./(1-R))
 43. RSA to load the number of sessions from the glm
+47. RSA de-mean
 48. @get.vector in TBTE to handle cells

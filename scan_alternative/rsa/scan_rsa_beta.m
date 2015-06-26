@@ -28,15 +28,4 @@ function scan = scan_rsa_beta(scan)
         scan_tool_progress(scan,[]);
     end
     scan_tool_progress(scan,0);
-    
-    % transformation
-    switch scan.job.transformation
-        case 'none'
-        case 'demean'
-            scan.running.load.beta = vec_demean(scan.running.load.beta,vec_rows(scan.running.load.subject,scan.running.load.session,scan.running.load.order,scan.running.load.name));
-        case 'zscore'
-            scan.running.load.beta = vec_zscore(scan.running.load.beta,vec_rows(scan.running.load.subject,scan.running.load.session,scan.running.load.order,scan.running.load.name));
-        otherwise
-            scan_tool_error(scan,'transformation "%s" not valid',scan.job.transformation);
-    end
 end

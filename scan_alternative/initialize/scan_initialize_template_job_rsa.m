@@ -19,7 +19,6 @@ function job = scan_initialize_template_job_rsa(type)
     job.comparison         = 'spearman';
     job.searchlight        = [];
     job.transformation     = 'none';
-    job.univariate         = false;
     job.whatToDo           = 'all';
     
     % filter
