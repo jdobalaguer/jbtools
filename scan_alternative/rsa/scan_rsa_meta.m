@@ -24,8 +24,15 @@ function scan = scan_rsa_meta(scan)
     meta = spm_vol(file);
     meta.fname = '';
     meta.descrip = '';
-    meta.private.dat(:) = nan;
-    meta.private.descrip = '';
+    private = struct();
+    private.dat         = nan(size(meta.private.dat));
+    private.mat         = meta.private.mat;
+    private.mat_intent  = meta.private.mat_intent;
+    private.mat0        = meta.private.mat0;
+    private.mat0_intent = meta.private.mat0_intent;
+    private.descrip     = '';
+    private = struct(private);
+    meta.private = private;
     
     % save
     scan.running.meta = meta;

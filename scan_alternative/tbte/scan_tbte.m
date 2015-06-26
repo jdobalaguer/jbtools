@@ -27,6 +27,7 @@ function scan = scan_tbte(scan)
         'Add function');
     
     % initialize
+    scan = scan_assert_spm(scan);               % assert (spm)
     scan = scan_initialize(scan);               % initialize scan / SPM
     try
         scan = scan_autocomplete_nii(scan,['epi3:',scan.job.image]); % autocomplete (nii)

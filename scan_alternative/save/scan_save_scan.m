@@ -53,7 +53,6 @@ function scan = scan_save_scan(scan)
 end
 
 %% auxiliar
-
 function b = allow_serialize(v)
     % can we serialize this variable?
     switch class(v)

@@ -9,7 +9,7 @@ function scan = scan_preprocess_estimation(scan)
     if ~scan.running.flag.estimation, return; end
     
     % print
-    scan_tool_print(scan,false,'\nNormalisation (coregistered structural to MNI) : ');
+    scan_tool_print(scan,false,'\nNormalisation (structural to MNI) : ');
     scan_tool_progress(scan,scan.running.subject.number);
     
     % subject
@@ -24,24 +24,25 @@ function scan = scan_preprocess_estimation(scan)
         copyfile(file_origin,file_normalisation);
         
         % normalisation
-        spm{i_subject}.spm.spatial.normalise.estwrite.subj.vol          = {[file_normalisation,',1']};
-        spm{i_subject}.spm.spatial.normalise.estwrite.subj.resample     = {[file_normalisation,',1']};
-        spm{i_subject}.spm.spatial.normalise.estwrite.eoptions.biasreg  = spm_get_defaults('old.preproc.biasreg');
-        spm{i_subject}.spm.spatial.normalise.estwrite.eoptions.biasfwhm = spm_get_defaults('old.preproc.biasreg');
-        spm{i_subject}.spm.spatial.normalise.estwrite.eoptions.tpm      = {scan.file.template.tpm};
-        spm{i_subject}.spm.spatial.normalise.estwrite.eoptions.affreg   = spm_get_defaults('old.preproc.regtype');
-        spm{i_subject}.spm.spatial.normalise.estwrite.eoptions.reg      = [0,0.001,0.5,0.05,0.2];
-        spm{i_subject}.spm.spatial.normalise.estwrite.eoptions.fwhm     = 0;
-        spm{i_subject}.spm.spatial.normalise.estwrite.eoptions.samp     = spm_get_defaults('old.preproc.samp');
-        spm{i_subject}.spm.spatial.normalise.estwrite.woptions.bb       = spm_get_defaults('normalise.write.bb');
-        spm{i_subject}.spm.spatial.normalise.estwrite.woptions.vox      = repmat(scan.parameter.analysis.voxs,[1,3]);
-        spm{i_subject}.spm.spatial.normalise.estwrite.woptions.interp   = spm_get_defaults('normalise.write.interp');
+        spm{i_subject}.spm.spatial.normalise.est.subj.vol          = {[file_normalisation,',1']};
+        spm{i_subject}.spm.spatial.normalise.est.eoptions.biasreg  = spm_get_defaults('old.preproc.biasreg');
+        spm{i_subject}.spm.spatial.normalise.est.eoptions.biasfwhm = spm_get_defaults('old.preproc.biasfwhm');
+        spm{i_subject}.spm.spatial.normalise.est.eoptions.tpm      = {[scan.file.template.t1,',1']}; %{scan.file.template.tpm};
+        spm{i_subject}.spm.spatial.normalise.est.eoptions.affreg   = spm_get_defaults('old.preproc.regtype');
+        spm{i_subject}.spm.spatial.normalise.est.eoptions.reg      = [0,0.001,0.5,0.05,0.2];
+        spm{i_subject}.spm.spatial.normalise.est.eoptions.fwhm     = 0;
+        spm{i_subject}.spm.spatial.normalise.est.eoptions.samp     = spm_get_defaults('old.preproc.samp');
         
         % SPM
-        T = evalc('spm_jobman(''run'',spm(i_subject))')
+%         evalc('spm_jobman(''run'',spm(i_subject))');
+        spm_jobman('run',spm(i_subject));
         
         % delete original file
-        delete(file_normalisation);
+%         delete(file_normalisation);
+        
+        % delete y_ file
+%         [p,n,e] = fileparts(file_normalisation);
+%         delete([p,'y_',n,e]);
         
         % wait
         scan_tool_progress(scan,[]);
@@ -52,6 +53,6 @@ function scan = scan_preprocess_estimation(scan)
     scan.running.jobs.normalisation = spm;
     
     % update
-    scan = scan_autocomplete_nii(scan,'structural:coregistration');
-    scan.running.last.structural = 'coregistration';
+    scan = scan_autocomplete_nii(scan,'structural:normalisation');
+    scan.running.last.structural = 'normalisation';
 end

@@ -1,7 +1,7 @@
 
-function scan = scan_tbte_rmdir(scan)
-    %% scan = SCAN_TBTE_RMDIR(scan)
-    % delete old directories before running the tbte
+function scan = scan_rsa_rmdir(scan)
+    %% scan = SCAN_RSA_RMDIR(scan)
+    % delete old directories before running the rsa
     % to list main functions, try
     %   >> help scan;
     
@@ -12,4 +12,5 @@ function scan = scan_tbte_rmdir(scan)
         scan_tool_warning(scan,false,'will delete folder "%s"',scan.running.directory.job);
         file_rmdir(scan.running.directory.job);
     end
+    
 end

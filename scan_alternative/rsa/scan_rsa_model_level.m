@@ -5,6 +5,10 @@ function scan = scan_rsa_model_level(scan)
     % to list main functions, try
     %   >> help scan;
     
+    %% notes
+    % levels are the extra regressors that go on top of the onsets
+    % these are used only with glms of type "tbte"
+    
     %% function
     if ~scan.running.flag.model, return; end
     

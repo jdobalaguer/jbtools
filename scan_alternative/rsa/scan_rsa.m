@@ -39,6 +39,7 @@ function scan = scan_rsa(scan)
         scan = scan_autocomplete_rsa(scan);     % autocomplete (rsa)
         scan = scan_autocomplete_mask(scan,scan.running.glm.job.image); % autocomplete (mask)
         scan = scan_rsa_flag(scan);             % redo flags
+        scan = scan_rsa_rmdir(scan);            % delete old directories
         scan = scan_rsa_mkdir(scan);            % create new directories
         scan = scan_save_caller(scan);          % save caller
 

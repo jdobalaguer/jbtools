@@ -13,6 +13,7 @@ function scan = scan_initialize_template(type)
     scan.parameter.scanner.ordsl        = [];
     scan.parameter.scanner.refsl        = [];
     scan.parameter.scanner.reft0        = [];
+    scan.parameter.scanner.voxs         = [nan,nan,nan];
     scan.parameter.analysis.voxs        = 4;  ... analysis
     scan.parameter.analysis.verbose     = true;
     scan.parameter.analysis.wpause      = true;

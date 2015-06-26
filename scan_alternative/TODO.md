@@ -1,17 +1,18 @@
 
 TODO
-06. handle HDD writing depending on the size of [scan]
+09. preprocessing
 23. add the order to the RSA vectors and to [scan.job.glm]
-26. new @xjview
-27. RSA don't ignore univariate/filter/searchlight
-28. RSA flags / rmdir
-30. rmdir directory.save.scan
-32. license
-33. glm_*_assert
+26. new GLM @plot.xjview
+27. RSA don't ignore filter
+35. TBTE @get.xjview(name,vector) @plot.xjview(name,vector)
+41. RSA mahalanobis (with image residuals)
+42. @scan_tool_mask_outside(image)
+45. RSA we may not need a mask at all
+46. RSA with less subjects
+47. RSA de-mean
 
 LONG TERM
-08. scan_merge
-09. preprocessing
+06. handle HDD writing depending on the size of [scan]
 #A. MVPA
 #V. leave-one-subject-out (LOSO) roi analysis
 12. re-do the conversion with SPM's dicom importer
@@ -23,6 +24,7 @@ DONE
 01. *fix* the glm FIR function yields different results for equivalent first beta/contrast - and I don't know why
 03. find an efficient way of defining models in fake_rsa
 07. zip/unzip
+08. scan_merge .... nah
 09. dicom, expansion
 #A. ppi (for real)
 #B. TBTE functions
@@ -64,6 +66,20 @@ R6. in RSA we should recycle the onset information from the TBTE.
 19. re-code the steplot/pipplot/errplot
 24. scan_glm_copy mask
 25. scan.directory.mask
-27. RSA don't ignore distance/comparison
+27. RSA don't ignore searchlight/distance/comparison/univariate
+28. RSA rmdir/flags
 29. scan_load_scan
+30. rmdir directory.save.scan
 31. improved save
+32. license
+33. glm_*_assert
+34. always functions? (no flag) .... nah
+36. scan_tool_zip auto-initialize if required
+37. @folder.zip for save.scan too
+38. own searchlight script with GLM option
+39. RSA glm
+40. RSA z-score
+41. save the Y from the GLM
+44. fisher's Z = 0.5 * log((1+R)./(1-R))
+43. RSA to load the number of sessions from the glm
+48. @get.vector in TBTE to handle cells

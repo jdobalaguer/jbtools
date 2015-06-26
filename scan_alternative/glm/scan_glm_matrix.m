@@ -23,6 +23,9 @@ function scan = scan_glm_matrix(scan)
         % matrix
         scan.running.design(i_subject).matrix          = SPM.xX.X;
         
+        % y
+        scan.running.design(i_subject).y = cell2mat(arrayfun(@(x)reshape(double(x.private.dat),[1,size(x.private.dat)]),SPM.xY.VY,'UniformOutput',false));
+        
         % row
         scan.running.design(i_subject).row.file        = cellstr(SPM.xY.P);
         scan.running.design(i_subject).row.session     = [];

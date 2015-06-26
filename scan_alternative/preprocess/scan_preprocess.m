@@ -12,7 +12,7 @@ function scan = scan_preprocess(scan)
     scan.job.name = '';
     
     % warning
-    scan_tool_warning('this is not finished yet'); return;
+%     scan_tool_warning(scan,false,'this is not finished yet'); return;
     
     % summary
     scan_tool_summary(scan,'Preprocessing pipeline',...
@@ -28,6 +28,7 @@ function scan = scan_preprocess(scan)
         'Add function (check)');
      
     % initialize
+    scan = scan_assert_spm(scan);                       % assert (spm)
     scan = scan_initialize(scan);                       % initialize scan / SPM
     try
         scan = scan_autocomplete_preprocess(scan);      % autocomplete
@@ -39,10 +40,10 @@ function scan = scan_preprocess(scan)
         % preprocessing
         scan = scan_preprocess_slicetime(scan);         % slice-time correction
         scan = scan_preprocess_realignment(scan);       % realignment
-        scan = scan_preprocess_coregistration(scan);    % coregistration (structural to MNI)
+        scan = scan_preprocess_coregistration(scan);    % coregistration
         scan = scan_preprocess_estimation(scan);        % normalisation (structural to MNI)
-        scan = scan_preprocess_normalisation(scan);     % normalisation (functional to MNI)
-        scan = scan_preprocess_smooth(scan);            % smoothing
+%         scan = scan_preprocess_normalisation(scan);     % normalisation (functional to MNI)
+%         scan = scan_preprocess_smooth(scan);            % smoothing
         
         % function
 %         scan = scan_function_preprocess_check(scan);

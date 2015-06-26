@@ -24,6 +24,7 @@ function scan = scan_rsa_mask(scan)
                 scan_tool_error(scan,'scan.job.mask.type not valid',scan.job.mask.type);
         end
         [scan.running.mask(i_subject).mask,scan.running.mask(i_subject).shape] = scan_nifti_load(scan.running.mask(i_subject).file);
+        scan.running.mask(i_subject).mask = logical(scan.running.mask(i_subject).mask);
         
         % wait
         scan_tool_progress(scan,[]);

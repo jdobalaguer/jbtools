@@ -43,7 +43,7 @@ function scan = scan_preprocess_rmdir(scan)
         
     % estimation
     if scan.running.flag.estimation
-        if any(cellfun(@idir,cell_flat(scan.running.directory.nii.structural.normalisation)))
+        if any(cellfun(@isdir,cell_flat(scan.running.directory.nii.structural.normalisation)))
             scan_tool_warning(scan,false,'will delete "structural:normalisation" folders');
         end
         for i_subject = 1:scan.running.subject.number

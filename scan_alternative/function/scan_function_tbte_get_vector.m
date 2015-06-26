@@ -32,14 +32,12 @@ function varargout = auxiliar_vector(varargin)
     end
     if ischar(varargin{3})
         field = varargin{3};
-    elseif islogical(varargin{3}) || isnumeric(varargin{3})
-        u = varargin{3};
     else
-        auxiliar_vector(tcan,'help'); return;
+        u = varargin{3};
     end
     func_default('field','');
     func_default('u',[]);
-
+    
     % field mode
     if field
         switch field
@@ -69,8 +67,11 @@ function varargout = auxiliar_vector(varargin)
         varargout = {mat2vec(v)}; return;
     end
 
+    % assert length
+    if isempty(u), auxiliar_vector(tcan,'help'); return; end
+    
     % vector mode
-    if ~isempty(u)
+    if islogical(u) || isnumeric(u)
         subject   = tcan.function.get.vector(tcan,name,'subject');
         session   = tcan.function.get.vector(tcan,name,'session');
         onset     = tcan.function.get.vector(tcan,name,'onset');
@@ -81,6 +82,27 @@ function varargout = auxiliar_vector(varargin)
         condition.onset   = condition.onset(ii_onset);
         u = u(ii_onset);
         v = nan(size(u));
+        for i = 1:length(u)
+            ii_subject = (tcan.running.subject.unique(subject(i)) == condition.subject);
+            ii_session = (session(i)                              == condition.session);
+            ii_onset   = (onset(i)                                == condition.onset);
+            v(i) = u(ii_subject & ii_session & ii_onset);
+        end
+        varargout = {mat2vec(v)}; return;
+    end
+    
+    % cell mode
+    if iscell(u)
+        subject   = tcan.function.get.vector(tcan,name,'subject');
+        session   = tcan.function.get.vector(tcan,name,'session');
+        onset     = tcan.function.get.vector(tcan,name,'onset');
+        condition = tcan.job.condition(strcmp(name,{tcan.job.condition.name}));
+        ii_onset  = ismember(condition.onset,onset);
+        condition.subject = condition.subject(ii_onset);
+        condition.session = condition.session(ii_onset);
+        condition.onset   = condition.onset(ii_onset);
+        u = u(ii_onset);
+        v = cell(size(u));
         for i = 1:length(u)
             ii_subject = (tcan.running.subject.unique(subject(i)) == condition.subject);
             ii_session = (session(i)                              == condition.session);

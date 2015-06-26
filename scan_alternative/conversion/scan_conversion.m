@@ -18,6 +18,7 @@ function scan = scan_conversion(scan)
         'NIfTI expansion');
      
     % initialize
+    scan = scan_assert_spm(scan);                   % assert (spm)
     scan = scan_initialize(scan);                   % initialize scan / SPM
     try
         scan = scan_autocomplete_dicom(scan);       % autocomplete (dicom)

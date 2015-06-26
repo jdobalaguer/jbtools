@@ -17,6 +17,9 @@ function scan_tool_zip(scan,mode,folder)
     directory = {};
     zip_file  = {};
     
+    % auto-initialize
+    if ~struct_isfield(scan,'directory'), scan = scan_initialize(scan); end
+    
     % subject
     for i_subject = 1:length(scan.subject.session)
         

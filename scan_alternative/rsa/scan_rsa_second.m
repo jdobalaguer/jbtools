@@ -38,8 +38,11 @@ function scan = scan_rsa_second(scan)
         % t-test
         [~,p_image,~,t_image] = ttest(group_image_rs,[],'tail','right');
         t_image = t_image.tstat;
+        t_image(isinf(t_image)) = nan;
         [~,p_smooth,~,t_smooth] = ttest(group_smooth_rs,[],'tail','right');
         t_smooth = t_smooth.tstat;
+        t_smooth(isinf(t_smooth)) = nan;
+        
         
         % write
         meta = scan.running.meta;
@@ -52,6 +55,14 @@ function scan = scan_rsa_second(scan)
         meta.descrip = 'P-map';
         scan_nifti_save(second_pmap_image, p_image, meta);
         scan_nifti_save(second_pmap_smooth,p_smooth,meta);
+        
+        % save
+        scan.result.second.image.rs(:,:,:,i_model)  = reshape(mean_image_rs,meta.dim);
+        scan.result.second.smooth.rs(:,:,:,i_model) = reshape(mean_smooth_rs,meta.dim);
+        scan.result.second.image.ts(:,:,:,i_model)  = reshape(t_image,meta.dim);
+        scan.result.second.smooth.ts(:,:,:,i_model) = reshape(t_smooth,meta.dim);
+        scan.result.second.image.ps(:,:,:,i_model)  = reshape(p_image,meta.dim);
+        scan.result.second.smooth.ps(:,:,:,i_model) = reshape(p_smooth,meta.dim);
         
         % wait
         scan_tool_progress(scan,[]);

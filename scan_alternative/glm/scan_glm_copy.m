@@ -1,6 +1,6 @@
 
 function scan = scan_glm_copy(scan,level,type)
-    %% scan = SCAN_GLM_COPY(scan)
+    %% scan = SCAN_GLM_COPY(scan,level,type)
     % copy files to [scan.running.directory.copy]
     % to list main functions, try
     %   >> help scan;

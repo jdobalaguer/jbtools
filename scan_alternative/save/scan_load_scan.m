@@ -8,15 +8,13 @@ function lcan = scan_load_scan(scan,scan_directory)
     %% function
     
     % variables
+    scan_directory = file_endsep(scan_directory);
     u_field = file_next(file_list(scan_directory,'local'));
-    scan_tool_assert(scan,~isempty(u_field),'GLM not found in folder "%s"',scan_directory);
+    scan_tool_assert(scan,~isempty(u_field),'nothing found in folder "%s"',scan_directory);
     file    = file_list(scan_directory,'absolute');
-    byts    = cellfun(@file_size,file);  byts = ceil(100 * byts / sum(byts));
+    scan_tool_assert(scan,all(strcmp(file_ext(file),'.mat')),'one or more files is not a mat-file');
     
-    % print
-    scan_tool_print(scan,false,'\nLoading [scan] ');
-    scan_tool_progress(scan,sum(byts));
-    
+    % load
     lcan = struct();
     for i_field = 1:length(u_field)
         
@@ -36,11 +34,7 @@ function lcan = scan_load_scan(scan,scan_directory)
             otherwise
                 scan_tool_error(scan,'method "%s" for field "%s" not recognised',method,strrep(var,'_','.'));
         end
-        
-        % wait
-        for i = 1:byts(i_field), scan_tool_progress(scan,[]); end
     end
-    scan_tool_progress(scan,0);
     
     % deepness
     lcan = struct_deep(lcan);

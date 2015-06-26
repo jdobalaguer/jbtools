@@ -16,7 +16,7 @@ function auxiliar_manager(varargin)
     if ~nargin, return; end
     assertStruct(varargin{1}); tcan = varargin{1};
     if nargin~=3 || strcmp(varargin{2},'help')
-        scan_tool_help(tcan,'@folderManager(scan,mode,folder)','This function manipulates the folders "original" and "copy" in [scan.running.directory]. [mode] is the operation (''zip''/''unzip''/''delete''). [folder] is the target folder (e.g. ''original:first'' or ''copy:first:beta'' or ''copy:second:contrast'').');
+        scan_tool_help(tcan,'@folderManager(scan,mode,folder)','This function manipulates the folders "scan", "original" and "copy" in [scan.running.directory]. [mode] is the operation (''zip''/''unzip''/''delete''). [folder] is the target folder (e.g. ''original:first'' or ''copy:first:beta'' or ''copy:second:contrast'').');
         return;
     end
 
@@ -63,6 +63,8 @@ function auxiliar_manager(varargin)
             auxiliar_manager(tcan,mode,'copy:second:spm');
             return;
         % basic folders
+        case 'scan'
+            u_directory = {tcan.running.directory.save.scan};
         case 'original:first'
             u_directory = {tcan.running.directory.original.first};
         case 'original:second'

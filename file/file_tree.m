@@ -2,7 +2,7 @@
 function [file] = file_tree(path,mode)
     %% [file] = FILE_TREE(path,mode)
     % list a tree of files and directories in a cell
-    % path : directory to list
+    % path : directory to list (default '.')
     % mode : 'absolute' or 'relative'
     % file : cell of (cell of)* strings
     
@@ -21,45 +21,22 @@ function [file] = file_tree(path,mode)
     path = file_endsep(path);
     
     % recursivity list
-    file = auxiliar1(path);
-    
-    % set mode
-    file = auxiliar2(file,mode);
+    file = auxiliar(path,mode);
     
 end
 
 %% auxiliar
 
 % recursive function
-function file = auxiliar1(path)
+function file = auxiliar(path,mode)
     % list
     [file,dirs] = file_list(path,'relative');
     % recursivity
     for i = 1:length(dirs)
         if dirs(i)
-            file{i} = auxiliar1(file_endsep(file{i}));
-        end
-    end
-end
-
-% change the path to local/relative/absolute
-function file = auxiliar2(file,mode)
-    for i = 1:length(file)
-        if ischar(file{i})
-            switch mode
-                case 'local'
-                        file{i} = strsplit(file{i},filesep);
-                        file{i} = file{i}{end};
-                case 'relative'
-                case 'absolute'
-                    for i = 1:length(file)
-                        file{i} = file_2absolute(file{i});
-                    end
-                otherwise
-                    error('file_tree: mode "%s" not valid',mode);
-            end
+            file{i} = auxiliar(file_endsep(file{i}),mode);
         else
-            file{i} = auxiliar2(file{i},mode);
+            file{i} = file_list(file{i},mode);
         end
     end
 end
