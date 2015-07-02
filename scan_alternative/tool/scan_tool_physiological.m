@@ -9,6 +9,11 @@ function scan_tool_physiological(scan,image,mask,file)
     
     %% function
     
+    % auto-initialize
+    if ~struct_isfield(scan,'scan.running.subject.session')
+        scan = scan_initialize(scan);
+    end
+    
     % print
     scan_tool_print(scan,false,'\nPre-load physiological signal (image "%s", mask "%s") : ',image,mask);
     scan_tool_progress(scan,sum(scan.running.subject.session));

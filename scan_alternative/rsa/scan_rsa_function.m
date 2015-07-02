@@ -11,18 +11,16 @@ function scan = scan_rsa_function(scan)
     % print
     scan_tool_print(scan,false,'\nAdd function : ');
     
-    % warning
-    scan_tool_warning(scan,false,'not implemented yet'); return;
-    
     % function @folder.*
-    scan = scan_function_glm_folder_cd(scan);           % change directory
-    scan = scan_function_rsa_folder_manager(scan);      % folder manager
+%     scan = scan_function_rsa_folder_cd(scan);           % change directory
+%     scan = scan_function_rsa_folder_manager(scan);      % folder manager
     
     % function @get.*
-%     scan = scan_function_glm_get_vector(scan);          % vector
+    scan = scan_function_rsa_get_rdm(scan);
+    scan = scan_function_rsa_get_model(scan);
     
     % function @plot.*
-    scan = scan_function_rsa_plot_rdm(scan); % plot rdm
-    scan = scan_function_rsa_plot_model(scan); % plot model
-    scan = scan_function_rsa_plot_comparison(scan); % plot comparison
+    scan = scan_function_rsa_plot_rdm(scan);
+    scan = scan_function_rsa_plot_model(scan);
+%     scan = scan_function_rsa_plot_comparison(scan); % plot comparison
 end

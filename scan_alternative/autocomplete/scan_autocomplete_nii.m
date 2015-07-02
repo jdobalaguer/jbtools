@@ -1,6 +1,6 @@
 
 function scan = scan_autocomplete_nii(scan,folder)
-    %% scan = SCAN_AUTOCOMPLETE_NII(scan)
+    %% scan = SCAN_AUTOCOMPLETE_NII(scan,folder)
     % autocomplete [scan] struct
     % scan   : [scan] struct
     % folder : folder to analyse (edit this file to see options)

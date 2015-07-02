@@ -1,14 +1,15 @@
 
 TODO
 09. preprocessing
-23. add the order to the RSA vectors and to [scan.job.glm]
 26. new GLM @plot.xjview
-27. RSA don't ignore filter
 35. TBTE @get.xjview(name,vector) @plot.xjview(name,vector)
-41. RSA mahalanobis (with image residuals)
-42. @scan_tool_mask_outside(image)
-45. RSA we may not need a mask at all
+42. @scan_tool_mask_outside(scan,image)
 46. RSA with less subjects
+47. RSA functions (also when ROI)
+48. check the @get.vector and @get.beta , for concat and tbte
+49. saveY in a better place (and pre-load in mahalanobis distance for all sessions)
+50. a [scan.running.done] cell of strings list would help to re-run stuff
+51. RSA results to MNI space, for realignment
 
 LONG TERM
 06. handle HDD writing depending on the size of [scan]
@@ -63,9 +64,10 @@ R6. in RSA we should recycle the onset information from the TBTE.
 17. split get/plot functions
 18. create a getv_/mat_/vec_ library, 
 19. re-code the steplot/pipplot/errplot
+23. add the order to the RSA vectors and to [scan.job.glm]
 24. scan_glm_copy mask
 25. scan.directory.mask
-27. RSA don't ignore searchlight/distance/comparison/univariate
+27. RSA don't ignore searchlight/distance/comparison/univariate/filter
 28. RSA rmdir/flags
 29. scan_load_scan
 30. rmdir directory.save.scan
@@ -79,7 +81,9 @@ R6. in RSA we should recycle the onset information from the TBTE.
 39. RSA glm
 40. RSA z-score
 41. save the Y from the GLM
-44. fisher's Z = 0.5 * log((1+R)./(1-R))
+41. RSA mahalanobis (with image residuals)
 43. RSA to load the number of sessions from the glm
+44. fisher's Z = 0.5 * log((1+R)./(1-R))
+45. RSA we may not need a mask at all
 47. RSA de-mean
 48. @get.vector in TBTE to handle cells

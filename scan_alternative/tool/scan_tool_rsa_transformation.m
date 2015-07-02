@@ -8,7 +8,7 @@ function beta = scan_tool_rsa_transformation(scan,beta)
     %% function
     switch scan.job.transformation
         case 'none'
-        case 'univariate'
+        case 'mean'
             beta = mean(beta,2);
         case 'demean'
             beta = mat_demean(beta,2);

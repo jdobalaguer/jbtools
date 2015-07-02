@@ -2,7 +2,7 @@
 function scan()
     %% SCAN toolbox (for fMRI data with SPM)
     %
-    % scan_conversion    : conversion dicom, nifti-4d and nifti-3d
+    % scan_conversion    : convert dicom, nifti-4d and nifti-3d
     % scan_preprocess    : run a preprocessing pipeline
     % scan_glm           : GLM / PPI analysis
     % scan_tbte          : trial-by-trial estimates

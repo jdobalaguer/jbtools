@@ -34,6 +34,7 @@ function scan = scan_rsa_model_column(scan)
                         j_column = j_column + 1;
                         scan.running.model(i_model).column(j_column).subject = x_column.subject(f_column(i_column));
                         scan.running.model(i_model).column(j_column).session = x_column.session(f_column(i_column));
+                        scan.running.model(i_model).column(j_column).order   = x_column.order(f_column(i_column));
                         scan.running.model(i_model).column(j_column).name    = x_column.name{f_column(i_column)};
                         scan.running.model(i_model).column(j_column).onset   = x_column.onset(f_column(i_column));
                         scan.running.model(i_model).column(j_column).level   = pair2struct(mat2vec([x_subname;num2cell(cellfun(@(x)x(f_column(i_column)),x_level))]));

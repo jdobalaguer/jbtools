@@ -42,9 +42,14 @@ function scan = scan_rsa_model_rdm(scan)
                 iy = tril(iy,-1); iy(~iy) = [];
                 rdm{i_subject}{i_session}.subject = {x.subject};
                 rdm{i_subject}{i_session}.session = {x.session};
+                rdm{i_subject}{i_session}.order   = {x.order};
                 rdm{i_subject}{i_session}.onset   = {x.onset};
                 rdm{i_subject}{i_session}.name    = {x.name};
-                rdm{i_subject}{i_session}.rdm     = double(arrayfun(scan.job.model(i_model).function,x(ix),x(iy)));
+                [x,y] = deal(x(ix),x(iy));
+                ii = (~arrayfun(scan.job.model(i_model).filter,x,y));
+                rdm{i_subject}{i_session}.filter  = ~ii;
+                rdm{i_subject}{i_session}.rdm     = nan(size(ii));
+                rdm{i_subject}{i_session}.rdm(ii) = double(arrayfun(scan.job.model(i_model).function,x(ii),y(ii)));
             end
             
             % wait

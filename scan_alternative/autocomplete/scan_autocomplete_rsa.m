@@ -34,7 +34,7 @@ function scan = scan_autocomplete_rsa(scan)
     
     % subject / session
     scan_tool_assert(scan,isequal(scan.running.subject.unique,scan.running.glm.running.subject.unique),'subjects in the GLM and the RSA must match (fix not implemented yet)');
-    if scan.running.glm.job.concatSessions
+    if struct_isfield(scan,'running.glm.job.concatSessions') && scan.running.glm.job.concatSessions
         scan.running.subject.session(:) = 1;
         scan_tool_warning(scan,false,'glm with concatenated sessions. will ignore [scan.subject.session]');
     end

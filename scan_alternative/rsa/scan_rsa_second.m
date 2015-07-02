@@ -43,6 +43,11 @@ function scan = scan_rsa_second(scan)
         t_smooth = t_smooth.tstat;
         t_smooth(isinf(t_smooth)) = nan;
         
+        % apply mask
+        t_image (isnan(mean_image_rs(:))) = nan;
+        p_image (isnan(mean_image_rs(:))) = nan;
+        t_smooth(isnan(mean_image_rs(:))) = nan;
+        p_smooth(isnan(mean_image_rs(:))) = nan;
         
         % write
         meta = scan.running.meta;

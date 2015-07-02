@@ -9,8 +9,8 @@ function scan = scan_autocomplete_tbte(scan)
     
     % directory
     scan.running.directory.job                   = file_endsep(fullfile(scan.directory.(scan.job.type),scan.job.name));
+    scan.running.directory.y                     = file_endsep(fullfile(scan.running.directory.job,'y'));
     scan.running.directory.original.first        = fullfile(scan.running.directory.job,'original','first_level',num2leg(scan.running.subject.unique,'subject_%03i')',filesep);
-    scan.running.directory.original.second       = fullfile(scan.running.directory.job,'original','second_level',filesep);
     scan.running.directory.copy.root             = fullfile(scan.running.directory.job,'copy',filesep);
     scan.running.directory.copy.first.beta       = fullfile(scan.running.directory.job,'copy','beta_1',filesep);
     scan.running.directory.copy.first.spm        = fullfile(scan.running.directory.job,'copy','SPM_1',filesep);

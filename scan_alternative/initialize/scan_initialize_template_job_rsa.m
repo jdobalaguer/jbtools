@@ -21,10 +21,7 @@ function job = scan_initialize_template_job_rsa(type)
     job.transformation     = 'none';
     job.whatToDo           = 'all';
     
-    % filter
-    job.filter = struct();
-    
     % model
-    job.model = struct('subject',{},'name',{},'matrix',{});
+    job.model = struct('name',{},'condition',{},'subname',{},'level',{},'function',{},'filter',{});
     
 end

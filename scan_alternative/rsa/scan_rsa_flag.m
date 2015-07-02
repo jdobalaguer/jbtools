@@ -7,11 +7,6 @@ function scan = scan_rsa_flag(scan)
     
     %% function
    
-    % warning
-    if ~isempty(file_list(file_nendsep(scan.running.directory.job)))
-        scan_tool_warning(scan,false,'folder "%s" already exists',scan.running.directory.job);
-    end
-    
     % switch
     switch scan.job.whatToDo
         % all

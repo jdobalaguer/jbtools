@@ -24,7 +24,11 @@ function scan = scan_glm_matrix(scan)
         scan.running.design(i_subject).matrix          = SPM.xX.X;
         
         % y
-        scan.running.design(i_subject).y = cell2mat(arrayfun(@(x)reshape(double(x.private.dat),[1,size(x.private.dat)]),SPM.xY.VY,'UniformOutput',false));
+        if scan.job.saveY
+            y = cell2mat(arrayfun(@(x)reshape(double(x.private.dat),[1,size(x.private.dat)]),SPM.xY.VY,'UniformOutput',false));
+            file_mkdir(scan.running.directory.y);
+            file_savevar(fullfile(scan.running.directory.y,sprintf('subject_%03i.mat',scan.running.subject.unique(i_subject))),[],'y',y);
+        end
         
         % row
         scan.running.design(i_subject).row.file        = cellstr(SPM.xY.P);
