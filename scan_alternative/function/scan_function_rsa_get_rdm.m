@@ -32,7 +32,6 @@ function varargout = auxiliar_rdm(varargin)
     
     % get RDM
     rdm  = scan_tool_rsa_buildrdm(tcan,beta');
-    rdm = squareform(rdm);
     
     % retugn
     varargout = {rdm};

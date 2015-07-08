@@ -6,6 +6,7 @@ function scan = scan_glm_concat(scan)
     %   >> help scan;
 
     %% function
+    if scan_tool_isdone(scan), return; end
     if ~scan.running.flag.design, return; end
     if ~scan.job.concatSessions,  return; end
     
@@ -27,4 +28,7 @@ function scan = scan_glm_concat(scan)
     
     % change sessions
     scan.running.subject.session(:) = 1;
+    
+    % done
+    scan = scan_tool_done(scan);
 end

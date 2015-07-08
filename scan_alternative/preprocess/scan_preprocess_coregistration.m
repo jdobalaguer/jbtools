@@ -6,6 +6,7 @@ function scan = scan_preprocess_coregistration(scan)
     %   >> help scan;
 
     %% function
+    if scan_tool_isdone(scan), return; end
     if ~scan.running.flag.coregistration, return; end
         
     % print
@@ -47,4 +48,7 @@ function scan = scan_preprocess_coregistration(scan)
     % update
     scan = scan_autocomplete_nii(scan,'structural:coregistration');
     scan.running.last.structural = 'coregistration';
+    
+    % done
+    scan = scan_tool_done(scan);
 end

@@ -6,6 +6,7 @@ function scan = scan_preprocess_estimation(scan)
     %   >> help scan;
 
     %% function
+    if scan_tool_isdone(scan), return; end
     if ~scan.running.flag.estimation, return; end
     
     % print
@@ -55,4 +56,7 @@ function scan = scan_preprocess_estimation(scan)
     % update
     scan = scan_autocomplete_nii(scan,'structural:normalisation');
     scan.running.last.structural = 'normalisation';
+    
+    % done
+    scan = scan_tool_done(scan);
 end

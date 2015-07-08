@@ -7,6 +7,7 @@ function scan = scan_rsa_model_level(scan)
     
     %% notes
     % levels are the extra regressors that go on top of the onsets
+    % this doesn't take [scan.job.glm.order] into account (but that's ok -see scan_function_tbte_get_vector)
     % these are used only with glms of type "tbte"
     
     %% function
@@ -14,35 +15,30 @@ function scan = scan_rsa_model_level(scan)
     
     % build levels
     for i_model = 1:length(scan.job.model)
-        % variables
-        u_condition = scan.job.glm.condition;
-        u_subname   = unique(cell_flat(scan.job.model(i_model).subname),'stable');
-        level       = cell(length(u_condition),length(u_subname));
-       
+        
+        scan.running.model(i_model).level = {};
+        
         % set level
-        n = nan(1,length(u_condition));
-        for i_condition = 1:length(u_condition)
-            n(i_condition) = sum(strcmp(scan.running.load.name,u_condition{i_condition}));
-            for i_subname = 1:length(u_subname)
-                ii_condition = strcmp(scan.job.model(i_model).condition,u_condition{i_condition});
-                ii_subname   = strcmp(scan.job.model(i_model).subname{ii_condition},u_subname{i_subname});
-                if any(ii_subname)
-                    level{i_condition,i_subname} = scan.running.glm.function.get.vector(scan.running.glm,u_condition{i_condition},scan.job.model(i_model).level{ii_condition}{ii_subname});
+        for i_subject = 1:scan.running.subject.number
+            for i_session = 1:scan.running.subject.session(i_subject)
+
+                u_condition = scan.job.glm.condition;
+                for i_condition = 1:length(u_condition)
+                    
+                    if isempty(scan.job.model(i_model).subname)
+                        % if no levels there
+                        scan.running.model(i_model).level{i_subject}{i_session}{i_condition} = cell(1,0);
+                    else
+                        % add levels
+                        u_level = scan.job.model(i_model).subname{i_condition};
+                        for i_level = 1:length(u_level)
+                            scan.running.model(i_model).level{i_subject}{i_session}{i_condition}{i_level} = struct('name',{[]},'value',{[]});
+                            scan.running.model(i_model).level{i_subject}{i_session}{i_condition}{i_level}.name  = u_level{i_level};
+                            scan.running.model(i_model).level{i_subject}{i_session}{i_condition}{i_level}.value = scan.running.glm.function.get.vector(scan.running.glm,i_subject,i_session,1,u_condition{i_condition},scan.job.model(i_model).level{i_condition}{i_level});
+                        end
+                    end
                 end
             end
         end
-        
-        % fill in empty levels
-        for i_condition = 1:length(u_condition)
-            for i_subname = 1:length(u_subname)
-                if isempty(level{i_condition,i_subname})
-                    level{i_condition,i_subname} = nan(n(i_condition),1);
-                end
-            end
-        end
-        
-        % save model
-        scan.running.model(i_model).level.name  = u_subname; 
-        scan.running.model(i_model).level.value = level;
     end
 end

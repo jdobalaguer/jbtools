@@ -6,6 +6,7 @@ function scan = scan_tbte_function(scan)
     %   >> help scan;
 
     %% function
+    if scan_tool_isdone(scan), return; end
     if ~scan.running.flag.function, return; end
     
     % print
@@ -23,4 +24,7 @@ function scan = scan_tbte_function(scan)
     % function @plot.*
     scan = scan_function_glm_plot_design(scan);         % review design
     scan = scan_function_tbte_plot_meshgrid(scan);      % meshgrid
+    
+    % done
+    scan = scan_tool_done(scan);
 end

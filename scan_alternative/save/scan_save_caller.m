@@ -1,11 +1,14 @@
 
-function scan = scan_save_caller(scan)
-    %% scan = SCAN_SAVE_CALLER(scan)
+function scan = scan_save_caller(scan,caller)
+    %% scan = SCAN_SAVE_CALLER(scan[,caller])
     % save the caller script
     % to list main functions, try
     %   >> help scan;
 
     %% function
+    
+    % default
+    func_default('caller',2);
     
     % make directory
     file_mkdir(fileparts(scan.running.file.save.caller));
@@ -18,9 +21,9 @@ function scan = scan_save_caller(scan)
     end
     
     % copy file
-    if isempty(func_caller(2))
+    if isempty(func_caller(caller))
         scan_tool_warning(scan,true,'Nothing to save');
         return;
     end
-    copyfile(which(func_caller(2)),scan.running.file.save.caller);
+    copyfile(which(func_caller(caller)),scan.running.file.save.caller);
 end

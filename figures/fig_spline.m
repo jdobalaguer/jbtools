@@ -1,6 +1,6 @@
 
-function hdl = fig_spline(varargin)
-    %% hdl = fig_spline(mode,[x,]my,sy[,c][,a])
+function h = fig_spline(varargin)
+    %% h = fig_spline(mode,[x,]my,sy[,c][,a])
     % plot whatever using splines
     % mode : what kind of plot. a string or a cell of strings. one or more of {'line','pip','error','shade'}
     % x    : x-values
@@ -33,7 +33,7 @@ function hdl = fig_spline(varargin)
     % variables
     if numel(x) > 1
         [xx,sb] = get_spline(x,my-sy);
-        [xx,su] = get_spline(x,my+sy);
+        [~ ,su] = get_spline(x,my+sy);
         mm = 0.5 * (su+sb);
         ss = 0.5 * (su-sb);
     else
@@ -46,11 +46,11 @@ function hdl = fig_spline(varargin)
     end
     
     % plot
-    if any(strcmp(mode,'line')),    fig_line  (xx,mm,c,varargin{7:end});      end
-    if any(strcmp(mode,'marker')),  fig_marker(xx,mm,c,varargin{7:end});      end
-    if any(strcmp(mode,'pip')),     fig_pip   (xx,mm,ss,c,varargin{7:end});   end
-    if any(strcmp(mode,'error')),   fig_error (xx,mm,ss,c,varargin{7:end});   end
-    if any(strcmp(mode,'shade')),   fig_shade (xx,mm,ss,c,a,varargin{7:end}); end
+    if any(strcmp(mode,'line')),    h.line   = fig_line  (xx,mm,c,varargin{7:end});      end
+    if any(strcmp(mode,'marker')),  h.marker = fig_marker(xx,mm,c,varargin{7:end});      end
+    if any(strcmp(mode,'pip')),     h.pip    = fig_pip   (xx,mm,ss,c,varargin{7:end});   end
+    if any(strcmp(mode,'error')),   h.error  = fig_error (xx,mm,ss,c,varargin{7:end});   end
+    if any(strcmp(mode,'shade')),   h.shade  = fig_shade (xx,mm,ss,c,a,varargin{7:end}); end
 end
 
 %% auxiliar

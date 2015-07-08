@@ -21,7 +21,4 @@ function cf = fig_figure(cf)
     
     % hold
     hold('on');
-    
-    % docked
-    % set(cf,'WindowStyle','docked');
 end

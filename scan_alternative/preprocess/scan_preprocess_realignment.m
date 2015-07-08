@@ -10,6 +10,7 @@ function scan = scan_preprocess_realignment(scan)
     %   "http://www.fil.ion.ucl.ac.uk/spm/toolbox/unwarp/"
     
     %% function
+    if scan_tool_isdone(scan), return; end
     if ~scan.running.flag.realignment, return; end
     
     % print
@@ -102,4 +103,7 @@ function scan = scan_preprocess_realignment(scan)
     % update
     scan = scan_autocomplete_nii(scan,'epi3:realignment');
     scan.running.last.epi3 = 'realignment';
+    
+    % done
+    scan = scan_tool_done(scan);
 end

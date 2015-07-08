@@ -6,6 +6,7 @@ function scan = scan_conversion_expansion(scan)
     %   >> help scan;
 
     %% function
+    if scan_tool_isdone(scan), return; end
     if ~scan.running.flag.expansion, return; end
    
     % print
@@ -25,4 +26,7 @@ function scan = scan_conversion_expansion(scan)
         end
     end
     scan_tool_progress(scan,0);
+    
+    % done
+    scan = scan_tool_done(scan);
 end

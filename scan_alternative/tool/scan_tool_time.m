@@ -9,5 +9,6 @@ function scan = scan_tool_time(scan)
     
     % print
     scan_tool_print(scan,false,'\nTotal');
+    scan.running.time.end = tic();
     toc(scan.running.time.start);
 end

@@ -1,0 +1,99 @@
+
+function fig_slider(v,x,l,e)
+    %% FIG_SLIDER(v[,x][,l][,e])
+    % allows you to see data with many dimensions simultaneously
+    % v : matrix of values
+    % x : cell ofstrings with the xticklabels
+    % l : legend of each dimension
+    % e : sprintf expression used for the sliders (default '%+.2f')
+    
+    %% function
+    
+    % parameters & variables
+    s = size(v);            % size
+    n = ndims(v);           % number of dimensions
+    
+    m =  80;                % marge
+    d =  30;                % distance between slides
+    p = 150;                % text width
+    w = 500 + 2*m;          % total width
+    h = w + (n-2)*d + 2*m;  % total height
+    
+    t = [];                 % text handles
+    b = [];                 % slider (button) handles
+    f = [];                 % figure
+    a = [];                 % axis
+    
+    % default
+    func_default('e','%.2f');
+    func_default('x',arrayfun(@(x)num2leg(1:x,e),s,'UniformOutput',false));
+    func_default('l',num2leg(1:n,'dim %d'));
+    
+    % assert
+    assert(all(cellfun(@iscellstr,x)),'fig_slider: error. [x] must be a cell of cells of strings');
+    assert(iscellstr(l),              'fig_slider: error. [l] must be a cell of strings');
+    
+    % create figure
+    f = figure('Resize','on','Position',[0,0,w,h],'Name',mfilename);
+    set(f,'Color',[1,1,1]);
+    set(f,'ToolBar','none');
+    
+    % create axes
+    a = axes('position',[m/w,1-(w-m)/h,1-2*m/w,(w-2*m)/h]);
+    
+    % create text & buttons
+    for i_main = 3:n
+        r = [1,s(i_main)];
+        t(i_main-2) = uicontrol('Style','text','String',l{i_main},'Position',[m,m+d*(n-i_main),p,20]);
+        b(i_main-2) = uicontrol('Style','slider','Min',r(1),'Max',r(2),'SliderStep',[1 1]./(r(2)-r(1)),'Value',1,'Position',[m+p,m+d*(n-i_main),w-2*m-p,20]);
+        set(b(i_main-2),'Callback',@updateImage);
+    end
+    
+    % plot
+    updateImage();
+    
+    %% nested: updateImage
+    function updateImage(control,action) %#ok<INUSD>
+        % only integer values
+        if exist('control','var')
+            set(control,'Value',round(get(control,'Value')));
+        end
+        
+        % set axis
+        axes(a);
+        
+        % update labels
+        for i_nested = 3:n
+            set(t(i_nested-2),'String',sprintf(['%s = %s'],l{i_nested},x{i_nested}{get(b(i_nested-2),'Value')}));
+        end
+        
+        % retrieve indices
+        c = cell(1,n-2);
+        for i_nested = 3:n
+            c{i_nested-2} = get(b(i_nested-2),'Value');
+        end
+        
+        % plot
+        plotImage(v(:,:,c{:}));
+    end
+    
+    %% nested: plotImage
+    function plotImage(values)
+        % plot
+        fig_pimage(values);
+        colorbar();
+
+        % aesthetics
+        sa.clim   = ranger(v);
+        sa.ylabel = l{1};
+        sa.xlabel = l{2};
+        sa.xtick  = 1:s(2);
+        sa.ytick  = 1:s(1);
+        sa.xticklabel = x{2};
+        sa.yticklabel = x{1};
+        fig_axis(sa);
+        fig_fontsize(a,14);
+        fig_fontname(a,'Helvetica');
+        set(gca,'XTickLabelRotation',90)
+    end
+end

@@ -26,6 +26,7 @@ function auxiliar_rdm(varargin)
     
     % get RDM
     rdm = tcan.function.get.rdm(tcan,i_subject,i_session,mask);
+    rdm = squareform(rdm);
     
     % get labels
     ii_subject = (tcan.running.load.subject == i_subject);

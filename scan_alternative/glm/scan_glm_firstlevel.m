@@ -6,6 +6,7 @@ function scan = scan_glm_firstlevel(scan)
     %   >> help scan;
 
     %% function
+    if scan_tool_isdone(scan), return; end
     if ~scan.running.flag.first, return; end
     
     % print
@@ -35,4 +36,7 @@ function scan = scan_glm_firstlevel(scan)
     
     % save
     scan.running.jobs.first = spm;
+    
+    % done
+    scan = scan_tool_done(scan);
 end

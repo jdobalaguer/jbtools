@@ -1,6 +1,6 @@
 
 function h = fig_pimage(varargin)
-    %% h = FIG_PIMAGE(varargin)
+    %% h = FIG_PIMAGE(c[,x][,y])
     % this works like pcolor. it has the advantage of plotting NaNs as blank cells
     % however, it centers each cell on the value, and doesn't miss the last row/column!
     
@@ -15,9 +15,9 @@ function h = fig_pimage(varargin)
             X = 0.5:size(C,2)+0.5;
             Y = 0.5:size(C,1)+0.5;
         case 3
-            C = varargin{3};
-            X = varargin{1} - 0.5;
-            Y = varargin{2} - 0.5;
+            C = varargin{1};
+            X = varargin{2} - 0.5;
+            Y = varargin{3} - 0.5;
             X(end+1)   = X(end) + 1;
             Y(end+1)   = Y(end) + 1;
         otherwise

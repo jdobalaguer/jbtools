@@ -6,6 +6,7 @@ function scan = scan_rsa_estimation(scan)
     %   >> help scan;
     
     %% function
+    if scan_tool_isdone(scan), return; end
     if ~scan.running.flag.estimation, return; end
     
     % print
@@ -17,9 +18,7 @@ function scan = scan_rsa_estimation(scan)
         for i_session = 1:scan.running.subject.session(i_subject)
         
             % searchlight or not?
-            if scan.job.searchlight, [image_rs,image_ps,image_ns] = scan_tool_rsa_searchlight(scan,i_subject,i_session);
-            else                     [image_rs,image_ps,image_ns] = scan_tool_rsa_roi(scan,i_subject,i_session);
-            end
+            [image_rs,image_ps,image_ns] = scan_tool_rsa_searchlight(scan,i_subject,i_session);
             
             % write & smooth
             smooth_rs = nan(size(image_rs),'single');
@@ -54,4 +53,7 @@ function scan = scan_rsa_estimation(scan)
         end
     end
     scan_tool_progress(scan,0);
+    
+    % done
+    scan = scan_tool_done(scan);
 end

@@ -6,6 +6,7 @@ function scan = scan_glm_ppi(scan)
     %   >> help scan;
 
     %% function
+    if scan_tool_isdone(scan), return; end
     if ~scan.running.flag.design, return; end
     if isempty(scan.job.ppi),     return; end
     
@@ -44,4 +45,7 @@ function scan = scan_glm_ppi(scan)
         end
     end
     scan_tool_progress(scan,0);
+    
+    % done
+    scan = scan_tool_done(scan);
 end

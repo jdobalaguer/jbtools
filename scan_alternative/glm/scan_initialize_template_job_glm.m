@@ -20,8 +20,9 @@ function job = scan_initialize_template_job_glm(type)
     job.image              = 'smooth';  % {'image','slicetime','realignment','normalisation','smooth'}
     job.margeFromEnd       = 0;         % remove onsets close to the end
     job.realignCovariate   = true;      % add realignment parameters as covariates?
+    job.removeVolumes      = 0;         % discard the first volumes in each session
     job.saveY              = false;     % whether to save the neural data in the design field (used for RSA mahalanobis distance)
-    job.secondLevel        = 'con';     % {'con','smpt'}
+    job.secondLevel        = 'con';     % what images to use for the second-level analysis? {'con','smpt'}
     job.whatToDo           = 'all';     % see @scan_glm_flag
     
     % condition

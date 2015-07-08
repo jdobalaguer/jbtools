@@ -2,9 +2,7 @@
 
 function fig_fontname(cf,fn)
     %% fig_fontname(cf)
-    % 
     % set font name for all text in figure [cf]
-    % 
     
     %% default
     if ~exist('cf','var')||isempty(cf); cf=gcf();   end

@@ -11,12 +11,11 @@ function scan = scan_preprocess(scan)
     scan.job.type = 'preprocess';
     scan.job.name = '';
     
-    % warning
-%     scan_tool_warning(scan,false,'this is not finished yet'); return;
-    
     % summary
     scan_tool_summary(scan,'Preprocessing pipeline',...
         'Initialize',...
+        ...
+        'First steps',...
         ...
         'Slice-time correction',...
         'Realignment',...
@@ -31,11 +30,8 @@ function scan = scan_preprocess(scan)
     scan = scan_assert_spm(scan);                       % assert (spm)
     scan = scan_initialize(scan);                       % initialize scan / SPM
     try
-        scan = scan_autocomplete_preprocess(scan);      % autocomplete
-        scan = scan_preprocess_flag(scan);              % redo flags
-        scan = scan_preprocess_rmdir(scan);             % remove old directories
-        scan = scan_preprocess_mkdir(scan);             % create new directories
-        scan = scan_save_caller(scan);                  % save caller
+        % first steps
+        scan = scan_preprocess_steps(scan);
 
         % preprocessing
         scan = scan_preprocess_slicetime(scan);         % slice-time correction

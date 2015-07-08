@@ -15,7 +15,12 @@ function scan = scan_autocomplete_rsa(scan)
     end
     
     % directory.job
-    scan.running.directory.job = file_endsep(fullfile(scan.directory.(scan.job.type),scan.job.name));
+    scan.running.directory.job       = file_endsep(fullfile(scan.directory.rsa,scan.job.glm.type,scan.job.glm.name,scan.job.name));
+    
+    % directory.save
+    scan.running.directory.save.scan = file_endsep(fullfile(scan.running.directory.job,'scan'));
+    scan.running.file.save.caller    = fullfile(scan.running.directory.job,'caller.m');
+    scan.running.file.save.hdd       = fullfile(scan.running.directory.job,'hdd.mat');
     
     % directory.map
     scan.running.directory.estimation.root          = file_endsep(fullfile(scan.running.directory.job,'estimation'));

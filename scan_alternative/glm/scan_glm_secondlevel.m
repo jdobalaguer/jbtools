@@ -6,6 +6,7 @@ function scan = scan_glm_secondlevel(scan)
     %   >> help scan;
 
     %% function
+    if scan_tool_isdone(scan), return; end
     if ~scan.running.flag.second, return; end
     
     % build folder
@@ -59,4 +60,7 @@ function scan = scan_glm_secondlevel(scan)
     
     % save
     scan.running.jobs.second = spm;
+    
+    % done
+    scan = scan_tool_done(scan);
 end

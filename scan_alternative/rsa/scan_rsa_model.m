@@ -6,6 +6,7 @@ function scan = scan_rsa_model(scan)
     %   >> help scan;
     
     %% function
+    if scan_tool_isdone(scan), return; end
     if ~scan.running.flag.model, return; end
     
     % print
@@ -22,4 +23,7 @@ function scan = scan_rsa_model(scan)
     
     % build rdm
     scan = scan_rsa_model_rdm(scan);
+    
+    % done
+    scan = scan_tool_done(scan);
 end

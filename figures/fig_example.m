@@ -7,7 +7,7 @@ function fig_example()
     %% figure
     f = figure();
 
-    %% barweb
+    % BARWEB
     subplot(2,1,1);
     % fig_bare
     y   = randi(10,2,5);
@@ -21,7 +21,7 @@ function fig_example()
     sa_barweb.ylabel  = 'y label';
     va_barweb = fig_axis(sa_barweb);
 
-    %% axis
+    % AXIS
     subplot(2,1,2);
     % fig_plot
     t = linspace(0,8*pi,10);
@@ -31,12 +31,10 @@ function fig_example()
     yy = ss+rr;
     my = nanmean(yy);
     sy = nanstd(yy);
-    sp = fig_steplot(t,my,sy);
-    ep = fig_errplot(t,my,sy);
-    pp = fig_pipplot(t,my,sy);
+    sp = fig_combination({'marker','shade','pip'},t,my,sy);
     % fig_axis
     sa_plot = struct();
-    sa_plot.ilegend = sp.shade;
+    sa_plot.ilegend = sp.pip;
     sa_plot.tlegend = 'legend';
     sa_plot.title   = 'FIGURE PLOT';
     sa_plot.xlabel  = 'x label';
@@ -47,11 +45,14 @@ function fig_example()
     sa_plot.ylim    = [-2,+2];
     va_plot = fig_axis(sa_plot);
 
-    %% set figure
+    % FIGURE
     fig_figure(f);
-
-    %% save
-    fig_export('fig_example.pdf');
-    fig_svg('fig_example.svg');
     
+    %% slider
+    [m{1:5}] = ndgrid(1:41,1:41,1:21,1:21,1:21);
+    e = '%+.2f';
+    v = cos(0.05 * m{3} .* sqrt(power(m{1}-m{4},2) + power(m{2}-m{5},2)));
+    x = arrayfun(@(x)num2leg(linspace(-1,+1,x),e),size(v),'UniformOutput',false);
+    l = {'DIM_1','DIM_2','dimension 3','dimension 4','dimension 5'};
+    fig_slider(v,x,l,e);
 end

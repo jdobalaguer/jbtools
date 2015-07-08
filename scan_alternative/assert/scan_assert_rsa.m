@@ -12,6 +12,10 @@ function scan = scan_assert_rsa(scan)
         func = scan.job.model(i_model).function;
         scan_tool_assert(scan,~func_isnested(func),  'Model functions cannot be nested.');
         scan_tool_assert(scan,~func_isformula(func), 'Model functions cannot be a formula.');
+        
+        func = scan.job.model(i_model).filter;
+        scan_tool_assert(scan,~func_isnested(func),  'Model filters cannot be nested.');
+        scan_tool_assert(scan,~func_isformula(func), 'Model filters cannot be a formula.');
     end
     
     scan_tool_assert(scan,exist('searchlightMapping_fMRI.m','file') == 2,'Please add RSA-toolbox to the path');

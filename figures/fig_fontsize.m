@@ -1,10 +1,8 @@
     
 
 function fig_fontsize(cf,fs)
-    %% fig_fontname(cf)
-    % 
-    % set font name for all text in figure [cf]
-    % 
+    %% fig_fontsize(cf)
+    % set font size for all text in figure [cf]
     
     %% default
     if ~exist('cf','var')||isempty(cf); cf=gcf();   end

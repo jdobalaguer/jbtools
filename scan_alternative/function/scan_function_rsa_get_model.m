@@ -26,7 +26,6 @@ function varargout = auxiliar_model(varargin)
     
     % get RDM
     rdm = tcan.running.model(i_model).rdm{i_subject}{i_session}.rdm;
-    rdm = squareform(rdm);
     
     % retugn
     varargout = {rdm};

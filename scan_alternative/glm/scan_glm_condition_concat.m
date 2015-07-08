@@ -9,6 +9,7 @@ function scan = scan_glm_condition_concat(scan)
     % this function doesn't work with TBTE ("version" is always empty)
     
     %% function
+    if scan_tool_isdone(scan), return; end
     if ~scan.running.flag.design, return; end
     if ~scan.job.concatSessions,  return; end
     
@@ -50,4 +51,7 @@ function scan = scan_glm_condition_concat(scan)
         scan.running.condition{i_subject} = {condition};
     end
     scan_tool_progress(scan,0);
+    
+    % done
+    scan = scan_tool_done(scan);
 end

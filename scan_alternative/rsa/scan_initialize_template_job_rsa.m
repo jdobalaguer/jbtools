@@ -13,11 +13,11 @@ function job = scan_initialize_template_job_rsa(type)
     
     % setting
     job.concatSessions     = false;
-    job.glm                = struct('type',{''},'name',{''},'condition',{{}});
+    job.glm                = struct('type',{''},'name',{''},'condition',{{}},'order',{[]});
     job.mask               = struct('type',{'individual'},'file',{'wholebrain.nii'});
     job.distance           = 'euclidean';
     job.comparison         = 'spearman';
-    job.searchlight        = [];
+    job.searchlight        = 15;
     job.transformation     = 'none';
     job.whatToDo           = 'all';
     

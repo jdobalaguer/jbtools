@@ -3,13 +3,11 @@ TODO
 09. preprocessing
 26. new GLM @plot.xjview
 35. TBTE @get.xjview(name,vector) @plot.xjview(name,vector)
-42. @scan_tool_mask_outside(scan,image)
-46. RSA with less subjects
-47. RSA functions (also when ROI)
-48. check the @get.vector and @get.beta , for concat and tbte
+47. RSA functions for ROI
 49. saveY in a better place (and pre-load in mahalanobis distance for all sessions)
-50. a [scan.running.done] cell of strings list would help to re-run stuff
 51. RSA results to MNI space, for realignment
+54. save all callers within a folder
+55. RSA within ROI
 
 LONG TERM
 06. handle HDD writing depending on the size of [scan]
@@ -19,6 +17,8 @@ LONG TERM
 20. make @get.vector return a struct with multiple fields? (legend, etc...)
 21. scan.pregeneration option in functions ?
 22. functions @update
+42. @scan_tool_mask_outside(scan,image)
+46. RSA with less subjects
 
 DONE
 01. *fix* the glm FIR function yields different results for equivalent first beta/contrast - and I don't know why
@@ -86,4 +86,11 @@ R6. in RSA we should recycle the onset information from the TBTE.
 44. fisher's Z = 0.5 * log((1+R)./(1-R))
 45. RSA we may not need a mask at all
 47. RSA de-mean
+47. RSA functions for searchlight
 48. @get.vector in TBTE to handle cells
+48. check the @get.vector and @get.beta , for concat and tbte
+50. a [scan.running.done] cell of strings list would help to re-run stuff
+52. [scan.job.image] folders for each glm/rsa
+53. wrap auto-completion as "first steps"
+55. make adding new jobs more straightforward
+56. option in glm to remove first volumes

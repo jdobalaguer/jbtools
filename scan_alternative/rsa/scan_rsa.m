@@ -5,12 +5,6 @@ function scan = scan_rsa(scan)
     % to list main functions, try
     %   >> help scan;
     
-    %% note
-    % 2. the models should be able to catch a cell instead of a scalar number
-    % 7. filter RSA
-    % 8. re-sort RDMs
-    % 9. shrink RDMs
-
     %% function
     
     % job type
@@ -19,6 +13,8 @@ function scan = scan_rsa(scan)
     % summary
     scan_tool_summary(scan,'Representation Similarity Analysis (RSA)',...
         'Initialize',...
+        ...
+        'First steps',...
         ...
         'Load beta',...
         'Load metadata',...
@@ -36,19 +32,15 @@ function scan = scan_rsa(scan)
     scan = scan_assert_rsa(scan);               % assert (rsa)
     scan = scan_initialize(scan);               % initialize scan / SPM
     try
-        scan = scan_autocomplete_rsa(scan);     % autocomplete (rsa)
-        scan = scan_autocomplete_mask(scan,scan.running.glm.job.image); % autocomplete (mask)
-        scan = scan_rsa_flag(scan);             % redo flags
-        scan = scan_rsa_rmdir(scan);            % delete old directories
-        scan = scan_rsa_mkdir(scan);            % create new directories
-        scan = scan_save_caller(scan);          % save caller
+        % first steps
+        scan = scan_rsa_steps(scan);
 
         % load data & models
         scan = scan_rsa_beta(scan);             % load beta
         scan = scan_rsa_meta(scan);             % load meta
         scan = scan_rsa_mask(scan);             % load mask
         scan = scan_rsa_model(scan);            % build model
-        if scan.job.concatSessions, scan.running.subject.session(:) = 1; end
+        scan = scan_rsa_concat(scan);           % concatenate sessions
         
         % estimation
         scan = scan_rsa_estimation(scan);

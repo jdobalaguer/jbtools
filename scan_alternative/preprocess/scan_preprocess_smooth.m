@@ -6,6 +6,7 @@ function scan = scan_preprocess_smooth(scan)
     %   >> help scan;
 
     %% function
+    if scan_tool_isdone(scan), return; end
     if ~scan.running.flag.smooth, return; end
     
     % last
@@ -22,4 +23,7 @@ function scan = scan_preprocess_smooth(scan)
         end
     end
     scan_tool_progress(scan,0);
+    
+    % done
+    scan = scan_tool_done(scan);
 end

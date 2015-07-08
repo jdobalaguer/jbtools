@@ -6,6 +6,7 @@ function scan = scan_initialize(scan)
     %   >> help scan;
     
     %% function
+    if scan_tool_isdone(scan), return; end
     
     % print
     scan_tool_print(scan,false,'\nInitialize : ');
@@ -23,4 +24,6 @@ function scan = scan_initialize(scan)
     % wait
     scan_tool_progress(scan,0);
     
+    % done
+    scan = scan_tool_done(scan);
 end

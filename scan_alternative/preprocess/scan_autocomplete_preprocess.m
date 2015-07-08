@@ -7,6 +7,12 @@ function scan = scan_autocomplete_preprocess(scan)
     
     %% function
     
+    % directory
+    scan.running.directory.job       = scan.directory.preprocess;
+    scan.running.directory.save.scan = file_endsep(fullfile(scan.running.directory.job,'scan'));
+    scan.running.file.save.caller    = fullfile(scan.running.directory.job,'caller.m');
+    scan.running.file.save.hdd       = fullfile(scan.running.directory.job,'hdd.mat');
+    
     % last
     scan.running.last = scan.job.last;
     

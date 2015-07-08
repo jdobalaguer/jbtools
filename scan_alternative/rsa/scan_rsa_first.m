@@ -9,6 +9,7 @@ function scan = scan_rsa_first(scan)
     % this may fail when using native spaces
     
     %% function
+    if scan_tool_isdone(scan), return; end
     if ~scan.running.flag.first, return; end
     
     % print
@@ -49,4 +50,7 @@ function scan = scan_rsa_first(scan)
         end
     end
     scan_tool_progress(scan,0);
+    
+    % done
+    scan = scan_tool_done(scan);
 end

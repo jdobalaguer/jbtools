@@ -13,7 +13,7 @@ end
 
 %% auxiliar
 function varargout = auxiliar_vector(varargin)
-    varargout = cell(1,nargin);
+    varargout = cell(1,nargout);
     if ~nargin, return; end
     assertStruct(varargin{1}); tcan = varargin{1};
     if nargin~=6 || strcmp(varargin{2},'help')

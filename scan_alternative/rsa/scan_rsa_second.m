@@ -6,6 +6,7 @@ function scan = scan_rsa_second(scan)
     %   >> help scan;
     
     %% function
+    if scan_tool_isdone(scan), return; end
     if ~scan.running.flag.second, return; end
     
     % print
@@ -73,4 +74,7 @@ function scan = scan_rsa_second(scan)
         scan_tool_progress(scan,[]);
     end
     scan_tool_progress(scan,0);
+    
+    % done
+    scan = scan_tool_done(scan);
 end

@@ -26,12 +26,14 @@ function auxiliar_model(varargin)
     
     % get RDM
     rdm = tcan.function.get.model(tcan,i_subject,i_session,i_model);
+    rdm = squareform(rdm);
 
     % figure
     n = size(rdm,1);
     fig_figure(plot_args.figure);
     subplot(plot_args.subplot(1),plot_args.subplot(2),plot_args.subplot(3));
     fig_pimage(rdm); set(gca,'YDir','reverse');
+%     imagesc(rdm); set(gca,'YDir','reverse');
     colormap(fig_color(plot_args.color_scheme,size(colormap(),1)));
     sa.xlim       = [0,n] + 0.5;
     sa.xtick      = [];

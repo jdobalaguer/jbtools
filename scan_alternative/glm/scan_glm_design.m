@@ -6,6 +6,7 @@ function scan = scan_glm_design(scan)
     %   >> help scan;
 
     %% function
+    if scan_tool_isdone(scan), return; end
     if ~scan.running.flag.design, return; end
     
     % print
@@ -67,4 +68,7 @@ function scan = scan_glm_design(scan)
     
     % save
     scan.running.jobs.design = spm;
+    
+    % done
+    scan = scan_tool_done(scan);
 end
