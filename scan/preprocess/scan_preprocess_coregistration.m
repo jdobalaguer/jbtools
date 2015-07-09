@@ -1,40 +1,54 @@
 
-function [scan,job] = scan_preprocess_coregistration(scan,job)
-    %% [scan,job] = SCAN_PREPROCESS_COREGISTRATION(scan,job)
-    % coregistration of raw data (structural to mean EPI)
-    % see also scan_preprocess_run
-    
-    %% WARNINGS
-    %#ok<*FPARK,*AGROW>
+function scan = scan_preprocess_coregistration(scan)
+    %% scan = SCAN_PREPROCESS_COREGISTRATION(scan)
+    % coregister structural with the mean EPI
+    % to list main functions, try
+    %   >> help scan;
 
-    %% FUNCTION
+    %% function
+    if scan_tool_isdone(scan), return; end
+    if ~scan.running.flag.coregistration, return; end
+        
+    % print
+    scan_tool_print(scan,false,'\nCoregistration (structural to functional) : ');
+    scan_tool_progress(scan,scan.running.subject.number);
     
-    % assert
-    assertWarning(all(job.run==1),'scan_preprocess_coregistration: warning. job.run set to 1');
-    job.run(:) = 1;
+    % subject
+    spm = cell(1,scan.running.subject.number);
+    for i_subject = 1:scan.running.subject.number
+        
+        % variables
+        file_origin         = scan.running.file.nii.structural.(scan.running.last.structural){i_subject};
+        file_coregistration = fullfile(scan.running.directory.nii.structural.coregistration{i_subject},strcat('c',file_2local(file_origin)));
+        file_mean           = file_match(fullfile(scan.running.directory.nii.epi3.(scan.running.last.epi3){i_subject}{1},'mean*.nii'),'absolute');
+        
+        % copy original file
+        copyfile(file_origin,file_coregistration);
+        
+        % coregistration
+        spm{i_subject}.spm.spatial.coreg.estimate.ref    = {[file_mean,',1']};
+        spm{i_subject}.spm.spatial.coreg.estimate.source = {[file_coregistration,',1']};
+        spm{i_subject}.spm.spatial.coreg.estimate.other  = {''};
+        spm{i_subject}.spm.spatial.coreg.estimate.eoptions.cost_fun = spm_get_defaults('coreg.estimate.cost_fun');
+        spm{i_subject}.spm.spatial.coreg.estimate.eoptions.sep      = spm_get_defaults('coreg.estimate.sep');
+        spm{i_subject}.spm.spatial.coreg.estimate.eoptions.tol      = spm_get_defaults('coreg.estimate.tol');
+        spm{i_subject}.spm.spatial.coreg.estimate.eoptions.fwhm     = spm_get_defaults('coreg.estimate.fwhm');
+        
+        % SPM
+        evalc('spm_jobman(''run'',spm(i_subject))');
+        
+        % wait
+        scan_tool_progress(scan,[]);
+    end
+    scan_tool_progress(scan,0);
     
-    % coregistration
-    batches = {};
-    for i_subject = scan.subject.u
-        fprintf('Coregistration : subject %02i \n',i_subject);
-        dir_mean = strcat(sprintf(job.mean.path,i_subject),filesep);
-        file_mean = dir([dir_mean,job.mean.file]);
-        file_mean = strcat(dir_mean,strvcat(file_mean.name));
-        dir_from = strcat(sprintf(job.from.path,i_subject),filesep);
-        file_from = dir([dir_from,job.from.file]);
-        assert(length(file_from)==1,'scan_preprocess_coregistration: error. multiple structural files');
-        copyfile([dir_from,file_from.name],[dir_from,'c',file_from.name]);
-        batch = struct();
-        batch.spm.spatial.coreg.estimate.ref    = {[file_mean,',1']};
-        batch.spm.spatial.coreg.estimate.source = {[dir_from,'c',file_from.name,',1']};
-        batch.spm.spatial.coreg.estimate.other  =  {''};
-        batch.spm.spatial.coreg.estimate.eoptions.cost_fun = 'nmi';
-        batch.spm.spatial.coreg.estimate.eoptions.sep = [4 2];
-        batch.spm.spatial.coreg.estimate.eoptions.tol = [0.0200 0.0200 0.0200 0.0010 0.0010 0.0010 0.0100 0.0100 0.0100 0.0010 0.0010 0.0010];
-        batch.spm.spatial.coreg.estimate.eoptions.fwhm = [7 7];
-        batches{end+1} = batch;
-    end
-    if ~isempty(batches)
-        spm_jobman('run',batches)
-    end
+    % save
+    scan.running.jobs.coregistration = spm;
+    
+    % update
+    scan = scan_autocomplete_nii(scan,'structural:coregistration');
+    scan.running.last.structural = 'coregistration';
+    
+    % done
+    scan = scan_tool_done(scan);
 end

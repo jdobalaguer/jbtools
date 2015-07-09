@@ -1,29 +1,18 @@
 
 function scan()
-    %% SCAN toolbox
-    % perform standard analyses for fMRI data
+    %% SCAN toolbox (for fMRI data with SPM)
     %
-    % see also scan_dcm2nii
-    %          scan_expand
-    %          scan_preprocess_run
-    %          scan_glm_run
-    %          scan_check_mean
-    %          scan_check_movement
-    %          scan_check_normalisation
-    %          scan_check_smooth
-    %          scan_plot_design
-    %          scan_plot_peristimulus
-    %          scan_plot_bar
-    %          scan_mvpa_glm
-    %          scan_mvpa_run
-    %          scan_mvpa_searchlight
-    %          scan_mvpa_summarize
-    %          scan_rsa_glm
-    %          scan_rsa_run
+    % scan_conversion    : convert dicom, nifti-4d and nifti-3d
+    % scan_preprocess    : run a preprocessing pipeline
+    % scan_glm           : GLM / PPI analysis
+    % scan_tbte          : trial-by-trial estimates
+    % scan_rsa           : representation similarity analysis
 
-    %%  WARNINGS
-    %#ok<>
+    % scan_mvpa          : multivoxel pattern analysis
     
-    %% FUNCTION
+    %% function
+    tcan.parameter.analysis = struct('wpause',false,'verbose',true,'color',struct('warning',[1,0.5,0]));
+    scan_tool_warning(tcan,false,'[scan] variable not defined.');
+    scan_tool_warning(tcan,false,'displaying help');
     help('scan');
 end

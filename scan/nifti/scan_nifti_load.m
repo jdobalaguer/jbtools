@@ -1,22 +1,45 @@
 
-function [v,s] = scan_nifti_load(file,mask)
-    %% [v,s] = SCAN_NIFTI_LOAD(file[,mask])
-    % Load a NIFTI image
-    % see also scan_plot_peristimulus
+function [vol,siz] = scan_nifti_load(file,mask)
+    %% [vol,siz] = SCAN_NIFTI_LOAD(file[,mask])
+    % load volumes
+    % file : a string, or a cell of strings
+    % mask : an array
+    % vol  : a volume, or a cell of volumes (vector shaped)
+    % siz  : a matrix with the shape of the volumes, or cell of matrices
+    % to list main functions, try
+    %   >> help scan;
     
-    %% WARNINGS
-    %#ok<*ERTAG,*FPARK>
-
-    %% FUNCTION
+    %% function
     
     % mask
-    not_mask = [];
-    if exist('mask','var') && ~isempty(mask), not_mask = ~mask(:); end
+    func_default('mask',[]);
     
-    % volume
-    v = spm_vol(file);
-    s = size(v.private.dat);
-    v = double(v.private.dat(:));
-    v(not_mask) = [];
+    % load single file
+    if ischar(file)
+        vol = spm_vol(file);
+        siz = size(vol.private.dat);
+        vol = double(vol.private.dat(:));
+        vol(~mask(:)) = [];
+        
+    % load many volumes
+    else
+        assert(iscellstr(file),'scan_nifti_load: error. file must be a string or a cell of strings');
+        
+        % efficient ROI extraction (but doesn't work)
+        % if ~isempty(mask)
+        %     [x,y,z] = ind2sub(size(mask),find(mask>0));
+        %     vol = spm_get_data(file,[x,y,z]')';
+        %     vol = mat2vec(num2cell(vol,1));
+        %     siz = repmat({[nan,nan,nan]},size(vol));
+        %     return
+        % end
+        
+        % recursive call
+        vol = cell(size(file));
+        siz = cell(size(file));
+        for i = 1:numel(file)
+            [vol{i},siz{i}] = scan_nifti_load(file{i},mask);
+        end
+    end
 
 end

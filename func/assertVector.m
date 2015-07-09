@@ -9,6 +9,5 @@ function assertVector(varargin)
     b = all(b);
     c = func_caller();
     func_default('c',func_caller(0));
-    assert(b,'%s: error. one or more variables are not vector',c);
-
+    assert(b,'%s: error. one or more variables are not vectors',c);
 end

@@ -12,6 +12,6 @@ function file_savevar(varargin)
     version = varargin{2};
     pair = varargin(3:end);
     func_default('version','-v7');
-    s = pair2struct(pair);
-    save(file,version,'-struct',s);
+    s = pair2struct(pair); %#ok<NASGU>
+    save(file,version,'-struct','s');
 end
