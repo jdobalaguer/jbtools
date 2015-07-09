@@ -8,6 +8,7 @@ function scan = scan_assert_rsa(scan)
     %% function
     
     % model function
+    scan_tool_assert(scan,struct_isfield(scan,'job.model'),'[scan.job.model] not found');
     for i_model = 1:numel(scan.job.model)
         func = scan.job.model(i_model).function;
         scan_tool_assert(scan,~func_isnested(func),  'Model functions cannot be nested.');

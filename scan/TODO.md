@@ -3,11 +3,8 @@ TODO
 09. preprocessing
 35. TBTE @get.second(name,vector) @plot.xjview(name)
 47. RSA functions for ROI
-51. RSA results to MNI space, for realignment
-55. RSA within ROI
 59. RSA with beta/cont/spmT
 60. TBTE first level generic contrasts (could be useful for RSA)
-61. fix struct_default when using empty struct vectors..
 
 LONG TERM
 06. handle HDD writing depending on the size of [scan]
@@ -19,6 +16,7 @@ LONG TERM
 22. functions @update
 42. @scan_tool_mask_outside(scan,image)
 46. RSA with less subjects
+51. RSA results to MNI space, for realignment
 
 DONE
 01. *fix* the glm FIR function yields different results for equivalent first beta/contrast - and I don't know why
@@ -97,6 +95,8 @@ R6. in RSA we should recycle the onset information from the TBTE.
 53. wrap auto-completion as "first steps"
 54. save all callers within a folder
 55. make adding new jobs more straightforward
+55. RSA within ROI
 56. option in glm to remove first volumes
 57. check for invalid fields in [scan] during scan_initialize
 58. RSA with global transformations
+61. fix struct_default when using empty struct vectors..

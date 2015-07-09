@@ -1,6 +1,6 @@
 
-function scan = scan_rsa_estimation(scan)
-    %% scan = SCAN_RSA_ESTIMATION(scan)
+function scan = scan_rsa_searchlight_estimation(scan)
+    %% scan = SCAN_RSA_SEARCHLIGHT_ESTIMATION(scan)
     % RSA estimation (searchlight)
     % to list main functions, try
     %   >> help scan;
@@ -17,7 +17,7 @@ function scan = scan_rsa_estimation(scan)
     for i_subject = 1:scan.running.subject.number
         for i_session = 1:scan.running.subject.session(i_subject)
         
-            % searchlight or not?
+            % searchlight
             [image_rs,image_ps,image_ns] = scan_tool_rsa_searchlight(scan,i_subject,i_session);
             
             % write & smooth

@@ -1,7 +1,7 @@
 
-function scan = scan_rsa_second(scan)
-    %% scan = SCAN_RSA_SECOND(scan)
-    % RSA second-level analysis
+function scan = scan_rsa_searchlight_second(scan)
+    %% scan = SCAN_RSA_SEARCHLIGHT_SECOND(scan)
+    % RSA second-level analysis (searchlight)
     % to list main functions, try
     %   >> help scan;
     

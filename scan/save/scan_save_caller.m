@@ -16,14 +16,14 @@ function scan = scan_save_caller(scan,caller)
     % move previous folder
     if file_match(scan.running.directory.save.caller)
         d = dir(scan.running.directory.save.caller); d = d.date;
-        f = strcat(scan.running.directory.save.caller,' ',d);
-        movefile(scan.running.file.save.caller,f);
+        f = strcat(file_nendsep(scan.running.directory.save.caller),' ',d);
+        movefile(scan.running.directory.save.caller,f);
     end
     
     % copy file
     while ~isempty(func_caller(caller))
         file_mkdir(scan.running.directory.save.caller);
         copyfile(which(func_caller(caller)),scan.running.directory.save.caller);
-        caller = caller+1;
+        caller = caller + 1;
     end
 end

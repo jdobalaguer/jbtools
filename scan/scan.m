@@ -14,5 +14,5 @@ function scan()
     tcan.parameter.analysis = struct('wpause',false,'verbose',true,'color',struct('warning',[1,0.5,0]));
     scan_tool_warning(tcan,false,'[scan] variable not defined.');
     scan_tool_warning(tcan,false,'displaying help');
-    help('scan');
+    help(which('scan'));
 end

@@ -53,7 +53,7 @@ function [r,p,n] = scan_tool_rsa_searchlight(scan,i_subject,i_session)
     end
 end
 
-%% auxiliar sphereCentre
+%% auxiliar: sphereCentre
 function ctrRelSphereSUBs = sphereCentre(scan)
 	voxSize_mm          = scan_tool_rsa_voxelsize(scan,scan.running.meta);
 	searchlightRad_mm   = scan.job.searchlight;
@@ -68,7 +68,7 @@ function ctrRelSphereSUBs = sphereCentre(scan)
 	ctrRelSphereSUBs    = sphereSUBs-ones(size(sphereSUBs,1),1)*ctrSUB;
 end
 
-%% mahalanobisProjection
+%% auxiliar: mahalanobisProjection
 function [X,Y] = mahalanobisProjection(scan,i_subject,i_session)
     [X,Y] = deal([]);
     if ~strcmp(scan.job.distance,'mahalanobis'), return; end
@@ -81,7 +81,7 @@ function [X,Y] = mahalanobisProjection(scan,i_subject,i_session)
     Y = Y(ii_session_row,:);
 end
 
-%% auxiliar searchlight
+%% auxiliar: searchlight
 function [p,r,n] = runSearchlight(scan,x,y,z,u_sphere,mask,beta,u_model,u_filter,X,Y)
 
     % subindices of voxels

@@ -1,7 +1,7 @@
 
-function scan = scan_rsa_function(scan)
-    %% scan = SCAN_RSA_FUNCTION(scan)
-    % define functions
+function scan = scan_rsa_searchlight_function(scan)
+    %% scan = SCAN_RSA_SEARCHLIGHT_FUNCTION(scan)
+    % define functions (searchlight)
     % to list main functions, try
     %   >> help scan;
 

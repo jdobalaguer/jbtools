@@ -23,9 +23,8 @@ function scan = scan_rsa(scan)
         'Build model',...
         ...
         'RSA estimation',...
-        'RSA analysis (first level)',...
-        'RSA analysis (second level)',...
-        ...
+        'RSA first',...
+        'RSA second',...
         'Add function');
     
     % initialize
@@ -44,15 +43,9 @@ function scan = scan_rsa(scan)
         scan = scan_rsa_model(scan);            % build model
         scan = scan_rsa_concat(scan);           % concatenate sessions
         
-        % estimation
-        scan = scan_rsa_estimation(scan);
-        
-        % analysis
-        scan = scan_rsa_first(scan);
-        scan = scan_rsa_second(scan);
-
-        % function
-        scan = scan_rsa_function(scan);
+        % estimation, first, second, function
+        scan = scan_rsa_searchlight(scan);
+        scan = scan_rsa_roi(scan);
         
         % save
         scan_save_scan(scan);

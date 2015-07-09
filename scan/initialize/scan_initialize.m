@@ -15,14 +15,14 @@ function scan = scan_initialize(scan)
     % initialize
     scan = scan_initialize_spm(scan);
     template = scan_initialize_template(scan.job.type);
-    scan     = scan_initialize_time(scan);
     scan     = struct_default(scan,template);
     
     % check
     f = checkFields(scan,template);
-    for i = 1:length(f), scan_tool_warning(scan,true,'field "%s" not found in pattern. it will be ignored.',f{i}); end
+    for i = 1:length(f), scan_tool_warning(scan,true,'field "%s" not found in template. it will be ignored.',f{i}); end
     
     % autocomplete
+    scan     = scan_initialize_time(scan);
     scan     = scan_initialize_autocomplete(scan);
     
     % wait
