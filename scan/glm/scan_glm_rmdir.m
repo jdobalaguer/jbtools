@@ -9,7 +9,7 @@ function scan = scan_glm_rmdir(scan)
     
     % remove directory
     if any(isdir(scan.running.directory.job))
-        scan_tool_warning(scan,false,'will delete folder "%s"',scan.running.directory.job);
+        scan_tool_warning(scan,true,'will delete folder "%s"',scan.running.directory.job);
         file_rmdir(scan.running.directory.job);
     end
     

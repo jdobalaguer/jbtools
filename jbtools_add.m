@@ -5,6 +5,7 @@ function jbtools_add()
     %% warnings
 
     %% function
+    if jbtools_added(), return; end
     dirs = jbtools_dirs();
     for i_dirs = 1:length(dirs)
         addpath(genpath(dirs{i_dirs}));

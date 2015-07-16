@@ -60,9 +60,4 @@ function scan = scan_rsa_model_rdm(scan)
         scan.running.model(i_model).rdm = rdm;
     end
     scan_tool_progress(scan,0);
-    
-%     % concatenation
-%     scan.running.subject.session(:) = 1;
-%     scan.running.load.version = strcat(mat2vec(num2leg(scan.running.load.session,'_%03i')),scan.running.load.version);
-%     scan.running.load.session(:) = 1;
 end

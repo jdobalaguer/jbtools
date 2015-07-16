@@ -1,33 +1,51 @@
 
-function y = vec_func(varargin)
-    %% y = VEC_FUNC(f,x1[,x2][,x3][...])
-    % apply a function [f] independently for each combination of {x}
-    % f :  a function @(i1,i2,...) that returns either a scalar or a vector
-    % x : combinations
-    % y : resulting vector
+function z = vec_func(varargin)
+    %% z = VEC_FUNC(f,y,x)
+    % apply a function [f] to {x} and {y} independently for each combination of {x}
+    % f :  a function @(x,y). it should return either a scalar or a vector
+    % y : value (cell of matrix)
+    % x : index (cell of vectors)
+    % z : resulting vector
+    
+    %% notes
+    % a current limitation. the resulting vector can only be a vector or a matrix (never a tensor)
     
     %% function
     
-    % default
-    f = varargin{1};
-    x = varargin(2:end);
-    
     % assert
     assert(nargin>1,'vec_func: error. not enough arguments');
-    assertVector(x);
-    assertNan(x{:});
-    assertSize(x{:});
+    assert(nargin<4,'vec_func: error. too many arguments');
+    
+    % default
+    varargin(end+1:3) = {{}};
+    f = varargin{1};
+    y = varargin{2};
+    x = varargin{3};
+    
+    % assert
+    assertVector(x{:});
+    func_return(@assertSize,0,[x,cellfun(@(y)y(:,1),y,'UniformOutput',false)]);
     
     % apply
-    y = apply(f,x,[]);
+    z = apply(f,y,x,{});
 end
 
 %% recursive function
-function y = apply(f,xs,us)
-    if isempty(xs), y = f(us{:}); return; end
-    y = nan(size(xs{1}));
-    for ux = unique(xs{1})
-        ii = (xs{1} == ux);
-        y(ii) = apply(f,cellfun(@(x)x(ii),xs(2:end),'UniformOutput',false),[us,{ux}]);
+function z = apply(f,y,x,u)
+    % instead of using @unique('rows'), we do it recursively
+    % that way, using @isequal we can compare pretty much anything (even nans)
+    % x : remaining x to index
+    % y : y matching those x
+    % u : x values already indexed
+    if isempty(x), z = f(y,u); return; end
+%     z = nan(size(x{1}));
+    ux = unique(x{1});
+    for ix = 1:length(ux)
+        ii = arrayfun(@(x)isequaln(x,ux(ix)),x{1});
+        tx = cellfun(@(x)x(ii),  x(2:end),'UniformOutput',false);
+        ty = cellfun(@(y)y(ii,:),y,       'UniformOutput',false);
+        tu = cellfun(@(u)u(ii),  u,       'UniformOutput',false);
+        tu{end+1} = x{1}(ii); %#ok<AGROW>
+        z(ii,:) = apply(f,ty,tx,tu); %#ok<AGROW>
     end
 end

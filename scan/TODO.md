@@ -5,6 +5,7 @@ TODO
 47. RSA functions for ROI
 59. RSA with beta/cont/spmT
 60. TBTE first level generic contrasts (could be useful for RSA)
+61. fix struct_default when using empty struct vectors..
 
 LONG TERM
 06. handle HDD writing depending on the size of [scan]
@@ -99,4 +100,3 @@ R6. in RSA we should recycle the onset information from the TBTE.
 56. option in glm to remove first volumes
 57. check for invalid fields in [scan] during scan_initialize
 58. RSA with global transformations
-61. fix struct_default when using empty struct vectors..

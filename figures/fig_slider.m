@@ -85,7 +85,7 @@ function fig_slider(v,x,l,r)
         colorbar();
 
         % aesthetics
-        sa.clim   = ranger(v);
+        sa.clim   = [-5,+5]; %ranger(v);
         sa.ylabel = l{1};
         sa.xlabel = l{2};
         sa.xtick  = 1:s(2);

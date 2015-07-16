@@ -24,8 +24,8 @@ function scan = scan_rsa_steps(scan)
     scan = scan_rsa_flag(scan);
     scan_tool_progress(scan,[]);
     
-    % delete old directories
-    scan = scan_rsa_rmdir(scan);
+    % move old directories
+    scan = scan_tool_movejob(scan);
     scan_tool_progress(scan,[]);
 	
     % create new directories

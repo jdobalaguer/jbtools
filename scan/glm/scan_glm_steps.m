@@ -32,8 +32,8 @@ function scan = scan_glm_steps(scan)
     scan = scan_glm_flag(scan);
     scan_tool_progress(scan,[]);
     
-    % delete old directories
-    scan = scan_glm_rmdir(scan);
+    % move old directories
+    scan = scan_tool_movejob(scan);
     scan_tool_progress(scan,[]);
 	
     % create new directories

@@ -4,6 +4,5 @@ function b = func_isnested(func)
     % check whether the function is nested
     
     %% function
-    b = any(ismember(func2str(func),'\/'));
-    
+    b = ~func_isformula(func) && any(ismember(func2str(func),'\/'));
 end

@@ -1,27 +1,22 @@
 
-function y = vec_zscore(x,s)
-    %% [y] = VEC_ZSCORE(x,s)
-    % z-scored matrix [x], independently for each index in [s]
+function z = vec_zscore(varargin)
+    %% [y] = VEC_ZSCORE(x[,s])
+    % z-score matrix [y], independently for each combination of indices in {x}
     
     %% function
     
     % default
-    func_default('s',ones(size(x)));
-    
-    % assert
-    assertVector(s);
-    assertSize(x(:,1),s);
+    y = varargin(1);
+    x = varargin(2:end);
     
     % do
-    y = nan(size(x));
-    [u_s,n_s] = numbers(s);
-    for i_s = 1:n_s
-        ii_s = (s == u_s(i_s));
-        x_s  = x(ii_s,:);
-        m_s = repmat(nanmean(x_s),  [sum(ii_s),ones(1,ndims(x_s)-1)]);
-        v_s = repmat(nanstd (x_s,0),[sum(ii_s),ones(1,ndims(x_s)-1)]);
-        y_s  = (x_s - m_s) ./ v_s;
-        y_s(v_s == 0) = 0;
-        y(ii_s,:) = y_s;
-    end
+    z = vec_func(@f,y,x);
+end
+
+function z = f(y,~)
+    s = [size(y{1},1),ones(1,ndims(y)-1)];
+    m = repmat(nanmean(y{1},1),s);
+    v = repmat(nanstd(y{1},[],1),s);
+    z = (y{1} - m) ./ v;
+    z(v == 0) = 0;
 end

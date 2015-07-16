@@ -1,6 +1,6 @@
 
 function z = mat_zscore(x,d)
-    %% z = MAT_ZSCORE(x,d)
+    %% z = MAT_ZSCORE(x[,d])
     % x : vector/matrix to z-score
     % d : dimension. if none specified, global z-scoring will be used
     % z : resulting z-score

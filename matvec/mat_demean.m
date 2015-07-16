@@ -1,6 +1,6 @@
 
 function z = mat_demean(x,d)
-    %% z = MAT_DEMEAN(x,d)
+    %% z = MAT_DEMEAN(x[,d])
     % x : vector/matrix to de-mean
     % d : dimension. if none specified, global de-meaning will be used
     % z : resulting de-mean

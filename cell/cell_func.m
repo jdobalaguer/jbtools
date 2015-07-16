@@ -1,6 +1,6 @@
 
-function r = cell_fun(varargin)
-    %% r = CELL_FUN(f,c1,c2,...)
+function r = cell_func(varargin)
+    %% r = CELL_FUNC(f,c1,c2,...)
     % like cellfun, but recursively
     % it always takes a cell as the output of [f]
     % e.g.

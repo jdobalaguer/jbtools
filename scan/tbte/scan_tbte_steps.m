@@ -32,8 +32,8 @@ function scan = scan_tbte_steps(scan)
     scan = scan_tbte_flag(scan);
     scan_tool_progress(scan,[]);
     
-    % delete old directories
-    scan = scan_tbte_rmdir(scan);
+    % move old directories
+    scan = scan_tool_movejob(scan);
     scan_tool_progress(scan,[]);
 	
     % create new directories

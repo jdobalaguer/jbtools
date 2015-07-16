@@ -10,15 +10,15 @@ function scan = scan_save_caller(scan,caller)
     % default
     func_default('caller',2);
     
-    % make directory
-    file_mkdir(fileparts(scan.running.directory.save.caller));
-    
     % move previous folder
     if file_match(scan.running.directory.save.caller)
         d = dir(scan.running.directory.save.caller); d = d.date;
         f = strcat(file_nendsep(scan.running.directory.save.caller),' ',d);
         movefile(scan.running.directory.save.caller,f);
     end
+    
+    % make directory
+    file_mkdir(fileparts(scan.running.directory.save.caller));
     
     % copy file
     while ~isempty(func_caller(caller))

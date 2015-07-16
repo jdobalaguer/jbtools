@@ -1,41 +1,32 @@
 
-function ret = struct_concat(varargin)
-    %% s = STRUCT_CONCAT(d,s1,s2,..)
+function s = struct_concat(varargin)
+    %% s = STRUCT_CONCAT(d,s1[,s2],..)
     % concatenate many structs, field by field
-    % d   : dimension of concatenation
-    % {s} : structs to concatenate
+    % d  : dimension of concatenation
+    % s# : structs with same fieldnames
+    % s  : resulting struct
     
     %% function
+    
+    % dimension
     d = varargin{1};
-    ret = varargin{2};
-    for i_struct = 3:length(varargin)
-        ret = struct_concat_two(d, ret , varargin{i_struct});
-    end
-end
-
-%% auxiliar (concatenate two structs)
-function ret = struct_concat_two(dim,s1,s2)
-    if isempty(s2), ret  = s1; return; end
     
-    u_field = fieldnames(s1);
-    nb_fields = length(u_field);
+    % fieldnames
+    f = cellfun(@fieldnames, varargin(2:end),'UniformOutput',false);
+    assert(isequal(f{:}),'struct_concat: error. structs have different fieldnames');
+    f = f{1};
     
-    ret = struct();
-    for i_field = 1:nb_fields
-        this_field = u_field{i_field};
-        % get values
-        v1 = s1.(this_field);
-        v2 = s2.(this_field);
-        % convert to cell
-        if ~strcmp(class(v1),class(v2))
-            if ~iscell(v1); v1={v1}; end
-            if ~iscell(v2); v2={v2}; end
-        end
-        if ischar(v1),   v1 = {v1}; end
-        if ischar(v2),   v2 = {v2}; end
-        % concat values
-        v = cat(dim,v1,v2);
-        % save value
-        ret.(this_field) = v;
+    % values
+    v = cellfun(@struct2cell,varargin(2:end),'UniformOutput',false);
+    
+    % number
+    n_f = length(f);
+    
+    % concatenation
+    s = struct();
+    for i_f = 1:n_f
+        t_f = f{i_f};
+        t_v = cellfun(@(x)x{i_f},v,'UniformOutput',false);
+        s.(t_f) = cat(d,t_v{:});
     end
 end

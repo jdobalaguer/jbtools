@@ -92,7 +92,7 @@ function [p,r,n] = runSearchlight(scan,x,y,z,u_sphere,mask,beta,u_model,u_filter
     % indices
     ii_voxel = sub2ind(mask.shape,u_xyz(:,1),u_xyz(:,2),u_xyz(:,3));
 
-    % restrict searchlight to voxels inside validDataBrainMask
+    % restrict searchlight to voxels inside mask.valid
     f_voxel = mask.index(ii_voxel(mask.valid(ii_voxel)));
 
     % number of voxels (return if not enough)
