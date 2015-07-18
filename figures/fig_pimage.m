@@ -30,5 +30,6 @@ function h = fig_pimage(varargin)
     
     % plot
     h = pcolor(X,Y,C);
+    set(h,'LineStyle','none','EdgeColor','none');
 
 end

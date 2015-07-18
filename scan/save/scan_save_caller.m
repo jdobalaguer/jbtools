@@ -23,7 +23,7 @@ function scan = scan_save_caller(scan,caller)
     % copy file
     while ~isempty(func_caller(caller))
         file_mkdir(scan.running.directory.save.caller);
-        copyfile(which(func_caller(caller)),scan.running.directory.save.caller);
+        try, copyfile(which(func_caller(caller)),scan.running.directory.save.caller); end
         caller = caller + 1;
     end
 end

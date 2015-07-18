@@ -9,7 +9,11 @@ function git(varargin)
     
     % parse
     if strcmp(varargin{1},'pum'),
-        cmd{1} = 'git commit -m "automatic upload"';
+        if nargin == 1
+            cmd{1} = 'git commit -m "automatic upload"';
+        else
+            cmd{1} = sprintf('git commit -m "%s"',varargin{2});
+        end
         cmd{2} = 'git push';
     else
         args = sprintf(' %s',varargin{:});
