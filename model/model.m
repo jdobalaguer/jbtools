@@ -3,15 +3,14 @@ function model()
     %% MODEL toolbox
     % utility for simulation and model fitting
     %
-    % see also model_simulation
+    % see also model_example
+    %          model_simulation
+    %          model_reconstruction
     %          model_cost
-    %          model_min
+    %          model_minimum
     %          model_landscape
     %          model_gradient
 
-    %%  WARNINGS
-    %#ok<>
-    
-    %% FUNCTION
+    %% function
     help('model');
 end

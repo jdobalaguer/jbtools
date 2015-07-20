@@ -23,12 +23,12 @@ function model = model_example()
     model.simu.data     = data;
     model.simu.subject  = data.subject;
     model = model_simulation(model);
-%     model = model_reconstruction(model);
+    model = model_reconstruction(model);
 
     model.cost.func     = @test_costfunc;
     model.cost.pars     = struct();
     model.cost.simu     = {1};
-   model.cost.index    = model.simu.index;
+    model.cost.index    = model.simu.index;
     model = model_cost(model);
     model = model_minimum(model);
 

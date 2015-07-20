@@ -1,8 +1,8 @@
 
 function h = fig_combination(varargin)
     %% h = FIG_COMBINATION(mode,[x,]my,sy[,c][,a])
-    % plot whatever using splines
-    % mode : what kind of plot. a string or a cell of strings. one or more of {'line','pip','error','shade'}
+    % plot whatever using standard error
+    % mode : what kind of plot. a string or a cell of strings. one or more of {'line','pip','error','shade','marker'}
     % x    : x-values
     % my   : center of y-value
     % sy   : half-height of area

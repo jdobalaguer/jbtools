@@ -4,5 +4,5 @@ function z = struct_mat2vec(s)
     % reshape values of each field as columns
     
     %% function
-    z = struct_fun(s,@mat2vec);
+    z = struct_func(s,@mat2vec);
 end

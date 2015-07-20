@@ -9,7 +9,9 @@ function [z,q] = vec_rows(varargin)
     %% function
     assertSize(varargin{:});
     assertVector(varargin{:});
-    X = cell2mat(cellfun(@mat2vec,varargin,'UniformOutput',false));
+    X = cellfun(@mat2vec,varargin,'UniformOutput',false);
+    X = cellfun(@double, varargin,'UniformOutput',false);
+    X = cell2mat(X);
     [q,~,z] = unique(X,'rows');
     z = reshape(z,size(varargin{1}));
 end

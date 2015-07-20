@@ -8,8 +8,8 @@ function model = model_minimum(model)
     %#ok<*ASGLU>
     
     %% assert
-    assert(isfieldp(model,'simu.result'), 'model_min: error. no "model.simu.result" field');
-    assert(isfieldp(model,'cost.result'), 'model_min: error. no "model.cost.result" field');
+    assert(struct_isfield(model,'simu.result'), 'model_min: error. no "model.simu.result" field');
+    assert(struct_isfield(model,'cost.result'), 'model_min: error. no "model.cost.result" field');
     
     %% function
 

@@ -11,8 +11,8 @@ function model = model_gradient(model)
     %% function
     
     % default
-    if ~isfield(model.grad,'index'),    model.grad.index  = {logical(model.grad.subject)}; end
-    if ~isfield(model.grad,'option'),   model.grad.option = []; end
+    if ~struct_isfield(model,'grad.index'),    model.grad.index  = {logical(model.grad.subject)}; end
+    if ~struct_isfield(model,'grad.option'),   model.grad.option = []; end
     
     % numbers
     u_pars = fieldnames(model.grad.origin);
@@ -26,12 +26,12 @@ function model = model_gradient(model)
     for i_pars = 1:n_pars
         c_pars{i_pars} =  model.grad.origin.(u_pars{i_pars});
     end
-    u_comb = jb_allcomb(c_pars{:});
+    u_comb = vec_combination(c_pars{:});
     n_comb = size(u_comb,1);
 
     % apply gradient descent
     model.grad.result = cell(n_subject,n_index);
-    jb_parallel_progress(n_subject * n_index * n_comb);
+    func_wait(n_subject * n_index * n_comb);
     for i_subject = 1:n_subject
         for i_index = 1:n_index
             
@@ -56,7 +56,7 @@ function model = model_gradient(model)
             parfor_cost_func   = model.cost.func;
             parfor_data   = data;
             
-            parfor (i_comb = 1:n_comb, jb_parallel_pool())
+            parfor (i_comb = 1:n_comb, mme_size())
                 % comb
                 parfor_x0 = u_comb(i_comb,:)';
                 
@@ -64,7 +64,7 @@ function model = model_gradient(model)
                 parfor_result(i_comb) = model_gradient_parfor(problem,parfor_x0,parfor_simu_pars,parfor_simu_func,parfor_cost_pars,parfor_cost_func,parfor_data);
                 
                 % progress
-                jb_parallel_progress();
+                func_wait();
             end
             
             % save minima
@@ -73,7 +73,7 @@ function model = model_gradient(model)
             model.grad.result{i_subject,i_index} = parfor_result(f_comb);
         end
     end
-    jb_parallel_progress(0);
+    func_wait(0);
     
 end
 

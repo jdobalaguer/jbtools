@@ -10,11 +10,10 @@ function model = model_cost(model)
     %% warnings
     %#ok<*ASGLU,*PFBNS>
     
-    %% assert
-    assert(isfieldp(model,'simu.result.simulation'), 'model_cost: error. no "model.simu.result.simulation" field');
-    assert(length(model.cost.index) == length(model.cost.simu), 'model_cost: error. "index" and "simu" have different length');
-    
     %% function
+    
+    % assert
+    assert(struct_isfield(model,'simu.result.simulation'),      'model_cost: error. no "model.simu.result.simulation" field');
     
     % numbers
     s_comb = size(model.simu.result.simulation); s_comb(1:2) = [];
@@ -24,7 +23,9 @@ function model = model_cost(model)
     [u_subject,n_subject] = numbers(model.simu.subject);
     
     % index
-    if ~isfieldp(model,'cost.index'), model.cost.index = model.simu.index; end
+    if ~struct_isfield(model,'cost.index'), model.cost.index = model.simu.index; end
+    assert(length(model.cost.index) == length(model.cost.simu), 'model_cost: error. "index" and "simu" have different length');
+    
     u_index = model.cost.index;
     n_index = length(u_index);
     
@@ -33,7 +34,7 @@ function model = model_cost(model)
     model.cost.result.cost = nan([n_subject,n_index,s_comb]);
     
     % cost
-    jb_parallel_progress(n_subject * n_index * n_comb);
+    func_wait(n_subject * n_index * n_comb);
     for i_subject = 1:n_subject
         
         % subject
@@ -59,7 +60,7 @@ function model = model_cost(model)
             parfor_ii     = ii_cost(ii_subject & ii_simu);
             parfor_result = model.cost.result.cost(i_subject,i_index,:);
             parfor_func   = model.cost.func;
-            parfor (i_comb = 1:n_comb, jb_parallel_pool())
+            parfor (i_comb = 1:n_comb, mme_size())
                 
                 % simu
                 simu = struct_filter(parfor_simu(i_comb),parfor_ii);
@@ -68,11 +69,11 @@ function model = model_cost(model)
                 parfor_result(i_comb) = parfor_func(data,simu,pars);
                 
                 % progress
-                jb_parallel_progress();
+                func_wait();
             end
             model.cost.result.cost(i_subject,i_index,:) = parfor_result;
         end
     end
-    jb_parallel_progress(0);
+    func_wait(0);
     
 end

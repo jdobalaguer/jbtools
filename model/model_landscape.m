@@ -56,7 +56,7 @@ function model_landscape(model,c_pars)
                     x = model.simu.pars.(u_pars{f_pars});
                     m = reshape(mean_cost(1,i_index,:),[s_comb(f_pars),1]);
                     e = reshape( ste_cost(1,i_index,:),[s_comb(f_pars),1]);
-                    fig_steplot(x,m,e);
+                    fig_combination({'marker','line','shade','pip'},x,m,e);
                     sa.xlabel     = u_pars{f_pars};
                     sa.ylabel     = 'cost';
                     fig_axis(sa);

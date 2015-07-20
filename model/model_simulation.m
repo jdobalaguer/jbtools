@@ -2,10 +2,9 @@
 function model = model_simulation(model)
     %% model = model_simulation(model)
     % run a (grid of) simulation(s) of a model
-    % this can work in parallel: use matlabpool('open')
-    % see also: model_cost
-    %           model_reconstruction
-    %           model_gradient
+    % this can work in parallel. @use mme_open
+    % to list main functions, try
+    %   >> help model;
     
     %% warnings
     %#ok<*PFBNS>
@@ -13,7 +12,7 @@ function model = model_simulation(model)
     %% function
     
     % set up parameters
-    if ~isfieldp(model,'simu.pars')
+    if ~struct_isfield(model,'simu.pars')
         model.simu.pars = struct('null',0);
     end
     model.simu.pars = struct_mat2vec(model.simu.pars);
@@ -24,7 +23,7 @@ function model = model_simulation(model)
         c_pars{i_pars} =  model.simu.pars.(u_pars{i_pars});
         if ~iscell(c_pars{i_pars}), c_pars{i_pars} = num2cell(c_pars{i_pars}); end % convert to cell
     end
-    u_comb = fliplr(jb_allcomb(c_pars{end:-1:1}));
+    u_comb = fliplr(vec_combination(c_pars{end:-1:1}));
     n_comb = size(u_comb,1);
     s_comb = cellfun(@numel,c_pars);
 
@@ -32,7 +31,7 @@ function model = model_simulation(model)
     [u_subject,n_subject] = numbers(model.simu.subject);
     
     % index
-    if ~isfield(model.simu,'index'), model.simu.index = {ones(size(model.simu.subject))}; end
+    if ~struct_isfield(model.simu,'index'), model.simu.index = {ones(size(model.simu.subject))}; end
     u_index = model.simu.index;
     n_index = length(u_index);
     
@@ -49,7 +48,7 @@ function model = model_simulation(model)
     model.simu.result.simulation = repmat(model.simu.result.simulation,[n_subject,n_index,s_comb]);
     
     % simulations
-    jb_parallel_progress(n_subject * n_index * n_comb);
+    func_wait(n_subject * n_index * n_comb);
     for i_subject = 1:n_subject
 
         % subject
@@ -67,7 +66,7 @@ function model = model_simulation(model)
             % parfor
             parfor_result = model.simu.result.simulation(i_subject,i_index,:);
             parfor_func   = model.simu.func;
-            parfor (i_comb = 1:n_comb, jb_parallel_pool())
+            parfor (i_comb = 1:n_comb, mme_size())
                 
                 % comb
                 pars = [u_pars';num2cell(u_comb(i_comb,:))];
@@ -77,11 +76,11 @@ function model = model_simulation(model)
                 parfor_result(i_comb) = parfor_func(data,pars);
                 
                 % progress
-                jb_parallel_progress();
+                func_wait();
             end
             model.simu.result.simulation(i_subject,i_index,:) = parfor_result;
         end
     end
-    jb_parallel_progress(0);
+    func_wait(0);
 
 end

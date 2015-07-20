@@ -1,11 +1,12 @@
 
 function z = mme_for(varargin)
-    %% MME_FOR(f,p,x1[,x2][,..])
+    %% MME_FOR(f,p,w,x1[,x2][,..])
     % combine multiple loops within a single parfor
     % use global variables or nested functions to share information with [f]
     %
     % f  : function with inputs ({x#},{i#}) for each iteration
-    % p  : use parfor (default true)
+    % p  : use parfor when possible (default true)
+    % w  : use waitbar (default false)
     % x# : iterations for each condition
     % z  : resulting cell tensor
 
@@ -16,11 +17,12 @@ function z = mme_for(varargin)
     %% function
     
     % arguments
-    [f,p,x] = deal(varargin{1},varargin{2},varargin(3:end));
+    [f,p,w,x] = deal(varargin{1},varargin{2},varargin{3},varargin(4:end));
     
     % default
     func_default('p',true);
     if ~exist('gcp','file'), p = false; end
+    func_default('w',false);
     
     % assert
     assertVector(x{:});
@@ -39,19 +41,23 @@ function z = mme_for(varargin)
     
     % parfor
     z = cell(size(i,1),1);
+    if w, func_wait(size(i,1)); end
     if p
         parfor j = 1:size(i,1)
             ti = num2cell(i(j,:));
             tx = cellfun(@(x,i)x{i},x,ti,'UniformOutput',false);
             z{j} = f(tx,ti); %#ok<PFBNS>
+            if w, func_wait(); end
         end
     else
         for j = 1:size(i,1)
             ti = num2cell(i(j,:));
             tx = cellfun(@(x,i)x{i},x,ti,'UniformOutput',false);
             z{j} = f(tx,ti);
+            if w, func_wait(); end
         end
     end
+    if w, func_wait(0); end
     
     % reshape
     s(1,end+1:2) = 1;

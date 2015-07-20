@@ -1,4 +1,4 @@
-function jbtools_pum(message)
+function jbtools_pum(varargin)
     %% JBTOOLS_PUM()
     % git pull, add, commit and push from jbtools root folder
 
@@ -8,6 +8,7 @@ function jbtools_pum(message)
     curr = pwd();
     root = jbtools_root();
     
+    message = strcat(sprintf('%s ',varargin{:}));
     func_default('message','automatic upload');
     
     cd(root);
