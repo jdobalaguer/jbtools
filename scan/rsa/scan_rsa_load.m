@@ -11,7 +11,7 @@ function scan = scan_rsa_load(scan)
     
     % print
     scan_tool_print(scan,false,'\nLoad GLM conditions : ');
-    scan_tool_progress(scan,sum(scan.running.subject.session));
+    scan = scan_tool_progress(scan,sum(scan.running.subject.session));
     
     scan.running.load = struct('beta',{[]},'subject',{[]},'session',{[]},'order',{[]},'main',{{}},'name',{{}},'version',{{}},'onset',{[]},'gen',{[]});
     scan.running.load.gen = struct('condition',{{}},'isubject',{[]},'isession',{[]},'order',{[]});
@@ -39,10 +39,10 @@ function scan = scan_rsa_load(scan)
                 end
             end
             % wait
-            scan_tool_progress(scan,[]);
+            scan = scan_tool_progress(scan,[]);
         end
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % done
     scan = scan_tool_done(scan);

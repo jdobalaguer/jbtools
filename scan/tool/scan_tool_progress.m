@@ -1,6 +1,6 @@
 
-function scan_tool_progress(scan,progress)
-    %% SCAN_TOOL_PROGRESS(scan,progress)
+function scan = scan_tool_progress(scan,progress)
+    %% scan = SCAN_TOOL_PROGRESS(scan,progress)
     % progress bar tool
     % to list main functions, try
     %   >> help scan;
@@ -9,7 +9,11 @@ function scan_tool_progress(scan,progress)
     if ~scan.parameter.analysis.verbose, return; end
     
     % progress
-    func_wait(progress);
+    if isempty(progress) || ~progress
+        func_wait(progress,scan.running.file.progess);
+    else
+        scan.running.file.progess = func_wait(progress);
+    end
     
     % time
     if scan.parameter.analysis.time

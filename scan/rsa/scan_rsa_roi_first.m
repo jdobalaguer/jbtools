@@ -11,7 +11,7 @@ function scan = scan_rsa_roi_first(scan)
     
     % print
     scan_tool_print(scan,false,'\nRSA analysis (first level) : ');
-    scan_tool_progress(scan,scan.running.subject.number);
+    scan = scan_tool_progress(scan,scan.running.subject.number);
 
     
     % first-level analysis
@@ -28,9 +28,9 @@ function scan = scan_rsa_roi_first(scan)
         scan.result.first(i_subject,:) = nanmean(r,1);
 
         % wait
-        scan_tool_progress(scan,[]);
+        scan = scan_tool_progress(scan,[]);
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % done
     scan = scan_tool_done(scan);

@@ -11,7 +11,7 @@ function scan = scan_rsa_searchlight_second(scan)
     
     % print
     scan_tool_print(scan,false,'\nRSA analysis (second level) : ');
-    scan_tool_progress(scan,numel(scan.job.model));
+    scan = scan_tool_progress(scan,numel(scan.job.model));
     
     % second-level analysis
     for i_model = 1:numel(scan.job.model)
@@ -71,9 +71,9 @@ function scan = scan_rsa_searchlight_second(scan)
         scan.result.second.smooth.ps(:,:,:,i_model) = reshape(p_smooth,meta.dim);
         
         % wait
-        scan_tool_progress(scan,[]);
+        scan = scan_tool_progress(scan,[]);
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % done
     scan = scan_tool_done(scan);

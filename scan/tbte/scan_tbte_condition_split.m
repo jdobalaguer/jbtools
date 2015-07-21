@@ -11,7 +11,7 @@ function scan = scan_tbte_condition_split(scan)
     
     % print
     scan_tool_print(scan,false,'\nSplit condition : ');
-    scan_tool_progress(scan,sum(scan.running.subject.session));
+    scan = scan_tool_progress(scan,sum(scan.running.subject.session));
     
     % subject
     for i_subject = 1:scan.running.subject.number
@@ -41,10 +41,10 @@ function scan = scan_tbte_condition_split(scan)
             scan.running.condition{i_subject}{i_session} = condition;
             
             % wait
-            scan_tool_progress(scan,[]);
+            scan = scan_tool_progress(scan,[]);
         end
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % done
     scan = scan_tool_done(scan);

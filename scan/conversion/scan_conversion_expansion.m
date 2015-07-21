@@ -11,7 +11,7 @@ function scan = scan_conversion_expansion(scan)
    
     % print
     scan_tool_print(scan,false,'\nNIfTI expansion : ');
-    scan_tool_progress(scan,sum(scan.running.subject.session));
+    scan = scan_tool_progress(scan,sum(scan.running.subject.session));
     
     % update nii.epi4
     scan = scan_autocomplete_nii(scan,'epi4');
@@ -22,10 +22,10 @@ function scan = scan_conversion_expansion(scan)
             file_epi4 = scan.running.file.nii.epi4{i_subject}{i_session};
             dire_epi3 = scan.running.directory.nii.epi3.image{i_subject}{i_session};
             spm_file_split(file_epi4,dire_epi3);
-            scan_tool_progress(scan,[]);
+            scan = scan_tool_progress(scan,[]);
         end
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % done
     scan = scan_tool_done(scan);

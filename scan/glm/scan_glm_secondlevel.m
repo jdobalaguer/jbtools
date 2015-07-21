@@ -11,7 +11,7 @@ function scan = scan_glm_secondlevel(scan)
     
     % build folder
     scan_tool_print(scan,false,'\nBuild folder : ');
-    scan_tool_progress(scan,scan.running.subject.number);
+    scan = scan_tool_progress(scan,scan.running.subject.number);
     for i_subject = 1:scan.running.subject.number
         for i_contrast = 1:length(scan.running.contrast{i_subject})
             file_first  = fullfile(scan.running.directory.original.first{i_subject},sprintf('%s_%04i.nii',scan.job.secondLevel,i_contrast));
@@ -19,13 +19,13 @@ function scan = scan_glm_secondlevel(scan)
             file_mkdir(fileparts(file_second));
             scan_tool_copy(file_first,file_second);
         end
-        scan_tool_progress(scan,[]);
+        scan = scan_tool_progress(scan,[]);
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % second level analyses
     scan_tool_print(scan,false,'\nSPM analysis (second level) : ');
-    scan_tool_progress(scan,length(scan.running.contrast{1}));
+    scan = scan_tool_progress(scan,length(scan.running.contrast{1}));
     j_job = 0;
     for i_contrast = 1:length(scan.running.contrast{1})
         directory_second = fullfile(scan.running.directory.original.second,sprintf('%s_%03i',scan.running.contrast{i_subject}(i_contrast).name,scan.running.contrast{i_subject}(i_contrast).order));
@@ -54,9 +54,9 @@ function scan = scan_glm_secondlevel(scan)
         % SPM
         evalc('spm_jobman(''run'',spm(j_job-2:j_job))');
         % wait
-        scan_tool_progress(scan,[]);
+        scan = scan_tool_progress(scan,[]);
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % save
     scan.running.jobs.second = spm;

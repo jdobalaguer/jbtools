@@ -16,9 +16,8 @@ function file = func_wait(N,file)
     %% warnings
 
     %% function
-    func_default('N',-1);
-    if N < 1 && ~exist('file','var')
-        error('func_wait: error. [file] not provided',file);
+    if N < 1 && ~exist(file,'var')
+        error('progress file "%s" not found. Run func_wait(N) to initialize it.',file);
     end
 
     try %#ok<TRYNC>

@@ -14,7 +14,7 @@ function scan = scan_rsa_bm(scan)
     
     % print
     scan_tool_print(scan,false,'\nBuild beta matrix : ');
-    scan_tool_progress(scan,sum(scan.running.subject.session));
+    scan = scan_tool_progress(scan,sum(scan.running.subject.session));
     
     % build the rdm
     scan.running.bm = {};
@@ -46,9 +46,9 @@ function scan = scan_rsa_bm(scan)
             end
             
             % wait
-            scan_tool_progress(scan,[]);
+            scan = scan_tool_progress(scan,[]);
         end
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
 
 end

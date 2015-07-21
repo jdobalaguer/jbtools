@@ -14,7 +14,7 @@ function scan = scan_rsa_searchlight_first(scan)
     
     % print
     scan_tool_print(scan,false,'\nRSA analysis (first level) : ');
-    scan_tool_progress(scan,scan.running.subject.number*numel(scan.job.model));
+    scan = scan_tool_progress(scan,scan.running.subject.number*numel(scan.job.model));
 
     
     % first-level analysis
@@ -46,10 +46,10 @@ function scan = scan_rsa_searchlight_first(scan)
             scan.result.first{i_subject}.smooth.rs(:,:,:,i_model) = reshape(mean_smooth_rs,meta.dim);
             
             % wait
-            scan_tool_progress(scan,[]);
+            scan = scan_tool_progress(scan,[]);
         end
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % done
     scan = scan_tool_done(scan);

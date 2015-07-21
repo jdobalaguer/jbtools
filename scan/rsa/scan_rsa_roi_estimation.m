@@ -11,7 +11,7 @@ function scan = scan_rsa_roi_estimation(scan)
     
     % print
     scan_tool_print(scan,false,'\nRSA estimation : ');
-    scan_tool_progress(scan,sum(scan.running.subject.session));
+    scan = scan_tool_progress(scan,sum(scan.running.subject.session));
     
     % subject
     for i_subject = 1:scan.running.subject.number
@@ -49,10 +49,10 @@ function scan = scan_rsa_roi_estimation(scan)
             scan.result.zero{i_subject}{i_session}.p = p;
             
             % wait
-            scan_tool_progress(scan,[]);
+            scan = scan_tool_progress(scan,[]);
         end
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % done
     scan = scan_tool_done(scan);

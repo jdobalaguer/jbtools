@@ -11,7 +11,7 @@ function scan = scan_glm_estimation(scan)
     
     % print
     scan_tool_print(scan,false,'\nSPM Estimation : ');
-    scan_tool_progress(scan,scan.running.subject.number);
+    scan = scan_tool_progress(scan,scan.running.subject.number);
     
     % subject
     for i_subject = 1:scan.running.subject.number
@@ -24,9 +24,9 @@ function scan = scan_glm_estimation(scan)
         evalc('spm_jobman(''run'',spm(i_subject))');
 
        % wait
-        scan_tool_progress(scan,[]);
+        scan = scan_tool_progress(scan,[]);
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % done
     scan = scan_tool_done(scan);

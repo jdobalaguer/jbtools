@@ -16,7 +16,7 @@ function scan_tool_physiological(scan,image,mask,file)
     
     % print
     scan_tool_print(scan,false,'\nPre-load physiological signal (image "%s", mask "%s") : ',image,mask);
-    scan_tool_progress(scan,sum(scan.running.subject.session));
+    scan = scan_tool_progress(scan,sum(scan.running.subject.session));
     
     % all subjects
     scan.running.subject.number  = length(scan.subject.session);
@@ -35,10 +35,10 @@ function scan_tool_physiological(scan,image,mask,file)
         regressor{i_subject} = cell(1,scan.subject.session(i_subject));
         for i_session = 1:scan.subject.session(i_subject)
             regressor{i_subject}{i_session} = cellfun(@nanmean,scan_nifti_load(scan.running.file.nii.epi3.(image){i_subject}{i_session},mask));
-            scan_tool_progress(scan,[]);
+            scan = scan_tool_progress(scan,[]);
         end
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % save
     file_mkdir(scan.directory.regressor);

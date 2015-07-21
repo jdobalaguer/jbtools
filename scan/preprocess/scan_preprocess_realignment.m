@@ -15,7 +15,7 @@ function scan = scan_preprocess_realignment(scan)
     
     % print
     scan_tool_print(scan,false,'\nRealignment : ');
-    scan_tool_progress(scan,scan.running.subject.number);
+    scan = scan_tool_progress(scan,scan.running.subject.number);
     
     % subject
     spm = cell(1,scan.running.subject.number);
@@ -93,9 +93,9 @@ function scan = scan_preprocess_realignment(scan)
         end
         
         % wait
-        scan_tool_progress(scan,[]);
+        scan = scan_tool_progress(scan,[]);
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % save
     scan.running.jobs.realignment = spm;

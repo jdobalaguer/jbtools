@@ -10,34 +10,34 @@ function scan = scan_rsa_steps(scan)
     
     % print
     scan_tool_print(scan,false,'\nFirst steps : ');
-    scan_tool_progress(scan,6);
+    scan = scan_tool_progress(scan,6);
     
     % autocomplete (rsa)
     scan = scan_autocomplete_rsa(scan);
-    scan_tool_progress(scan,[]);
+    scan = scan_tool_progress(scan,[]);
     
     % autocomplete (mask)
     scan = scan_autocomplete_mask(scan,scan.running.glm.job.image);
-    scan_tool_progress(scan,[]);
+    scan = scan_tool_progress(scan,[]);
     
     % redo flags
     scan = scan_rsa_flag(scan);
-    scan_tool_progress(scan,[]);
+    scan = scan_tool_progress(scan,[]);
     
     % move old directories
     scan = scan_tool_movejob(scan);
-    scan_tool_progress(scan,[]);
+    scan = scan_tool_progress(scan,[]);
 	
     % create new directories
     scan = scan_rsa_mkdir(scan);
-    scan_tool_progress(scan,[]);
+    scan = scan_tool_progress(scan,[]);
     
     % save caller
     scan = scan_save_caller(scan,3);
-    scan_tool_progress(scan,[]);
+    scan = scan_tool_progress(scan,[]);
     
     % wait
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % done
     scan = scan_tool_done(scan);

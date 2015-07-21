@@ -26,7 +26,7 @@ function scan = scan_save_scan(scan)
     
     % print
     scan_tool_print(scan,false,'\nSaving [scan] ');
-    scan_tool_progress(scan,sum(byts));
+    scan = scan_tool_progress(scan,sum(byts));
     
     for i_field = 1:length(u_field)
         
@@ -47,9 +47,9 @@ function scan = scan_save_scan(scan)
         end
         
         % wait
-        for i = 1:byts(i_field), scan_tool_progress(scan,[]); end
+        for i = 1:byts(i_field), scan = scan_tool_progress(scan,[]); end
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
 end
 
 %% auxiliar

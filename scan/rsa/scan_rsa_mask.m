@@ -11,7 +11,7 @@ function scan = scan_rsa_mask(scan)
     
     % print
     scan_tool_print(scan,false,'\nLoad mask : ');
-    scan_tool_progress(scan,scan.running.subject.number);
+    scan = scan_tool_progress(scan,scan.running.subject.number);
     
     % subject
     for i_subject = 1:scan.running.subject.number
@@ -34,9 +34,9 @@ function scan = scan_rsa_mask(scan)
         end
         
         % wait
-        scan_tool_progress(scan,[]);
+        scan = scan_tool_progress(scan,[]);
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % done
     scan = scan_tool_done(scan);

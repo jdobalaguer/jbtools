@@ -10,7 +10,7 @@ function scan = scan_initialize(scan)
     
     % print
     scan_tool_print(scan,false,'\nInitialize : ');
-    scan_tool_progress(scan,1);
+    scan = scan_tool_progress(scan,1);
     
     % initialize
     scan = scan_initialize_spm(scan);
@@ -26,7 +26,7 @@ function scan = scan_initialize(scan)
     scan     = scan_initialize_autocomplete(scan);
     
     % wait
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % done
     scan = scan_tool_done(scan);

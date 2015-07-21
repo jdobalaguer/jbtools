@@ -11,7 +11,7 @@ function scan = scan_preprocess_coregistration(scan)
         
     % print
     scan_tool_print(scan,false,'\nCoregistration (structural to functional) : ');
-    scan_tool_progress(scan,scan.running.subject.number);
+    scan = scan_tool_progress(scan,scan.running.subject.number);
     
     % subject
     spm = cell(1,scan.running.subject.number);
@@ -38,9 +38,9 @@ function scan = scan_preprocess_coregistration(scan)
         evalc('spm_jobman(''run'',spm(i_subject))');
         
         % wait
-        scan_tool_progress(scan,[]);
+        scan = scan_tool_progress(scan,[]);
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % save
     scan.running.jobs.coregistration = spm;

@@ -82,7 +82,7 @@ function scan_tool_zip(scan,mode,folder)
     
     % zip/unzip
     scan_tool_print(scan,false,'\nZip/Unzip : ');
-    scan_tool_progress(scan,length(directory));
+    scan = scan_tool_progress(scan,length(directory));
     for i = 1:length(directory)
         switch mode
             case 'zip'
@@ -97,7 +97,7 @@ function scan_tool_zip(scan,mode,folder)
             otherwise
                 scan_tool_error(scan,'unknown mode "%s"',mode);
         end
-        scan_tool_progress(scan,[]);
+        scan = scan_tool_progress(scan,[]);
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
 end

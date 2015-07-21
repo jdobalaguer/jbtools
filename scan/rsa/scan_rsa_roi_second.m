@@ -11,7 +11,7 @@ function scan = scan_rsa_roi_second(scan)
     
     % print
     scan_tool_print(scan,false,'\nRSA analysis (second level) : ');
-    scan_tool_progress(scan,1);
+    scan = scan_tool_progress(scan,1);
     
     % second-level analysis
     [~,p,~,stats] = ttest(scan.result.first,[],'tail','right');
@@ -20,7 +20,7 @@ function scan = scan_rsa_roi_second(scan)
     scan.result.second.t = stats.tstat;
     
     % wait
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % done
     scan = scan_tool_done(scan);

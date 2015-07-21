@@ -18,7 +18,7 @@ function scan = scan_rsa_beta(scan)
     
     % print
     scan_tool_print(scan,false,'\nLoad beta volumes : ');
-    scan_tool_progress(scan,n_isubject * n_isession);
+    scan = scan_tool_progress(scan,n_isubject * n_isession);
     
     for i_isubject = 1:n_isubject
         for i_isession = 1:n_isession
@@ -45,10 +45,10 @@ function scan = scan_rsa_beta(scan)
             end
             
             % wait
-            scan_tool_progress(scan,[]);
+            scan = scan_tool_progress(scan,[]);
         end
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % done
     scan = scan_tool_done(scan);

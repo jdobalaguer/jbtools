@@ -11,7 +11,7 @@ function scan = scan_rsa_global(scan)
     
     % print
     scan_tool_print(scan,false,'\nGlobal transformation : ');
-    scan_tool_progress(scan,1);
+    scan = scan_tool_progress(scan,1);
     
     % variables
     beta    = double(scan.running.load.beta);
@@ -49,7 +49,7 @@ function scan = scan_rsa_global(scan)
     scan.running.load.beta = beta;
     
     % wait
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % done
     scan = scan_tool_done(scan);

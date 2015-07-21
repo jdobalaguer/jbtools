@@ -11,7 +11,7 @@ function scan = scan_rsa_meta(scan)
     
     % print
     scan_tool_print(scan,false,'\nLoad metadata : ');
-    scan_tool_progress(scan,1);
+    scan = scan_tool_progress(scan,1);
     
     % variables
     name    = scan.running.load.name{1};
@@ -39,7 +39,7 @@ function scan = scan_rsa_meta(scan)
     scan.running.meta = meta;
     
     % wait
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % done
     scan = scan_tool_done(scan);

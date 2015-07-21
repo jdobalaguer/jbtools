@@ -8,7 +8,7 @@ function scan_tool_xY(scan)
     
     % print
     scan_tool_print(scan,false,'\nSave xY : ');
-    scan_tool_progress(scan,scan.running.subject.number);
+    scan = scan_tool_progress(scan,scan.running.subject.number);
     
     % subject
     for i_subject = 1:scan.running.subject.number
@@ -23,7 +23,7 @@ function scan_tool_xY(scan)
         file_savevar(fullfile(scan.directory.xY,sprintf('subject_%03i.mat',scan.running.subject.unique(i_subject))),[],'xY',xY);
         
         % wait
-        scan_tool_progress(scan,[]);
+        scan = scan_tool_progress(scan,[]);
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
 end

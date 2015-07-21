@@ -12,7 +12,7 @@ function scan = scan_glm_concat(scan)
     
     % print
     scan_tool_print(scan,false,'\nConcatenate session (file) : ');
-    scan_tool_progress(scan,scan.running.subject.number);
+    scan = scan_tool_progress(scan,scan.running.subject.number);
     
     % concatenate files
     for i_subject = 1:scan.running.subject.number
@@ -22,9 +22,9 @@ function scan = scan_glm_concat(scan)
                 scan.running.file.nii.epi3.(u_image{i_image}){i_subject} = {vertcat(scan.running.file.nii.epi3.(u_image{i_image}){i_subject}{:})};
             end
         end
-        scan_tool_progress(scan,[]);
+        scan = scan_tool_progress(scan,[]);
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % change sessions
     scan.running.subject.session(:) = 1;

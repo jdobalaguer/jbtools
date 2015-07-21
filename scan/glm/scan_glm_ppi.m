@@ -12,7 +12,7 @@ function scan = scan_glm_ppi(scan)
     
     % print
     scan_tool_print(scan,false,'\nAdd PPI : ');
-    scan_tool_progress(scan,scan.running.subject.number*length(scan.job.ppi));
+    scan = scan_tool_progress(scan,scan.running.subject.number*length(scan.job.ppi));
     
     % ppi
     for i_ppi = 1:length(scan.job.ppi)
@@ -41,10 +41,10 @@ function scan = scan_glm_ppi(scan)
             end
             
             % wait
-            scan_tool_progress(scan,[]);
+            scan = scan_tool_progress(scan,[]);
         end
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % done
     scan = scan_tool_done(scan);

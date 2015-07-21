@@ -34,7 +34,7 @@ function scan = scan_glm_regressor_add(scan)
             case 'mask'
                 % type mask
                 mask = scan_nifti_load(fullfile(scan.directory.mask,scan.job.regressor(i_regressor).file));
-                scan_tool_progress(scan,sum(scan.running.subject.session));
+                scan = scan_tool_progress(scan,sum(scan.running.subject.session));
                 for i_subject = 1:scan.running.subject.number
                     for i_session = 1:scan.running.subject.session(i_subject)
                         vols = scan_nifti_load(scan.running.file.nii.epi3.(scan.job.image){i_subject}{i_session},mask);
@@ -44,15 +44,15 @@ function scan = scan_glm_regressor_add(scan)
                         scan.running.regressor{i_subject}{i_session}.filter(end+1)      = scan.job.regressor(i_regressor).filter;
                         scan.running.regressor{i_subject}{i_session}.zscore(end+1)      = scan.job.regressor(i_regressor).zscore;
                         scan.running.regressor{i_subject}{i_session}.covariate(end+1)   = scan.job.regressor(i_regressor).covariate;
-                        scan_tool_progress(scan,[]);
+                        scan = scan_tool_progress(scan,[]);
                     end
                 end
-                scan_tool_progress(scan,0);
+                scan = scan_tool_progress(scan,0);
             
             case 'mat',
                 % type mat-file
                 regressor = file_loadvar(fullfile(scan.directory.regressor,scan.job.regressor(i_regressor).file),'regressor');
-                scan_tool_progress(scan,sum(scan.running.subject.session));
+                scan = scan_tool_progress(scan,sum(scan.running.subject.session));
                 for i_subject = 1:scan.running.subject.number
                     subject = scan.running.subject.unique(i_subject);
                     scan_tool_assert(scan,~isempty(regressor{subject}),                                        'regressor "%s" is empty for subject "%03i"',scan.job.regressor(i_regressor).file,subject);
@@ -63,10 +63,10 @@ function scan = scan_glm_regressor_add(scan)
                         scan.running.regressor{i_subject}{i_session}.filter(end+1)      = scan.job.regressor(i_regressor).filter;
                         scan.running.regressor{i_subject}{i_session}.zscore(end+1)      = scan.job.regressor(i_regressor).zscore;
                         scan.running.regressor{i_subject}{i_session}.covariate(end+1)   = scan.job.regressor(i_regressor).covariate;
-                        scan_tool_progress(scan,[]);
+                        scan = scan_tool_progress(scan,[]);
                     end
                 end
-                scan_tool_progress(scan,0);
+                scan = scan_tool_progress(scan,0);
         end
     end
     

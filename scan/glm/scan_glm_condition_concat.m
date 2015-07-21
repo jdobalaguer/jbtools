@@ -15,7 +15,7 @@ function scan = scan_glm_condition_concat(scan)
     
     % print
     scan_tool_print(scan,false,'\nConcatenate session (condition) : ');
-    scan_tool_progress(scan,sum(scan.running.subject.session));
+    scan = scan_tool_progress(scan,sum(scan.running.subject.session));
     
     % subject
     for i_subject = 1:scan.running.subject.number
@@ -44,13 +44,13 @@ function scan = scan_glm_condition_concat(scan)
             n_volume = n_volume + length(scan.running.file.nii.epi3.(scan.job.image){i_subject}{i_session});
             
             % wait
-            scan_tool_progress(scan,[]);
+            scan = scan_tool_progress(scan,[]);
         end
         
         % save condition
         scan.running.condition{i_subject} = {condition};
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
     
     % done
     scan = scan_tool_done(scan);

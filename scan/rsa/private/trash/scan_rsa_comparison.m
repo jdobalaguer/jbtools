@@ -11,7 +11,7 @@ function scan = scan_rsa_comparison(scan)
     
     % print
     scan_tool_print(scan,false,'\nCompare model : ');
-    scan_tool_progress(scan,sum(scan.running.subject.session));
+    scan = scan_tool_progress(scan,sum(scan.running.subject.session));
     
     % comparison
     for i_subject = 1:scan.running.subject.number
@@ -26,9 +26,9 @@ function scan = scan_rsa_comparison(scan)
             end
             
             % wait
-            scan_tool_progress(scan,[]);
+            scan = scan_tool_progress(scan,[]);
         end
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
 
 end

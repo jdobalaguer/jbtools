@@ -12,7 +12,7 @@ function scan = scan_rsa_model_rdm(scan)
     if ~scan.running.flag.model, return; end
     
     % build RDMs
-    scan_tool_progress(scan,length(scan.job.model) * scan.running.subject.number);
+    scan = scan_tool_progress(scan,length(scan.job.model) * scan.running.subject.number);
     for i_model = 1:length(scan.job.model)
         % variables
         x_subject = mat2vec([scan.running.model(i_model).column.subject]);
@@ -53,11 +53,11 @@ function scan = scan_rsa_model_rdm(scan)
             end
             
             % wait
-            scan_tool_progress(scan,[]);
+            scan = scan_tool_progress(scan,[]);
         end
         
         % save
         scan.running.model(i_model).rdm = rdm;
     end
-    scan_tool_progress(scan,0);
+    scan = scan_tool_progress(scan,0);
 end
