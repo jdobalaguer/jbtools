@@ -41,23 +41,23 @@ function z = mme_for(varargin)
     
     % parfor
     z = cell(size(i,1),1);
-    if w, func_wait(size(i,1)); end
+    if w, file = func_wait(size(i,1)); end
     if p
         parfor j = 1:size(i,1)
             ti = num2cell(i(j,:));
             tx = cellfun(@(x,i)x{i},x,ti,'UniformOutput',false);
             z{j} = f(tx,ti); %#ok<PFBNS>
-            if w, func_wait(); end
+            if w, func_wait([],file); end
         end
     else
         for j = 1:size(i,1)
             ti = num2cell(i(j,:));
             tx = cellfun(@(x,i)x{i},x,ti,'UniformOutput',false);
             z{j} = f(tx,ti);
-            if w, func_wait(); end
+            if w, func_wait([],file); end
         end
     end
-    if w, func_wait(0); end
+    if w, func_wait(0,file); end
     
     % reshape
     s(1,end+1:2) = 1;

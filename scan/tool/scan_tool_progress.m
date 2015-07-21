@@ -16,5 +16,4 @@ function scan_tool_progress(scan,progress)
         if  progress, tic(); end
         if ~progress, toc(); end
     end
-    
 end

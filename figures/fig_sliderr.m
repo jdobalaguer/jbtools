@@ -84,7 +84,11 @@ function fig_sliderr(v,e,x,l,r)
     function plotImage(values,errors)
         % plot
         delete(get(a,'Children'));
-        fig_combination({'line','marker','shade','pip'},[],values,errors);
+        if any(e)
+            fig_combination({'line','marker','shade','pip'},[],values,errors);
+        else
+            fig_combination({'line'},[],values,errors);
+        end
 
         % aesthetics
         sa.ylim   = ranger(v) + [-1,+1]*nanmax(v(:));
