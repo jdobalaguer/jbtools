@@ -18,7 +18,7 @@ function file = func_wait(N,file)
     %% function
     func_default('N',-1);
     if N < 1 && ~exist('file','var')
-        error('func_wait: error. [file] not provided',file);
+        error('func_wait: error. [file] not provided');
     end
 
     try %#ok<TRYNC>
