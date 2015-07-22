@@ -21,7 +21,7 @@ function varargout = auxiliar_vector(varargin)
     if ~nargin, return; end
     assertStruct(varargin{1}); tcan = varargin{1};
     if nargin~=6 || strcmp(varargin{2},'help')
-        scan_tool_help(tcan,'v = @get.vector(scan,i_subject,i_session,order,name,field)\nv = @get.vector(scan,name,u)','This function loads or transform a vector so that it can index the vector of betas from @scan.function.get.beta. [name] is the name of a condition. [field] can be any of {''main'',''name'',''subject'',''session'',''version'',''order'',''covariate''}. [u] is a vector of same length than those in [scan.job.condition]. [v] is the the resulting vector.');
+        scan_tool_help(tcan,'v = @get.vector(scan,i_subject,i_session,order,name,field)\nv = @get.vector(scan,i_subject,i_session,[],name,u)','This function loads or transform a vector so that it can index the vector of betas from @scan.function.get.beta. [name] is the name of a condition. [field] can be any of {''main'',''name'',''subject'',''session'',''version'',''order'',''covariate''}. [u] is a vector of same length than those in [scan.job.condition]. [v] is the the resulting vector.');
         return;
     end
 

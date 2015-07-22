@@ -23,7 +23,11 @@ function func_profile(file,path,args)
     profile('on');
     
     % run function
-    func_run(file,args);
+    try
+        func_run(file,args);
+    catch err
+        warning(err.message);
+    end
     
     % stop
     profile('off');

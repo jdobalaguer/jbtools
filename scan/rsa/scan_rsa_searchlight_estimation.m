@@ -30,7 +30,7 @@ function scan = scan_rsa_searchlight_estimation(scan)
                 file_pmap_smooth = fullfile(scan.running.directory.estimation.probability,scan.job.model(i_model).name,sprintf('smooth subject_%03i session_%03i.nii',scan.running.subject.unique(i_subject),i_session));
                 file_mkdir(fileparts(file_rmap_image));
                 file_mkdir(fileparts(file_pmap_image));
-                meta = scan.running.meta;
+                meta = struct_rm(scan.running.meta,'pinfo');
                 meta.descrip = 'Z-maps';
                 scan_nifti_save(file_rmap_image,image_rs(:,:,:,i_model),meta);
                 meta.descrip = 'P-maps';

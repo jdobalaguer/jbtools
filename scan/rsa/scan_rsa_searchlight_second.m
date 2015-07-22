@@ -51,7 +51,7 @@ function scan = scan_rsa_searchlight_second(scan)
         p_smooth(isnan(mean_image_rs(:))) = nan;
         
         % write
-        meta = scan.running.meta;
+        meta = struct_rm(scan.running.meta,'pinfo');
         meta.descrip = 'R-map';
         scan_nifti_save(second_rmap_image, mean_image_rs, meta);
         scan_nifti_save(second_rmap_smooth,mean_smooth_rs,meta);

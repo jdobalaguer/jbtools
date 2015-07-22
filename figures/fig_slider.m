@@ -9,6 +9,7 @@ function fig_slider(v,x,l,r)
     % r : sprintf regular expression used for the sliders (default '%+.2f')
     
     %% function
+    v = single(v);
     
     % parameters & variables
     s = size(v);            % size
@@ -80,12 +81,13 @@ function fig_slider(v,x,l,r)
     
     %% nested: plotImage
     function plotImage(values)
+        
         % plot
         fig_pimage(values);
         colorbar();
 
         % aesthetics
-        sa.clim   = [-5,+5]; %ranger(v);
+        sa.clim   = ranger(v);
         sa.ylabel = l{1};
         sa.xlabel = l{2};
         sa.xtick  = 1:s(2);
