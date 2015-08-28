@@ -17,6 +17,7 @@ function b = struct_isfield(s,f)
     f = regexp(f,'\.','split');
     while ~isempty(f)
         if ~isfield(s,f{1}), return; end
+        if isempty(s) && isscalar(f), break; end
         s = s.(f{1});
         f(1) = [];
     end

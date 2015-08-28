@@ -34,6 +34,7 @@ function scan = scan_rsa_meta(scan)
     private.descrip     = '';
     private = struct(private);
     meta.private = private;
+    meta = struct_rm(meta,'pinfo');
     
     % save
     scan.running.meta = meta;

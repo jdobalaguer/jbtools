@@ -19,6 +19,7 @@ function scan = scan_autocomplete_preprocess(scan)
     % structural
     scan = scan_autocomplete_nii(scan,'structural:image');
     scan = scan_autocomplete_nii(scan,'structural:coregistration');
+    scan = scan_autocomplete_nii(scan,'structural:segmentation');
     scan = scan_autocomplete_nii(scan,'structural:normalisation');
     
     % epi3

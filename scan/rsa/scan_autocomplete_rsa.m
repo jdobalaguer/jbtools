@@ -9,7 +9,7 @@ function scan = scan_autocomplete_rsa(scan)
     
     % assert
     if strcmp(scan.job.glm.type,'glm') && ~isempty(cell_flat({scan.job.model.subname}))
-        scan_tool_warning(scan,false,'conditions are not allowed with scan.job.glm.type = ''glm''');
+        scan_tool_warning(scan,true,'conditions are not allowed with scan.job.glm.type = ''glm''');
         [scan.job.model.subname] = deal({});
         [scan.job.model.level] = deal({});
     end
@@ -41,7 +41,7 @@ function scan = scan_autocomplete_rsa(scan)
     scan_tool_assert(scan,isequal(scan.running.subject.unique,scan.running.glm.running.subject.unique),'subjects in the GLM and the RSA must match (fix not implemented yet)');
     if struct_isfield(scan,'running.glm.job.concatSessions') && scan.running.glm.job.concatSessions
         scan.running.subject.session(:) = 1;
-        scan_tool_warning(scan,false,'glm with concatenated sessions. will ignore [scan.subject.session]');
+        scan_tool_warning(scan,true,'glm with concatenated sessions. will ignore [scan.subject.session]');
     end
     
     % load

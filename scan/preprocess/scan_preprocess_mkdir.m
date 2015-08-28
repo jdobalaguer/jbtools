@@ -35,6 +35,13 @@ function scan = scan_preprocess_mkdir(scan)
         end
     end
         
+    % segmentation
+    if scan.running.flag.segmentation
+        for i_subject = 1:scan.running.subject.number
+            file_mkdir(scan.running.directory.nii.structural.segmentation{i_subject});
+        end
+    end
+        
     % estimation
     if scan.running.flag.estimation
         for i_subject = 1:scan.running.subject.number

@@ -27,6 +27,7 @@ function auxiliar_model(varargin)
     % get RDM
     rdm = tcan.function.get.model(tcan,i_subject,i_session,i_model);
     rdm = squareform(rdm);
+    rdm(logical(eye(size(rdm)))) = nan;
 
     % figure
     n = size(rdm,1);
@@ -43,4 +44,5 @@ function auxiliar_model(varargin)
     sa.title      = tcan.running.model(i_model).name;
     fig_axis(sa);
     colorbar();
+    axis(gca(),'square');
 end

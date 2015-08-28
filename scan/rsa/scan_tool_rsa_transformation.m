@@ -6,12 +6,18 @@ function beta = scan_tool_rsa_transformation(scan,beta)
     %   >> help scan;
     
     %% function
+    % beta = [conditions,voxels]
     switch scan.job.transformation
         case 'none'
         case 'mean'
             beta = mean(beta,2);
+        case 'std'
+            beta = std(beta,1,2);
         case 'demean'
             beta = mat_demean(beta,2);
+        case 'destd'
+            m    = repmat(mean(beta,  2),[1,size(beta,2)]);
+            beta = m + mat_zscore(beta,2);
         case 'zscore'
             beta = mat_zscore(beta,2);
         otherwise

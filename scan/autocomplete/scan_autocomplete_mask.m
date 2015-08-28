@@ -25,7 +25,6 @@ function scan = scan_autocomplete_mask(scan,image)
     
     % individual
     for i_subject = 1:scan.running.subject.number
-        scan.running.directory.mask.individual{i_subject} = file_endsep(fullfile(scan.running.directory.mask.root,'individual',dirs{:},scan.parameter.path.subject{i_subject}));
+        scan.running.directory.mask.individual{i_subject} = file_endsep(fullfile(scan.running.directory.mask.root,'individual',dirs{:},scan.parameter.path.subject{scan.running.subject.unique(i_subject)}));
     end
-
 end

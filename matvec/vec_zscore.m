@@ -15,8 +15,8 @@ end
 
 function z = f(y,~)
     s = [size(y{1},1),ones(1,ndims(y)-1)];
-    m = repmat(nanmean(y{1},1),s);
-    v = repmat(nanstd(y{1},[],1),s);
+    m = repmat(nanmean(y{1},  1),s);
+    v = repmat(nanstd (y{1},1,1),s);
     z = (y{1} - m) ./ v;
     z(v == 0) = 0;
 end

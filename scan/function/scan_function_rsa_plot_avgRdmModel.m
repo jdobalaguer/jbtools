@@ -49,4 +49,5 @@ function auxiliar_rdmModel(varargin)
     sa.yticklabel = label;
     fig_axis(sa);
     colorbar();
+    axis(gca(),'square');
 end

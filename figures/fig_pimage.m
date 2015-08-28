@@ -24,6 +24,9 @@ function h = fig_pimage(varargin)
             error('fig_pimage: error. wrong number of arguments');
     end
     
+    % double
+    C = double(C);
+    
     % add an extra thing
     C(end+1,:) = C(end,:);
     C(:,end+1) = C(:,end);

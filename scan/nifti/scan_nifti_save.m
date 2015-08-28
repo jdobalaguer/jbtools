@@ -11,6 +11,9 @@ function scan_nifti_save(file,vol,template)
     % template
     if ischar(template), template = spm_vol(template); end
     
+    % remove pinfo
+    template = struct_rm(template,'pinfo');
+    
     % file
     template.fname = file;
     

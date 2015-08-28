@@ -50,6 +50,9 @@ function scan = scan_rsa_beta(scan)
     end
     scan = scan_tool_progress(scan,0);
     
+    % force nan consistency
+%     scan.running.load.beta(:,any(isnan(scan.running.load.beta),1)) = nan;
+    
     % done
     scan = scan_tool_done(scan);
 end

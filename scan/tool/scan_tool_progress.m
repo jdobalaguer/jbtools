@@ -10,9 +10,9 @@ function scan = scan_tool_progress(scan,progress)
     
     % progress
     if isempty(progress) || ~progress
-        func_wait(progress,scan.running.file.progess);
+        func_wait(progress,scan.running.file.progress);
     else
-        scan.running.file.progess = func_wait(progress);
+        scan.running.file.progress = func_wait(progress);
     end
     
     % time

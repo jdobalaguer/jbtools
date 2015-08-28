@@ -8,14 +8,14 @@ function scan = scan_initialize(scan)
     %% function
     if scan_tool_isdone(scan), return; end
     
-    % print
-    scan_tool_print(scan,false,'\nInitialize : ');
-    scan = scan_tool_progress(scan,1);
-    
     % initialize
     scan = scan_initialize_spm(scan);
     template = scan_initialize_template(scan.job.type);
     scan     = struct_default(scan,template);
+    
+    % print (if before, it would give a warning for [scan.running.file.progress])
+    scan_tool_print(scan,false,'\nInitialize : ');
+    scan = scan_tool_progress(scan,1);
     
     % check
     f = checkFields(scan,template);
@@ -33,9 +33,8 @@ function scan = scan_initialize(scan)
 end
 
 %% auxiliar
-function f = checkFields(s1,s2)
-    u1 = fieldnames(struct_flat(s1));
-    u2 = fieldnames(struct_flat(s2));
-    b  = ismember(u1,u2);
-    f = strrep(u1(~b),'_','.');
+function f = checkFields(s,t)
+    u = strrep(fieldnames(struct_flat(s)),'_','.');
+    b = cellfun(@(f)struct_isfield(t,f),u);
+    f  = u(~b);
 end

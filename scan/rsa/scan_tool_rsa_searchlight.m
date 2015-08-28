@@ -1,5 +1,5 @@
 
-function [r,p,n] = scan_tool_rsa_searchlight(scan,i_subject,i_session)
+function [r,p,n,rdm] = scan_tool_rsa_searchlight(scan,i_subject,i_session)
     %% models = SCAN_TOOL_RSA_SEARCHLIGHT(scan,i_subject,i_session)
     % RSA toolbox - run the searchlight
     % to list main functions, try
@@ -45,11 +45,24 @@ function [r,p,n] = scan_tool_rsa_searchlight(scan,i_subject,i_session)
 	n = nan(mask.shape,'single');
 	p = nan([mask.shape,n_model],'single');
 	r = nan([mask.shape,n_model],'single');
+    rdm = [];
 
-	% searchlight loop
-    for i_voxel = 1:n_voxel
-        [x,y,z] = ind2sub(mask.shape,u_voxel(i_voxel));
-        [p(x,y,z,:),r(x,y,z,:),n(x,y,z,:)] = runSearchlight(scan,x,y,z,u_sphere,mask,beta,u_model,u_filter,X,Y);
+	% searchlight loop (don't save RDMs)
+    if ~scan.job.saveRDM
+        for i_voxel = 1:n_voxel
+            [x,y,z] = ind2sub(mask.shape,u_voxel(i_voxel));
+            [p(x,y,z,:),r(x,y,z,:),n(x,y,z,:)] = runSearchlight(scan,x,y,z,u_sphere,mask,beta,u_model,u_filter,X,Y,i_subject);
+        end
+	% searchlight loop (save RDMs)
+    else
+        n_condition = size(beta,2);
+        s_rdm       = 0.5 * n_condition * (n_condition - 1);
+        rdm         = nan([s_rdm , mask.shape],'single');
+        for i_voxel = 1:n_voxel
+            [x,y,z] = ind2sub(mask.shape,u_voxel(i_voxel));
+            [p(x,y,z,:),r(x,y,z,:),n(x,y,z,:),t_rdm] = runSearchlight(scan,x,y,z,u_sphere,mask,beta,u_model,u_filter,X,Y,i_subject);
+            if ~isempty(t_rdm), rdm(:,u_voxel(i_voxel)) = t_rdm; end
+        end
     end
 end
 
@@ -82,7 +95,7 @@ function [X,Y] = mahalanobisProjection(scan,i_subject,i_session)
 end
 
 %% auxiliar: searchlight
-function [p,r,n] = runSearchlight(scan,x,y,z,u_sphere,mask,beta,u_model,u_filter,X,Y)
+function [p,r,n,rdm] = runSearchlight(scan,x,y,z,u_sphere,mask,beta,u_model,u_filter,X,Y,i_subject)
 
     % subindices of voxels
     u_xyz = repmat([x,y,z],[size(u_sphere,1) 1]) + u_sphere;
@@ -97,7 +110,7 @@ function [p,r,n] = runSearchlight(scan,x,y,z,u_sphere,mask,beta,u_model,u_filter
 
     % number of voxels (return if not enough)
     n = length(f_voxel);
-    if n < 2, [p,r] = deal(nan(1,size(u_model,2))); return; end
+    if n < 2, [p,r] = deal(nan(1,size(u_model,2))); rdm = []; return; end
 
     % build RDM and compare it with models
     beta = beta(f_voxel,:)';
@@ -108,4 +121,7 @@ function [p,r,n] = runSearchlight(scan,x,y,z,u_sphere,mask,beta,u_model,u_filter
         rdm  = scan_tool_rsa_buildrdm(scan,beta);
     end
     [r,p] = scan_tool_rsa_comparison(scan,rdm,u_model,u_filter);
+    
+    % only send back the RDM if necessary
+    if ~scan.job.saveRDM, rdm = []; end
 end

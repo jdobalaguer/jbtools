@@ -18,7 +18,7 @@ function scan = scan_rsa_searchlight_estimation(scan)
         for i_session = 1:scan.running.subject.session(i_subject)
         
             % searchlight
-            [image_rs,image_ps,image_ns] = scan_tool_rsa_searchlight(scan,i_subject,i_session);
+            [image_rs,image_ps,image_ns,rdm] = scan_tool_rsa_searchlight(scan,i_subject,i_session);
             
             % write & smooth
             smooth_rs = nan(size(image_rs),'single');
@@ -47,6 +47,7 @@ function scan = scan_rsa_searchlight_estimation(scan)
             scan.result.zero{i_subject}{i_session}.image.ps  = image_ps;
             scan.result.zero{i_subject}{i_session}.smooth.ps = smooth_ps;
             scan.result.zero{i_subject}{i_session}.image.ns  = image_ns;
+            if scan.job.saveRDM, scan.result.rdm{i_subject}{i_session} = rdm; end
             
             % wait
             scan = scan_tool_progress(scan,[]);

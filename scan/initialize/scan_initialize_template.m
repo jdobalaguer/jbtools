@@ -14,6 +14,7 @@ function scan = scan_initialize_template(type)
     scan.parameter.scanner.refsl        = [];
     scan.parameter.scanner.reft0        = [];
     scan.parameter.scanner.voxs         = [nan,nan,nan];
+    scan.parameter.analysis.memory      = 2^30;  % 1GB
     scan.parameter.analysis.voxs        = 4;  ... analysis
     scan.parameter.analysis.verbose     = true;
     scan.parameter.analysis.wpause      = true;
@@ -54,9 +55,10 @@ function scan = scan_initialize_template(type)
     
     % job
     scan.job                        = scan_initialize_template_job(type);
+    scan.job.type                   = type;
     
     % running
-    scan.running = struct();
+    scan.running.file.progress = '';
     
     % result
     scan.result = struct();

@@ -24,6 +24,15 @@ function scan = scan_autocomplete_nii(scan,folder)
                 scan.running.file.nii.structural.coregistration{i_subject} = file_match(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'structural','coregistration','*.nii'),'absolute');
             end
     
+        case 'structural:segmentation'
+            for i_subject = 1:scan.running.subject.number
+                subject = scan.running.subject.unique(i_subject);
+                scan.running.directory.nii.structural.segmentation{i_subject} = file_endsep(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'structural','segmentation'));
+                scan.running.file.nii.structural.segmentation.c{i_subject} = file_list (fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'structural','segmentation','c*.nii'),'absolute');
+                scan.running.file.nii.structural.segmentation.y{i_subject} = file_match(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'structural','segmentation','y*.nii'),'absolute');
+                scan.running.file.nii.structural.segmentation.m{i_subject} = file_match(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'structural','segmentation','m*.nii'),'absolute');
+            end
+    
         case 'structural:normalisation'
             for i_subject = 1:scan.running.subject.number
                 subject = scan.running.subject.unique(i_subject);

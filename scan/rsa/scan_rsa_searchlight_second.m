@@ -36,6 +36,10 @@ function scan = scan_rsa_searchlight_second(scan)
         mean_image_rs  = nanmean(group_image_rs, 1);
         mean_smooth_rs = nanmean(group_smooth_rs,1);
         
+        % only take voxels with all subjects
+        ii = repmat(any(isnan(group_image_rs),1),[size(group_image_rs,1),1]);
+        group_image_rs(ii(:)) = nan;
+        
         % t-test
         [~,p_image,~,t_image] = ttest(group_image_rs,[],'tail','right');
         t_image = t_image.tstat;

@@ -20,11 +20,10 @@ function scan = scan_preprocess(scan)
         'Slice-time correction',...
         'Realignment',...
         'Coregistration (structural to functional)',...
-        'Normalisation (coregistered structural to MNI)',...
+        'Segmentation',...
+        'Estimation (of the normalisation from co-registered structural to MNI)',...
         'Normalisation (functional to MNI)',...
-        'Smoothing',...
-        ...
-        'Add function (check)');
+        'Smoothing');
      
     % initialize
     scan = scan_assert_spm(scan);                       % assert (spm)
@@ -37,12 +36,10 @@ function scan = scan_preprocess(scan)
         scan = scan_preprocess_slicetime(scan);         % slice-time correction
         scan = scan_preprocess_realignment(scan);       % realignment
         scan = scan_preprocess_coregistration(scan);    % coregistration
+        scan = scan_preprocess_segmentation(scan);      % segmentation
         scan = scan_preprocess_estimation(scan);        % normalisation (structural to MNI)
-%         scan = scan_preprocess_normalisation(scan);     % normalisation (functional to MNI)
-%         scan = scan_preprocess_smooth(scan);            % smoothing
-        
-        % function
-%         scan = scan_function_preprocess_check(scan);
+        scan = scan_preprocess_normalisation(scan);     % normalisation (functional to MNI)
+        scan = scan_preprocess_smooth(scan);            % smoothing
         
         % save
         scan_save_scan(scan);

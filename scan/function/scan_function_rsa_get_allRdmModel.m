@@ -17,7 +17,7 @@ function varargout = auxiliar_allRdmModel(varargin)
     if ~nargin, return; end
     assertStruct(varargin{1}); tcan = varargin{1};
     if nargin~=3 || strcmp(varargin{2},'help')
-        scan_tool_help(tcan,'@model(scan,i_model,mask)','This function get all the RDM within a mask, and filtered like a certain model would be.');
+        scan_tool_help(tcan,'allRDMs = @model(scan,i_model,mask)','This function get all the RDM within a mask, and filtered like a certain model would be.');
         return;
     end
 

@@ -90,7 +90,7 @@ function scan_tool_zip(scan,mode,folder)
                 file_rmdir(directory{i});
             case 'unzip'
                 unzip(zip_file{i},fileparts(directory{i}));
-                delete(zip_file{i});
+%                 delete(zip_file{i});
             case 'delete'
                 file_rmdir(file_match(directory{i},'absolute'));
                 delete(file_match(zip_file{i},'absolute'));

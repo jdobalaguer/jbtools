@@ -47,6 +47,13 @@ function scan = scan_glm_condition_concat(scan)
             scan = scan_tool_progress(scan,[]);
         end
         
+        % remove empty conditions
+        r_condition = false(size(u_name));
+        for i_condition = 1:length(u_name)
+            if isempty(condition(i_condition).onset),  r_condition(i_condition) = 1; end
+        end
+        condition(r_condition) = [];
+        
         % save condition
         scan.running.condition{i_subject} = {condition};
     end

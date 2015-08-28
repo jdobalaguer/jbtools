@@ -67,7 +67,7 @@ function varargout = auxiliar_vector(varargin)
     condition = tcan.job.condition(strcmp(name,{tcan.job.condition.name}));
     ii_subject = (condition.subject == tcan.running.subject.unique(i_subject));
     ii_session = (condition.session == i_session);
-    ii_onset   = ismember(condition.onset,onset);
+    ii_onset   = ismember(condition.onset + tcan.parameter.scanner.reft0 - tcan.job.delayOnset,onset);
     condition.subject = condition.subject(ii_subject & ii_session & ii_onset);
     condition.session = condition.session(ii_subject & ii_session & ii_onset);
     condition.onset   = condition.onset  (ii_subject & ii_session & ii_onset);
