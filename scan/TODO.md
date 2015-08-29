@@ -1,10 +1,13 @@
 
 TODO
-09. preprocessing
+09. slicetime correction
 35. TBTE @get.second(name,vector) @plot.xjview(name)
 47. RSA functions for ROI
 59. RSA with beta/cont/spmT
 60. TBTE first level generic contrasts (could be useful for RSA)
+62. check the meshgrid function in TBTE
+63. improve TBTE contrast functions with orthogonalisation
+64. bypass orthogonalisation option
 
 LONG TERM
 06. handle HDD writing depending on the size of [scan]
@@ -24,6 +27,7 @@ DONE
 07. zip/unzip
 08. scan_merge .... nah
 09. dicom, expansion
+09. preprocessing
 #A. ppi (for real)
 #B. TBTE functions
 #C. plot options parser

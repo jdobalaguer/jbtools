@@ -46,7 +46,7 @@ function scan = scan_preprocess_smooth(scan)
     
     % update
     scan = scan_autocomplete_nii(scan,'epi3:smooth');
-    scan.running.last.structural = 'smooth';
+    scan.running.last.epi3 = 'smooth';
     
     % done
     scan = scan_tool_done(scan);

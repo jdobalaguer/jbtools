@@ -31,11 +31,17 @@ function scan_tool_zip(scan,mode,folder)
                 case 'dicom:structural'
                     directory{i_subject} = fullfile(scan.directory.dicom,scan.parameter.path.subject{i_subject},'structural');
                     zip_file{i_subject} = [directory{i_subject},'.zip'];
+                    
                 case 'dicom:epi'
                     directory{i_subject}{i_session} = fullfile(scan.directory.dicom,scan.parameter.path.subject{i_subject},'epi',scan.parameter.path.session{i_session});
                     zip_file{i_subject}{i_session} = [directory{i_subject}{i_session},'.zip'];
+                    
                 case 'nii:structural:image'
                     directory{i_subject} = fullfile(scan.directory.nii,scan.parameter.path.subject{i_subject},'structural','image');
+                    zip_file{i_subject} = [directory{i_subject},'.zip'];
+
+                case 'nii:structural:segmentation'
+                    directory{i_subject} = fullfile(scan.directory.nii,scan.parameter.path.subject{i_subject},'structural','segmentation');
                     zip_file{i_subject} = [directory{i_subject},'.zip'];
 
                 case 'nii:structural:coregistration'

@@ -48,7 +48,7 @@ function scan = scan_preprocess_normalisation(scan)
     
     % update
     scan = scan_autocomplete_nii(scan,'epi3:normalisation');
-    scan.running.last.structural = 'normalisation';
+    scan.running.last.epi3 = 'normalisation';
     
     % done
     scan = scan_tool_done(scan);

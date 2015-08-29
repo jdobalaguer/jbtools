@@ -95,7 +95,8 @@ function check_registration(scan,vols,labs)
     
     % assert
     n_vols = cellfun(@numel,vols);
-    scan_tool_assert(scan,sum(n_vols)<24,'too many volumes (limit is 24)');
+    max_vols = 200;
+    scan_tool_assert(scan,sum(n_vols)<=max_vols,sprintf('too many volumes (limit is %d)',max_vols));
 
     % load images
     vols = cellfun(@spm_vol,vols,'UniformOutput',false);
@@ -110,7 +111,7 @@ function check_registration(scan,vols,labs)
     n = max(n_vols);
     w  = 1/n;
     h  = 1/m;
-    ds = (w+h)*0.02;
+    ds = (w+h)*0.005;
     
     % display volumes
     for i_subject = 1:length(vols)
