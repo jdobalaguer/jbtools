@@ -23,7 +23,7 @@ function scan = scan_glm_design(scan)
         spm{i_subject}.spm.stats.fmri_spec.timing.RT      = scan.parameter.scanner.tr;
         if scan.parameter.analysis.st  % slice-time correction
             spm{i_subject}.spm.stats.fmri_spec.timing.fmri_t  = scan.parameter.scanner.nslices; % microtime resolution
-            spm{i_subject}.spm.stats.fmri_spec.timing.fmri_t0 = .5 * scan.parameter.scanner.nslices; % microtime onset
+            spm{i_subject}.spm.stats.fmri_spec.timing.fmri_t0 = scan.parameter.scanner.reft0; % microtime onset
         else
             spm{i_subject}.spm.stats.fmri_spec.timing.fmri_t  = spm_get_defaults('stats.fmri.t');
             spm{i_subject}.spm.stats.fmri_spec.timing.fmri_t0 = spm_get_defaults('stats.fmri.t0');

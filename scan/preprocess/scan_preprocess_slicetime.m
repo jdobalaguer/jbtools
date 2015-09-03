@@ -32,7 +32,7 @@ function scan = scan_preprocess_slicetime(scan)
         spm{i_subject}.spm.temporal.st.tr       = scan.parameter.scanner.tr;
         spm{i_subject}.spm.temporal.st.ta       = spm{i_subject}.spm.temporal.st.tr * (1 - 1/spm{i_subject}.spm.temporal.st.nslices);
         spm{i_subject}.spm.temporal.st.so       = scan.parameter.scanner.ordsl;
-        spm{i_subject}.spm.temporal.st.refslice = spm{i_subject}.spm.temporal.st.nslices;
+        spm{i_subject}.spm.temporal.st.refslice = scan.parameter.scanner.refsl;
         
         % SPM
         eval('spm_jobman(''run'',spm(i_subject))');
