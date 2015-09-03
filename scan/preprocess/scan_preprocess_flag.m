@@ -13,9 +13,9 @@ function scan = scan_preprocess_flag(scan)
         case 'all'
             redo = [1,1,1,1,1,1,1];
         % to
-        case 'to slicetime'
-            redo = [1,0,0,0,0,0,0];
         case 'to realignment'
+            redo = [1,0,0,0,0,0,0];
+        case 'to slicetime'
             redo = [1,1,0,0,0,0,0];
         case 'to coregistration'
             redo = [1,1,1,0,0,0,0];
@@ -28,9 +28,9 @@ function scan = scan_preprocess_flag(scan)
         case 'to smooth'
             redo = [1,1,1,1,1,1,1];
         % only
-        case 'only slicetime'
-            redo = [1,0,0,0,0,0,0];
         case 'only realignment'
+            redo = [1,0,0,0,0,0,0];
+        case 'only slicetime'
             redo = [0,1,0,0,0,0,0];
         case 'only coregistration'
             redo = [0,0,1,0,0,0,0];
@@ -43,9 +43,9 @@ function scan = scan_preprocess_flag(scan)
         case 'only smooth'
             redo = [0,0,0,0,0,0,1];
         % from
-        case 'from slicetime'
-            redo = [1,1,1,1,1,1,1];
         case 'from realignment'
+            redo = [1,1,1,1,1,1,1];
+        case 'from slicetime'
             redo = [0,1,1,1,1,1,1];
         case 'from coregistration'
             redo = [0,0,1,1,1,1,1];
@@ -62,6 +62,7 @@ function scan = scan_preprocess_flag(scan)
     end
     
     % build flags
-    flag_args = [{'slicetime','realignment','coregistration','segmentation','estimation','normalisation','smooth'};num2cell(redo)];
+    flag_args = [{'realignment','slicetime','coregistration','segmentation','estimation','normalisation','smooth'};num2cell(redo)];
     scan.running.flag = struct(flag_args{:});
+    if ~scan.parameter.analysis.st, scan.running.flag.slicetime = 0; end    
 end

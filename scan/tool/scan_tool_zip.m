@@ -96,10 +96,10 @@ function scan_tool_zip(scan,mode,folder)
                 file_rmdir(directory{i});
             case 'unzip'
                 unzip(zip_file{i},fileparts(directory{i}));
-%                 delete(zip_file{i});
+                file_delete(zip_file{i});
             case 'delete'
                 file_rmdir(file_match(directory{i},'absolute'));
-                delete(file_match(zip_file{i},'absolute'));
+                file_delete(file_match(zip_file{i},'absolute'));
             otherwise
                 scan_tool_error(scan,'unknown mode "%s"',mode);
         end

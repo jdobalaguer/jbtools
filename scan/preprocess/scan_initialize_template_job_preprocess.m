@@ -13,7 +13,6 @@ function job = scan_initialize_template_job_preprocess(type)
     
     % setting
     job.last                = struct('epi3',{'image'},'structural',{'image'});
-    job.sliceTimeCorrection = false;
     job.unwarp              = 'no';
     job.whatToDo            = 'all';
 end

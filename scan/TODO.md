@@ -8,6 +8,7 @@ TODO
 62. check the meshgrid function in TBTE
 63. improve TBTE contrast functions with orthogonalisation
 64. bypass orthogonalisation option
+65. fix glm normalisation/smooth folders (add voxel size)
 
 LONG TERM
 06. handle HDD writing depending on the size of [scan]
