@@ -1,6 +1,6 @@
 
-function scan_tool_zip(scan,mode,folder)
-    %% SCAN_TOOL_ZIP(scan,mode,folder)
+function scan = scan_tool_zip(scan,mode,folder)
+    %% scan = SCAN_TOOL_ZIP(scan,mode,folder)
     % zip/unzip folders
     % scan   : [scan] struct
     % mode   : string with mode (either 'zip' or 'unzip' or 'delete')
@@ -90,18 +90,24 @@ function scan_tool_zip(scan,mode,folder)
     scan_tool_print(scan,false,'\nZip/Unzip : ');
     scan = scan_tool_progress(scan,length(directory));
     for i = 1:length(directory)
-        switch mode
-            case 'zip'
-                zip(zip_file{i},directory{i});
-                file_rmdir(directory{i});
-            case 'unzip'
-                unzip(zip_file{i},fileparts(directory{i}));
-                file_delete(zip_file{i});
-            case 'delete'
-                file_rmdir(file_match(directory{i},'absolute'));
-                file_delete(file_match(zip_file{i},'absolute'));
-            otherwise
-                scan_tool_error(scan,'unknown mode "%s"',mode);
+        try %#ok<TRYNC>
+            switch mode
+                case 'zip'
+                    zip(zip_file{i},directory{i});
+                case 'zip+delete'
+                    zip(zip_file{i},directory{i});
+                    file_rmdir(directory{i});
+                case 'unzip'
+                    unzip(zip_file{i},fileparts(directory{i}));
+                case 'unzip+delete'
+                    unzip(zip_file{i},fileparts(directory{i}));
+                    file_delete(zip_file{i});
+                case 'delete'
+                    file_rmdir(file_match(directory{i},'absolute'));
+                    file_delete(file_match(zip_file{i},'absolute'));
+                otherwise
+                    scan_tool_error(scan,'unknown mode "%s"',mode);
+            end
         end
         scan = scan_tool_progress(scan,[]);
     end

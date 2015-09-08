@@ -13,7 +13,7 @@ end
 
 %% auxiliar
 function varargout = auxiliar_allRdmModel(varargin)
-    varargout = {};
+    varargout = cell(1,nargout);
     if ~nargin, return; end
     assertStruct(varargin{1}); tcan = varargin{1};
     if nargin~=3 || strcmp(varargin{2},'help')

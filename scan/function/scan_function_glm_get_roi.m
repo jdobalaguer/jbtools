@@ -30,7 +30,7 @@ function varargout = auxiliar_roi(varargin)
     if ~ischar(mask),                                       auxiliar_roi(tcan,'help'); return; end
 
     % mask
-    mask = scan_nifti_load(fullfile(tcan.directory.mask,mask));
+    if ~isempty(mask), mask = scan_nifti_load(fullfile(tcan.directory.mask,mask)); end
 
     % switch
     roi = struct();

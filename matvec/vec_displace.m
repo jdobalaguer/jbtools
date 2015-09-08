@@ -16,16 +16,15 @@ function y = vec_displace(x,n,r,d)
     assertScalar(n,d);
     
     %% function
-    y = vec_func(@displace,r);
+    y = vec_func(@displace,{x},{r});
     
-    function t = displace(v)
-        ii = (r == v);
-        t = x(ii);
-        if abs(n)<length(t),
-            if n>0, t = [ repmat(d,[1,n]) , t(1:end-n)       ]; end
-            if n<0, t = [ t(-n+1:end)     , repmat(d,[1,-n]) ]; end
+    function v = displace(y,~)
+        v = y{1};
+        if abs(n)<length(v),
+            if n>0, v = [ repmat(d,[n,1]) ; v(1:end-n)       ]; end
+            if n<0, v = [ v(-n+1:end)     ; repmat(d,[-n,1]) ]; end
         else
-            t = repmat(d,size(t));
+            v = repmat(d,size(v));
         end
     end
 end

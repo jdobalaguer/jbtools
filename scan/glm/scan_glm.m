@@ -92,7 +92,9 @@ function scan = scan_glm(scan)
         % save
         scan_save_scan(scan);
         scan = scan_tool_time(scan);
+        scan = scan_tool_sound(scan,1);
     catch e
         scan = scan_tool_catch(scan,e);
+        scan = scan_tool_sound(scan,0);
     end
 end

@@ -105,3 +105,4 @@ R6. in RSA we should recycle the onset information from the TBTE.
 57. check for invalid fields in [scan] during scan_initialize
 58. RSA with global transformations
 61. fix struct_default when using empty struct vectors..
+66. handel alarm

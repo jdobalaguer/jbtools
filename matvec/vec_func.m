@@ -2,7 +2,7 @@
 function z = vec_func(varargin)
     %% z = VEC_FUNC(f,y,x)
     % apply a function [f] to {x} and {y} independently for each combination of {x}
-    % f :  a function @(x,y). it should return either a scalar or a vector
+    % f :  a function @(y,x). it should return either a scalar or a vector
     % y : value (cell of matrix)
     % x : index (cell of vectors)
     % z : resulting vector
