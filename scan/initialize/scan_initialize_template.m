@@ -54,6 +54,8 @@ function scan = scan_initialize_template(type)
     % file
     scan.file.template.t1           = fullfile(scan.directory.spm,'canonical','avg152T1.nii');
     scan.file.template.t2           = fullfile(scan.directory.spm,'canonical','avg152T2.nii');
+    scan.file.template.st1          = fullfile(scan.directory.spm,'canonical','single_subj_T1.nii');
+    scan.file.template.pd           = fullfile(scan.directory.spm,'canonical','avg152PD.nii');
     scan.file.template.tpm          = fullfile(scan.directory.spm,'tpm','TPM.nii');
     
     % job

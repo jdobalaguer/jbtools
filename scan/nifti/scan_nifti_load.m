@@ -19,7 +19,10 @@ function [vol,siz] = scan_nifti_load(file,mask)
         vol = spm_vol(file);
         siz = size(vol.private.dat);
         vol = double(vol.private.dat(:));
-        vol(~mask(:)) = [];
+        if ~isempty(mask)
+            assertSize(vol,mask);
+            vol(~mask(:)) = [];
+        end
         
     % load many volumes
     else

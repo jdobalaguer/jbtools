@@ -29,7 +29,7 @@ function scan = scan_glm_design(scan)
             spm{i_subject}.spm.stats.fmri_spec.timing.fmri_t0 = spm_get_defaults('stats.fmri.t0');
         end
         spm{i_subject}.spm.stats.fmri_spec.fact = struct('name',{},'levels',{});
-        spm{i_subject}.spm.stats.fmri_spec.bases = scan.running.bases; %spm{i_subject}.spm.stats.fmri_spec.bases.(scan.job.basisFunction.name) = scan.job.basisFunction.parameters;
+        spm{i_subject}.spm.stats.fmri_spec.bases = scan.running.bases;
         spm{i_subject}.spm.stats.fmri_spec.volt = 1;
         spm{i_subject}.spm.stats.fmri_spec.global = 'none';
         if scan.job.globalScaling, spm{i_subject}.spm.stats.fmri_spec.global = 'scaling'; end
