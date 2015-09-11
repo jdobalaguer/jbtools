@@ -12,10 +12,10 @@ function [obj] = new_parse(varargin)
     u_file = varargin(2:end);
     n_file = nargin-1;
     if n_file==1 && file_isdire(u_file{1}) ... one directory
-        u_file = file_list(file_endsep(u_file{1}),'absolute');
+        u_file = file_list(fullfile(u_file{1},'*.nii'),'absolute');
         n_file = length(u_file);
     elseif ~n_file ... no arguments (current directory)
-        u_file = file_list(file_endsep(pwd()),'absolute');
+        u_file = file_list(fullfile(pwd(),'*.nii'),'absolute');
         n_file = length(u_file);
     else ... list of files
         scan_tool_assert(scan,all(cellfun(@file_exist,u_file)),'one or more files do not exist');

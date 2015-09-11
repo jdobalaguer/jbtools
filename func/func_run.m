@@ -21,6 +21,6 @@ function varargout = func_run(file,args)
     func = func_handle(file);
     
     % run function
-    varargout = func_return(func,[],args{:});
+    varargout = func_return(func,nargout,args{:});
     
 end

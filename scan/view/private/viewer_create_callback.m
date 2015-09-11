@@ -1,29 +1,25 @@
 
-function obj = viewer_update_callback(obj)
-    %% obj = VIEWER_UPDATE_CALLBACK(obj)
+function obj = viewer_create_callback(obj)
+    %% obj = VIEWER_CREATE_CALLBACK(obj)
 
     %% function
-    disp('viewer_update_map');
-    
-    % get number of files
-    n_file = length(get(findobj(obj.fig.control.figure,'Tag','FileList'),'Value'));
+    disp('viewer_create_callback');
     
     % print background
-    for i_pov = 1:3
-        for i_file = 1:n_file
-            set(obj.fig.viewer.background(i_pov,i_file),'ButtonDownFcn',@clickStatistics);
-            set(obj.fig.viewer.statistics(i_pov,i_file),'ButtonDownFcn',@clickStatistics);
-        end
-    end
+    set(obj.fig.viewer.background,'ButtonDownFcn',@clickSurface);
+    set(obj.fig.viewer.statistics,'ButtonDownFcn',@clickSurface);
+    set(obj.fig.viewer.line.x,    'ButtonDownFcn',@clickSurface);
+    set(obj.fig.viewer.line.y,    'ButtonDownFcn',@clickSurface);
     
     %% nested function
-    function clickStatistics(s,e)
-        f_pov = find(any(obj.fig.viewer.axis == get(s,'Parent'),2));
+    function clickSurface(s,e)
+        disp('clickSurface');
+        i_pov = find(any(obj.fig.viewer.axis == get(s,'Parent'),2));
         
         % update control
         coord = round(e.IntersectionPoint(1:2));
         h = obj.fig.control.figure;
-        switch f_pov
+        switch i_pov
             case 1
                 y_edit = findobj(h,'Tag','YEdit'); set(y_edit,'String',sprintf('%.1f',coord(1)));
                 z_edit = findobj(h,'Tag','ZEdit'); set(z_edit,'String',sprintf('%.1f',coord(2)));
@@ -38,7 +34,5 @@ function obj = viewer_update_callback(obj)
         % update viewer
         obj = viewer_update_map(obj);
         obj = viewer_update_line(obj);
-        obj = viewer_update_appearance(obj);
-        obj = viewer_update_callback(obj);
     end
 end

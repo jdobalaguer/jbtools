@@ -7,14 +7,9 @@ function obj = viewer_callback(obj)
 
     % figure
     set(obj.fig.viewer.figure,'CloseRequestFcn',@closeViewer);
+    set(obj.fig.viewer.figure,'KeyPressFcn',@keyViewer);
     
     %% nested functions
-    
-    % control
-    function closeViewer(viewer,~)
-        disp('close_viewer');
-        set(viewer,'Visible','off');
-        check = findobj(obj.fig.control.figure,'Tag','ViewerCheck');
-        set(check,'Value',0);
-    end
+    function closeViewer(viewer,~),  obj = viewer_callback_close(obj,viewer); end
+    function keyViewer(~,evt),       obj = viewer_callback_key(obj,evt);      end
 end

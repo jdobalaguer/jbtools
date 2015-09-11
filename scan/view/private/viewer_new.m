@@ -13,4 +13,18 @@ function obj = viewer_new(obj)
     set(h,'MenuBar',        'no');
     set(h,'Resize',         'on');
     obj.fig.viewer.figure = h;
+    
+    % axis
+    obj.fig.viewer.axis = [];
+    
+    % background
+    obj.fig.viewer.background = [];
+    
+    % statistics
+    obj.fig.viewer.statistics = [];
+    
+    % line
+    obj.fig.viewer.line.x = [];
+    obj.fig.viewer.line.y = [];
+
 end

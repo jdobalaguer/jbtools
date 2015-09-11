@@ -23,5 +23,5 @@ function h = fig_marker(varargin)
     assertSize(x,y);
     
     % plot
-    h = plot(x,y,'color',c,'marker','o','linestyle','none','linewidth',2,varargin{4:end});
+    h = plot(x,y,'color',c,'marker','.','markersize',20,'linestyle','none','linewidth',2,varargin{4:end});
 end

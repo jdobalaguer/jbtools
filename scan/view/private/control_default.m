@@ -22,7 +22,15 @@ function obj = control_default(obj)
     set(file_list,'Value',obj.par.control.windows.selected);
     
     % statistics
-    % TODO
+    switch obj.dat.map
+        case 'T',  set(findobj(h,'Tag','MapPopup'),'Value',1);
+        case 'F',  set(findobj(h,'Tag','MapPopup'),'Value',2);
+        case 'P',  set(findobj(h,'Tag','MapPopup'),'Value',3);
+        otherwise  set(findobj(h,'Tag','MapPopup'),'Value',4);
+    end
+    set(findobj(h,'Tag','PValueEdit'),'String',sprintf('%.1e',obj.par.control.statistics.pvalue));
+    set(findobj(h,'Tag','DFEdit'),    'String',sprintf('%d',obj.dat.df));
+    obj = control_update_statistics(obj);
     
     % position
     p = obj.par.control.position;

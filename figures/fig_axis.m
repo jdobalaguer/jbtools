@@ -38,8 +38,8 @@ function varargout = fig_axis(sa,ca)
   set(ca, 'FontName','Verdana');
   set(ca, 'Box'         , 'off'     , ...
           'TickDir'     , 'out'     , ...
-          'TickLength'  , [0,0] , ...
           'LineWidth'   , 1         );
+  set(ca,'TickLength',[0.01,0.025]);
   set(get(gcf,'CurrentAxes'), 'box', 'off');
   set(get(gcf,'CurrentAxes'),'layer','top');
         

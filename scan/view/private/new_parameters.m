@@ -13,22 +13,18 @@ function obj = new_parameters(obj)
     obj.par.control.windows.atlas       = false;
     obj.par.control.windows.merged      = false;
     
-    obj.par.control.windows.selected    = 1:obj.dat.number;
+    obj.par.control.windows.selected    = 1; %1:obj.dat.number;
     
-    obj.par.control.statistics.analysis = 't-maps';
     obj.par.control.statistics.tail     = 'Both';
     obj.par.control.statistics.pvalue   = 0.001;
-    obj.par.control.statistics.fdr      = nan;
-    obj.par.control.statistics.stat     = nan;
-    obj.par.control.statistics.df       = nan;
     
     obj.par.control.position.x          = 21;
     obj.par.control.position.y          = 24;
     obj.par.control.position.z          = 20;
     
     % viewer
-    obj.par.viewer.colormap.background  = 'gray';
-    obj.par.viewer.colormap.statistics  = 'parula';
+    obj.par.viewer.line.color           = [1,1,1];
+    obj.par.viewer.colormap.statistics  = 'jet';
     obj.par.viewer.colormap.resolution  = 64;
     
 end

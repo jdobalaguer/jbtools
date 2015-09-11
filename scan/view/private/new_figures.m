@@ -29,6 +29,9 @@ function obj = new_figures(obj)
 %     obj = atlas_callback(obj);
 %     obj = merged_callback(obj);
 
+    % create
+    obj = viewer_create(obj);
+    
     % update
     obj = control_update(obj);
     obj = viewer_update(obj);

@@ -1,9 +1,16 @@
 
-function obj = viewer_update_axes(obj)
-    %% obj = VIEWER_UPDATE_AXES(obj)
+function obj = viewer_create_axes(obj)
+    %% obj = VIEWER_CREATE_AXES(obj)
 
+    %% notes
+    % 1. fawt force that the axis is actually for that figure (without calling the figure)
+    % 2. new arrangement
+    % 3. slices, buttons, labels
+    % 4. see http://uk.mathworks.com/matlabcentral/newsreader/view_thread/246599
+
+    
     %% function
-    disp('viewer_update_axes');
+    disp('viewer_create_axes');
     
     % remove previous axes
     delete(obj.fig.viewer.axis);

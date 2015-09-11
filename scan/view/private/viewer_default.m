@@ -8,17 +8,9 @@ function obj = viewer_default(obj)
     h = obj.fig.viewer.figure;
     
     % figure
-    set(h,'Visible',bool2string(obj.par.control.windows.viewer));
-    
-    % axis
-    obj.fig.viewer.axis = repmat(matlab.graphics.axis.Axes,[3,length(obj.par.control.windows.selected)]);
+    set(h,'Visible',aux_bool2string(obj.par.control.windows.viewer));
     
     % whatever
     % TODO
 
-end
-
-function s = bool2string(b)
-    s = 'off';
-    if b, s = 'on'; end
 end
