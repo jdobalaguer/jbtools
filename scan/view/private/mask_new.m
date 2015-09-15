@@ -8,12 +8,10 @@ function obj = mask_new(obj)
     % figure
     h = figure();
     set(h,'Name',           'Mask Manager');
-    set(h,'Tag',            'ControlFigure');
+    set(h,'Tag',            'MaskFigure');
     set(h,'Units',          'pixels');
     set(h,'MenuBar',        'no');
     set(h,'Resize',         'off');
-    set(h,'CloseRequestFcn',@closeMask);
-    if ~obj.par.control.windows.mask, set(h,'Visible','off'); end
     obj.fig.mask.figure = h;
     
     %% nested function

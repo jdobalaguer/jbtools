@@ -41,33 +41,47 @@ function obj = control_update_statistics(obj,edit)
     if isnan(d), set(m_popup,'Value',find(strcmp(u_m,'none'))); return; end
     if strcmp(m,'none'), return; end
     
-    % update statistic
+    % update
     if ~isnan(p)
         % based on p-value
+        % (this is what remains fixed when we change the tails)
         switch m
             case 't-map', t = spm_invTcdf(1-p,d);
+                          f = nan;
             case 'f-map', t = spm_invFcdf(1-p,d);
+                          f = nan;
             case 'p-map', t = spm_invTcdf(1-p,d);
+                          f = nan;
         end
-        f = nan;
     elseif ~isnan(t)
         % based on statistic
         switch m
             case 't-map', p = 1-spm_Tcdf(t,d);
+                          f = nan;
             case 'f-map', p = 1-spm_Fcdf(t,d);
+                          f = nan;
             case 'p-map', p = 1-spm_Tcdf(T,d);
+                          f = nan;
         end
         f = nan;
-    elseif ~isnan(t)
+    elseif ~isnan(f)
         % based on FDR
         % TODO
-        [t,p,f] = deal(nan); 
+        switch m
+            case 't-map', t = nan;
+                          p = nan;
+            case 'f-map', t = nan;
+                          p = nan;
+            case 'p-map', t = nan;
+                          p = nan;
+        end
     else
         % something weird, put all to nan
-        scan_tool_warning(obj.dat.scan,false,'no statistic specified - statistic map disabled');
+        scan_tool_warning(obj.scan,false,'no statistic specified - statistic map disabled');
         set(m_popup,'Value',find(strcmp(u_m,'none')));
         [t,p,f] = deal(nan); 
     end
+    
     set(t_edit,'String',sprintf('%+.2f',t));
     set(p_edit,'String',sprintf('%.1e', p));
     set(f_edit,'String',sprintf('%+.2f',f));

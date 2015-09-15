@@ -23,7 +23,7 @@ end
 
 %% auxiliar
 function [u,n,h] = get_unh(x,k)
-    if ~iscell(x), x = jb_filter(x); end
+    if ~iscell(x), x = vec_filter(x); end
     u = unique(x);
     n = length(u);
     h = nan(n,1);

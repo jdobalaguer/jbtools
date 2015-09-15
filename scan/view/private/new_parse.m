@@ -9,7 +9,7 @@ function [obj] = new_parse(varargin)
     scan = varargin{1};
     
     % files
-    u_file = varargin(2:end);
+    u_file = mat2vec(varargin(2:end));
     n_file = nargin-1;
     if n_file==1 && file_isdire(u_file{1}) ... one directory
         u_file = file_list(fullfile(u_file{1},'*.nii'),'absolute');
@@ -23,8 +23,6 @@ function [obj] = new_parse(varargin)
     
     % save things
     obj = scan_view_obj();
-    obj.dat = struct();
-    obj.dat.scan = scan;
-    obj.dat.file = u_file;
-    obj.dat.number = n_file;
+    obj.scan = scan;
+    obj.dat.statistics = struct('file',u_file);
 end

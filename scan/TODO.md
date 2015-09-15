@@ -9,6 +9,8 @@ TODO
 63. improve TBTE contrast functions with orthogonalisation
 64. bypass orthogonalisation option
 65. fix glm normalisation/smooth folders (add voxel size)
+67. enable/disable first level GLM
+68. scan_view
 
 LONG TERM
 06. handle HDD writing depending on the size of [scan]

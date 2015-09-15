@@ -1,3 +1,3 @@
-1. create axes/surfs once
-2. assert direction of surfaces, and position of lines
-3. render options
+1. assert direction of surfaces, and position of lines
+2. render options
+3. create get/set methods for the control

@@ -6,6 +6,7 @@ function obj = viewer_create_callback(obj)
     disp('viewer_create_callback');
     
     % print background
+    set(obj.fig.viewer.axis,      'ButtonDownFcn',@clickSurface);
     set(obj.fig.viewer.background,'ButtonDownFcn',@clickSurface);
     set(obj.fig.viewer.statistics,'ButtonDownFcn',@clickSurface);
     set(obj.fig.viewer.line.x,    'ButtonDownFcn',@clickSurface);
@@ -14,7 +15,12 @@ function obj = viewer_create_callback(obj)
     %% nested function
     function clickSurface(s,e)
         disp('clickSurface');
-        i_pov = find(any(obj.fig.viewer.axis == get(s,'Parent'),2));
+        
+        %  get axis and POV
+        if strcmp(get(s,'Type'),'axes') a = s;
+        else                            a = get(s,'Parent');
+        end
+        i_pov = find(any(obj.fig.viewer.axis == a,2));
         
         % update control
         coord = round(e.IntersectionPoint(1:2));
@@ -32,7 +38,8 @@ function obj = viewer_create_callback(obj)
         end
         
         % update viewer
-        obj = viewer_update_map(obj);
+        obj = viewer_update_background(obj);
+        obj = viewer_update_statistics(obj);
         obj = viewer_update_line(obj);
     end
 end

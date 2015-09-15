@@ -21,6 +21,7 @@ function job = scan_initialize_template_job_glm(type)
     job.margeFromEnd       = 0;         % remove onsets close to the end
     job.realignCovariate   = true;      % add realignment parameters as covariates?
     job.removeVolumes      = 0;         % discard the first volumes in each session
+    job.firstLevel         = true;      % whether to run the first level or not
     job.secondLevel        = 'con';     % what images to use for the second-level analysis? {'con','smpt'}
     job.whatToDo           = 'all';     % see @scan_glm_flag
     

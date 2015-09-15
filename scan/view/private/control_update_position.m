@@ -17,9 +17,10 @@ function obj = control_update_position(obj,dx,dy,dz)
     z = dz + eval(get(z_edit,'String'));
 
     % limit coordinates
+    [xbox,ybox,zbox] = viewer_get_XYlim(obj);
     xyz = [x,y,z];
-    xyz = max(xyz,[1,1,1]);
-    xyz = min(xyz,obj.dat.size);
+    xyz = max(xyz,[xbox(1),ybox(1),zbox(1)]);
+    xyz = min(xyz,[xbox(2),ybox(2),zbox(2)]);
     x = xyz(1); y = xyz(2); z = xyz(3);
 
     % update control

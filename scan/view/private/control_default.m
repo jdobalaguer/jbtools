@@ -13,23 +13,22 @@ function obj = control_default(obj)
     glass_check  = findobj(h,'Tag','GlassCheck');  set(glass_check, 'Value',p.glass);
     mask_check   = findobj(h,'Tag','MaskCheck');   set(mask_check,  'Value',p.mask);
     atlas_check  = findobj(h,'Tag','AtlasCheck');  set(atlas_check, 'Value',p.atlas);
-    merged_check = findobj(h,'Tag','MergedCheck'); set(merged_check,'Value',p.merged);
+    render_check = findobj(h,'Tag','RenderCheck'); set(render_check,'Value',p.render);
     
     % file
     file_list = findobj(h,'Tag','FileList');
     set(file_list,'Min',  0);
-    set(file_list,'Max',  obj.dat.number);
-    set(file_list,'Value',obj.par.control.windows.selected);
+    set(file_list,'Max',  length(obj.dat.statistics));
+    set(file_list,'Value',obj.par.control.file.selected);
+    set(file_list,'String',file_2local({obj.dat.statistics.file}));
     
     % statistics
-    switch obj.dat.map
-        case 'T',  set(findobj(h,'Tag','MapPopup'),'Value',1);
-        case 'F',  set(findobj(h,'Tag','MapPopup'),'Value',2);
-        case 'P',  set(findobj(h,'Tag','MapPopup'),'Value',3);
-        otherwise  set(findobj(h,'Tag','MapPopup'),'Value',4);
-    end
+    set(findobj(h,'Tag','StatEdit'),  'String',sprintf('%.1e',obj.par.control.statistics.stat));
     set(findobj(h,'Tag','PValueEdit'),'String',sprintf('%.1e',obj.par.control.statistics.pvalue));
-    set(findobj(h,'Tag','DFEdit'),    'String',sprintf('%d',obj.dat.df));
+    set(findobj(h,'Tag','FDREdit'),   'String',sprintf('%.1e',obj.par.control.statistics.fdr));
+    obj = control_update_map(obj);
+    obj = control_update_df(obj);
+    obj = control_update_tail(obj,[]);
     obj = control_update_statistics(obj);
     
     % position
@@ -37,5 +36,5 @@ function obj = control_default(obj)
     x_edit = findobj(h,'Tag','XEdit'); set(x_edit,'String',sprintf('%.1f',p.x));
     y_edit = findobj(h,'Tag','YEdit'); set(y_edit,'String',sprintf('%.1f',p.y));
     z_edit = findobj(h,'Tag','ZEdit'); set(z_edit,'String',sprintf('%.1f',p.z));
-    bg_pop = findobj(h,'Tag','BackgroundPopup'); set(bg_pop,'String',{obj.dat.templates.name});
+    bg_pop = findobj(h,'Tag','BackgroundPopup'); set(bg_pop,'String',{obj.dat.background.name},'Value',find(strcmp(obj.par.control.background.name,{obj.dat.background.name})));
 end

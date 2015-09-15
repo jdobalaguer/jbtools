@@ -7,11 +7,12 @@ function obj = viewer_new(obj)
 
     % figure
     h = figure();
-    set(h,'Name',           'viewer');
-    set(h,'Tag',            'ControlFigure');
+    set(h,'Name',           'Viewer');
+    set(h,'Tag',            'ViewerFigure');
     set(h,'Units',          'pixels');
     set(h,'MenuBar',        'no');
     set(h,'Resize',         'on');
+    set(h,'Color',          [0,0,0]);
     obj.fig.viewer.figure = h;
     
     % axis

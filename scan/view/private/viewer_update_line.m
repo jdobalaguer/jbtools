@@ -9,14 +9,15 @@ function obj = viewer_update_line(obj)
     x = str2double(get(findobj(obj.fig.control.figure,'Tag','XEdit'),'String'));
     y = str2double(get(findobj(obj.fig.control.figure,'Tag','YEdit'),'String'));
     z = str2double(get(findobj(obj.fig.control.figure,'Tag','ZEdit'),'String'));
+    [xbox,ybox,zbox] = viewer_get_XYlim(obj);
     
     % print background
-    set(obj.fig.viewer.line.x(1,:),'XData',[1,obj.dat.size(2)],'YData',[z,z]);
-    set(obj.fig.viewer.line.y(1,:),'XData',[y,y],'YData',[1,obj.dat.size(3)]);
+    set(obj.fig.viewer.line.x(1,:),'XData',ybox, 'YData',[z,z]);
+    set(obj.fig.viewer.line.y(1,:),'XData',[y,y],'YData',zbox );
     
-    set(obj.fig.viewer.line.x(2,:),'XData',[1,obj.dat.size(1)],'YData',[z,z]);
-    set(obj.fig.viewer.line.y(2,:),'XData',[x,x],'YData',[1,obj.dat.size(3)]);
+    set(obj.fig.viewer.line.x(2,:),'XData',xbox, 'YData',[z,z]);
+    set(obj.fig.viewer.line.y(2,:),'XData',[x,x],'YData',zbox );
     
-    set(obj.fig.viewer.line.x(3,:),'XData',[1,obj.dat.size(2)],'YData',[x,x]);
-    set(obj.fig.viewer.line.y(3,:),'XData',[y,y],'YData',[1,obj.dat.size(1)]);
+    set(obj.fig.viewer.line.x(3,:),'XData',ybox, 'YData',[x,x]);
+    set(obj.fig.viewer.line.y(3,:),'XData',[y,y],'YData',xbox );
 end

@@ -64,5 +64,7 @@ function scan = scan_preprocess_flag(scan)
     % build flags
     flag_args = [{'realignment','slicetime','coregistration','segmentation','estimation','normalisation','smooth'};num2cell(redo)];
     scan.running.flag = struct(flag_args{:});
+    
+    % slice-time
     if ~scan.parameter.analysis.st, scan.running.flag.slicetime = 0; end    
 end

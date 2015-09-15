@@ -49,4 +49,7 @@ function scan = scan_glm_flag(scan)
     
     % one-subject
     if scan.running.subject.number == 1, scan.running.flag.second = false; end
+    
+    % first level
+    if ~scan.job.firstLevel, scan.running.flag.first = 0; end    
 end

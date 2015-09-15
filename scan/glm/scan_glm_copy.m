@@ -76,7 +76,7 @@ function scan = scan_glm_copy(scan,level,type)
                 scan = scan_tool_progress(scan,[]);
             end
             file_mkdir(scan.running.directory.mask.common);
-            spm_imcalc(fullfile(scan.running.directory.mask.individual,'wholebrain.nii'),fullfile(scan.running.directory.mask.common,'wholebrain.nii'),strcat('1',sprintf(' & i%d',1:scan.running.subject.number)));
+            evalc('spm_imcalc(fullfile(scan.running.directory.mask.individual,''wholebrain.nii''),fullfile(scan.running.directory.mask.common,''wholebrain.nii''),strcat(''1'',sprintf('' & i%d'',1:scan.running.subject.number)));');
             scan = scan_tool_progress(scan,0);
         
         % first level SPM mat-file

@@ -73,7 +73,7 @@ function X = scan_tool_convolution(scan,i_order,condition)
             scan_tool_assert(scan,numel(U.dur) == numel(U.ons),'mismatch between number of onset and number of durations.');
             U.P = struct('name',{'none'},'h',{0});
 
-            % get onsets (this bis is based in "spm_get_ons.m" line 94)
+            % get onsets (this bit is based in "spm_get_ons.m" line 94)
             k = length(scan.running.file.nii.epi3.(scan.job.image){i_subject}{i_session});
             u     = U.ons.^0;
             if ~any(U.dur), u = u/xBF.dt; end

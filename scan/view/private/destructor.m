@@ -9,6 +9,6 @@ function destructor(obj,~)
     delete(obj.fig.glass.figure);
     delete(obj.fig.mask.figure);
     delete(obj.fig.atlas.figure);
-    delete(obj.fig.merged.figure);
+    delete(obj.fig.render.figure);
     delete(obj);
 end

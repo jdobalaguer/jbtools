@@ -5,8 +5,11 @@ function obj = viewer_update(obj)
     %% function
     disp('viewer_update');
     
-    % map
-    obj = viewer_update_map(obj);
+    % background
+    obj = viewer_update_background(obj);
+
+    % statistics
+    obj = viewer_update_statistics(obj);
     
     % line
     obj = viewer_update_line(obj);

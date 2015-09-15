@@ -8,8 +8,9 @@ classdef scan_view_obj < handle
     
     %% properties
     properties
-        dat % data
-        par % parameter
-        fig % figure
+        scan % scan
+        dat  % data
+        par  % parameter
+        fig  % figure
     end
 end

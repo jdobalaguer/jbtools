@@ -1,6 +1,6 @@
 
-function y = vec_filter(f,x)
-    %% [y] = VEC_FILTER(f,x)
+function y = vec_filter(x,f)
+    %% [y] = VEC_FILTER(x,f)
     % filter elements from a vector
     % f : filter function (default "~isnan")
     % x : input vector
