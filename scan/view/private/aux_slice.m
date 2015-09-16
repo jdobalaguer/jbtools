@@ -56,6 +56,7 @@ function c = aux_slice(data,matrix,mni,r,method)
     
     % slice plane in native coordinates
     a = matlab.graphics.axis.Axes();
+    if all(isnan(data(:))), c = nan(r); return; end
     h = slice(a,xx,yy,zz,data,xcor,ycor,zcor,method);
     
     % get values
