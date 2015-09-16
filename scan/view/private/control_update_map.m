@@ -11,7 +11,7 @@ function obj = control_update_map(obj)
     
     % get maps
     u_map = {obj.dat.statistics(ii_file).map};
-    n_map = sum(ii_file);
+    n_map = length(u_map);
     
     % assert
     switch n_map

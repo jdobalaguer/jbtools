@@ -1,6 +1,6 @@
 
 function obj = control_update_position(obj,dx,dy,dz)
-    %% obj = CONTROL_UPDATE_POSITION(obj)
+    %% obj = CONTROL_UPDATE_POSITION(obj,dx,dy,dz)
     
     %% function
     disp('control_update_position');

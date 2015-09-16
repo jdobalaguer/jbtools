@@ -17,6 +17,7 @@ function obj = viewer_new(obj)
     
     % axis
     obj.fig.viewer.axis = [];
+    obj.fig.viewer.title = [];
     
     % background
     obj.fig.viewer.background = [];

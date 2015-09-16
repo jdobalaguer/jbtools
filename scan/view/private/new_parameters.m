@@ -28,8 +28,12 @@ function obj = new_parameters(obj)
     
     % viewer
     obj.par.viewer.marge                = 5;
+    obj.par.viewer.title.color          = [1,1,1];
+    obj.par.viewer.title.size           = 14;
     obj.par.viewer.line.color           = [1,1,1,0.5];
-    obj.par.viewer.line.thickness       = 3;
-    obj.par.viewer.colormap.statistics  = 'jet';
+    obj.par.viewer.line.thickness       = 1;
+    obj.par.viewer.colormap.positive    = 'hot';
+    obj.par.viewer.colormap.negative    = 'cool';
+    obj.par.viewer.colormap.both        = 'jet';
     obj.par.viewer.colormap.resolution  = 64;
 end

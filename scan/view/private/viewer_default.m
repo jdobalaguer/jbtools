@@ -9,8 +9,4 @@ function obj = viewer_default(obj)
     
     % figure
     set(h,'Visible',aux_bool2string(obj.par.control.windows.viewer));
-    
-    % whatever
-    % TODO
-
 end

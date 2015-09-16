@@ -79,12 +79,16 @@ function obj = control_callback(obj)
         disp('control_callback.callbackStatistics');
         obj = control_update_statistics(obj,edit);
         obj = viewer_update_statistics(obj);
+        obj = viewer_update_Clim(obj);
+        obj = viewer_update_colormap(obj);
     end
     function callbackTail(radio,~)
         disp('control_callback.callbackTail');
         obj = control_update_tail(obj,radio);
         obj = control_update_statistics(obj);
         obj = viewer_update_statistics(obj);
+        obj = viewer_update_Clim(obj);
+        obj = viewer_update_colormap(obj);
     end
 
     %% nested position callback

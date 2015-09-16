@@ -1,3 +1,3 @@
-1. assert direction of surfaces, and position of lines
+1. FDR for multipl comparisons
 2. render options
-3. create get/set methods for the control
+3. display the statistic and the p-value for each file

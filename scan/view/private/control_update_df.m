@@ -11,7 +11,7 @@ function obj = control_update_df(obj)
     
     % get maps
     u_df = {obj.dat.statistics(ii_file).df};
-    n_df = sum(ii_file);
+    n_df = length(u_df);
     
     % assert
     switch n_df

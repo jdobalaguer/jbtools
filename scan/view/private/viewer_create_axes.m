@@ -25,8 +25,14 @@ function obj = viewer_create_axes(obj)
         for i_file = 1:n_file
             j_axis = j_axis + 1;
             obj.fig.viewer.axis(i_pov,i_file) = subplot(3,n_file,j_axis,'Color',[0,0,0],'Parent',obj.fig.viewer.figure);
-            %colorbar('peer',obj.fig.viewer.axis(i_pov,i_file));
         end
     end
+    
+    % reverse axis for the third POV
     set(obj.fig.viewer.axis(3,:),'YDir','reverse');
+    
+    % add colorbar
+    obj.fig.viewer.colorbar.axis = axes('position',[0,0.1,1,0.8],'Parent',obj.fig.viewer.figure,'Visible','off');
+    obj.fig.viewer.colorbar.bar  = colorbar('peer',obj.fig.viewer.colorbar.axis,'Color',[1,1,1],'Fontsize',12);
+    set(obj.fig.viewer.colorbar.bar,'Location','east');
 end

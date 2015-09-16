@@ -29,8 +29,4 @@ function obj = viewer_create_statistics(obj)
             end
         end
     end
-    
-    % colormap
-    cmap = fig_color(obj.par.viewer.colormap.statistics, obj.par.viewer.colormap.resolution);
-    colormap(obj.fig.viewer.figure,cmap);
 end
