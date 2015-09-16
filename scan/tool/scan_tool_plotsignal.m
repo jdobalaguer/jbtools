@@ -1,6 +1,6 @@
 
 function scan_tool_plotsignal(scan,n_volume,image)
-    %% PLOT_SIGNAL(scan,n_volume,image)
+    %% SCAN_TOOL_PLOTSIGNAL(scan,n_volume,image)
     % plot average signal over the whole volume
     % n_volume : if positive, it will plot the first [n_volume] volumes
     %            if negative, it will plot the last [n_volume] volumes

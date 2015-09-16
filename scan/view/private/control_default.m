@@ -20,7 +20,7 @@ function obj = control_default(obj)
     set(file_list,'Min',  0);
     set(file_list,'Max',  length(obj.dat.statistics));
     set(file_list,'Value',obj.par.control.file.selected);
-    set(file_list,'String',file_2local({obj.dat.statistics.file}));
+    set(file_list,'String',file_next(file_2local({obj.dat.statistics.file})));
     
     % statistics
     set(findobj(h,'Tag','StatEdit'),  'String',sprintf('%.1e',obj.par.control.statistics.stat));
@@ -36,5 +36,8 @@ function obj = control_default(obj)
     x_edit = findobj(h,'Tag','XEdit'); set(x_edit,'String',sprintf('%.1f',p.x));
     y_edit = findobj(h,'Tag','YEdit'); set(y_edit,'String',sprintf('%.1f',p.y));
     z_edit = findobj(h,'Tag','ZEdit'); set(z_edit,'String',sprintf('%.1f',p.z));
-    bg_pop = findobj(h,'Tag','BackgroundPopup'); set(bg_pop,'String',{obj.dat.background.name},'Value',find(strcmp(obj.par.control.background.name,{obj.dat.background.name})));
+    
+    % background
+    bg_pop  = findobj(h,'Tag','BackgroundPopup');   set(bg_pop,'String',{obj.dat.background.name},'Value',find(strcmp(obj.par.control.background.name,{obj.dat.background.name})));
+    bgr_pop = findobj(h,'Tag','BgResolutionPopup'); set(bgr_pop,'String',{'Low','Med','High'},'Value',find(strcmp(obj.par.control.background.resolution,{'Low','Med','High'})));
 end

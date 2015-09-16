@@ -38,8 +38,6 @@ function obj = viewer_create_callback(obj)
         end
         
         % update viewer
-        obj = viewer_update_background(obj);
-        obj = viewer_update_statistics(obj);
-        obj = viewer_update_line(obj);
+        obj = viewer_update(obj);
     end
 end

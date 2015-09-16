@@ -12,9 +12,9 @@ function obj = control_update_position(obj,dx,dy,dz)
     z_edit = findobj(h,'Tag','ZEdit');
 
     % get coordinates
-    x = dx + eval(get(x_edit,'String'));
-    y = dy + eval(get(y_edit,'String'));
-    z = dz + eval(get(z_edit,'String'));
+    x = dx + str2double(get(x_edit,'String'));
+    y = dy + str2double(get(y_edit,'String'));
+    z = dz + str2double(get(z_edit,'String'));
 
     % limit coordinates
     [xbox,ybox,zbox] = viewer_get_XYlim(obj);

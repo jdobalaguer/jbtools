@@ -5,6 +5,9 @@ function obj = viewer_update(obj)
     %% function
     disp('viewer_update');
     
+    % text
+    obj = viewer_update_text(obj);
+    
     % background
     obj = viewer_update_background(obj);
 

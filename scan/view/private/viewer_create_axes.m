@@ -33,6 +33,6 @@ function obj = viewer_create_axes(obj)
     
     % add colorbar
     obj.fig.viewer.colorbar.axis = axes('position',[0,0.1,1,0.8],'Parent',obj.fig.viewer.figure,'Visible','off');
-    obj.fig.viewer.colorbar.bar  = colorbar('peer',obj.fig.viewer.colorbar.axis,'Color',[1,1,1],'Fontsize',12);
+    obj.fig.viewer.colorbar.bar  = colorbar('peer',obj.fig.viewer.colorbar.axis,'Color',obj.par.viewer.text.color,'Fontsize',obj.par.viewer.text.size);
     set(obj.fig.viewer.colorbar.bar,'Location','east');
 end

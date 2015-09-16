@@ -30,11 +30,12 @@ function obj = control_callback(obj)
     b_radio = findobj(h,'Tag','BothRadio');       set(b_radio,'Callback',@callbackTail);
     
     % position
-    x_edit = findobj(h,'Tag','XEdit');             set(x_edit,'Callback',@callbackPosition);
-    y_edit = findobj(h,'Tag','YEdit');             set(y_edit,'Callback',@callbackPosition);
-    z_edit = findobj(h,'Tag','ZEdit');             set(z_edit,'Callback',@callbackPosition);
+    x_edit = findobj(h,'Tag','XEdit');              set(x_edit,'Callback',@callbackPosition);
+    y_edit = findobj(h,'Tag','YEdit');              set(y_edit,'Callback',@callbackPosition);
+    z_edit = findobj(h,'Tag','ZEdit');              set(z_edit,'Callback',@callbackPosition);
     
-    bg_pop = findobj(h,'Tag','BackgroundPopup');   set(bg_pop,'Callback',@callbackBackground);
+    bg_pop = findobj(h,'Tag','BackgroundPopup');    set(bg_pop,'Callback',@callbackBackground);
+    bgr_pop = findobj(h,'Tag','BgResolutionPopup'); set(bgr_pop,'Callback',@callbackBgResolution);
     
     %% nested control callback
     function closeControl(~,~)
@@ -47,19 +48,19 @@ function obj = control_callback(obj)
         disp('control_callback.callbackViewer');
         viewer_update_check(obj,'control');
     end
-    function callbackGlass(check,~)
+    function callbackGlass(~,~)
         disp('control_callback.callbackGlass');
         glass_update_check(obj,'control');
     end
-    function callbackMask(check,~)
+    function callbackMask(~,~)
         disp('control_callback.callbackMask');
         mask_update_check(obj,'control');
     end
-    function callbackAtlas(check,~)
+    function callbackAtlas(~,~)
         disp('control_callback.callbackAtlas');
         atlas_update_check(obj,'control');
     end
-    function callbackRender(check,~)
+    function callbackRender(~,~)
         disp('control_callback.callbackRender');
         render_update_check(obj,'control');
     end
@@ -95,14 +96,16 @@ function obj = control_callback(obj)
     function callbackPosition(~,~)
         disp('control_callback.callbackPosition');
         obj = control_update_position(obj,0,0,0);
-        obj = viewer_update_background(obj);
-        obj = viewer_update_statistics(obj);
-        obj = viewer_update_line(obj);
+        obj = viewer_update(obj);
     end
     function callbackBackground(~,~)
         disp('control_callback.callbackBackground');
         obj = viewer_update_background(obj);
         obj = viewer_update_XYlim(obj);
+    end
+    function callbackBgResolution(~,~)
+        disp('control_callback.callbackBackground');
+        obj = viewer_update_background(obj);
     end
     
 end

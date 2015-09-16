@@ -16,38 +16,59 @@ function obj = viewer_update_background(obj)
     % get background
     ii_bg  = control_get_background(obj);
     bg_matrix = obj.dat.background(ii_bg).matrix;
-    bg_size   = obj.dat.background(ii_bg).size;
     bg_data   = obj.dat.background(ii_bg).data;
+    
+    % get statistics (needed for low resolution)
+    ii_file = control_get_file(obj);
+    ii_file = ii_file(1); % hack, let's use resolution of the first file
     
     % box coordinates
     [xbox,ybox,zbox] = aux_getBox(obj.dat.background(ii_bg));
-        
+    
+    % resolution
+    bgr_pop = findobj(obj.fig.control.figure,'Tag','BgResolutionPopup');
+    u_resolution = get(bgr_pop,'String');
+    i_resolution = get(bgr_pop,'Value');
+    resolution   = u_resolution{i_resolution};
+    method = 'linear';
+    switch resolution
+        case 'Low',
+            method = 'nearest';
+            lim_bg = mat2row(cellfun(@(x)diff(ranger(x)),(struct2cell(obj.dat.background(ii_bg).mni))));
+            lim_st = mat2row(cellfun(@(x)diff(ranger(x)),(struct2cell(obj.dat.statistics(ii_file).mni))));
+            siz_st = obj.dat.statistics(ii_file).size;
+            bg_size = lim_bg .* siz_st ./ lim_st;
+        case 'Med',  bg_size = 1.0 * obj.dat.background(ii_bg).size;
+        case 'High', bg_size = 2.0 * obj.dat.background(ii_bg).size;
+        otherwise,   bg_size = 1.0 * obj.dat.background(ii_bg).size;
+    end
+    
     % update background
     for i_pov = 1:3
         
         % calculate the slice for the POV
         switch i_pov
             case 1
-                r  = [bg_size(2),bg_size(3)];
+                r  = round([bg_size(2),bg_size(3)]);
                 ux = linspace(ybox(1),ybox(2),r(1));
                 uy = linspace(zbox(1),zbox(2),r(2));
                 mni = aux_plane(x,ux,uy);
                 [xdata,ydata,zdata] = ndgrid(ux,uy,0);
-                cdata = aux_slice(bg_data,bg_matrix,mni,r,'linear');
+                cdata = aux_slice(bg_data,bg_matrix,mni,r,method);
             case 2
-                r  = [bg_size(1),bg_size(3)];
+                r  = round([bg_size(1),bg_size(3)]);
                 ux = linspace(xbox(1),xbox(2),r(1));
                 uy = linspace(zbox(1),zbox(2),r(2));
                 mni = aux_plane(ux,y,uy);
                 [xdata,ydata,zdata] = ndgrid(ux,uy,0);
-                cdata = aux_slice(bg_data,bg_matrix,mni,r,'linear');
+                cdata = aux_slice(bg_data,bg_matrix,mni,r,method);
             case 3
-                r  = [bg_size(2),bg_size(1)];
+                r  = round([bg_size(2),bg_size(1)]);
                 ux = linspace(ybox(1),ybox(2),r(1));
                 uy = linspace(xbox(1),xbox(2),r(2));
                 mni = aux_plane(uy,ux,z);
                 [xdata,ydata,zdata] = ndgrid(ux,uy,0);
-                cdata = aux_slice(bg_data,bg_matrix,mni,fliplr(r),'linear')';
+                cdata = aux_slice(bg_data,bg_matrix,mni,fliplr(r),method)';
         end
         
         % set grayscale colour

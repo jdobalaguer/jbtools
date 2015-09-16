@@ -1,6 +1,6 @@
 
 function [xbox,ybox,zbox] = viewer_get_XYlim(obj)
-    %% obj = VIEWER_GET_XYLIM(obj)
+    %% [xbox,ybox,zbox] = VIEWER_GET_XYLIM(obj)
     % get the limits of the figure
     
     %% function

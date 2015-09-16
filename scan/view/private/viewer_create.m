@@ -10,6 +10,7 @@ function obj = viewer_create(obj)
     obj = viewer_update_Clim(obj);
     obj = viewer_update_colormap(obj);
     obj = viewer_create_title(obj);
+    obj = viewer_create_text(obj);
     
     % map
     obj = viewer_create_background(obj);

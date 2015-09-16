@@ -24,12 +24,13 @@ function obj = new_parameters(obj)
     obj.par.control.position.y          = 0;
     obj.par.control.position.z          = 0;
     
-    obj.par.control.background.name     = 'st1';
+    obj.par.control.background.name        = 'st1';
+    obj.par.control.background.resolution  = 'Med';
     
     % viewer
     obj.par.viewer.marge                = 5;
-    obj.par.viewer.title.color          = [1,1,1];
-    obj.par.viewer.title.size           = 14;
+    obj.par.viewer.text.color           = [1,1,1];
+    obj.par.viewer.text.size            = 14;
     obj.par.viewer.line.color           = [1,1,1,0.5];
     obj.par.viewer.line.thickness       = 1;
     obj.par.viewer.colormap.positive    = 'hot';

@@ -16,8 +16,10 @@ function obj = viewer_new(obj)
     obj.fig.viewer.figure = h;
     
     % axis
-    obj.fig.viewer.axis = [];
-    obj.fig.viewer.title = [];
+    obj.fig.viewer.axis  = [];
+    obj.fig.viewer.text.title = [];
+    obj.fig.viewer.text.pvalue = [];
+    obj.fig.viewer.text.statistic = [];
     
     % background
     obj.fig.viewer.background = [];
