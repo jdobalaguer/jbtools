@@ -13,11 +13,30 @@ function scan = scan_glm_secondlevel(scan)
     scan_tool_print(scan,false,'\nBuild folder : ');
     scan = scan_tool_progress(scan,scan.running.subject.number);
     for i_subject = 1:scan.running.subject.number
-        for i_contrast = 1:length(scan.running.contrast{i_subject})
-            file_first  = fullfile(scan.running.directory.original.first{i_subject},sprintf('%s_%04i.nii',scan.job.secondLevel,i_contrast));
-            file_second = fullfile(scan.running.directory.original.second,sprintf('%s_%03i',scan.running.contrast{i_subject}(i_contrast).name,scan.running.contrast{i_subject}(i_contrast).order),sprintf('%s_subject_%03i.nii',scan.job.secondLevel,i_subject));
-            file_mkdir(fileparts(file_second));
-            scan_tool_copy(file_first,file_second);
+        switch scan.job.secondLevel
+            case 'beta'
+                for i_contrast = 1:length(scan.running.contrast{i_subject})
+                    f_beta = find(scan.running.contrast{i_subject}(i_contrast).vector);
+                    n_beta = length(f_beta);
+                    file_first = cell(1,n_beta);
+                    for i_beta = 1:n_beta
+                        file_first{i_beta} = fullfile(scan.running.directory.original.first{i_subject},sprintf('%s_%04i.nii',scan.job.secondLevel,f_beta(i_beta)));
+                    end
+                    file_first  = char(file_first); %#ok<NASGU>
+                    file_second = fullfile(scan.running.directory.original.second,sprintf('%s_%03i',scan.running.contrast{i_subject}(i_contrast).name,scan.running.contrast{i_subject}(i_contrast).order),sprintf('%s_subject_%03i.nii',scan.job.secondLevel,i_subject));
+                    file_func   = strcat('(i1',sprintf(' + i%d',2:n_beta),sprintf(')./%d',n_beta)); %#ok<NASGU>
+                    file_mkdir(fileparts(file_second));
+                    evalc('spm_imcalc(file_first,file_second,file_func);');
+                end
+            case {'con','spmT'}
+                for i_contrast = 1:length(scan.running.contrast{i_subject})
+                    file_first  = fullfile(scan.running.directory.original.first{i_subject},sprintf('%s_%04i.nii',scan.job.secondLevel,i_contrast));
+                    file_second = fullfile(scan.running.directory.original.second,sprintf('%s_%03i',scan.running.contrast{i_subject}(i_contrast).name,scan.running.contrast{i_subject}(i_contrast).order),sprintf('%s_subject_%03i.nii',scan.job.secondLevel,i_subject));
+                    file_mkdir(fileparts(file_second));
+                    scan_tool_copy(file_first,file_second);
+                end
+            otherwise
+                scan_tool_error(scan,'scan.job.secondLevel is "%s" not valid. It must be one of {''beta'',''con'',''spmT''}');
         end
         scan = scan_tool_progress(scan,[]);
     end

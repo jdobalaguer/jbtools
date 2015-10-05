@@ -37,6 +37,9 @@ function obj = viewer_create_callback(obj)
                 y_edit = findobj(h,'Tag','YEdit'); set(y_edit,'String',sprintf('%.1f',coord(1)));
         end
         
+        % ensure the range of positions
+        obj = control_update_position(obj,0,0,0);
+        
         % update viewer
         obj = viewer_update(obj);
     end

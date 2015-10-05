@@ -42,7 +42,7 @@ function scan = scan_preprocess(scan)
         scan = scan_preprocess_smooth(scan);            % smoothing
         
         % save
-        scan_save_scan(scan);
+        scan_save(scan);
         scan = scan_tool_time(scan);
         scan = scan_tool_sound(scan,1);
     catch e

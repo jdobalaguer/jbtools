@@ -50,7 +50,7 @@ function scan = scan_rsa(scan)
         scan = scan_rsa_roi(scan);
         
         % save
-        scan_save_scan(scan);
+        scan_save(scan);
         scan = scan_tool_time(scan);
         scan = scan_tool_sound(scan,1);
     catch e

@@ -8,6 +8,7 @@ function obj = control_callback(obj)
     
     % figure
     set(h,'CloseRequestFcn',@closeControl);
+    set(h,'KeyPressFcn',    @keyControl);
     
     % windows
     viewer_check = findobj(h,'Tag','ViewerCheck'); set(viewer_check,'Callback',@callbackViewer);
@@ -41,6 +42,9 @@ function obj = control_callback(obj)
     function closeControl(~,~)
         disp('control_callback.close_control');
         destructor(obj);
+    end
+    function keyControl(~,evt)
+        obj = control_callback_key(obj,evt);
     end
 
     %% nested windows callback

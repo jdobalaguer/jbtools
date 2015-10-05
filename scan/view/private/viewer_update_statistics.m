@@ -29,19 +29,7 @@ function obj = viewer_update_statistics(obj)
         v_size   = obj.dat.statistics(x_file(i_file)).size;
 
         % mask statistics
-        img = nan(size(v_data));
-        tmin = str2double(get(findobj(obj.fig.control.figure,'Tag','StatEdit'),'string'));
-        if get(findobj(obj.fig.control.figure,'Tag','PositiveRadio'),'Value')
-            img(v_data(:) >= +tmin) = v_data(v_data(:) >= +tmin);
-        elseif get(findobj(obj.fig.control.figure,'Tag','NegativeRadio'),'Value')
-            img(v_data(:) <= -tmin) = v_data(v_data(:) <= -tmin);
-        elseif get(findobj(obj.fig.control.figure,'Tag','BothRadio'),'Value')
-            img(v_data(:) >= +tmin) = v_data(v_data(:) >= +tmin);
-            img(v_data(:) <= -tmin) = v_data(v_data(:) <= -tmin);
-        else
-            scan_tool_warning(obj.scan,false,'no tail selected');
-        end
-        v_data = img;
+        v_data = aux_maskStatistics(obj,v_data);
 
         % calculate the slice for the POV
         for i_pov = 1:3
@@ -68,6 +56,9 @@ function obj = viewer_update_statistics(obj)
                     [xdata,ydata,zdata] = ndgrid(ux,uy,0);
                     cdata = aux_slice(v_data,v_matrix,mni,fliplr(r),'nearest')';
             end
+            
+            % center pixels and add a dummy last row/column
+            [xdata,ydata,zdata,cdata] = aux_centerSurface(xdata,ydata,zdata,cdata);
             
             % update
             set(obj.fig.viewer.statistics(i_pov,i_file),'XData',xdata,'YData',ydata,'ZData',zdata,'CData',cdata);

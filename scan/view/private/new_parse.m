@@ -11,8 +11,9 @@ function [obj] = new_parse(varargin)
     % files
     u_file = mat2vec(varargin(2:end));
     n_file = nargin-1;
-    if n_file==1 && file_isdire(u_file{1}) ... one directory
-        u_file = file_list(fullfile(u_file{1},'*.nii'),'absolute');
+    if n_file==1 && exist(u_file{1},'dir')==7 ... one directory
+        u_file = file_endsep(u_file{1});
+        u_file = file_list(fullfile(u_file,'*.nii'),'absolute');
         n_file = length(u_file);
     elseif ~n_file ... no arguments (current directory)
         u_file = file_list(fullfile(pwd(),'*.nii'),'absolute');

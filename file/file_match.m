@@ -6,6 +6,7 @@ function file = file_match(path,mode)
     
     %% function
     func_default('mode','local');
+    assert(~isempty(path),'file_match: error. path is empty');
     path = file_nendsep(path);
     list = file_list(path,mode);
     func_default('list',{''});

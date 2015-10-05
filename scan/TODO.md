@@ -10,7 +10,16 @@ TODO
 64. bypass orthogonalisation option
 65. fix glm normalisation/smooth folders (add voxel size)
 67. enable/disable first level GLM
-68. scan_view
+mat_elements
+mat_squeeze([dim])
+scan_tool_fixPaths
+scan_view assert spm
+scan_view threshold for highest t-stat
+scan_glm assert lengths of conditions
+scan_view glass brain
+scan_view p-values must take into account the tail!!!!
+scan_view control using tabs
+scan add functions at the beginning
 
 LONG TERM
 06. handle HDD writing depending on the size of [scan]
@@ -108,3 +117,9 @@ R6. in RSA we should recycle the onset information from the TBTE.
 58. RSA with global transformations
 61. fix struct_default when using empty struct vectors..
 66. handel alarm
+68. scan_view basics
+69. change names to scan_load, scan_save
+70. remove mean files from scan_tool_check 'first'
+71. scan_view error if no files
+72. scan_view center voxels in viewer
+73. add viewer alpha range

@@ -48,7 +48,7 @@ function model = model_simulation(model)
     model.simu.result.simulation = repmat(model.simu.result.simulation,[n_subject,n_index,s_comb]);
     
     % simulations
-    func_wait(n_subject * n_index * n_comb);
+    fw = func_wait(n_subject * n_index * n_comb);
     for i_subject = 1:n_subject
 
         % subject
@@ -76,11 +76,11 @@ function model = model_simulation(model)
                 parfor_result(i_comb) = parfor_func(data,pars);
                 
                 % progress
-                func_wait();
+                func_wait([],fw);
             end
             model.simu.result.simulation(i_subject,i_index,:) = parfor_result;
         end
     end
-    func_wait(0);
+    func_wait(0,fw);
 
 end

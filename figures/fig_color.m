@@ -42,6 +42,8 @@ function color = fig_color(scheme,n)
         case 'hot';     f = figure(); color = 255.*hot(n);    close(f);
         case 'cool';    f = figure(); color = 255.*cool(n);   close(f);
         case 'jet';     f = figure(); color = 255.*jet(n);    close(f);
+        case 'jet_positive'; color = 255.*fig_color('jet',2*n); color = color(n+(1:n),:);
+        case 'jet_negative'; color = 255.*fig_color('jet',2*n); color = color(1:n,:);
         case 'parula';  f = figure(); color = 255.*parula(n); close(f);
         % palettes (see http://www.colourlovers.com)
         case 'cegato';  color = [029,012,108;237,131,046;233,199,234;061,197,184;215,250,015];

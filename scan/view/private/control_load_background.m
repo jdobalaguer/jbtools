@@ -13,12 +13,13 @@ function obj = control_load_background(obj)
     
     % load templates
     [v,s,t,~,~] = aux_loadNII(u_file);
-    v = cellfun(@(v,s)reshape(v,s),v,s,'UniformOutput',false);
     v = cellfun(@single,v,'UniformOutput',false);
+    v = cellfun(@(v,s)reshape(v,s),v,s,'UniformOutput',false);
     
     % coordinates
     c = cellfun(@aux_MNIcoordinates,s,t,'UniformOutput',false);
     
     % save volumes
     obj.dat.background = struct('file',u_file,'name',tn,'data',v,'size',s,'matrix',t,'mni',c);
+
 end

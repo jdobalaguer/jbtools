@@ -34,7 +34,7 @@ function model = model_cost(model)
     model.cost.result.cost = nan([n_subject,n_index,s_comb]);
     
     % cost
-    func_wait(n_subject * n_index * n_comb);
+    fw = func_wait(n_subject * n_index * n_comb);
     for i_subject = 1:n_subject
         
         % subject
@@ -69,11 +69,11 @@ function model = model_cost(model)
                 parfor_result(i_comb) = parfor_func(data,simu,pars);
                 
                 % progress
-                func_wait();
+                func_wait([],fw);
             end
             model.cost.result.cost(i_subject,i_index,:) = parfor_result;
         end
     end
-    func_wait(0);
+    func_wait(0,fw);
     
 end

@@ -12,7 +12,7 @@ function obj = viewer_new(obj)
     set(h,'Units',          'pixels');
     set(h,'MenuBar',        'no');
     set(h,'Resize',         'on');
-    set(h,'Color',          [0,0,0]);
+    set(h,'Color',          obj.par.viewer.color);
     obj.fig.viewer.figure = h;
     
     % axis

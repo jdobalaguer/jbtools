@@ -11,6 +11,6 @@ function obj = viewer_create_appearance(obj)
     set(obj.fig.viewer.axis,'XTick',  []);
     set(obj.fig.viewer.axis,'YTick',  []);
     set(obj.fig.viewer.axis,'Box',    'on');
-    set(obj.fig.viewer.axis,'XColor', [0,0,0]);
-    set(obj.fig.viewer.axis,'YColor', [0,0,0]);
+    set(obj.fig.viewer.axis,'XColor', [0,0,0,0]);
+    set(obj.fig.viewer.axis,'YColor', [0,0,0,0]);
 end

@@ -13,6 +13,8 @@ function obj = viewer_callback_maximum(obj,local,sign)
     % get volume
     mni    = obj.dat.statistics(u_file(ii_file)).mni;
     volume = obj.dat.statistics(u_file(ii_file)).data;
+    matrix = obj.dat.statistics(u_file(ii_file)).matrix;
+    s_volume = size(volume);
     
     % apply sign
     volume = sign .* volume;
@@ -23,24 +25,32 @@ function obj = viewer_callback_maximum(obj,local,sign)
     y_edit = findobj(h,'Tag','YEdit');
     z_edit = findobj(h,'Tag','ZEdit');
     
-    % get coordinates
-    x = str2double(get(x_edit,'String'));
-    y = str2double(get(y_edit,'String'));
-    z = str2double(get(z_edit,'String'));
     
     if local
-        % local maximum
-        % TODO
-    else
-        % global maximum
-        volume = volume(:);
-        m = max(volume);
-        f = find(volume == m);
-        f = f(randi(length(f)));
-        x = mni.x(f);
-        y = mni.y(f);
-        z = mni.z(f);
+        % apply statistics threshold
+        volume = aux_maskStatistics(obj,volume);
+        
+        % get coordinates
+        x = str2double(get(x_edit,'String'));
+        y = str2double(get(y_edit,'String'));
+        z = str2double(get(z_edit,'String'));
+
+        % mask only current cluster
+        cor = round(aux_mni2cor([x,y,z],matrix));
+        if any(cor<1) || any(cor>s_volume), return; end
+        volume = aux_maskCluster(volume,cor);
     end
+    
+    % global maximum
+    volume = zero2nan(volume);
+    if all(isnan(volume(:))), return; end
+    volume = volume(:);
+    m = max(volume);
+    f = find(volume == m);
+    f = f(randi(length(f)));
+    x = mni.x(f);
+    y = mni.y(f);
+    z = mni.z(f);
 
     % update control
     set(x_edit,'String',sprintf('%.1f',x));

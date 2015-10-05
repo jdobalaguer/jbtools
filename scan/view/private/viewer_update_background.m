@@ -71,12 +71,26 @@ function obj = viewer_update_background(obj)
                 cdata = aux_slice(bg_data,bg_matrix,mni,fliplr(r),method)';
         end
         
+        % center pixels and add a dummy last row/column
+        [xdata,ydata,zdata,cdata] = aux_centerSurface(xdata,ydata,zdata,cdata);
+        
         % set grayscale colour
         cdata = repmat(cdata,[1,1,3]);
         
-        % update
+        % update without transparency
+        if isempty(obj.par.viewer.background.alpha),
+            for i_file = 1:n_file
+                set(obj.fig.viewer.background(i_pov,i_file),'XData',xdata,'YData',ydata,'ZData',zdata,'CData',cdata);
+            end
+            continue;
+        end
+            
+        % update with transparency
+        adata = (nan2zero(cdata(:,:,1)) - obj.par.viewer.background.alpha(1)) ./ diff(obj.par.viewer.background.alpha);
+        adata(adata(:)<0) = 0;
+        adata(adata(:)>1) = 1;
         for i_file = 1:n_file
-            set(obj.fig.viewer.background(i_pov,i_file),'XData',xdata,'YData',ydata,'ZData',zdata,'CData',cdata);
+            set(obj.fig.viewer.background(i_pov,i_file),'XData',xdata,'YData',ydata,'ZData',zdata,'CData',cdata,'AlphaData',adata,'FaceAlpha','flat');
         end
     end
 end

@@ -31,7 +31,7 @@ function model = model_gradient(model)
 
     % apply gradient descent
     model.grad.result = cell(n_subject,n_index);
-    func_wait(n_subject * n_index * n_comb);
+    fw = func_wait(n_subject * n_index * n_comb);
     for i_subject = 1:n_subject
         for i_index = 1:n_index
             
@@ -64,7 +64,7 @@ function model = model_gradient(model)
                 parfor_result(i_comb) = model_gradient_parfor(problem,parfor_x0,parfor_simu_pars,parfor_simu_func,parfor_cost_pars,parfor_cost_func,parfor_data);
                 
                 % progress
-                func_wait();
+                func_wait([],fw);
             end
             
             % save minima
@@ -73,7 +73,7 @@ function model = model_gradient(model)
             model.grad.result{i_subject,i_index} = parfor_result(f_comb);
         end
     end
-    func_wait(0);
+    func_wait(0,fw);
     
 end
 

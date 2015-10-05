@@ -24,9 +24,10 @@ function obj = viewer_create_axes(obj)
     for i_pov = 1:3
         for i_file = 1:n_file
             j_axis = j_axis + 1;
-            obj.fig.viewer.axis(i_pov,i_file) = subplot(3,n_file,j_axis,'Color',[0,0,0],'Parent',obj.fig.viewer.figure);
+            obj.fig.viewer.axis(i_pov,i_file) = subplot(3,n_file,j_axis,'Parent',obj.fig.viewer.figure);
         end
     end
+    set(obj.fig.viewer.axis,'Color',obj.par.viewer.color,'XColor',[0,0,0,0],'YColor',[0,0,0,0]);
     
     % reverse axis for the third POV
     set(obj.fig.viewer.axis(3,:),'YDir','reverse');

@@ -7,7 +7,7 @@ function scan = scan_glm_contrast(scan)
     
     %% function
     if scan_tool_isdone(scan), return; end
-    if ~scan.running.flag.first, return; end
+    if ~scan.running.flag.first && ~strcmp(scan.job.secondLevel,'beta') && ~scan.running.flag.second, return; end
     
     % print
     scan_tool_print(scan,false,'\nSet contrast : ');

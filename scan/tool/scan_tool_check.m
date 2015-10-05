@@ -9,7 +9,8 @@ function varargout = scan_tool_check(scan,image,mode)
     %   >> help scan;
 
     %% notes
-    % we use session 1 for everything. it actually should be concantenating all sessions..
+    % 1) we use session 1 for everything. it actually should be concantenating all sessions..
+    % 2) we make sure we initialize SPM so that the kernel of the smoothing is updated
 
     %% function
     
@@ -20,6 +21,7 @@ function varargout = scan_tool_check(scan,image,mode)
     scan_tool_assert(scan,length(image)==length(mode),'number of images and modes must match');
     
     % auto-initialize
+    scan = scan_initialize_spm(scan);
     if ~struct_isfield(scan,'running.subject.number')
         scan = scan_initialize(scan);
     end
@@ -66,7 +68,7 @@ function vol = get_volume(scan,i_subject,image,mode)
         case 'epi3:normalisation'
             vol = file_list(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi3',scan.parameter.path.session{1},'normalisation',num2str(scan.parameter.analysis.voxs),'*.nii'),'absolute');
         case 'epi3:smooth'
-            vol = file_list(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi3',scan.parameter.path.session{1},'smooth',num2str(scan.parameter.analysis.voxs),'*.nii'),'absolute');
+            vol = file_list(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi3',scan.parameter.path.session{1},'smooth',num2str(scan.parameter.analysis.voxs),num2str(unique(spm_get_defaults('smooth.fwhm'))),'*.nii'),'absolute');
         otherwise
             scan_tool_error(scan,'[image] not valid');
     end
@@ -74,8 +76,12 @@ function vol = get_volume(scan,i_subject,image,mode)
     % apply mode
     switch(mode)
         case 'first'
+            ii = cellfun(@(f)~isempty(strfind(f,'mean')),vol);
+            vol(ii) = [];
             vol = vol(1);
         case 'last'
+            ii = cellfun(@(f)~isempty(strfind(f,'mean')),vol);
+            vol(ii) = [];
             vol = vol(end);
         case 'random'
             vol = randsample(vol,1);

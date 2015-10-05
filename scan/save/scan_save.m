@@ -1,6 +1,6 @@
 
-function scan = scan_save_scan(scan)
-    %% scan = SCAN_SAVE_SCAN(scan)
+function scan = scan_save(scan)
+    %% scan = SCAN_SAVE(scan)
     % save the [scan] struct
     % to list main functions, try
     %   >> help scan;

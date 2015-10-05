@@ -14,30 +14,30 @@ function scan = scan_autocomplete_nii(scan,folder)
             for i_subject = 1:scan.running.subject.number
                 subject = scan.running.subject.unique(i_subject);
                 scan.running.directory.nii.structural.image{i_subject} = file_endsep(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'structural','image'));
-                scan.running.file.nii.structural.image{i_subject} = file_match(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'structural','image','*.nii'),'absolute');
+                scan.running.file.nii.structural.image{i_subject} = file_match(fullfile(scan.running.directory.nii.structural.image{i_subject},'*.nii'),'absolute');
             end
             
         case 'structural:coregistration'
             for i_subject = 1:scan.running.subject.number
                 subject = scan.running.subject.unique(i_subject);
                 scan.running.directory.nii.structural.coregistration{i_subject} = file_endsep(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'structural','coregistration'));
-                scan.running.file.nii.structural.coregistration{i_subject} = file_match(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'structural','coregistration','*.nii'),'absolute');
+                scan.running.file.nii.structural.coregistration{i_subject} = file_match(fullfile(scan.running.directory.nii.structural.coregistration{i_subject},'*.nii'),'absolute');
             end
     
         case 'structural:segmentation'
             for i_subject = 1:scan.running.subject.number
                 subject = scan.running.subject.unique(i_subject);
                 scan.running.directory.nii.structural.segmentation{i_subject} = file_endsep(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'structural','segmentation'));
-                scan.running.file.nii.structural.segmentation.c{i_subject} = file_list (fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'structural','segmentation','c*.nii'),'absolute');
-                scan.running.file.nii.structural.segmentation.y{i_subject} = file_match(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'structural','segmentation','y*.nii'),'absolute');
-                scan.running.file.nii.structural.segmentation.m{i_subject} = file_match(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'structural','segmentation','m*.nii'),'absolute');
+                scan.running.file.nii.structural.segmentation.c{i_subject} = file_list (fullfile(scan.running.directory.nii.structural.segmentation{i_subject},'c*.nii'),'absolute');
+                scan.running.file.nii.structural.segmentation.y{i_subject} = file_match(fullfile(scan.running.directory.nii.structural.segmentation{i_subject},'y*.nii'),'absolute');
+                scan.running.file.nii.structural.segmentation.m{i_subject} = file_match(fullfile(scan.running.directory.nii.structural.segmentation{i_subject},'m*.nii'),'absolute');
             end
     
         case 'structural:normalisation'
             for i_subject = 1:scan.running.subject.number
                 subject = scan.running.subject.unique(i_subject);
                 scan.running.directory.nii.structural.normalisation{i_subject} = file_endsep(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'structural','normalisation',num2str(scan.parameter.analysis.voxs)));
-                scan.running.file.nii.structural.normalisation{i_subject} = file_match(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'structural','normalisation',num2str(scan.parameter.analysis.voxs),'*.nii'),'absolute');
+                scan.running.file.nii.structural.normalisation{i_subject} = file_match(fullfile(scan.running.directory.nii.structural.normalisation{i_subject},'*.nii'),'absolute');
             end
 
         case 'epi4'
@@ -45,7 +45,7 @@ function scan = scan_autocomplete_nii(scan,folder)
                 for i_session = 1:scan.running.subject.session(i_subject)
                     subject = scan.running.subject.unique(i_subject);
                     scan.running.directory.nii.epi4{i_subject}{i_session} = file_endsep(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi4',scan.parameter.path.session{i_session}));
-                    scan.running.file.nii.epi4{i_subject}{i_session} = file_match(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi4',scan.parameter.path.session{i_session},'*.nii'),'absolute');
+                    scan.running.file.nii.epi4{i_subject}{i_session} = file_match(fullfile(scan.running.directory.nii.epi4{i_subject}{i_session},'*.nii'),'absolute');
                 end
             end
 
@@ -54,7 +54,7 @@ function scan = scan_autocomplete_nii(scan,folder)
                 subject = scan.running.subject.unique(i_subject);
                 for i_session = 1:scan.running.subject.session(i_subject)
                     scan.running.directory.nii.epi3.image{i_subject}{i_session} = file_endsep(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi3',scan.parameter.path.session{i_session},'image'));
-                    scan.running.file.nii.epi3.image{i_subject}{i_session} = file_list(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi3',scan.parameter.path.session{i_session},'image','*.nii'),'absolute');
+                    scan.running.file.nii.epi3.image{i_subject}{i_session} = file_list(fullfile(scan.running.directory.nii.epi3.image{i_subject}{i_session},'*.nii'),'absolute');
                     scan.running.file.nii.epi3.image{i_subject}{i_session}(cellfun(@isscalar,strfind(scan.running.file.nii.epi3.image{i_subject}{i_session},'mean'))) = []; % remove mean image
                 end
             end
@@ -64,7 +64,7 @@ function scan = scan_autocomplete_nii(scan,folder)
                 subject = scan.running.subject.unique(i_subject);
                 for i_session = 1:scan.running.subject.session(i_subject)
                     scan.running.directory.nii.epi3.slicetime{i_subject}{i_session} = file_endsep(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi3',scan.parameter.path.session{i_session},'slicetime'));
-                    scan.running.file.nii.epi3.slicetime{i_subject}{i_session} = file_list(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi3',scan.parameter.path.session{i_session},'slicetime','*.nii'),'absolute');
+                    scan.running.file.nii.epi3.slicetime{i_subject}{i_session} = file_list(fullfile(scan.running.directory.nii.epi3.slicetime{i_subject}{i_session},'*.nii'),'absolute');
                     scan.running.file.nii.epi3.slicetime{i_subject}{i_session}(cellfun(@isscalar,strfind(scan.running.file.nii.epi3.slicetime{i_subject}{i_session},'mean'))) = []; % remove mean image
                 end
             end
@@ -74,7 +74,7 @@ function scan = scan_autocomplete_nii(scan,folder)
                 subject = scan.running.subject.unique(i_subject);
                 for i_session = 1:scan.running.subject.session(i_subject)
                     scan.running.directory.nii.epi3.realignment{i_subject}{i_session} = file_endsep(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi3',scan.parameter.path.session{i_session},'realignment'));
-                    scan.running.file.nii.epi3.realignment{i_subject}{i_session} = file_list(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi3',scan.parameter.path.session{i_session},'realignment','*.nii'),'absolute');
+                    scan.running.file.nii.epi3.realignment{i_subject}{i_session} = file_list(fullfile(scan.running.directory.nii.epi3.realignment{i_subject}{i_session},'*.nii'),'absolute');
                     scan.running.file.nii.epi3.realignment{i_subject}{i_session}(cellfun(@isscalar,strfind(scan.running.file.nii.epi3.realignment{i_subject}{i_session},'mean'))) = []; % remove mean image
                 end
             end
@@ -84,7 +84,7 @@ function scan = scan_autocomplete_nii(scan,folder)
                 subject = scan.running.subject.unique(i_subject);
                 for i_session = 1:scan.running.subject.session(i_subject)
                     scan.running.directory.nii.epi3.normalisation{i_subject}{i_session} = file_endsep(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi3',scan.parameter.path.session{i_session},'normalisation',num2str(scan.parameter.analysis.voxs)));
-                    scan.running.file.nii.epi3.normalisation{i_subject}{i_session} = file_list(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi3',scan.parameter.path.session{i_session},'normalisation',num2str(scan.parameter.analysis.voxs),'*.nii'),'absolute');
+                    scan.running.file.nii.epi3.normalisation{i_subject}{i_session} = file_list(fullfile(scan.running.directory.nii.epi3.normalisation{i_subject}{i_session},'*.nii'),'absolute');
                     scan.running.file.nii.epi3.normalisation{i_subject}{i_session}(cellfun(@isscalar,strfind(scan.running.file.nii.epi3.normalisation{i_subject}{i_session},'mean'))) = []; % remove mean image
                 end
             end
@@ -93,8 +93,8 @@ function scan = scan_autocomplete_nii(scan,folder)
             for i_subject = 1:scan.running.subject.number
                 subject = scan.running.subject.unique(i_subject);
                 for i_session = 1:scan.running.subject.session(i_subject)
-                    scan.running.directory.nii.epi3.smooth{i_subject}{i_session} = file_endsep(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi3',scan.parameter.path.session{i_session},'smooth',num2str(scan.parameter.analysis.voxs)));
-                    scan.running.file.nii.epi3.smooth{i_subject}{i_session} = file_list(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi3',scan.parameter.path.session{i_session},'smooth',num2str(scan.parameter.analysis.voxs),'*.nii'),'absolute');
+                    scan.running.directory.nii.epi3.smooth{i_subject}{i_session} = file_endsep(fullfile(scan.directory.nii,scan.parameter.path.subject{subject},'epi3',scan.parameter.path.session{i_session},'smooth',num2str(scan.parameter.analysis.voxs),num2str(unique(spm_get_defaults('smooth.fwhm')))));
+                    scan.running.file.nii.epi3.smooth{i_subject}{i_session} = file_list(fullfile(scan.running.directory.nii.epi3.smooth{i_subject}{i_session},'*.nii'),'absolute');
                     scan.running.file.nii.epi3.smooth{i_subject}{i_session}(cellfun(@isscalar,strfind(scan.running.file.nii.epi3.smooth{i_subject}{i_session},'mean'))) = []; % remove mean image
                 end
             end

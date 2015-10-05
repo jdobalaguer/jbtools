@@ -34,10 +34,26 @@ function obj = viewer_update_text(obj)
         cor = aux_mni2cor(mni,obj.dat.statistics(file).matrix);
         cor = round(cor);
 
+        % if out of bounds then dont print Out
+        s = size(obj.dat.statistics(file).data);
+        if any(cor<1) || any(cor>s)
+            set(obj.fig.viewer.text.pvalue(i_file),   'String',sprintf(''));
+            set(obj.fig.viewer.text.statistic(i_file),'String',sprintf('Out'));
+            continue;
+        end
+        
         % calculate statistics
         d = obj.dat.statistics(file).df;
         t = obj.dat.statistics(file).data(cor(1),cor(2),cor(3));
         
+        % if isnan then print NaN
+        if isnan(t)
+            set(obj.fig.viewer.text.pvalue(i_file),   'String',sprintf(''));
+            set(obj.fig.viewer.text.statistic(i_file),'String',sprintf('NaN'));
+            continue;
+        end
+        
+        % update text with values
         switch map
             case 1
                 p = 1-spm_Tcdf(t,d);
@@ -53,7 +69,7 @@ function obj = viewer_update_text(obj)
                 set(obj.fig.viewer.text.pvalue(i_file),   'String',sprintf('p = %.4f', p));
                 set(obj.fig.viewer.text.statistic(i_file),'String',sprintf('t_{%d} = %+.2f',d,t));
             case 4
+                set(obj.fig.viewer.text.statistic(i_file),'String',sprintf('n = %+.2f',t));
         end
-        
     end
 end

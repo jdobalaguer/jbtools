@@ -55,7 +55,7 @@ function scan = scan_tbte(scan)
         scan = scan_tbte_function(scan);
         
         % save
-        scan_save_scan(scan);
+        scan_save(scan);
         scan = scan_tool_time(scan);
         scan = scan_tool_sound(scan,1);
     catch e

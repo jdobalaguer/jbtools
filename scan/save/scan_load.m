@@ -1,6 +1,6 @@
 
-function lcan = scan_load_scan(scan,scan_directory)
-    %% scan = SCAN_LOAD_SCAN(scan)
+function lcan = scan_load(scan,scan_directory)
+    %% scan = SCAN_LOAD(scan)
     % load the [scan] struct
     % to list main functions, try
     %   >> help scan;

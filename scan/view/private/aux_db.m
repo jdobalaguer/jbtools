@@ -3,6 +3,9 @@ function h = aux_db(obj,slice,parent)
     %% h = AUX_DB(obj,slice,parent)
     % display the background (ignoring the colormap)
     
+    %% notes
+    % 1. it's better to replace "surface" with "image"
+    
     %% function
     disp('aux_db');
     
