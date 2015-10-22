@@ -33,8 +33,8 @@ ANONYMOUS/DICT.M
 ANONYMOUS/TREE.M
     Jean-Yves Tinevez - tinevez@pasteur.fr
 
-D3/PRIVATE/JAVATCPSERVER.M, and others
-    (Find this licence!)
+D3/PRIVATE/WEBSERVER/JAVATCPSERVER.M,
+     based on Dirk-Jan Kroon
 
 FIGURES/FIG_4D.M
     Santiago Herce Castañón
