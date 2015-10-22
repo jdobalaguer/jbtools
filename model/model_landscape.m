@@ -1,6 +1,7 @@
 
 function model_landscape(model,c_pars)
     %% model = MODEL_LANDSCAPE(model,pars)
+    % plot the landscape of the cost function across parameters
     % see also: model_cost
     
     %% warnings
