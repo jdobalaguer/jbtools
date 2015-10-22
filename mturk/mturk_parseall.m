@@ -5,13 +5,13 @@ function mturk_parseall(pathname)
     nb_allfiles = length(allfiles);
     
     %% parse data
-    parfor (i_allfiles = 1:nb_allfiles, jb_parallel_pool())
+    parfor (i_allfiles = 1:nb_allfiles, mme_size())
         mturk_parseall_parse(pathname,allfiles,i_allfiles);
     end
     fprintf('mturk_parseall: \n');
     
     %% uncell data
-    parfor (i_allfiles = 1:nb_allfiles, jb_parallel_pool())
+    parfor (i_allfiles = 1:nb_allfiles, mme_size())
         mturk_parseall_uncell(pathname,allfiles,i_allfiles);
     end
     fprintf('mturk_parseall: \n');

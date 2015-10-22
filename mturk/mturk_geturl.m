@@ -1,7 +1,7 @@
 
 function mturk_geturl(path,url)
     %% create path
-    mkdirp(path);
+    file_mkdir(path);
     
     %% list files
     index   = urlread(url);
