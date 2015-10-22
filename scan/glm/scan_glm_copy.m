@@ -1,17 +1,18 @@
 
-function scan = scan_glm_copy(scan,level,type)
+function scan = scan_glm_copy(scan,level,type,force)
     %% scan = SCAN_GLM_COPY(scan,level,type)
     % copy files to [scan.running.directory.copy]
     % to list main functions, try
     %   >> help scan;
 
     %% function
+    func_default('force',1);
     
     switch [level,':',type]
         % first level beta
         case 'first:beta'
-            if ~any(ismember('beta_1',scan.job.copyFolder)), return; end
-            if ~scan.running.flag.estimation, return; end
+            if ~force && ~any(ismember('beta_1',scan.job.copyFolder)), return; end
+            if ~force && ~scan.running.flag.estimation, return; end
             scan_tool_print(scan,false,'\nCopy beta (first level) : ');
             scan = scan_tool_progress(scan,scan.running.subject.number);
             for i_subject = 1:scan.running.subject.number
@@ -28,9 +29,9 @@ function scan = scan_glm_copy(scan,level,type)
             
         % first level contrast
         case 'first:contrast'
-            if ~any(ismember('cont_1',scan.job.copyFolder)), return; end
-            if ~scan.running.flag.first, return; end
-            if ~strcmp(scan.job.type,'glm'), return; end
+            if ~force && ~any(ismember('cont_1',scan.job.copyFolder)), return; end
+            if ~force && ~scan.running.flag.first, return; end
+            if ~force && ~strcmp(scan.job.type,'glm'), return; end
             scan_tool_print(scan,false,'\nCopy contrast (first level) : ');
             scan = scan_tool_progress(scan,scan.running.subject.number);
             for i_subject = 1:scan.running.subject.number
@@ -46,9 +47,9 @@ function scan = scan_glm_copy(scan,level,type)
             
         % first level statistic
         case 'first:statistic'
-            if ~any(ismember('spmt_1',scan.job.copyFolder)), return; end
-            if ~scan.running.flag.first, return; end
-            if ~strcmp(scan.job.type,'glm'), return; end
+            if ~force && ~any(ismember('spmt_1',scan.job.copyFolder)), return; end
+            if ~force && ~scan.running.flag.first, return; end
+            if ~force && ~strcmp(scan.job.type,'glm'), return; end
             scan_tool_print(scan,false,'\nCopy statistic (first level) : ');
             scan = scan_tool_progress(scan,scan.running.subject.number);
             for i_subject = 1:scan.running.subject.number
@@ -64,8 +65,8 @@ function scan = scan_glm_copy(scan,level,type)
             
         % first level SPM mat-file
         case 'first:mask'
-            if ~any(ismember('mask',scan.job.copyFolder)), return; end
-            if ~scan.running.flag.estimation, return; end
+            if ~force && ~any(ismember('mask',scan.job.copyFolder)), return; end
+            if ~force && ~scan.running.flag.estimation, return; end
             scan_tool_print(scan,false,'\nCopy mask (first level) : ');
             scan = scan_tool_progress(scan,scan.running.subject.number + 1);
             for i_subject = 1:scan.running.subject.number
@@ -81,8 +82,8 @@ function scan = scan_glm_copy(scan,level,type)
         
         % first level SPM mat-file
         case 'first:spm'
-            if ~any(ismember('spm_1',scan.job.copyFolder)), return; end
-            if ~scan.running.flag.design, return; end
+            if ~force && ~any(ismember('spm_1',scan.job.copyFolder)), return; end
+            if ~force && ~scan.running.flag.design, return; end
             scan_tool_print(scan,false,'\nCopy SPM mat-file (first level) : ');
             scan = scan_tool_progress(scan,scan.running.subject.number);
             for i_subject = 1:scan.running.subject.number
@@ -96,9 +97,9 @@ function scan = scan_glm_copy(scan,level,type)
         
         % second level beta
         case 'second:beta'
-            if ~any(ismember('beta_2',scan.job.copyFolder)), return; end
-            if ~scan.running.flag.second, return; end
-            if ~strcmp(scan.job.type,'glm'), return; end
+            if ~force && ~any(ismember('beta_2',scan.job.copyFolder)), return; end
+            if ~force && ~scan.running.flag.second, return; end
+            if ~force && ~strcmp(scan.job.type,'glm'), return; end
             scan_tool_print(scan,false,'\nCopy beta file (second level) : ');
             scan = scan_tool_progress(scan,length(scan.running.contrast{1}));
             for i_contrast = 1:length(scan.running.contrast{1})
@@ -112,9 +113,9 @@ function scan = scan_glm_copy(scan,level,type)
             
         % second level contrast
         case 'second:contrast'
-            if ~any(ismember('cont_2',scan.job.copyFolder)), return; end
-            if ~scan.running.flag.second, return; end
-            if ~strcmp(scan.job.type,'glm'), return; end
+            if ~force && ~any(ismember('cont_2',scan.job.copyFolder)), return; end
+            if ~force && ~scan.running.flag.second, return; end
+            if ~force && ~strcmp(scan.job.type,'glm'), return; end
             scan_tool_print(scan,false,'\nCopy contrast file (second level) : ');
             scan = scan_tool_progress(scan,length(scan.running.contrast{1}));
             for i_contrast = 1:length(scan.running.contrast{1})
@@ -128,9 +129,9 @@ function scan = scan_glm_copy(scan,level,type)
             
         % second level statistic
         case 'second:statistic'
-            if ~any(ismember('spmt_2',scan.job.copyFolder)), return; end
-            if ~scan.running.flag.second, return; end
-            if ~strcmp(scan.job.type,'glm'), return; end
+            if ~force && ~any(ismember('spmt_2',scan.job.copyFolder)), return; end
+            if ~force && ~scan.running.flag.second, return; end
+            if ~force && ~strcmp(scan.job.type,'glm'), return; end
             scan_tool_print(scan,false,'\nCopy statistic file (second level) : ');
             scan = scan_tool_progress(scan,length(scan.running.contrast{1}));
             for i_contrast = 1:length(scan.running.contrast{1})
@@ -144,9 +145,9 @@ function scan = scan_glm_copy(scan,level,type)
         
         % second level SPM mat-file
         case 'second:spm'
-            if ~any(ismember('spm_2',scan.job.copyFolder)), return; end
-            if ~scan.running.flag.second, return; end
-            if ~strcmp(scan.job.type,'glm'), return; end
+            if ~force && ~any(ismember('spm_2',scan.job.copyFolder)), return; end
+            if ~force && ~scan.running.flag.second, return; end
+            if ~force && ~strcmp(scan.job.type,'glm'), return; end
             scan_tool_print(scan,false,'\nCopy SPM mat-file (second level) : ');
             scan = scan_tool_progress(scan,length(scan.running.contrast{1}));
             for i_contrast = 1:length(scan.running.contrast{1})

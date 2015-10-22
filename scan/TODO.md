@@ -5,21 +5,23 @@ TODO
 47. RSA functions for ROI
 59. RSA with beta/cont/spmT
 60. TBTE first level generic contrasts (could be useful for RSA)
-62. check the meshgrid function in TBTE
 63. improve TBTE contrast functions with orthogonalisation
 64. bypass orthogonalisation option
 65. fix glm normalisation/smooth folders (add voxel size)
 67. enable/disable first level GLM
-mat_elements
-mat_squeeze([dim])
-scan_tool_fixPaths
-scan_view assert spm
-scan_view threshold for highest t-stat
-scan_glm assert lengths of conditions
-scan_view glass brain
-scan_view p-values must take into account the tail!!!!
-scan_view control using tabs
-scan add functions at the beginning
+74. mat_elements (what was this?)
+75. mat_squeeze([dim])
+76. scan_tool_fixPaths
+77. scan_view assert spm
+78. scan_view threshold for highest t-stat
+79. scan_glm assert lengths of conditions
+80. scan_view glass brain
+81. scan_view p-values must take into account the tail!!!!
+82. scan_view FDR
+83. scan_view control using tabs
+84. scan add functions at the beginning
+86. discard dummy scans from the preprocessing
+88. check @scan_function_tbte_get_vector, line 71 (ii_onset)
 
 LONG TERM
 06. handle HDD writing depending on the size of [scan]
@@ -116,6 +118,7 @@ R6. in RSA we should recycle the onset information from the TBTE.
 57. check for invalid fields in [scan] during scan_initialize
 58. RSA with global transformations
 61. fix struct_default when using empty struct vectors..
+62. check the meshgrid function in TBTE
 66. handel alarm
 68. scan_view basics
 69. change names to scan_load, scan_save
@@ -123,3 +126,5 @@ R6. in RSA we should recycle the onset information from the TBTE.
 71. scan_view error if no files
 72. scan_view center voxels in viewer
 73. add viewer alpha range
+85. scan_glm_copy force flags
+87. add multiple durations to scan_glm

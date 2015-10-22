@@ -27,7 +27,8 @@ function c = aux_slice(data,matrix,mni,r,method)
     [xx,yy,zz] = meshgrid(1:s(1),1:s(2),1:s(3));
     
     % get mni plane coordinates
-    cor  = aux_mni2cor(mni,matrix);
+    cor = aux_mni2cor(mni,matrix);
+    cor = single(cor); % to avoid errors due to precision
     
     % FAST MODE
     % this only happens when the volume has the right orientation

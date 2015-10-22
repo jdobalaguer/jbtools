@@ -19,5 +19,5 @@ function scan = scan_assert_rsa(scan)
         scan_tool_assert(scan,~func_isformula(func), 'Model filters cannot be a formula.');
     end
     
-    scan_tool_assert(scan,exist('searchlightMapping_fMRI.m','file') == 2,'Please add RSA-toolbox to the path');
+    %scan_tool_assert(scan,exist('searchlightMapping_fMRI.m','file') == 2,'Please add RSA-toolbox to the path');
 end

@@ -29,6 +29,13 @@ function scan = scan_autocomplete_glm(scan)
     % bases
     scan.running.bases = struct(scan.job.basisFunction.name,{scan.job.basisFunction.parameters});
     
+    % extend duration if required
+    for i_condition = 1:length(scan.job.condition)
+        if isscalar(scan.job.condition(i_condition).duration)
+            scan.job.condition(i_condition).duration = repmat(scan.job.condition(i_condition).duration,size(scan.job.condition(i_condition).onset));
+        end
+    end
+    
     % condition
     for i_subject = 1:scan.running.subject.number
         for i_session = 1:scan.running.subject.session(i_subject)
@@ -47,7 +54,7 @@ function scan = scan_autocomplete_glm(scan)
                     'onset'    , {scan.job.condition(i_condition).onset(ii_data) + scan.parameter.scanner.reft0 - scan.job.delayOnset}, ...
                     'subname'  , {scan.job.condition(i_condition).subname}, ...
                     'level'    , {cell2mat(cellfun(@(x)double(mat2vec(x(ii_data))),scan.job.condition(i_condition).level,'UniformOutput',false))}, ...
-                    'duration' , {scan.job.condition(i_condition).duration});
+                    'duration' , {scan.job.condition(i_condition).duration(ii_data)});
             end
         end
     end

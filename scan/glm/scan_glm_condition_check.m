@@ -31,6 +31,7 @@ function scan = scan_glm_condition_check(scan)
                     scan.running.condition{i_subject}{i_session}(i_condition).onset(scans_to_remove) = [];
                     if ~isempty(scan.running.condition{i_subject}{i_session}(i_condition).level),
                         scan.running.condition{i_subject}{i_session}(i_condition).level(scans_to_remove,:) = [];
+                        scan.running.condition{i_subject}{i_session}(i_condition).duration(scans_to_remove) = [];
                     end
                     scan_tool_warning(scan,true,'subject "%03i" session "%03i" condition "%s" removed %d samples',scan.running.subject.unique(i_subject),i_session,scan.running.condition{i_subject}{i_session}(i_condition).name,sum(scans_to_remove));
                 end

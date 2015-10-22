@@ -69,22 +69,22 @@ function scan = scan_glm(scan)
 
         % estimation
         scan = scan_glm_estimation(scan);               % SPM estimation
-        scan = scan_glm_copy(scan,'first','beta');      % copy
-        scan = scan_glm_copy(scan,'first','mask');      % copy
+        scan = scan_glm_copy(scan,'first','beta',0);    % copy
+        scan = scan_glm_copy(scan,'first','mask',0);    % copy
 
         % first level analysis
         scan = scan_glm_contrast(scan);                 % contrasts
         scan = scan_glm_firstlevel(scan);               % SPM first level analyses
-        scan = scan_glm_copy(scan,'first','contrast');  % copy
-        scan = scan_glm_copy(scan,'first','statistic'); % copy
-        scan = scan_glm_copy(scan,'first','spm');       % copy
+        scan = scan_glm_copy(scan,'first','contrast',0);  % copy
+        scan = scan_glm_copy(scan,'first','statistic',0); % copy
+        scan = scan_glm_copy(scan,'first','spm',0);       % copy
 
         % second level analysis
         scan = scan_glm_secondlevel(scan);              % SPM second level analyses
-        scan = scan_glm_copy(scan,'second','beta');     % copy
-        scan = scan_glm_copy(scan,'second','contrast'); % copy
-        scan = scan_glm_copy(scan,'second','statistic'); % copy
-        scan = scan_glm_copy(scan,'second','spm');      % copy
+        scan = scan_glm_copy(scan,'second','beta',0);      % copy
+        scan = scan_glm_copy(scan,'second','contrast',0);  % copy
+        scan = scan_glm_copy(scan,'second','statistic',0); % copy
+        scan = scan_glm_copy(scan,'second','spm',0);       % copy
 
         % function
         scan = scan_glm_function(scan);
