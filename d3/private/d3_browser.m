@@ -1,16 +1,8 @@
 
 function d3_browser(url)
     %% D3_BROWSER([url])
-    % opens a web browser on the specified url
-    % see also d3_start
-    %          d3_default
-    %          d3_close
-    %          d3_reply
-    %          d3_browser
-    %          d3_figure
-    %          d3_example
-    
-    %% warnings
+    % private function. opens a web browser on the specified url (similar to "web")
+    % see also d3_help
     
     %% function
     
@@ -23,5 +15,4 @@ function d3_browser(url)
     desktop = Desktop.getDesktop();
     uri = URI(sprintf('http://%s',url));
     desktop.browse(uri);
-    
 end

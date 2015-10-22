@@ -36,15 +36,3 @@ function html = d3_chart_plot(data,summ)
     html = [html,'   .attr("fill",         "none");',10];
     html = [html,'</script>',10];
 end
-
-%% auxiliar
-
-% get m files
-function html = get_m(varargin)
-    filename = [jbtools_root(),'/d3/private/www/m/',varargin{1}];
-    [pathstr,name,ext] = fileparts(filename);
-    addpath(pathstr);
-    fhandle = str2func(name);
-    html = feval(fhandle,varargin{2:end});
-end
-

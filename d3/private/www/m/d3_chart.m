@@ -17,15 +17,3 @@ function html = d3_chart(d3)
         html = [html,get_m(['d3_chart_',data.styl.chart,'.m'],data,summ)];
     end
 end
-
-%% auxiliar
-
-% get m files
-function html = get_m(varargin)
-    filename = [jbtools_root(),'/d3/private/www/m/',varargin{1}];
-    [pathstr,name,ext] = fileparts(filename);
-    addpath(pathstr);
-    fhandle = str2func(name);
-    html = feval(fhandle,varargin{2:end});
-end
-

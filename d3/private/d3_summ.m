@@ -1,6 +1,9 @@
 
 function [data,summ] = d3_summ(data)
     %% data = D3_SUMM(data)
+    % private function. summarise figure/axis options from [data] for consistency
+    % it also a adds extra fields to [data.fig]
+    % see also d3_help
     
     %% warnings
     %#ok<*AGROW>
@@ -8,7 +11,7 @@ function [data,summ] = d3_summ(data)
     %% function
     
     % get tabs
-    for i_data = 1:length(data), x_tab(i_data) = data(i_data).fig.handle; end
+    x_tab = arrayfun(@(d)d.fig.handle,data);
     [u_tab,n_tab] = numbers(x_tab);
     
     % summary

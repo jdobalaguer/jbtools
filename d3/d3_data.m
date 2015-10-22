@@ -16,13 +16,13 @@ function data = d3_data(varargin)
         case 'plot'
             data.vals.x = varargin{3};
             data.vals.y = varargin{4};
-            data = struct_deep(parser(['no_warning',varargin(5:end)],struct_flat(data)));
+            data = struct_deep(struct_default(pair2struct(varargin(5:end)),struct_flat(data)));
             
         otherwise
             error('d3_data: error. chart "%s" not recognised',data.styl.chart);
     end
     
     defs = d3_data_default();
-    data = struct_deep(parser(struct_flat(data),struct_flat(defs)));
+    data = struct_deep(struct_default(struct_flat(data),struct_flat(defs)));
     
 end

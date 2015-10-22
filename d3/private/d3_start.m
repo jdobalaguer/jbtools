@@ -1,25 +1,23 @@
 
 function d3 = d3_start(varargin)
-    %% d3 = D3_START(data[,args,vals])
-    % initialize the webserver
-    % see also d3_start
-    %          d3_start_default
-    %          d3_close
-    %          d3_reply
-    %          d3_browser
-    %          d3_figure
-    %          d3_example
-    
-    %% warnings
+    %% D3_START(data,[opt])
+    % D3_START(data[,par1,val1][,par2,val2])
+    % private function. initialise the webserver
+    % see also d3_help
     
     %% function
     
+    % Options
+    if isscalar(varargin) && isstruct(varargin{1}), opts = varargin{1};
+    else opts = pair2struct(varargin);
+    end
+    
     % Config of the HTTP server
     defs = d3_start_default();
-    opts = parser(varargin,defs);
+    opts = struct_default(opts,defs);
     
     % Open a TCP Server Port
-    TCP = JavaTcpServer('initialize',[],[],opts);
+    TCP = webserver_run('JavaTcpServer','initialize',[],[],opts);
     opts.port = TCP.port;
     d3  = struct('TCP',TCP,'opts',opts);
 end

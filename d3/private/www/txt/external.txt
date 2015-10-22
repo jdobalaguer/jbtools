@@ -1,0 +1,5 @@
+<script src="external/d3.min.js"          charset="utf-8"></script>
+<script src="external/dimple.min.js"      charset="utf-8"></script>
+<script src="external/jquery.min.js"      charset="utf-8"></script>
+<script src="external/svg_todataurl.js"   charset="utf-8"></script>
+<script src="external/FileSaver.min.js"   charset="utf-8"></script>

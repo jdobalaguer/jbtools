@@ -33,7 +33,7 @@ function html = d3_tab(d3)
         end
         html = [html,'">',10];
         % fig
-        html = [html,'  <div id="fig',num2str(tab),'" ></div>'];
+        html = [html,'    <div id="fig',num2str(tab),'" ></div>',10];
         % menu
         html = [html,'    <div class="tabs">',10];
         html = [html,'      <a class="tab" href="javascript:menu_showSVG(',num2str(tab),');">Show SVG</a>',10];
@@ -42,7 +42,7 @@ function html = d3_tab(d3)
         html = [html,'      <a class="tab" href="javascript:menu_savePNG(',num2str(tab),');">Save PNG</a>',10];
         html = [html,'    </div>',10];
         % /content
-        html = [html,'</div>',10];
+        html = [html,'  </div>',10];
     end
     
     % tail

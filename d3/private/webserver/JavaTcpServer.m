@@ -1,7 +1,8 @@
 
 function [TCP,data] = JavaTcpServer(action,TCP,data,config)
     %% [TCP,data] = JavaTcpServer(action,TCP,data,config)
-    % Java Web Server
+    % private function. Java Web Server
+    % based on http://uk.mathworks.com/matlabcentral/fileexchange/29027-web-server
     
     %% warnings
     %#ok<*TRYNC>
