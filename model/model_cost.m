@@ -1,8 +1,8 @@
 
 function model = model_cost(model)
-    %% model = model_cost(model)
+    %% model = MODEL_COST(model)
     % calculate the cost of each parameterisation
-    % this can work in parallel: use matlabpool('open')
+    % this can work in parallel: use @mme_open
     % see also: model_simulation
     %           model_minimum
     %           model_gradient
@@ -57,7 +57,7 @@ function model = model_cost(model)
             
             % parfor
             parfor_simu   = model.simu.result.simulation(i_subject,i_simu,:);
-            parfor_ii     = ii_cost(ii_subject & ii_simu);
+            parfor_ii     = logical(ii_cost(ii_subject & ii_simu));
             parfor_result = model.cost.result.cost(i_subject,i_index,:);
             parfor_func   = model.cost.func;
             parfor (i_comb = 1:n_comb, mme_size())

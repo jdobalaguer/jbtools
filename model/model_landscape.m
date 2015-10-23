@@ -39,8 +39,10 @@ function model_landscape(model,c_pars)
         assert(length(f_pars)<4, 'model_landscape: error. too many dimensions!');
 
         % squeeze
-        mean_cost = nanmean(model.cost.result.cost,1); ... subject
-        ste_cost  = nanste( model.cost.result.cost,1); ... subject
+        nan_cost  = model.cost.result.cost;
+        nan_cost(isinf(nan_cost)) = nan;
+        mean_cost = nanmean(nan_cost,1); % subject
+        ste_cost  = nanste(nan_cost,1); % subject
         for i = 1:n_pars
             if ~ismember(i,f_pars)
                 mean_cost = nanmin(mean_cost,[],i+2);
@@ -62,7 +64,7 @@ function model_landscape(model,c_pars)
                     sa.ylabel     = 'cost';
                     fig_axis(sa);
                 case 2
-                    imagesc(reshape(mean_cost(1,i_index,:),s_comb(f_pars)))
+                    fig_pimage(reshape(mean_cost(1,i_index,:),s_comb(f_pars)))
                     sa = struct();
                     sa.xtick      = 1:length(model.simu.pars.(u_pars{f_pars(2)}));
                     sa.xticklabel = num2leg(model.simu.pars.(u_pars{f_pars(2)}),'%.2f');
@@ -71,6 +73,7 @@ function model_landscape(model,c_pars)
                     sa.yticklabel = num2leg(model.simu.pars.(u_pars{f_pars(1)}),'%.2f');
                     sa.ylabel     = u_pars{f_pars(1)};
                     fig_axis(sa);
+                    %axis('square');
                     %set(gca(),'clim',[0,1]);
                     colorbar();
                 case 3
