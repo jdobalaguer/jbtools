@@ -97,13 +97,19 @@ function scan = scan_tool_zip(scan,mode,folder)
                 case 'zip+delete'
                     zip(zip_file{i},directory{i});
                     file_rmdir(directory{i});
+                case 'zip+delnii'
+                    zip(zip_file{i},directory{i});
+                    file_delete(fullfile(directory{i},'*.nii'));
                 case 'unzip'
                     unzip(zip_file{i},fileparts(directory{i}));
                 case 'unzip+delete'
                     unzip(zip_file{i},fileparts(directory{i}));
                     file_delete(zip_file{i});
-                case 'delete'
+                case 'deldir'
                     file_rmdir(file_match(directory{i},'absolute'));
+                case 'delnii'
+                    file_delete(fullfile(directory{i},'*.nii'));
+                case 'delzip'
                     file_delete(file_match(zip_file{i},'absolute'));
                 otherwise
                     scan_tool_error(scan,'unknown mode "%s"',mode);

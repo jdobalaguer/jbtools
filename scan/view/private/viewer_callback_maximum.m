@@ -16,9 +16,6 @@ function obj = viewer_callback_maximum(obj,local,sign)
     matrix = obj.dat.statistics(u_file(ii_file)).matrix;
     s_volume = size(volume);
     
-    % apply sign
-    volume = sign .* volume;
-    
     % handle control
     h = obj.fig.control.figure;
     x_edit = findobj(h,'Tag','XEdit');
@@ -40,6 +37,9 @@ function obj = viewer_callback_maximum(obj,local,sign)
         if any(cor<1) || any(cor>s_volume), return; end
         volume = aux_maskCluster(volume,cor);
     end
+    
+    % apply sign
+    volume = sign .* volume;
     
     % global maximum
     volume = zero2nan(volume);

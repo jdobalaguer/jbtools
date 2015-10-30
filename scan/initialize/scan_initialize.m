@@ -10,6 +10,7 @@ function scan = scan_initialize(scan)
     
     % initialize
     scan = scan_initialize_spm(scan);
+    scan = scan_initialize_tfce(scan);
     template = scan_initialize_template(scan.job.type);
     scan     = struct_default(scan,template);
     

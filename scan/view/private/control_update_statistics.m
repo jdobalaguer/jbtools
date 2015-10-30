@@ -46,34 +46,43 @@ function obj = control_update_statistics(obj,edit)
         % based on p-value
         % (this is what remains fixed when we change the tails)
         switch m
-            case 't-map', t = spm_invTcdf(1-p,d);
-                          f = nan;
-            case 'f-map', t = spm_invFcdf(1-p,d);
-                          f = nan;
-            case 'p-map', t = spm_invTcdf(1-p,d);
-                          f = nan;
+            case 't-map',   t = spm_invTcdf(1-p,d);
+                            f = nan;
+            case 'f-map',   t = spm_invFcdf(1-p,d);
+                            f = nan;
+            case 'p-map',   t = spm_invTcdf(1-p,d);
+                            f = nan;
+            case {'p-TFCE','pFDR-TFCE','pFWE-TFCE'}
+                            t = power(10,abs(p));
+                            f = nan;
         end
     elseif ~isnan(t)
         % based on statistic
         switch m
-            case 't-map', p = 1-spm_Tcdf(t,d);
-                          f = nan;
-            case 'f-map', p = 1-spm_Fcdf(t,d);
-                          f = nan;
-            case 'p-map', p = 1-spm_Tcdf(T,d);
-                          f = nan;
+            case 't-map',   p = 1-spm_Tcdf(t,d);
+                            f = nan;
+            case 'f-map',   p = 1-spm_Fcdf(t,d);
+                            f = nan;
+            case 'p-map',   p = 1-spm_Tcdf(t,d);
+                            f = nan;
+            case {'p-TFCE','pFDR-TFCE','pFWE-TFCE'}
+                            p = log10(abs(t));
+                            f = nan;
         end
         f = nan;
     elseif ~isnan(f)
         % based on FDR
         % TODO
         switch m
-            case 't-map', t = nan;
-                          p = nan;
-            case 'f-map', t = nan;
-                          p = nan;
-            case 'p-map', t = nan;
-                          p = nan;
+            case 't-map',   t = nan;
+                            p = nan;
+            case 'f-map',   t = nan;
+                            p = nan;
+            case 'p-map',   t = nan;
+                            p = nan;
+            case {'p-TFCE','pFDR-TFCE','pFWE-TFCE'}
+                            p = log10(abs(p));
+                            f = nan;
         end
     else
         % something weird, put all to nan

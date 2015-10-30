@@ -26,9 +26,12 @@ function obj = control_update_map(obj)
     % update
     h = obj.fig.control.figure;
     switch map
-        case 'T',  set(findobj(h,'Tag','MapPopup'),'Value',1);
-        case 'F',  set(findobj(h,'Tag','MapPopup'),'Value',2);
-        case 'P',  set(findobj(h,'Tag','MapPopup'),'Value',3);
-        otherwise, set(findobj(h,'Tag','MapPopup'),'Value',4);
+        case 'T',           set(findobj(h,'Tag','MapPopup'),'Value',1);
+        case 'F',           set(findobj(h,'Tag','MapPopup'),'Value',2);
+        case 'P',           set(findobj(h,'Tag','MapPopup'),'Value',3);
+        case 'tfceLP',      set(findobj(h,'Tag','MapPopup'),'Value',4);
+        case 'tfceLPfdr',   set(findobj(h,'Tag','MapPopup'),'Value',5);
+        case 'tfceLPfwe',   set(findobj(h,'Tag','MapPopup'),'Value',5);
+        otherwise,          set(findobj(h,'Tag','MapPopup'),'Value',7);
     end
 end

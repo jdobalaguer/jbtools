@@ -24,7 +24,7 @@ function obj = control_update_position(obj,dx,dy,dz)
     x = xyz(1); y = xyz(2); z = xyz(3);
 
     % update control
-    set(x_edit,'String',sprintf('%.1f',x));
-    set(y_edit,'String',sprintf('%.1f',y));
-    set(z_edit,'String',sprintf('%.1f',z));
+    set(x_edit,'String',sprintf('%+.1f',x));
+    set(y_edit,'String',sprintf('%+.1f',y));
+    set(z_edit,'String',sprintf('%+.1f',z));
 end

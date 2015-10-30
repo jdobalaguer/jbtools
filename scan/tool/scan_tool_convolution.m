@@ -1,11 +1,12 @@
 
-function X = scan_tool_convolution(scan,i_order,condition)
-    %% X = SCAN_TOOL_CONVOLUTION(scan,i_order,condition)
+function X = scan_tool_convolution(scan,i_order,condition,parametric)
+    %% X = SCAN_TOOL_CONVOLUTION(scan,i_order,condition[,parametric])
     % convolve a condition in [scan.job.condition] with the basis function in [scan.job.basisFunction]
-    % scan      : [scan] struct
-    % i_order   : order of interest in the basis function
-    % condition : name of the condition
-    % X         : resulting signal
+    % scan       : [scan] struct
+    % i_order    : order of interest in the basis function
+    % condition  : name of the condition
+    % parametric : name of the parametric modulation
+    % X          : resulting signal
     % to list main functions, try
     %   >> help scan;
             
@@ -15,6 +16,9 @@ function X = scan_tool_convolution(scan,i_order,condition)
     % "spm_fMRI_design.m" line 203
     
     %% function
+    
+    % default
+    func_default('parametric','');
 
     % subject
     X = cell(1,scan.running.subject.number);
@@ -51,7 +55,7 @@ function X = scan_tool_convolution(scan,i_order,condition)
                                     struct_default(xBF,scan.job.basisFunction.parameters);
                 otherwise,          scan_tool_error('unknown basis functions.');
             end
-            xBF = spm_get_bf(xBF);
+            evalc('xBF = spm_get_bf(xBF)');
             xBF.bf = xBF.bf(:,i_order);
             xBF.order = 1;
 
@@ -68,14 +72,27 @@ function X = scan_tool_convolution(scan,i_order,condition)
             U.ons  = scan.running.condition{i_subject}{i_session}(i_condition).onset(:);
             U.dur  = scan.running.condition{i_subject}{i_session}(i_condition).duration(:);
             U.tmod = 0;
-            U.pmod = struct('name', {}, 'param', {}, 'poly', {});
             if length(U.dur) == 1, U.dur = repmat(U.dur,size(U.ons)); end
             scan_tool_assert(scan,numel(U.dur) == numel(U.ons),'mismatch between number of onset and number of durations.');
-            U.P = struct('name',{'none'},'h',{0});
+            U.P = struct('name',{'none'},'P',{[]},'h',{0});
+            if ~isempty(parametric)
+                ii_level = strcmp(scan.running.condition{i_subject}{i_session}(i_condition).subname,parametric);
+                U.P.name = scan.running.condition{i_subject}{i_session}(i_condition).subname{ii_level};
+                U.P.P    = scan.running.condition{i_subject}{i_session}(i_condition).level(:,ii_level);
+                U.P.h    = 1;
+            end
 
             % get onsets (this bit is based in "spm_get_ons.m" line 94)
             k = length(scan.running.file.nii.epi3.(scan.job.image){i_subject}{i_session});
-            u     = U.ons.^0;
+            u = U.ons.^0;
+            if ~isempty(parametric)
+                U.P.i = [1, ([1:U.P.h] + size(u,2))]; %#ok<NBRAK>
+                for j = 1:U.P.h
+                    u(:,end+1) = U.P.P.^j; %#ok<AGROW>
+                    U.name{end+1} = sprintf('%sx%s^%d',U.name{1},U.P.name,j);
+                end
+            end
+
             if ~any(U.dur), u = u/xBF.dt; end
             ton       = round(U.ons/xBF.dt) + 33;
             tof       = round(U.dur/xBF.dt) + ton + 1;
@@ -92,6 +109,7 @@ function X = scan_tool_convolution(scan,i_order,condition)
 
             % convolve stimulus functions with basis functions
             X{i_subject}{i_session} = spm_Volterra(U,xBF.bf,1);
+            if ~isempty(parametric), X{i_subject}{i_session}(:,1) = []; end
 
             % resample regressors at acquisition times (32 bin offset)
             if ~isempty(X{i_subject}{i_session})

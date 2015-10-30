@@ -9,7 +9,7 @@ TODO
 64. bypass orthogonalisation option
 65. fix glm normalisation/smooth folders (add voxel size)
 67. enable/disable first level GLM
-74. mat_elements (what was this?)
+74. mat_elements (using sub2ind or ind2sub!)
 75. mat_squeeze([dim])
 76. scan_tool_fixPaths
 77. scan_view assert spm
@@ -22,6 +22,9 @@ TODO
 84. scan add functions at the beginning
 86. discard dummy scans from the preprocessing
 88. check @scan_function_tbte_get_vector, line 71 (ii_onset)
+90. scan_tool_print without progress
+91. TFCE without normal second level (and copy)
+92. TFCE in scan_view
 
 LONG TERM
 06. handle HDD writing depending on the size of [scan]
@@ -128,3 +131,4 @@ R6. in RSA we should recycle the onset information from the TBTE.
 73. add viewer alpha range
 85. scan_glm_copy force flags
 87. add multiple durations to scan_glm
+89. TFCE

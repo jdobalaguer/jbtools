@@ -135,11 +135,48 @@ function scan = scan_glm_copy(scan,level,type,force)
             scan_tool_print(scan,false,'\nCopy statistic file (second level) : ');
             scan = scan_tool_progress(scan,length(scan.running.contrast{1}));
             for i_contrast = 1:length(scan.running.contrast{1})
+                % uncorrected
                 original = fullfile(scan.running.directory.original.second,sprintf('%s_%03i',scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order),'spmT_0001.nii');
                 copy     = fullfile(scan.running.directory.copy.second.statistic,sprintf('%s_%03i.nii',scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order));
                 file_mkdir(fileparts(copy));
                 scan_tool_copy(original,copy);
                 scan = scan_tool_progress(scan,[]);
+            end
+            scan = scan_tool_progress(scan,0);
+            
+        % second level statistic
+        case 'second:tfce'
+            if ~scan.job.tfce, return; end
+            if ~force && ~any(ismember('spmt_2',scan.job.copyFolder)), return; end
+            if ~force && ~scan.running.flag.second, return; end
+            if ~force && ~strcmp(scan.job.type,'glm'), return; end
+            scan_tool_print(scan,false,'\nCopy statistic file (second level) : ');
+            scan = scan_tool_progress(scan,length(scan.running.contrast{1}));
+            for i_contrast = 1:length(scan.running.contrast{1})
+                % log(P) uncorrected
+                original = fullfile(scan.running.directory.original.second,sprintf('%s_%03i',scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order),'TFCE_log_p_0001.nii');
+                copy     = fullfile(scan.running.directory.copy.second.statistic,sprintf('%s_%03i(TFCE).nii',scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order));
+                file_mkdir(fileparts(copy));
+                meta = spm_vol(original);
+                meta.descrip = sprintf('SPM{tfceLP_[%.1f]} - contrast 1: %s_%03i',scan.running.subject.number-1,scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order);
+                vol  = spm_read_vols(meta);
+                scan_nifti_save(copy,vol,meta);
+                % log(P) false discovery rate
+                original = fullfile(scan.running.directory.original.second,sprintf('%s_%03i',scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order),'TFCE_log_pFDR_0001.nii');
+                copy     = fullfile(scan.running.directory.copy.second.statistic,sprintf('%s_%03i(TFCEfdr).nii',scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order));
+                file_mkdir(fileparts(copy));
+                meta = spm_vol(original);
+                meta.descrip = sprintf('SPM{tfceLPfdr_[%.1f]} - contrast 1: %s_%03i',scan.running.subject.number-1,scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order);
+                vol  = spm_read_vols(meta);
+                scan_nifti_save(copy,vol,meta);
+                % log(P) family-wise error
+                original = fullfile(scan.running.directory.original.second,sprintf('%s_%03i',scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order),'TFCE_log_pFWE_0001.nii');
+                copy     = fullfile(scan.running.directory.copy.second.statistic,sprintf('%s_%03i(TFCEfwe).nii',scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order));
+                file_mkdir(fileparts(copy));
+                meta = spm_vol(original);
+                meta.descrip = sprintf('SPM{tfceLPfwe_[%.1f]} - contrast 1: %s_%03i',scan.running.subject.number-1,scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order);
+                vol  = spm_read_vols(meta);
+                scan_nifti_save(copy,vol,meta);
             end
             scan = scan_tool_progress(scan,0);
         

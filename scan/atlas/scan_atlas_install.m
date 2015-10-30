@@ -31,6 +31,7 @@ function scan = scan_atlas_install(scan,atlas)
     % print
     scan_tool_print(scan,false,'Installing %s atlas from "%s"',atlas,url{1});
     for i = 2:length(url), scan_tool_print(scan,false,'                         "%s"',atlas,url{i}); end
+    scan_tool_assert(scan,strcmp(input('Do you understand that this is an external library? Type "yes" : ','s'),'yes'),'Cancelled.');
     scan = scan_tool_progress(scan,5);
     
     % create trash, delete old versions

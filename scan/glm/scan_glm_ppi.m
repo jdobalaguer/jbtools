@@ -31,6 +31,10 @@ function scan = scan_glm_ppi(scan)
                 scan_tool_assert(scan,sum(i_regressor)==1,'none or multiple regressors found for subject "%03i" session "%03i" with the same name "%s"',i_subject,i_session,scan.job.ppi(i_ppi).regressor);
                 regressor   = scan.running.regressor{i_subject}{i_session}.regressor(:,i_regressor);
                 
+                % save convolution
+                scan.running.convolution{i_subject}{i_session}{i_ppi}.name      = scan.job.ppi(i_ppi).condition;
+                scan.running.convolution{i_subject}{i_session}{i_ppi}.regressor = condition{i_subject}{i_session};
+                
                 % add interaction
                 interaction = mat_zscore(condition{i_subject}{i_session} .* regressor);
                 scan.running.regressor{i_subject}{i_session}.name{end+1}        = scan.job.ppi(i_ppi).name;

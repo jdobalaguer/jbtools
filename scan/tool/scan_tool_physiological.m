@@ -41,7 +41,7 @@ function scan_tool_physiological(scan,image,mask,file)
     scan = scan_tool_progress(scan,0);
     
     % save
-    file_mkdir(scan.directory.regressor);
+    file_mkdir(file_parts(fullfile(scan.directory.regressor,file)));
     save(fullfile(scan.directory.regressor,file),'regressor');
     
 end

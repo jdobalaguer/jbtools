@@ -55,20 +55,23 @@ function obj = viewer_update_text(obj)
         
         % update text with values
         switch map
-            case 1
+            case 1 % t-map
                 p = 1-spm_Tcdf(t,d);
-                set(obj.fig.viewer.text.pvalue(i_file),   'String',sprintf('p = %.4f', p));
+                set(obj.fig.viewer.text.pvalue(i_file),   'String',sprintf('p = %.2e', p));
                 set(obj.fig.viewer.text.statistic(i_file),'String',sprintf('t_{%d} = %+.2f',d,t));
-            case 2
+            case 2 % f-map
                 p = 1-spm_Fcdf(t,d);
-                set(obj.fig.viewer.text.pvalue(i_file),   'String',sprintf('p = %.4f', p));
+                set(obj.fig.viewer.text.pvalue(i_file),   'String',sprintf('p = %.2e', p));
                 set(obj.fig.viewer.text.statistic(i_file),'String',sprintf('f_{%d} = %+.2f',d,t));
-            case 3
+            case 3 % p-map
                 p = t;
-                t = spm_invTcdf(1-p,d);
-                set(obj.fig.viewer.text.pvalue(i_file),   'String',sprintf('p = %.4f', p));
+                set(obj.fig.viewer.text.pvalue(i_file),   'String',sprintf('p = %.2e', p));
                 set(obj.fig.viewer.text.statistic(i_file),'String',sprintf('t_{%d} = %+.2f',d,t));
-            case 4
+            case num2cell(4:6) % tfce
+                p = power(10,-abs(t));
+                set(obj.fig.viewer.text.pvalue(i_file),   'String',sprintf('p = %.2e', p));
+                set(obj.fig.viewer.text.statistic(i_file),'String',sprintf('log(p)_{%d} = %+.2f',d,t));
+            case 7 % none
                 set(obj.fig.viewer.text.statistic(i_file),'String',sprintf('n = %+.2f',t));
         end
     end

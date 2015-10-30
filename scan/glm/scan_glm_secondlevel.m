@@ -47,7 +47,7 @@ function scan = scan_glm_secondlevel(scan)
     scan = scan_tool_progress(scan,length(scan.running.contrast{1}));
     j_job = 0;
     for i_contrast = 1:length(scan.running.contrast{1})
-        directory_second = fullfile(scan.running.directory.original.second,sprintf('%s_%03i',scan.running.contrast{i_subject}(i_contrast).name,scan.running.contrast{i_subject}(i_contrast).order));
+        directory_second = fullfile(scan.running.directory.original.second,sprintf('%s_%03i',scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order));
         % design
         j_job = j_job + 1;
         spm{j_job}.spm.stats.factorial_design.dir                      = {directory_second}; %#ok<*AGROW>
@@ -66,7 +66,7 @@ function scan = scan_glm_secondlevel(scan)
         % contrast
         j_job = j_job + 1;
         spm{j_job}.spm.stats.con.spmmat                    = {fullfile(directory_second,'SPM.mat')};
-        spm{j_job}.spm.stats.con.consess{1}.tcon.name      = sprintf('%s_%03i',scan.running.contrast{i_subject}(i_contrast).name,scan.running.contrast{i_subject}(i_contrast).order);
+        spm{j_job}.spm.stats.con.consess{1}.tcon.name      = sprintf('%s_%03i',scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order);
         spm{j_job}.spm.stats.con.consess{1}.tcon.convec    = 1; % contrast vector, here just 1, (simple T)
         spm{j_job}.spm.stats.con.consess{1}.tcon.sessrep   = 'none';
         spm{j_job}.spm.stats.con.delete = 1;
