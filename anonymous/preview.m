@@ -9,5 +9,5 @@ function preview(path)
     if isempty(path), error('preview: error. file not found'); end
     
     % preview
-    evalc(sprintf('!qlmanage -p %s',path));
+    evalc(sprintf('!qlmanage -p "%s"',path));
 end

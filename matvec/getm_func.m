@@ -7,5 +7,4 @@ function [z,u] = getm_func(varargin)
     %% function
     [z,u] = getm_all(varargin{2:end});
     z = cellfun(varargin{1},z);
-    return;
 end

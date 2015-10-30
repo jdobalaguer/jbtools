@@ -5,7 +5,7 @@ function fig_sliderr(v,e,x,l,r)
     % plot one dimension at a time (and standard error bars)
     % v : matrix of values
     % e : matrix of error values
-    % x : cell ofstrings with the xticklabels
+    % x : cell of strings with the xticklabels
     % l : legend of each dimension
     % r : sprintf regular expression used for the sliders (default '%+.2f')
     
@@ -31,6 +31,9 @@ function fig_sliderr(v,e,x,l,r)
     func_default('r','%.2f');
     func_default('x',arrayfun(@(x)num2leg(1:x,r),s,'UniformOutput',false));
     func_default('l',num2leg(1:n,'dim %d'));
+    
+    % cellnum to cellstr
+    if ~iscell(x{1}), x = cellfun(@(x)num2leg(x,r),x,'UniformOutput',false); end
     
     % assert
     assert(all(cellfun(@iscellstr,x)),'fig_slider: error. [x] must be a cell of cells of strings');

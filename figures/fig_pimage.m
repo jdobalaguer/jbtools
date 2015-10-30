@@ -34,5 +34,7 @@ function h = fig_pimage(varargin)
     % plot
     h = pcolor(X,Y,C);
     set(h,'LineStyle','none','EdgeColor','none');
-
+    
+    % axis
+    set(get(h,'Parent'),'YDir','reverse');
 end

@@ -12,7 +12,10 @@ function git(varargin)
         if nargin == 1
             cmd{1} = 'git commit -m "automatic upload"';
         else
-            cmd{1} = sprintf('git commit -m "%s"',varargin{2});
+            msg = sprintf('%s ',varargin{2:end});
+            msg(end) = [];
+            cmd{1} = sprintf('git commit -m "%s"',msg);
+            clear msg;
         end
         cmd{2} = 'git push';
     else

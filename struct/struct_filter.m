@@ -10,6 +10,10 @@ function s = struct_filter(s,ii)
     n_field = length(u_field);
     for i_field = 1:n_field
         field = u_field{i_field};
-        s.(field) = s.(field)(ii,:);
+        try 
+            s.(field) = s.(field)(ii,:);
+        catch
+            warning('field "%s" not filtered!',field);
+        end
     end
 end

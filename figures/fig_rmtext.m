@@ -19,7 +19,7 @@ function removeText(h)
     else
         c = get(h,'Children');
         for i = 1:length(c)
-            removeText(c(i));
+            try removeText(c(i)); end
         end
     end
 end
@@ -27,14 +27,16 @@ end
 function removeAxes(h)
     a = get(h,'Children');
     for i = 1:length(a)
-        axes(a(i));
-        sa.title = '';
-        sa.xlabel = '';
-        sa.ylabel = '';
-        sa.xticklabel = {''};
-        sa.yticklabel = {''};
-        fig_axis(sa);
-        set(gca(),'XMinorTick','off');
-        set(gca(),'YMinorTick','off');
+        try
+            axes(a(i));
+            sa.title = '';
+            sa.xlabel = '';
+            sa.ylabel = '';
+            sa.xticklabel = {''};
+            sa.yticklabel = {''};
+            fig_axis(sa);
+            set(gca(),'XMinorTick','off');
+            set(gca(),'YMinorTick','off');
+        end
     end
 end

@@ -64,7 +64,7 @@ function model_landscape(model,c_pars)
                     sa.ylabel     = 'cost';
                     fig_axis(sa);
                 case 2
-                    fig_pimage(reshape(mean_cost(1,i_index,:),s_comb(f_pars)))
+                    fig_pimage(reshape(mean_cost(1,i_index,:),s_comb(f_pars)));
                     sa = struct();
                     sa.xtick      = 1:length(model.simu.pars.(u_pars{f_pars(2)}));
                     sa.xticklabel = num2leg(model.simu.pars.(u_pars{f_pars(2)}),'%.2f');

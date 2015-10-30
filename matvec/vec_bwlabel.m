@@ -1,11 +1,12 @@
 
-function y = vec_block(x)
-    %% [y] = VEC_BLOCK(x)
-    % calculate block how many times each block has been seen
+function y = vec_bwlabel(x)
+    %% [y] = VEC_BWLABEL(x)
+    % similar to bwlabel, vec_rows and vec_block
+    % give a different label for each block
     % e.g. >> x = [1,1,2,2,1,1,2,2,3,3,2,2,3,3,2,2];
-    %      >> y = vec_block(x)
+    %      >> y = vec_bwlabel(x)
     %      y = 
-    %          1 1 1 1 2 2 2 2 1 1 3 3 2 2 4 4
+    %          1 1 2 2 3 3 4 4 5 5 6 6 7 7 8 8
     
     %% function
     
@@ -20,7 +21,7 @@ function y = vec_block(x)
     i = find(diff(z));
     n = [i,numel(z)] - [0,i];
     v = z([1,i+1]);
-    m = mat2row(sum(getm_dummy(v) .* cumsum(getm_dummy(v),1),2));
+    m = 1:length(n);
     
     c = arrayfun(@(n,m)repmat(m,1,n),n,m,'UniformOutput',false);
     y = cat(2,c{:});
