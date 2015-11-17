@@ -51,9 +51,9 @@ function model = model_gradient(model)
             % parfor
             parfor_result = repmat(struct('u_min',[],'v_min',[]),[n_comb,1]);
             parfor_simu_pars   = u_pars;
-            parfor_simu_func   = model.simu.func;
-            parfor_cost_pars   = model.cost.pars;
-            parfor_cost_func   = model.cost.func;
+            parfor_simu_func   = model.grad.simu;
+            parfor_cost_pars   = model.grad.costpars;
+            parfor_cost_func   = model.grad.costfunc;
             parfor_data   = data;
             
             parfor (i_comb = 1:n_comb, mme_size())
