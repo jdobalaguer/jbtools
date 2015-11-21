@@ -20,6 +20,13 @@ function model = model_reconstruction_min(model)
     n_index = length(u_index);
     s_comb = size(model.simu.result.simulation); s_comb(1:2) = [];
     
+    % if no parameters (similar to @model_reconstruction)
+    if isempty(s_comb)
+        model = model_reconstruction(model);
+        model.cost.result.reconstruction = model.simu.result.reconstruction;
+        return;
+    end
+    
     % result
     model.cost.result.reconstruction = struct_filter(model.simu.result.simulation(1),1);
     model.cost.result.reconstruction = repmat(model.cost.result.reconstruction,[n_index,1]);

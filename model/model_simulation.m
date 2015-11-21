@@ -12,7 +12,7 @@ function model = model_simulation(model)
     %% function
     
     % set up parameters
-    if ~struct_isfield(model,'simu.pars')
+    if ~struct_isfield(model,'simu.pars') || struct_isempty(model.simu.pars)
         model.simu.pars = struct('null',0);
     end
     model.simu.pars = struct_mat2vec(model.simu.pars);
