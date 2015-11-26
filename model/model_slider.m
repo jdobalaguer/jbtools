@@ -7,9 +7,18 @@ function model_slider(model)
     %% function
     
     % variables
-    m = meeze(model.cost.result.cost,1);
+    v = model.cost.result.cost;
     x = struct2cell(model.simu.pars);
     l = fieldnames(model.simu.pars);
+    
+    % average across subjects
+    s = size(v); s(1) = [];
+    m = reshape(mean(v,1),s);
+    
+    % set index
+    x{end+1} = mat2vec(1:size(v,2));
+    l{end+1} = 'index';
+    m = permute(m,[2:ndims(m),1]);
     
     % figure
     fig_slider(m,x,l);

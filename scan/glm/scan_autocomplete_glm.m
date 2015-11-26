@@ -21,6 +21,7 @@ function scan = scan_autocomplete_glm(scan)
     scan.running.directory.copy.first.contrast   = fullfile(scan.running.directory.job,'copy','cont_1',filesep);
     scan.running.directory.copy.first.statistic  = fullfile(scan.running.directory.job,'copy','spmt_1',filesep);
     scan.running.directory.copy.first.spm        = fullfile(scan.running.directory.job,'copy','SPM_1',filesep);
+    scan.running.directory.copy.first.residual   = fullfile(scan.running.directory.job,'copy','res_1',filesep);
     scan.running.directory.copy.second.beta      = fullfile(scan.running.directory.job,'copy','beta_2',filesep);
     scan.running.directory.copy.second.contrast  = fullfile(scan.running.directory.job,'copy','cont_2',filesep);
     scan.running.directory.copy.second.statistic = fullfile(scan.running.directory.job,'copy','spmt_2',filesep);

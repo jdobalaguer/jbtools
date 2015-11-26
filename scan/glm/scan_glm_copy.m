@@ -95,6 +95,21 @@ function scan = scan_glm_copy(scan,level,type,force)
             end
             scan = scan_tool_progress(scan,0);
         
+        % first level residuals
+        case 'first:residual'
+            if ~force && ~any(ismember('spm_1',scan.job.copyFolder)), return; end
+            if ~force && ~scan.running.flag.design, return; end
+            scan_tool_print(scan,false,'\nCopy residual maps (first level) : ');
+            scan = scan_tool_progress(scan,scan.running.subject.number);
+            for i_subject = 1:scan.running.subject.number
+                original  = fullfile(scan.running.directory.original.first{i_subject},'ResMS.nii');
+                copy      = fullfile(scan.running.directory.copy.first.residual,sprintf('subject_%03i.nii',scan.running.subject.unique(i_subject)));
+                file_mkdir(fileparts(copy));
+                scan_tool_copy(original,copy);
+                scan = scan_tool_progress(scan,[]);
+            end
+            scan = scan_tool_progress(scan,0);
+        
         % second level beta
         case 'second:beta'
             if ~force && ~any(ismember('beta_2',scan.job.copyFolder)), return; end
