@@ -11,9 +11,14 @@ function fig_slider(v,x,l,r)
     %% function
     v = single(v);
     
+    % number
+    func_default('x',[]);
+    func_default('l',[]);
+    
     % parameters & variables
+    n = max([length(x),length(l),ndims(v)]); % number of dimensions
     s = size(v);            % size
-    n = ndims(v);           % number of dimensions
+    s(end+1:n) = 1;
     
     m =  80;                % marge
     d =  30;                % distance between slides
@@ -30,6 +35,7 @@ function fig_slider(v,x,l,r)
     func_default('r','%.2f');
     func_default('x',arrayfun(@(x)num2leg(1:x,r),s,'UniformOutput',false));
     func_default('l',num2leg(1:n,'dim %d'));
+    
     
     % cellnum to cellstr
     if ~iscell(x{1}), x = cellfun(@(x)num2leg(x,r),x,'UniformOutput',false); end
@@ -50,8 +56,12 @@ function fig_slider(v,x,l,r)
     for i_main = 3:n
         range = [1,s(i_main)];
         t(i_main-2) = uicontrol('Style','text','String',l{i_main},'Position',[m,m+d*(n-i_main),p,20]);
-        b(i_main-2) = uicontrol('Style','slider','Min',range(1),'Max',range(2),'SliderStep',[1 1]./diff(range),'Value',1,'Position',[m+p,m+d*(n-i_main),w-2*m-p,20]);
-        set(b(i_main-2),'Callback',@updateImage);
+        if isscalar(x{i_main})
+            b(i_main-2) = uicontrol('Style','text','String',x{i_main},'Position',[m+p,m+d*(n-i_main),w-2*m-p,20]);
+        else
+            b(i_main-2) = uicontrol('Style','slider','Min',range(1),'Max',range(2),'SliderStep',[1 1]./diff(range),'Value',1,'Position',[m+p,m+d*(n-i_main),w-2*m-p,20]);
+            set(b(i_main-2),'Callback',@updateImage);
+        end
     end
     
     % plot
@@ -69,13 +79,19 @@ function fig_slider(v,x,l,r)
         
         % update labels
         for i_nested = 3:n
-            set(t(i_nested-2),'String',sprintf(['%s = %s'],l{i_nested},x{i_nested}{get(b(i_nested-2),'Value')}));
+            if ~isscalar(x{i_nested})
+                set(t(i_nested-2),'String',sprintf(['%s = %s'],l{i_nested},x{i_nested}{get(b(i_nested-2),'Value')}));
+            end
         end
         
         % retrieve indices
         c = cell(1,n-2);
         for i_nested = 3:n
-            c{i_nested-2} = get(b(i_nested-2),'Value');
+            if isscalar(x{i_nested})
+                c{i_nested-2} = 1;
+            else
+                c{i_nested-2} = get(b(i_nested-2),'Value');
+            end
         end
         
         % plot
