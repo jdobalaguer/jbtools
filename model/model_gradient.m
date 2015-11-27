@@ -1,6 +1,6 @@
 
 function model = model_gradient(model)
-    %% model = model_gradient(model)
+    %% model = MODEL_GRADIENT(model)
     % apply gradient descent on each point of a grid
     % the result is the best of them
     % this can work in parallel: use matlabpool('open')

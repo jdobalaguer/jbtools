@@ -1,6 +1,6 @@
 
 function model = model_example()
-    %% model = model_example()
+    %% model = MODEL_EXAMPLE()
     % example showing how to use the toolbox
 
     %% function

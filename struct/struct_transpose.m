@@ -4,5 +4,5 @@ function z = struct_transpose(s)
     % transpose fields
     
     %% function
-    z = struct_func(s,@transpose);
+    z = struct_func(@transpose,s);
 end

@@ -8,9 +8,10 @@ function model()
     %          model_reconstruction
     %          model_cost
     %          model_minimum
+    %          model_reconstruction_min
     %          model_landscape
     %          model_gradient
 
     %% function
-    help('model');
+    help(which('model'));
 end

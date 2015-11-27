@@ -29,14 +29,17 @@ function model = model_reconstruction_min(model)
     model.cost.result.reconstruction = struct_filter(model.simu.result.simulation(1),1);
     model.cost.result.reconstruction = repmat(model.cost.result.reconstruction,[n_index,1]);
     for i_index = 1:n_index
-        reconstruction = struct_func(model.cost.result.reconstruction(i_index,1),@(x)repmat(x,[length(u_index{i_index}),1]));
-        reconstruction = struct_func(reconstruction,@(v)nan(size(v))); % here we assume we work with numbers (no cells, strings or structs)
+        reconstruction = struct_func(@(x)repmat(x,[length(u_index{i_index}),1]),...
+                                     model.cost.result.reconstruction(i_index,1));
+        reconstruction = struct_func(@(v)nan(size(v)),reconstruction); % here we assume we work with numbers (no cells, strings or structs)
         for i_subject = 1:n_subject
             ii_subject = (model.simu.subject == u_subject(i_subject));
+            ii_index   = model.simu.index{model.cost.simu{i_index}};
+            ii = (ii_subject & ii_index);
             i_comb = num2cell(model.cost.result.min_subject(i_subject).i_min(1,:)); % if more than one minimum, take the first one
             i_comb = sub2ind(s_comb,i_comb{:});
             simulation = model.simu.result.simulation(i_subject,model.cost.simu{i_index},i_comb);
-            reconstruction = struct_set(reconstruction,simulation,ii_subject);
+            reconstruction = struct_set(reconstruction,simulation,ii);
         end
         model.cost.result.reconstruction(i_index) = reconstruction;
     end
