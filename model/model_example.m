@@ -1,20 +1,27 @@
 
 function model = model_example()
     %% model = MODEL_EXAMPLE()
-    % example showing how to use the toolbox
+    % example code showing how to use the toolbox
+    % it includes an exhaustive simulation
+    %             best fitting minimisation
+    %             cross-validation prediction
+    %             gradient-descent (fmincon)
 
     %% function
 
     % parameters
-    N = 4; % number of subjects
-    t = 5; % number of trials
-    k = 7; % points per parameter (in exhaustive grid search)
+    N = 2; % number of subjects
+    b = 3; % number of blocks
+    t = 4; % number of trials
+    k = 5; % points per parameter (in exhaustive grid search)
     
     % data
-    data.subject = mat2vec(repmat(1:N,[t,1]));
-    data.noise   = mat2vec(randn(t,N));
+    data.subject = mat2vec(repmat(1:N,[b*t,1]));
+    data.block   = mat2vec(repmat(permat(1:b,[1,t]),[1,N]));
+    data.trial   = mat2vec(repmat(1:t,[1,b*N]));
+    data.noise   = mat2vec(randn(N*b*t,1));
 
-    % EXHAUSTIVE SEARCH METHOD
+    % EXHAUSTIVE SIMULATION
     model = struct();
     model.simu.func     = @test_simufunc;
     model.simu.pars     = struct('a',linspace(-1,+1,k),...
@@ -26,7 +33,7 @@ function model = model_example()
     model = model_simulation(model);     % get model preditions
     model = model_reconstruction(model); % merge predictions across subjets
 
-    % define cost
+    % EXHAUSTIVE COST MINIMSATION
     model.cost.func     = @test_costfunc;
     model.cost.pars     = struct();
     model.cost.simu     = {1};
@@ -38,6 +45,15 @@ function model = model_example()
     model_landscape(model,{{'a'},{'a','b'},{'a','b','c'}});
     model_slider(model);
     model_sliderr(model);
+    
+    % EXHAUSTIVE CROSS-VALIDATION
+    model.xval.func     = @test_costfunc;
+    model.xval.pars     = struct();
+    model.xval.simu     = {1};
+    model.xval.index    = model.simu.index;
+    model.xval.block    = data.block;
+    model.xval.leave    = 1; % leave-one-out
+    model = model_xval(model);
 
     % GRADIENT DESCENT METHOD
     model.grad.data     = data;
@@ -49,7 +65,7 @@ function model = model_example()
     model = model_gradient(model);
 end
 
-%% model
+%% simulation function
 function result = test_simufunc(data,pars)
     a = pars.a;
     b = pars.b;

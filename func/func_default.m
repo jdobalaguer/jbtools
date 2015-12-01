@@ -14,7 +14,8 @@ function func_default(var,val)
         var = {var};
         val = {val};
     else
-        assert(iscellstr(var), 'func_default: error. [var] is not a cell of strings');
+        assert(iscellstr(var),        'func_default: error. [var] is not a cell of strings');
+        assert(iscell(val),           'func_default: error. [val] is not a cell');
     end
     
     % assert
@@ -26,10 +27,21 @@ function func_default(var,val)
     % do
     for i = 1:length(var)
         if any(var{i}=='.')
-            warning('func_default: warning. struct field "%s" not allowed',var{i});
+            try    doit = evalin('caller',sprintf('isempty(%s);',var{i}));
+            catch, doit = true;
+            end
+            if doit
+                if ~evalin('caller','exist(''foo'',''var'');');
+                    assignin('caller','foo',val{i});
+                    evalin('caller',sprintf('%s = foo;',var{i}));
+                    evalin('caller','clear(''foo'');');
+                else
+                    warning('func_default: warning. struct field "%s" not possible to set to default (try to clear variable "foo")',var{i});
+                end
+            end
             continue;
         end
-        if ~evalin('caller',sprintf('exist(''%s'',''var'')',var{i})) || evalin('caller',sprintf('isempty(%s)',var{i}))
+        if ~evalin('caller',sprintf('exist(''%s'',''var'');',var{i})) || evalin('caller',sprintf('isempty(%s);',var{i}))
             assignin('caller',var{i},val{i});
         end
     end

@@ -16,14 +16,16 @@ function model = model_cost(model)
     assert(struct_isfield(model,'simu.result.simulation'),      'model_cost: error. no "model.simu.result.simulation" field');
     
     % numbers
-    s_comb = size(model.simu.result.simulation); s_comb(1:2) = [];
-    n_comb = prod(s_comb);
+    u_pars  = fieldnames(model.simu.pars);
+    n_pars  = length(u_pars);
+    s_comb  = size(model.simu.result.simulation); s_comb(1:2) = []; s_comb(end+1:n_pars) = 1;
+    n_comb  = prod(s_comb);
     
     % subject
     [u_subject,n_subject] = numbers(model.simu.subject);
     
     % index
-    if ~struct_isfield(model,'cost.index'), model.cost.index = model.simu.index; end
+    func_default('model.cost.index',model.simu.index);
     assert(length(model.cost.index) == length(model.cost.simu), 'model_cost: error. "index" and "simu" have different length');
     
     u_index = model.cost.index;
@@ -31,7 +33,7 @@ function model = model_cost(model)
     
     % result
     model.cost.result      = struct();
-    model.cost.result.cost = nan([n_subject,n_index,s_comb]);
+    model.cost.result.cost = nan([n_subject,n_index,s_comb],'single');
     
     % cost
     fw = func_wait(n_subject * n_index * n_comb);
@@ -50,7 +52,7 @@ function model = model_cost(model)
             assert(all(ii_simu(ii_cost & ii_subject)),'model_cost: error. simu(%d) doesnt cover index(%d)',model.cost.simu{i_index},i_index);
             
             % data
-            data = struct_filter(model.simu.data,ii_subject & ii_cost);
+            data = struct_filter(model.simu.data,ii_subject & ii_cost & ii_simu);
             
             % pars
             pars = model.cost.pars;
