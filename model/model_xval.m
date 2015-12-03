@@ -5,6 +5,9 @@ function model = model_xval(model)
     % this can work in parallel: use @mme_open
     % see also: model_simulation
     
+    %% notes
+    % find the best way to parallelise this
+    
     %% function
     
     % assert
@@ -73,9 +76,9 @@ function model = model_xval(model)
                 parfor_ii     = logical(ii_training(ii_simu & ii_index & ii_subject));
                 parfor_result = model.xval.result(i_index).training.cost(i_subject,i_xval,:);
                 parfor_func   = model.xval.func;
-                parfor (i_comb = 1:n_comb, mme_size())
+                for i_comb = 1:n_comb
                     simu = struct_filter(parfor_simu(i_comb),parfor_ii);
-                    parfor_result(i_comb) = parfor_func(data,simu,pars); %#ok<PFBNS>
+                    parfor_result(i_comb) = parfor_func(data,simu,pars);
                 end
                 model.xval.result(i_index).training.cost(i_subject,i_xval,:) = parfor_result;
 
@@ -97,9 +100,9 @@ function model = model_xval(model)
                 parfor_ii     = logical(ii_evaluate(ii_simu & ii_index & ii_subject));
                 parfor_result = model.xval.result(i_index).evaluate.cost(i_subject,i_xval,:);
                 parfor_func   = model.xval.func;
-                parfor (i_comb = 1:n_comb, mme_size())
+                for i_comb = 1:n_comb
                     simu = struct_filter(parfor_simu(i_comb),parfor_ii);
-                    parfor_result(i_comb) = parfor_func(data,simu,pars); %#ok<PFBNS>
+                    parfor_result(i_comb) = parfor_func(data,simu,pars);
                 end
                 model.xval.result(i_index).evaluate.cost(i_subject,i_xval,:) = parfor_result;
 
