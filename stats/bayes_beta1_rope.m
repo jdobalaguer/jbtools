@@ -40,7 +40,7 @@ function varargout = bayes_beta1_rope(x,varargin)
     h = (p < pars.alpha);
     stats = struct('h',{h},'p',{p});
     stats.prior      = prior;
-    stats.likelihood = likelihood;
+    stats.likelihood = likelihood + 1;
     stats.posterior  = posterior;
     
     % output

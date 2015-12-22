@@ -44,10 +44,11 @@ function varargout = bayes_beta2_bf(x,y,varargin)
     % test
     h  = bf > 1;
     stats = struct('h',{h},'bf',{bf});
-    stats.prior       = prior;
-    stats.likelihood  = likelihood_x;
-    stats.null        = prob_null;
-    stats.alternative = prob_alt;
+    stats.prior        = prior;
+    stats.likelihood.x = likelihood_x + 1;
+    stats.likelihood.y = likelihood_y + 1;
+    stats.null         = prob_null;
+    stats.alternative  = prob_alt;
     
     % output
     if nargout, varargout = {h,bf,stats}; return; end

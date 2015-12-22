@@ -10,7 +10,7 @@ A. is there any method for gibbs sampling?
 5. model_bayes (for grid)
 6. model_bayes (for mcmc)
 7. gaussian processes
-8. fix bug with prior/likelihood in bayes_mcmc1_null
 
 # DONE
+8. fix bug with prior/likelihood in bayes_mcmc1_null
 
