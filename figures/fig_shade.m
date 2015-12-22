@@ -29,5 +29,5 @@ function h = fig_shade(varargin)
     % plot
     xx = [x,fliplr(x)];
     yy = [my-sy,fliplr(my+sy)];
-    h = fill(xx,yy,c,'linestyle','none','facealpha',a);
+    h = fill(xx,yy,c,'linestyle','none','facealpha',a,varargin{6:end});
 end

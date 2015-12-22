@@ -31,16 +31,23 @@ function h = fig_combination(varargin)
     assertClass(mode,{'char','cell'});
     assertSize(x,my,sy);
     
-    % hold on
-    if iscellstr(mode) && length(mode)>1
-        hold('on');
+    % cell mode
+    if iscellstr(mode)
+        h = struct();
+        h.(mode{1}) = fig_combination(mode{1},x,my,sy,c,a);
+        for i_mode = 2:length(mode)
+            hold('on');
+            h.(mode{i_mode}) = fig_combination(mode{i_mode},x,my,sy,c,a);
+        end
+        return;
     end
     
     % plot
-    h = struct();
-    if any(strcmp(mode,'line')),    h.line   = fig_line(x,my,c,varargin{7:end});       end
-    if any(strcmp(mode,'marker')),  h.marker = fig_marker(x,my,c,varargin{7:end});     end
-    if any(strcmp(mode,'pip')),     h.pip    = fig_pip(x,my,sy,c,varargin{7:end});     end
-    if any(strcmp(mode,'error')),   h.error  = fig_error(x,my,sy,c,varargin{7:end});   end
-    if any(strcmp(mode,'shade')),   h.shade  = fig_shade(x,my,sy,c,a,varargin{7:end}); end
+    switch mode
+        case 'line',    h = fig_line(x,my,c,varargin{7:end});
+        case 'marker',  h = fig_marker(x,my,c,varargin{7:end});
+        case 'pip',     h = fig_pip(x,my,sy,c,varargin{7:end});
+        case 'error',   h = fig_error(x,my,sy,c,varargin{7:end});
+        case 'shade',   h = fig_shade(x,my,sy,c,a,varargin{7:end});
+    end
 end

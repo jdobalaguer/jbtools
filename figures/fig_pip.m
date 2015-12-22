@@ -25,5 +25,7 @@ function h = fig_pip(varargin)
     assertSize(x,my,sy);
     
     % plot
-    h = plot([x,fliplr(x)],[my-sy,fliplr(my+sy)],'color',c,'marker','none','linestyle','--',varargin{5:end});
+    xx = [x,fliplr(x)];         xx(end+1) = xx(1);
+    yy = [my-sy,fliplr(my+sy)]; yy(end+1) = yy(1);
+    h = plot(xx,yy,'color',c,'marker','none','linestyle','--',varargin{5:end});
 end

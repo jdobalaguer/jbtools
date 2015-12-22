@@ -1,8 +1,7 @@
+
 function fig_example()
-    %% fig_example()
-    %
+    %% FIG_EXAMPLE()
     % example of the use of fig_ functions
-    %
 
     %% figure
     f = figure();
