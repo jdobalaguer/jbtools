@@ -9,7 +9,7 @@ function bayes_mcmc1_plot(pars,stats)
     fig_figure();
     
     % prior, likelihood, posterior
-    z              = linspace(min(stats.samples),max(stats.samples),n);
+    z              = linspace(min(stats.samples(:,pars.index)),max(stats.samples(:,pars.index)),n);
     pdf_prior      = stats.pdf.prior(z);
     pdf_likelihood = stats.pdf.likelihood(z);
     pdf_posterior  = bayes_pdf(stats.samples,z);
@@ -23,8 +23,8 @@ function bayes_mcmc1_plot(pars,stats)
     if struct_isfield(stats,'hdi')
         hdi = stats.hdi;
         switch pars.tail
-            case 'left',  hdi(1) = min(stats.samples);
-            case 'right', hdi(2) = max(stats.samples);
+            case 'left',  hdi(1) = min(stats.samples(:,pars.index));
+            case 'right', hdi(2) = max(stats.samples(:,pars.index));
         end
         z_hdi   = linspace(hdi(1),hdi(2),n);
         pdf_hdi = nan2zero(interp1(z,pdf_posterior,z_hdi));

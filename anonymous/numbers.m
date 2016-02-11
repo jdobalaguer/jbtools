@@ -24,7 +24,7 @@ end
 %% auxiliar
 function [u,n,h] = get_unh(x,k)
     if ~iscell(x), x = vec_filter(x); end
-    u = unique(x);
+    u = unique(x,'stable');
     n = length(u);
     h = nan(n,1);
     if k == 3

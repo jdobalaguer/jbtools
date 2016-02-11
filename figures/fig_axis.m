@@ -1,6 +1,7 @@
 
-function varargout = fig_axis(sa,ca)
-  %% va = fig_axis(sa[,ca])
+function varargout = fig_axis(varargin)
+  %% va = FIG_AXIS(sa[,ca])
+  % va = FIG_AXIS(f1,v1[,f2,v2][,..,..][,ca])
   % 
   % set axis features (labels, legend, title, ...)
   % 
@@ -27,18 +28,35 @@ function varargout = fig_axis(sa,ca)
   % sa.zlabel = 'zlabel';
   % sa.ilegend = [obj1, obj2, ...];
   % sa.tlegend = {object 1','object 2'};
+  % sa.plegend = 'SouthEast';
   % sa.title   = 'title';
 
-  if ~exist('sa','var') || isempty(sa); sa = struct(); end
-  if ~exist('ca','var') || isempty(ca); ca = gca();    end
+  %% input
+  if isstruct(varargin{1}) && nargin==1
+      sa = varargin{1};
+      ca = [];
+  elseif isstruct(varargin{1}) && nargin==2
+      [sa,ca] = deal(varargin{:});
+  else
+      assertString(varargin{1:2:end});
+      if mod(nargin,2)
+          sa = pair2struct(varargin{1:end-1});
+          ca = varargin{end};
+      else
+          sa = pair2struct(varargin{1:end});
+          ca = [];
+      end
+      
+  end
+  func_default('sa',struct());
+  func_default('ca',gca());
   va = struct();
 
   %% axis
   % general
   set(ca, 'FontName','Verdana');
   set(ca, 'Box'         , 'off'     , ...
-          'TickDir'     , 'out'     , ...
-          'LineWidth'   , 1         );
+          'TickDir'     , 'out'     ); %'LineWidth', 1
   set(ca,'TickLength',[0.01,0.025]);
   set(get(gcf,'CurrentAxes'), 'box', 'off');
   set(get(gcf,'CurrentAxes'),'layer','top');
@@ -126,7 +144,8 @@ function varargout = fig_axis(sa,ca)
   end
   % legend
   if isfield(sa,{'ilegend','tlegend'})
-    va.hlegend = legend(sa.ilegend,sa.tlegend,'location','NorthWest');
+    if ~isfield(sa,'plegend'), sa.plegend = 'NorthWest'; end
+    va.hlegend = legend(sa.ilegend,sa.tlegend,'location',sa.plegend);
   end
   
   %% output

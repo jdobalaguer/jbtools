@@ -1,6 +1,8 @@
 
 function mturk_parseurl(path_file,path_url)
     % mturk_parseurl(path_file,path_url)
+    % example:
+    %   mturk_parseurl('data_folder','http://185.47.61.11/main/tasks/jan/151022/data/');
     
     if path_file(end)=='/', path_file(end) = []; end
     if path_url(end)=='/',  path_url(end) = [];  end

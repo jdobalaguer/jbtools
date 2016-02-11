@@ -13,7 +13,7 @@ function h = fig_error(varargin)
     assert(nargin>2, 'fig_error: error. not enough arguments');
     
     % default
-    varargin(end+1:5) = {[]};
+    varargin(end+1:4) = {[]};
     [x,my,sy,c] = deal(varargin{1:4});
     my = mat2row(my);
     func_default('x',1:length(my));
@@ -25,5 +25,5 @@ function h = fig_error(varargin)
     assertSize(x,my,sy);
     
     % plot
-    h = errorbar(x,my,-sy,+sy,'Color',c,'linestyle','none');
+    h = errorbar(x,my,-sy,+sy,'Color',c,'linestyle','none',varargin{5:end});
 end

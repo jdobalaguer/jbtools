@@ -11,6 +11,7 @@ function h = fig_bare(m,e,c,g,b,w)
     r = isrow(m);
 
     % func_default
+    func_default('e',zeros(size(m)));
     func_default('c',fig_color('hsv',n(2)));
     func_default('g','');
     func_default('b','');

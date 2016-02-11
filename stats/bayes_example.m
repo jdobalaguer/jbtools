@@ -13,9 +13,9 @@ function bayes_example
     pars1 = [20, 6]; % [a,b]
     pars2 = [ 2, 4];
     beta  = bayes_pdf_beta(pars1,pars2); %#ok<NASGU>
-    bayes_beta2_plot(pars1,pars2);
+    bayes_beta2_plot(beta);
 
-    %% Bernouilli process
+    %% Bernouilli processes
     
     % one variable: tests whether bias is smaller than 0.5
     [z,N] = deal(2,10);
@@ -30,20 +30,25 @@ function bayes_example
     
     % two variables: calculates the bayes factor of two separate biases vs one common bias
     x = zeros(10,1); x(1:2) = 1;
-    bayes_beta2_bf(x,x);
+    bayes_beta2_bf(x,x,'prior',[1,1]);
     bayes_beta2_bf(x,~x);
     
-    %% Gaussian process
+    %% Gaussian processes
     % TODO
     
-    %% Markov-Chain Monte-Carlo (MCMC)
+    %% Markov-Chain Monte-Carlo (MCMC) approximations
     
     % one variable: equivalent to @ttest
     prior      = bayes_pdf_beta([1,   4]);   % this is p(z), the prior
-    likelihood = bayes_pdf_beta([2+1,8+1]); % this is p(d|z) with 8 heads for 15 flips
-    bayes_mcmc1_null(prior,likelihood,'tail','left','alpha',0.05,...
+    likelihood = bayes_pdf_beta([2+1,8+1]); % this is p(d|z) with 8/10 heads
+    bayes_mcmc1_null(prior,likelihood,'index',1,'tail','left','alpha',0.05,...
                                       'mcmc_initial',0.5,'mcmc_nsamples',2e3);
+    fig_axis(struct('xlim',{[0,1]}));
                                   
     % two variables: equivalent to @ttest2
-    % TODO
+    prior      = bayes_pdf_beta([1,1],[1,1]); % this is p(z1,z2), the prior
+    likelihood = bayes_pdf_beta([2+1,8+1],[4+1,2+1]); % this is p(d|z1,z2) with 8/10 heads and 4/6 heads for each coin
+    bayes_mcmc2_null(prior,likelihood,'index',[1,2],'tail','left','alpha',0.05,...
+                                      'mcmc_initial',[0.5,0.5],'mcmc_nsamples',2e3);
+    fig_axis(struct('xlim',{[0,1]},'ylim',{[0,1]}));
 end

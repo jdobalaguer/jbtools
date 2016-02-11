@@ -29,7 +29,6 @@ function model = model_xval(model)
     % initialise variables
     model.xval.result = struct('training',{},'evaluate',{});
     
-    fw = func_wait(n_index * n_subject);
     for i_index = 1:n_index
 
         % indices
@@ -51,14 +50,16 @@ function model = model_xval(model)
         model.xval.result(i_index).evaluate.cost = nan([n_subject,n_xval,s_comb],'single');
         model.xval.result(i_index).evaluate.min  = repmat(struct('i',{[]},'u',{[]},'v',{[]}),[n_subject,n_xval]);
         
+        % wait
+        fw = func_wait(n_subject * n_xval);
+        
         % cross-validation
         for i_subject = 1:n_subject
-
-            % subject
-            subject = u_subject(i_subject);
-            ii_subject = (model.simu.subject == subject);
-
             for i_xval = 1:n_xval
+                
+                % subject
+                subject = u_subject(i_subject);
+                ii_subject = (model.simu.subject == subject);
 
                 % cross-validation indices
                 i_simu  = model.xval.simu{i_index};
@@ -72,18 +73,18 @@ function model = model_xval(model)
                 % training cost (based on @model_cost)
                 data = struct_filter(model.simu.data,ii_simu & ii_index & ii_subject & ii_training);
                 pars = model.xval.pars;
-                parfor_simu   = model.simu.result.simulation(i_subject,i_simu,:);
-                parfor_ii     = logical(ii_training(ii_simu & ii_index & ii_subject));
-                parfor_result = model.xval.result(i_index).training.cost(i_subject,i_xval,:);
-                parfor_func   = model.xval.func;
+                comb_simu   = model.simu.result.simulation(i_subject,i_simu,:);
+                comb_ii     = logical(ii_training(ii_simu & ii_index & ii_subject));
+                comb_result = model.xval.result(i_index).training.cost(i_subject,i_xval,:);
+                comb_func   = model.xval.func;
                 for i_comb = 1:n_comb
-                    simu = struct_filter(parfor_simu(i_comb),parfor_ii);
-                    parfor_result(i_comb) = parfor_func(data,simu,pars);
+                    simu = struct_filter(comb_simu(i_comb),comb_ii);
+                    comb_result(i_comb) = comb_func(data,simu,pars);
                 end
-                model.xval.result(i_index).training.cost(i_subject,i_xval,:) = parfor_result;
+                model.xval.result(i_index).training.cost(i_subject,i_xval,:) = comb_result;
 
                 % training min (based on @model_minimisation)
-                tmp_cost = mat_reshape(parfor_result,s_comb);
+                tmp_cost = mat_reshape(comb_result,s_comb);
                 tmp_min  = model.xval.result(i_index).training.min(i_subject,i_xval);
                 [tmp_min.i,tmp_min.v] = jb_findmin(tmp_cost);
                 tmp_min.i(:,end+1:n_pars) = 1;
@@ -96,29 +97,29 @@ function model = model_xval(model)
                 % evaluate cost (based on @model_cost)
                 data = struct_filter(model.simu.data,ii_simu & ii_index & ii_subject & ii_evaluate);
                 pars = model.xval.pars;
-                parfor_simu   = model.simu.result.simulation(i_subject,i_simu,:);
-                parfor_ii     = logical(ii_evaluate(ii_simu & ii_index & ii_subject));
-                parfor_result = model.xval.result(i_index).evaluate.cost(i_subject,i_xval,:);
-                parfor_func   = model.xval.func;
+                comb_simu   = model.simu.result.simulation(i_subject,i_simu,:);
+                comb_ii     = logical(ii_evaluate(ii_simu & ii_index & ii_subject));
+                comb_result = model.xval.result(i_index).evaluate.cost(i_subject,i_xval,:);
+                comb_func   = model.xval.func;
                 for i_comb = 1:n_comb
-                    simu = struct_filter(parfor_simu(i_comb),parfor_ii);
-                    parfor_result(i_comb) = parfor_func(data,simu,pars);
+                    simu = struct_filter(comb_simu(i_comb),comb_ii);
+                    comb_result(i_comb) = comb_func(data,simu,pars);
                 end
-                model.xval.result(i_index).evaluate.cost(i_subject,i_xval,:) = parfor_result;
+                model.xval.result(i_index).evaluate.cost(i_subject,i_xval,:) = comb_result;
 
                 % evaluate min (based on @model_minimisation)
-                tmp_cost  = mat_reshape(parfor_result,s_comb);
+                tmp_cost  = mat_reshape(comb_result,s_comb);
                 tmp_min   = model.xval.result(i_index).training.min(i_subject,i_xval);
                 for i_min = 1:size(tmp_min.i,1)
                     i_comb             = num2cell(tmp_min.i(i_min,:));
                     tmp_min.v(i_min,1) = tmp_cost(i_comb{:});
                 end
                 model.xval.result(i_index).evaluate.min(i_subject,i_xval) = tmp_min;
+                
+                % wait
+                func_wait([],fw);
             end
-            
-            % wait
-            func_wait([],fw);
         end
+        func_wait(0,fw);
     end
-    func_wait(0,fw);
 end

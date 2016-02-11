@@ -1,10 +1,9 @@
 
 function varargout = bayes_mcmc1_null(prior,likelihood,varargin)
     %% [h,p,stats] = BAYES_MCMC1_NULL(prior,likelihood[,'param1',val1][,..])
-    % Calculate the probability that of rejecting a null hypothesis, given
-    % a binary vector [x]. If no output, the result is plotted and printed.
-    %
-    % The default alpha is 0.05
+    % Calculate the probability that of rejecting a null hypothesis for one
+    % parameter, given a prior and likelihood functions.
+    % If no output, the result is plotted and printed.
     %
     % List of inputs
     %   prior      : a function @(z) describing the prior distribution
@@ -16,7 +15,8 @@ function varargout = bayes_mcmc1_null(prior,likelihood,varargin)
     %   stats      : statistics
     %
     % List of hypothesis parameters
-    %   'alpha'    : probability of rejecting the null hypothesis
+    %   'index'    : parameter under the test (default 1)
+    %   'alpha'    : probability of rejecting the null hypothesis (default 0.05)
     %   'tail'     : one of {'left','right','both'} (default 'both')
     %   'thresh'   : value of theta to be rejected (default 0.5)
     %
@@ -26,8 +26,8 @@ function varargout = bayes_mcmc1_null(prior,likelihood,varargin)
     %   'mcmc_nsamples' : number of samples obtained (default 1e4)
     %   'mcmc_burnin'   : burnin period, a scalar > 0
     %   'mcmc_thin'     : ???
-    %   Other parameters can be added depending on the MCMC method used.
-    %   They need to be defined as 'mcmc_*'
+    %   Other parameters may be added depending on the MCMC method used.
+    %   They need to be defined as 'mcmc_*'.
     % 
     % See also bayes
     
@@ -35,7 +35,7 @@ function varargout = bayes_mcmc1_null(prior,likelihood,varargin)
     varargout = {};
     
     % default
-    dflt = struct('alpha',{0.05},'tail',{'both'},'thresh',{0.5},...
+    dflt = struct('index',{1},'alpha',{0.05},'tail',{'both'},'thresh',{0.5},...
                   'method',{'slicesample'},'mcmc',{struct('initial',{0},'nsamples',{1e4})});
     pars = pair2struct(varargin{:});
     pars = struct_deep(pars);
@@ -49,17 +49,18 @@ function varargout = bayes_mcmc1_null(prior,likelihood,varargin)
     samples   = slicesample(pars.mcmc.initial,pars.mcmc.nsamples,mcmc{:});
     
     % test
+    sample = samples(:,pars.index(1));
     switch pars.tail
-        case 'left',
-            p = mean(samples > pars.thresh);
+        case 'left'
+            p = mean(sample > pars.thresh);
             hdi = [-inf,quantile(samples,1-pars.alpha)];
-        case 'right',
-            p = mean(samples < pars.thresh);
-            hdi = [quantile(samples,pars.alpha),+inf];
-        case 'both',
-            p = mean(samples < pars.thresh);
+        case 'right'
+            p = mean(sample < pars.thresh);
+            hdi = [quantile(sample,pars.alpha),+inf];
+        case 'both'
+            p = mean(sample < pars.thresh);
             p = 2 * min(p,1-p);
-            hdi = [quantile(samples,0.5*pars.alpha),quantile(samples,1-0.5*pars.alpha)];
+            hdi = [quantile(sample,0.5*pars.alpha),quantile(sample,1-0.5*pars.alpha)];
         otherwise,    error('stats_bayes_beta: error. [tail] is not valid.');
     end
     h = (p < pars.alpha);

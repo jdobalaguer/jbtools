@@ -26,19 +26,19 @@ function ret = mturk_uncell(c,h)
         end
 
         %% includes a string
-        if ischar(c{1})
-            ret = c;
+        if iscellstr(c)
+            ret = c';
             return;
         end
 
         %% includes another cell
-        if iscell(c{1})
+        if all(cellfun(@iscell,c))
             for i_cell = 1:nb_cells
                 c{i_cell} = mturk_uncell(c{i_cell},[h,{'{}'}]);
             end
         end    
         % includes a number
-        if isnumeric(c{1})
+        if all(cellfun(@isnumeric,c))
             s_c = size(c{1});
             for i_c = 1:length(c)
                 c{i_c} = reshape(c{i_c},[1,s_c]);

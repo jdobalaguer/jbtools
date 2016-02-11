@@ -38,13 +38,13 @@ function varargout = bayes_beta1_null(x,varargin)
     
     % test
     switch pars.tail
-        case 'left',
+        case 'left'
             p = 1-betacdf(pars.thresh,posterior(1),posterior(2));
             hdi = [0,betainv(1-pars.alpha,posterior(1),posterior(2))];
-        case 'right',
+        case 'right'
             p = betacdf(pars.thresh,posterior(1),posterior(2));
             hdi = [betainv(pars.alpha,posterior(1),posterior(2)),1];
-        case 'both',
+        case 'both'
             p = 2 * min(betacdf(pars.thresh,posterior(1),posterior(2)),1-betacdf(pars.thresh,posterior(1),posterior(2)));
             hdi = betainv([.5*pars.alpha,1-.5*pars.alpha],posterior(1),posterior(2));
         otherwise,    error('stats_bayes_beta: error. [tail] is not valid.');

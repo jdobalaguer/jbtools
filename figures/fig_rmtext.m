@@ -34,9 +34,9 @@ function removeAxes(h)
             sa.ylabel = '';
             sa.xticklabel = {''};
             sa.yticklabel = {''};
+            sa.xminor = 'off';
+            sa.yminor = 'off';
             fig_axis(sa);
-            set(gca(),'XMinorTick','off');
-            set(gca(),'YMinorTick','off');
         end
     end
 end

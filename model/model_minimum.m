@@ -39,7 +39,7 @@ function model = model_minimum(model)
     
     % find minima group
     model.cost.result.min_group = repmat(struct('i_min',[],'v_min',[],'u_min',[],'message',[]),[n_index,1]);
-    cost = mean(model.cost.result.cost,1);
+    cost = nanmean(model.cost.result.cost,1);
     for i_index = 1:n_index
         tmp_cost = mat_reshape(cost(1,i_index,:),s_comb);
         tmp_min  = struct();

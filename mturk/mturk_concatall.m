@@ -15,16 +15,19 @@ function ret = mturk_concatall(s)
             case 'sdata'
                 catdim = 1;
             case 'edata'
-                catdim = 1;
+                catdim = 0;
             case 'parameters'
-                catdim = 1;
+                catdim = 0;
             case 'numbers'
-                catdim = 1;
+                catdim = 0;
             otherwise
                 fprintf('mturk_parseall: WARNING. unknown field %s.   \n',this_field);
                 fprintf('mturk_parseall: WARNING. default cat dim = 1.\n');
                 catdim = 1;
         end
+        
+        % skip undesired structs
+        if ~catdim, continue; end
         
         % add subject
         if strcmp(this_field,'sdata')

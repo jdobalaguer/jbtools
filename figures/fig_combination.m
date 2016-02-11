@@ -20,7 +20,7 @@ function h = fig_combination(varargin)
     x  = mat2row(x);
     my = mat2row(my);
     sy = mat2row(sy);
-    func_default('mode','line');
+    func_default('mode',{'line','pip','shade','marker'});
     func_default('x',1:length(my));
     func_default('sy',zeros(size(my)));
     func_default('c','b');
@@ -34,10 +34,10 @@ function h = fig_combination(varargin)
     % cell mode
     if iscellstr(mode)
         h = struct();
-        h.(mode{1}) = fig_combination(mode{1},x,my,sy,c,a);
+        h.(mode{1}) = fig_combination(mode{1},x,my,sy,c,a,varargin{7:end});
         for i_mode = 2:length(mode)
             hold('on');
-            h.(mode{i_mode}) = fig_combination(mode{i_mode},x,my,sy,c,a);
+            h.(mode{i_mode}) = fig_combination(mode{i_mode},x,my,sy,c,a,varargin{7:end});
         end
         return;
     end

@@ -1,12 +1,13 @@
 
-function bayes_beta2_plot(varargin)
-    %% BAYES_BETA2_PLOT(pdf)
+function bayes_mcmc2_plot(varargin)
+    %% BAYES_MCMC2_PLOT(pdf)
     % BAYES_BETA2_PLOT(pars1,pars2)
     % auxiliar function
     % pdf  : a function handle of the form @(z1,z2)
     % pars : a vector of the form [a,b]
     
     %% function
+    error('TODO');
     n = 500;
     
     % get Beta PDF
