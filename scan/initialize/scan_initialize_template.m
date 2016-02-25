@@ -13,7 +13,6 @@ function scan = scan_initialize_template(type)
     scan.parameter.scanner.ordsl        = [];
     scan.parameter.scanner.refsl        = [];
     scan.parameter.scanner.reft0        = [];
-    scan.parameter.scanner.voxs         = [nan,nan,nan];
     scan.parameter.analysis.st          = true;
     scan.parameter.analysis.memory      = 2^30;
     scan.parameter.analysis.voxs        = 4;  ... analysis

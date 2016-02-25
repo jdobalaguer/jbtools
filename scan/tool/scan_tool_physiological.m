@@ -16,7 +16,7 @@ function scan_tool_physiological(scan,image,mask,file)
     
     % print
     scan_tool_print(scan,false,'\nPre-load physiological signal (image "%s", mask "%s") : ',image,mask);
-    scan = scan_tool_progress(scan,sum(scan.running.subject.session));
+    scan = scan_tool_progress(scan,sum(scan.subject.session));
     
     % all subjects
     scan.running.subject.number  = length(scan.subject.session);

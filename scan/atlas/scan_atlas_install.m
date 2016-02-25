@@ -1,6 +1,6 @@
 
 function scan = scan_atlas_install(scan,atlas)
-    %% scan = SCAN_ATLAS_INSTALL(scan)
+    %% scan = SCAN_ATLAS_INSTALL(scan,atlas)
     % download/install an atlas
     % atlas : one string, one of {'AAL','AAL2','TD','xjview'}
     % to list main functions, try

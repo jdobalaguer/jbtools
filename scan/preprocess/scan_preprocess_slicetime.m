@@ -35,7 +35,7 @@ function scan = scan_preprocess_slicetime(scan)
         spm{i_subject}.spm.temporal.st.refslice = scan.parameter.scanner.refsl;
         
         % SPM
-        eval('spm_jobman(''run'',spm(i_subject))');
+        evalc('spm_jobman(''run'',spm(i_subject))');
 
         % delete original file
         for i_session = 1:scan.running.subject.session(i_subject)
