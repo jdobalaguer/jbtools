@@ -54,6 +54,11 @@ function model = model_example()
     model.xval.block    = data.block;
     model.xval.leave    = 1; % leave-one-out
     model = model_xval(model);
+    
+    % BAYES/MAP PREDICTIONS
+    % this would require the cost to be a likelihood function
+    model.bayes.func    = 'negative log-likelihood';
+    % model = model_bayes(model);
 
     % GRADIENT DESCENT METHOD
     model.grad.data     = data;
