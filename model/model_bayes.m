@@ -28,19 +28,20 @@ function model = model_bayes(model)
     if ischar(model.bayes.func)
         switch model.bayes.func
             case '1-probability',           model.bayes.func = @(x) 1-x;
-            case 'negative log-likelihood', model.bayes.func = @(x) exp(-x);
+            case 'negative log-likelihood', model.bayes.func = @(x) exp(nanmin(inf2nan(x(:)))-x);
         end
     end
-    probability = model.bayes.func(cost);
+    probability = nan(size(cost));
     for i_subject = 1:n_subject
         for i_index = 1:n_index
-            probability(i_subject,i_index,:) = probability(i_subject,i_index,:) ./ sum(mat2vec(probability(i_subject,i_index,:)));
+            tmp = model.bayes.func(cost(i_subject,i_index,:));
+            probability(i_subject,i_index,:) = tmp ./ sum(tmp);
         end
     end
     assert(all(probability(:) >= 0), 'model_bayes: error. probabilities need >= 0.');
     assert(all(probability(:) <= 1), 'model_bayes: error. probabilities need <= 1.');
     model.bayes.result.probability = probability;
-    clear probability;
+    clear tmp probability;
     
     % marginal probabilities (parameters)
     pars = struct2cell(model.simu.pars);

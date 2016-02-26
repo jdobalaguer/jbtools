@@ -6,4 +6,3 @@ function x = zero2nan(x)
     %% function
     x(x(:)==0) = nan;
 end
-    
