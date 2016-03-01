@@ -17,6 +17,7 @@ function model = model_reconstruction_min(model)
     u_index = model.cost.index;
     n_index = length(u_index);
     s_comb = size(model.simu.result.simulation); s_comb(1:2) = [];
+    if isscalar(s_comb), s_comb = [s_comb,1]; end
     
     % if no parameters (similar to @model_reconstruction)
     if isempty(s_comb)

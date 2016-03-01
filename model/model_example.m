@@ -63,7 +63,7 @@ function model = model_example()
     % GRADIENT DESCENT METHOD
     model.grad.data     = data;
     model.grad.simu     = @test_simufunc;
-    model.grad.origin   = struct('a',0:1,'b',0:1,'c',0:1,'d',0:1);
+    model.grad.origin   = struct('a',{0:1},'b',{0:1},'c',{0:1},'d',{0:1});
     model.grad.costfunc = @test_costfunc;
     model.grad.costpars = struct();
     model.grad.subject  = data.subject;

@@ -44,6 +44,8 @@ function model = model_bayes(model)
     clear tmp probability;
     
     % marginal probabilities (parameters)
+    
+    % map values (parameters)
     pars = struct2cell(model.simu.pars);
     [pars{1:n_pars}] = ndgrid(pars{:});
     model.bayes.result.marginal = struct();
