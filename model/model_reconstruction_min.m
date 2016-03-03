@@ -17,7 +17,7 @@ function model = model_reconstruction_min(model)
     u_index = model.cost.index;
     n_index = length(u_index);
     s_comb = size(model.simu.result.simulation); s_comb(1:2) = [];
-    if isscalar(s_comb), s_comb = [s_comb,1]; end
+    
     
     % if no parameters (similar to @model_reconstruction)
     if isempty(s_comb)
@@ -38,7 +38,9 @@ function model = model_reconstruction_min(model)
             ii_index   = model.simu.index{model.cost.simu{i_index}};
             ii = (ii_subject & ii_index);
             i_comb = num2cell(model.cost.result.min_subject(i_subject).i_min(1,:)); % if more than one minimum, take the first one
-            i_comb = sub2ind(s_comb,i_comb{:});
+            if isscalar(s_comb),    i_comb = i_comb{1};
+            else                    i_comb = sub2ind(s_comb,i_comb{:});
+            end
             simulation = model.simu.result.simulation(i_subject,model.cost.simu{i_index},i_comb);
             reconstruction = struct_set(reconstruction,simulation,ii);
         end

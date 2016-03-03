@@ -8,7 +8,7 @@ function [f,v] = jb_findmin(m)
     %% function
     
     % grids
-    s = size(m);
+    s = mat_size(m);
     n_x = length(s);
     u_x = cell(1,n_x);
     for i = 1:n_x, u_x{i} = 1:size(m,i); end
