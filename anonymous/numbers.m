@@ -23,6 +23,15 @@ end
 
 %% auxiliar
 function [u,n,h] = get_unh(x,k)
+    % cell without strings
+    if iscell(x) && ~iscellstr(x)
+        u = {};
+        n = 0;
+        h = nan;
+        return;
+    end
+        
+    % normal behaviour
     if ~iscell(x), x = vec_filter(x); end
     u = unique(x);
     n = length(u);
