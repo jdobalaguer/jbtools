@@ -1,6 +1,6 @@
 
-function model = model_reconstruction(model)
-    %% model = MODEL_RECONSTRUCTION(model)
+function model = model_reconstruction_simu(model)
+    %% model = MODEL_RECONSTRUCTION_SIMU(model)
     % reconstruct the simulation based on the original indices
     % (i.e. one vector for all subjects)
     

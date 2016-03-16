@@ -3,10 +3,13 @@ function model = model_gradient(model)
     %% model = MODEL_GRADIENT(model)
     % apply gradient descent on each point of a grid
     % the result is the best of them
-    % this can work in parallel: use matlabpool('open')
+    % this can work in parallel: use @mme_open
+    % to list main functions, try
+    %   >> help model;
     
-    %% warnings
-    %#ok<>
+    %% notes
+    % results @MODEL_GRADIENT
+    % model.gradxval.result.best{index}[sub] = struct('u',{},'v',{})
 
     %% function
     
@@ -30,10 +33,11 @@ function model = model_gradient(model)
     n_comb = size(u_comb,1);
 
     % apply gradient descent
-    model.grad.result = cell(n_subject,n_index);
+    model.grad.result.best = cell([n_index,1]);
     fw = func_wait(n_subject * n_index * n_comb);
-    for i_subject = 1:n_subject
-        for i_index = 1:n_index
+    for i_index = 1:n_index
+        model.grad.result.best{i_index} = repmat(struct('u_min',[],'v_min',[]),[n_subject,1]);
+        for i_subject = 1:n_subject
             
             % indices
             ii_subject = (model.grad.subject == u_subject(i_subject));
@@ -70,7 +74,7 @@ function model = model_gradient(model)
             % save minima
             v_comb = [parfor_result(:).v_min];
             f_comb = find(v_comb == nanmin(v_comb),1,'first');
-            model.grad.result{i_subject,i_index} = parfor_result(f_comb);
+            model.grad.result.best{i_index}(i_subject) = parfor_result(f_comb);
         end
     end
     func_wait(0,fw);

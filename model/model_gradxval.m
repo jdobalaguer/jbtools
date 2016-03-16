@@ -4,20 +4,15 @@ function model = model_gradxval(model)
     % apply gradient descent on each point of a grid
     % (the result is the best of them)
     % and si applied with cross-validation to test generalisation
-    % this can work in parallel: use matlabpool('open')
+    % this can work in parallel: use @mme_open
+    % to list main functions, try
+    %   >> help model;
     
-    %% notes
-    % results @MODEL_XVAL
-    % model.xval.result(index).training.cost[sub,xval,pars1,p1,p2,p3,..] = 
-    % model.xval.result(index).training.min[sub,xval] = struct('i',{},''u',{},'v',{})
-    % model.xval.result(index).evaluate.cost = [sub,xval,pars1,p1,p2,p3,..]
-    % model.xval.result(index).evaluate.min[sub,xval] = struct('i',{},''u',{},'v',{})
-    
-    % results @MODEL_GRADXVAL
-    % model.gradxval.result(index).minima[sub,xval,origin] = struct('u',{},'v',{})
-    % model.gradxval.result(index).best[sub,xval]          = struct('u',{},'v',{})
-    % model.gradxval.result(index).training[sub,xval]      = double
-    % model.gradxval.result(index).evaluate[sub,xval]      = double
+    %% output
+    % model.gradxval.result.minima{i_index}[sub,xval,origin] = struct('u',{},'v',{})
+    % model.gradxval.result.best{i_index}[sub,xval]          = struct('u',{},'v',{})
+    % model.gradxval.result.training{i_index}[sub,xval]      = double
+    % model.gradxval.result.evaluate{i_index}[sub,xval]      = double
     
     %% warnings
     %#ok<>
@@ -48,8 +43,10 @@ function model = model_gradxval(model)
     n_comb = size(u_comb,1);
     
     % initialise variables
-    model.gradxval.result = struct('training',{},'evaluate',{});
-    
+    model.gradxval.result.minima   = cell(n_index,1);
+    model.gradxval.result.best     = cell(n_index,1);
+    model.gradxval.result.training = cell(n_index,1);
+    model.gradxval.result.evaluate = cell(n_index,1);
     for i_index = 1:n_index
 
         % indices
@@ -64,10 +61,10 @@ function model = model_gradxval(model)
         n_xval = numel(xval_training);
 
         % initialise variables
-        model.gradxval.result(i_index).minima   = repmat(struct('u',{[]},'v',{[]}),[n_subject,n_xval,n_comb]);
-        model.gradxval.result(i_index).best     = repmat(struct('u',{[]},'v',{[]},'o',{[]}),[n_subject,n_xval]);
-        model.gradxval.result(i_index).training = nan([n_subject,n_xval],'single');
-        model.gradxval.result(i_index).evaluate = nan([n_subject,n_xval],'single');
+        model.gradxval.result.minima{i_index}   = repmat(struct('u',{[]},'v',{[]}),[n_subject,n_xval,n_comb]);
+        model.gradxval.result.best{i_index}     = repmat(struct('u',{[]},'v',{[]},'o',{[]}),[n_subject,n_xval]);
+        model.gradxval.result.training{i_index} = nan([n_subject,n_xval],'single');
+        model.gradxval.result.evaluate{i_index} = nan([n_subject,n_xval],'single');
         
         % wait
         fw = func_wait(n_subject * n_xval * n_comb);
@@ -116,14 +113,14 @@ function model = model_gradxval(model)
                 end
                 
                 % save minimas
-                model.gradxval.result(i_index).minima(i_subject,i_xval,:) = struct('u',{parfor_result.u_min},'v',{parfor_result.v_min});
+                model.gradxval.result.minima{i_index}(i_subject,i_xval,:) = struct('u',{parfor_result.u_min},'v',{parfor_result.v_min});
                 
                 % save best
                 parfor_v        = [parfor_result.v_min];
                 [v_min,ii_min]  = min(parfor_v);
-                model.gradxval.result(i_index).best(i_subject,i_xval).u = parfor_result(ii_min).u_min; % best fit
-                model.gradxval.result(i_index).best(i_subject,i_xval).v = v_min; % best cost
-                model.gradxval.result(i_index).best(i_subject,i_xval).o = u_comb(ii_min,:)'; % origin
+                model.gradxval.result.best{i_index}(i_subject,i_xval).u = parfor_result(ii_min).u_min; % best fit
+                model.gradxval.result.best{i_index}(i_subject,i_xval).v = v_min; % best cost
+                model.gradxval.result.best{i_index}(i_subject,i_xval).o = u_comb(ii_min,:)'; % origin
                 
                 % save training/evaluation cost
                 best_simu_pars = pair2struct([parfor_simu_pars,num2cell(parfor_result(ii_min).u_min)]');
@@ -131,8 +128,8 @@ function model = model_gradxval(model)
                 best_simu_evaluate = parfor_simu_func(evaluate,best_simu_pars);
                 best_cost_training = parfor_cost_func(training,best_simu_training,parfor_cost_pars);
                 best_cost_evaluate = parfor_cost_func(evaluate,best_simu_evaluate,parfor_cost_pars);
-                model.gradxval.result(i_index).training(i_subject,i_xval) = best_cost_training;
-                model.gradxval.result(i_index).evaluate(i_subject,i_xval) = best_cost_evaluate;
+                model.gradxval.result.training{i_index}(i_subject,i_xval) = best_cost_training;
+                model.gradxval.result.evaluate{i_index}(i_subject,i_xval) = best_cost_evaluate;
             end
         end
     end

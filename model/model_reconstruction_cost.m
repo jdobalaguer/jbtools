@@ -1,6 +1,6 @@
 
-function model = model_reconstruction_min(model)
-    %% model = MODEL_RECONSTRUCTION_MIN(model)
+function model = model_reconstruction_cost(model)
+    %% model = MODEL_RECONSTRUCTION_COST(model)
     % reconstruct the simulation based on the original indices
     % (i.e. one vector for all subjects)
     % using best parameters for each subject
@@ -19,9 +19,9 @@ function model = model_reconstruction_min(model)
     s_comb = size(model.simu.result.simulation); s_comb(1:2) = [];
     
     
-    % if no parameters (similar to @model_reconstruction)
+    % if no parameters (similar to @model_reconstruction_simu)
     if isempty(s_comb)
-        model = model_reconstruction(model);
+        model = model_reconstruction_simu(model);
         model.cost.result.reconstruction = model.simu.result.reconstruction;
         return;
     end

@@ -2,9 +2,12 @@
 function model = model_simulation(model)
     %% model = MODEL_SIMULATION(model)
     % run a (grid of) simulation(s) of a model
-    % this can work in parallel. @use mme_open
+    % this can work in parallel: @use mme_open
     % to list main functions, try
     %   >> help model;
+    
+    %% output
+    % model.simu.result.simulation[subject,index,comb] = data
     
     %% warnings
     %#ok<*PFBNS>

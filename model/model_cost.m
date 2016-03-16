@@ -3,9 +3,11 @@ function model = model_cost(model)
     %% model = MODEL_COST(model)
     % calculate the cost of each parameterisation
     % this can work in parallel: use @mme_open
-    % see also: model_simulation
-    %           model_minimum
-    %           model_gradient
+    % to list main functions, try
+    %   >> help model;
+    
+    %% output
+    % model.simu.result.simulation[subject,index,comb] = data
     
     %% warnings
     %#ok<*ASGLU,*PFBNS>
