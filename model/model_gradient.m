@@ -32,6 +32,7 @@ function model = model_gradient(model)
     end
     u_comb = vec_combination(c_pars{:});
     n_comb = size(u_comb,1);
+    s_comb = cellfun(@numel,c_pars);
 
     % apply gradient descent
     model.grad.result.best = cell([n_index,1]);
@@ -39,7 +40,7 @@ function model = model_gradient(model)
     for i_index = 1:n_index
         
         % initialise variables
-        model.grad.result.minima{i_index} = repmat(struct('u',{[]},'v',{[]}),[n_subject,n_xval,n_comb]);
+        model.grad.result.minima{i_index} = repmat(struct('u',{[]},'v',{[]}),[n_subject,s_comb]);
         model.grad.result.best{i_index}   = repmat(struct('u_min',[],'v_min',[]),[n_subject,1]);
         for i_subject = 1:n_subject
             
