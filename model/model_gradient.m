@@ -37,7 +37,10 @@ function model = model_gradient(model)
     model.grad.result.best = cell([n_index,1]);
     fw = func_wait(n_subject * n_index * n_comb);
     for i_index = 1:n_index
-        model.grad.result.best{i_index} = repmat(struct('u_min',[],'v_min',[]),[n_subject,1]);
+        
+        % initialise variables
+        model.grad.result.minima{i_index} = repmat(struct('u',{[]},'v',{[]}),[n_subject,n_xval,n_comb]);
+        model.grad.result.best{i_index}   = repmat(struct('u_min',[],'v_min',[]),[n_subject,1]);
         for i_subject = 1:n_subject
             
             % indices
@@ -69,6 +72,9 @@ function model = model_gradient(model)
             end
             
             % save minima
+            model.grad.result.minima{i_index}(i_subject,:) = struct('u',{parfor_result.u_min},'v',{parfor_result.v_min});
+            
+            % save best
             v_comb = [parfor_result(:).v_min];
             f_comb = find(v_comb == nanmin(v_comb),1,'first');
             model.grad.result.best{i_index}(i_subject) = parfor_result(f_comb);
