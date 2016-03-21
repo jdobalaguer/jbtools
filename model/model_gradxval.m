@@ -23,7 +23,8 @@ function model = model_gradxval(model)
     
     % default
     if ~struct_isfield(model,'gradxval.index'),    model.gradxval.index  = {logical(model.grad.subject)}; end
-    if ~struct_isfield(model,'gradxval.option'),   model.gradxval.option = []; end
+    if ~struct_isfield(model,'gradxval.search'),   model.gradxval.search = struct(); end
+    model.gradxval.search = struct_default(model.gradxval.search,struct('solver',{'fminsearch'},'options',{[]}));
     if ~struct_isfield(model,'gradxval.leave'),    model.gradxval.leave  = 1;  end
     
     % numbers
@@ -90,23 +91,20 @@ function model = model_gradxval(model)
 
                 % apply gradient-descent
                 % (from @model_gradient)
-                problem = struct();
-                problem.options   = model.gradxval.option;
-                problem.solver    = 'fminsearch';
-
                 parfor_result = repmat(struct('u_min',[],'v_min',[]),[n_comb,1]);
                 parfor_simu_pars   = u_pars;
                 parfor_simu_func   = model.gradxval.simu;
                 parfor_cost_pars   = model.gradxval.costpars;
                 parfor_cost_func   = model.gradxval.costfunc;
                 parfor_data        = training;
+                parfor_problem     = model.gradxval.search;
 
                 parfor (i_comb = 1:n_comb, mme_size())
                     % comb
                     parfor_x0 = u_comb(i_comb,:)';
 
                     % gradiend
-                    parfor_result(i_comb) = model_gradient_parfor(problem,parfor_x0,parfor_simu_pars,parfor_simu_func,parfor_cost_pars,parfor_cost_func,parfor_data);
+                    parfor_result(i_comb) = model_gradient_parfor(parfor_problem,parfor_x0,parfor_simu_pars,parfor_simu_func,parfor_cost_pars,parfor_cost_func,parfor_data);
 
                     % progress
                     func_wait([],fw);
