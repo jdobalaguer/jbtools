@@ -10,11 +10,10 @@ function result = model_gradient_parfor(problem,parfor_x0,parfor_simu_pars,parfo
     % fminsearch
     result   = struct('u_min',{nan(size(parfor_x0))},'v_min',{inf});
     exitflag = +1; %#ok<NASGU>
-    [result.u_min,result.v_min,exitflag] = feval(problem.solver,problem);
-%     try     [result.u_min,result.v_min,exitflag] = feval(problem.solver,problem);
-%     catch,  exitflag = -1;
-%     end
-    assertWarning(exitflag > 0,'model_gradient_parfor: error. fminsearch \n');
+    try     [result.u_min,result.v_min,exitflag] = feval(problem.solver,problem);
+    catch,  exitflag = -1;
+    end
+    assertWarning(exitflag > 0,'model_gradient_parfor: error. search not possible \n');
 
     %% nested
     function cost = cost_function(x)
