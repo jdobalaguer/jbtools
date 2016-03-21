@@ -13,8 +13,8 @@ function varargout = shuffle(varargin)
     ii = randperm(length(varargin{1}));
     
     % shuffle
-    varargout = cell(1,nargout);
-    for i = 1:nargout
+    varargout = cell(1,nargin);
+    for i = 1:nargin
         varargout{i} = varargin{i}(ii);
     end
 end

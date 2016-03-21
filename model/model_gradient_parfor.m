@@ -4,7 +4,7 @@ function result = model_gradient_parfor(problem,parfor_x0,parfor_simu_pars,parfo
     %% function
     
     % problem
-    problem.x0        = parfor_x0;
+    problem.x0        = parfor_x0';
     problem.objective = @cost_function;
 
     % fminsearch
@@ -17,7 +17,7 @@ function result = model_gradient_parfor(problem,parfor_x0,parfor_simu_pars,parfo
 
     %% nested
     function cost = cost_function(x)
-        pars = [parfor_simu_pars';num2cell(x)'];
+        pars = [parfor_simu_pars';num2cell(x)];
         pars = struct(pars{:});
         simu = parfor_simu_func(parfor_data,pars);
         cost = parfor_cost_func(parfor_data,simu,parfor_cost_pars);
