@@ -10,12 +10,21 @@ function result = model_gradient_parfor(problem,parfor_x0,parfor_simu_pars,parfo
     % fminsearch
     result   = struct('u_min',{parfor_x0},'v_min',{inf});
     exitflag = +1; %#ok<NASGU>
-    try     [result.u_min,result.v_min,exitflag] = feval(problem.solver,problem);
-    catch err
-        exitflag = -1;
-        fprintf('model_gradient_parfor: error. "%s" \n',err.message);
+    if isinf(nan2inf(cost_function(parfor_x0)))
+        return
+    else
+        try
+            [result.u_min,result.v_min,exitflag] = feval(problem.solver,problem);
+            if all(result.u_min == parfor_x0)
+                error('stuck at initial point');
+            end
+        catch err
+            exitflag = -1;
+            fprintf('model_gradient_parfor: error. "%s" \n',err.message);
+            fprintf('model_gradient_parfor: error. V(X0) = %d \n',cost_function(parfor_x0));
+        end
+        assertWarning(exitflag > 0,'model_gradient_parfor: error. search not possible \n');
     end
-    assertWarning(exitflag > 0,'model_gradient_parfor: error. search not possible \n');
 
     %% nested
     function cost = cost_function(x)
