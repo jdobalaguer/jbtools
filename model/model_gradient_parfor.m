@@ -13,7 +13,7 @@ function result = model_gradient_parfor(problem,parfor_x0,parfor_simu_pars,parfo
     try     [result.u_min,result.v_min,exitflag] = feval(problem.solver,problem);
     catch err
         exitflag = -1;
-        fprintf('model_gradient_parfor: error. %s',err.message);
+        fprintf('model_gradient_parfor: error. "%s" \n',err.message);
     end
     assertWarning(exitflag > 0,'model_gradient_parfor: error. search not possible \n');
 
