@@ -10,7 +10,8 @@ function result = model_gradient_parfor(problem,parfor_x0,parfor_simu_pars,parfo
     % fminsearch
     result   = struct('u_min',{parfor_x0},'v_min',{inf});
     exitflag = +1; %#ok<NASGU>
-    if isinf(nan2inf(cost_function(parfor_x0)))
+    parfor_v0 = cost_function(parfor_x0);
+    if isinf(nan2inf(parfor_v0))
         return
     else
         try
@@ -21,7 +22,7 @@ function result = model_gradient_parfor(problem,parfor_x0,parfor_simu_pars,parfo
         catch err
             exitflag = -1;
             fprintf('model_gradient_parfor: error. "%s" \n',err.message);
-            fprintf('model_gradient_parfor: error. V(X0) = %d \n',cost_function(parfor_x0));
+            fprintf('model_gradient_parfor: error. V(X0) = %d \n',parfor_v0);
         end
         assertWarning(exitflag > 0,'model_gradient_parfor: error. search not possible \n');
     end
