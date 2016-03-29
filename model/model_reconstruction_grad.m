@@ -31,7 +31,7 @@ function model = model_reconstruction_grad(model)
             ii_index   = model.grad.index{i_index};
             ii = (ii_subject & ii_index);
             data = struct_filter(model.grad.data,ii);
-            pars = pair2struct([fieldnames(model.grad.origin),num2cell(model.grad.result.best{i_index}(i_subject).u_min')]');
+            pars = pair2struct([fieldnames(model.grad.origin),num2cell(model.grad.result.best{i_index}(i_subject).u_min)]');
             simulation = model.grad.simu(data,pars);
             reconstruction(i_index) = struct_set(reconstruction(i_index),simulation,ii);
         end
