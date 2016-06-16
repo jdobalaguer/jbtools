@@ -11,5 +11,4 @@ function singleSubjectVols = scan_tool_rsa_fMRIDataPreparation(scan,i_subject,i_
     ii_session = (scan.running.load.session == i_session);
     if scan.job.concatSessions, ii_session(:) = 1; end
     singleSubjectVols = scan.running.load.beta(ii_subject & ii_session,:)';
-%     singleSubjectVols = nan2zero(singleSubjectVols);
 end

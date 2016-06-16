@@ -1,6 +1,6 @@
 
-function fig_cloneplot(fa,tf,sp)
-    %% FIG_CLONEPLOT(fa,hf,ht)
+function ta = fig_cloneplot(fa,tf,sp)
+    %% FIG_CLONEPLOT(fa,tf,sp)
     % clone a (sub)plot from one figure to another figure
     % fa : figure axis to copy (e.g. gca)
     % tf : figure where you want to copy it (i.e. a figure handle - empty if you want a new figure)

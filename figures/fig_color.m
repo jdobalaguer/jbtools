@@ -62,6 +62,24 @@ function color = fig_color(scheme,n)
             color_hsv(:,2) = 1;
             color_hsv(:,3) = 1;
             color = 255 * hsv2rgb(color_hsv);
+        case 'hsv_3';
+            color_hsv = nan(n,3);
+            color_hsv(:,1) = linspace(1/3/n,1/3,n);
+            color_hsv(:,2) = 1;
+            color_hsv(:,3) = 1;
+            color = 255 * hsv2rgb(color_hsv);
+        case 'hsv_4';
+            color_hsv = nan(n,3);
+            color_hsv(:,1) = linspace(1/4/n,1/4,n);
+            color_hsv(:,2) = 1;
+            color_hsv(:,3) = 1;
+            color = 255 * hsv2rgb(color_hsv);
+        case 'hsv_6';
+            color_hsv = nan(n,3);
+            color_hsv(:,1) = linspace(1/6/n,1/6,n);
+            color_hsv(:,2) = 1;
+            color_hsv(:,3) = 1;
+            color = 255 * hsv2rgb(color_hsv);
     % psychtoolbox
         otherwise
             assert(logical(exist('get_color.m','file')),sprintf('fig_color: scheme "%s" not valid',scheme));

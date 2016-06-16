@@ -118,6 +118,7 @@ function [data] = mturk_parsejson(json)
                         ME = MException('json:parse_object',['Can not have an empty name: ' json]);
                         ME.throw;
                     end
+                    name = genvarname(char(name));
                     data.(name) = value;
 
                 case '}' % End of object, so exit the function

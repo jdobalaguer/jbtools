@@ -30,6 +30,7 @@ function varargout = fig_axis(varargin)
   % sa.tlegend = {object 1','object 2'};
   % sa.plegend = 'SouthEast';
   % sa.title   = 'title';
+  % sa.ratio   = [1,1];
 
   %% input
   if isstruct(varargin{1}) && nargin==1
@@ -61,6 +62,24 @@ function varargout = fig_axis(varargin)
   set(get(gcf,'CurrentAxes'), 'box', 'off');
   set(get(gcf,'CurrentAxes'),'layer','top');
         
+  %% x & y
+  % xytick
+  if isfield(sa,{'xytick'})
+      sa.xtick = sa.xytick;
+      sa.ytick = sa.xytick;
+  end
+  % xylim
+  if isfield(sa,{'xylim'})
+      sa.xlim = sa.xylim;
+      sa.ylim = sa.xylim;
+  end
+  % xycolor
+  if isfield(sa,{'xycolor'})
+      sa.xcolor = sa.xycolor;
+      sa.ycolor = sa.xycolor;
+  end
+  
+  %% x
   % xtick
   if isfield(sa,{'xtick'})
     set(ca,   'XTick',sa.xtick);
@@ -69,7 +88,7 @@ function varargout = fig_axis(varargin)
   if isfield(sa,{'xminor'})
     set(ca,   'XMinorTick',sa.xminor);
   end
-  % ygrid
+  % xgrid
   if isfield(sa,{'xgrid'})
     set(ca,   'XGrid'     , sa.xgrid);
   end
@@ -77,10 +96,24 @@ function varargout = fig_axis(varargin)
   if isfield(sa,{'xticklabel'})
     set(ca,   'XTickLabel',sa.xticklabel);
   end
+  % xrotation
+  if isfield(sa,{'xrotation'})
+    set(ca,   'XTickLabelRotation',sa.xrotation);
+  end
   % xlim
   if isfield(sa,{'xlim'})
       xlim(sa.xlim);
   end
+  % xcolor
+  if isfield(sa,{'xcolor'})
+      set(ca,'XColor',sa.xcolor);
+  end
+  % xlabel
+  if isfield(sa,{'xlabel'})
+    va.xlabel = xlabel(sa.xlabel);
+  end
+  
+  %% y
   % ytick
   if isfield(sa,{'ytick'})
     set(ca,   'YTick'     , sa.ytick);
@@ -97,10 +130,24 @@ function varargout = fig_axis(varargin)
   if isfield(sa,{'yticklabel'})
     set(ca,   'YTickLabel',sa.yticklabel);
   end
+  % yrotation
+  if isfield(sa,{'yrotation'})
+    set(ca,   'YTickLabelRotation',sa.yrotation);
+  end
   % ylim
   if isfield(sa,{'ylim'})
       ylim(sa.ylim);
   end
+  % ycolor
+  if isfield(sa,{'ycolor'})
+      set(ca,'YColor',sa.ycolor);
+  end
+  % ylabel
+  if isfield(sa,{'ylabel'})
+    va.ylabel = ylabel(sa.ylabel);
+  end
+  
+  %% z
   % ztick
   if isfield(sa,{'ztick'})
     set(ca,   'ZTick'     , sa.ztick);
@@ -121,22 +168,18 @@ function varargout = fig_axis(varargin)
   if isfield(sa,{'zlim'})
       zlim(sa.zlim);
   end
-  % clim
-  if isfield(sa,{'clim'})
-      set(gca(),'clim',sa.clim);
-  end
-  % xlabel
-  if isfield(sa,{'xlabel'})
-    va.xlabel = xlabel(sa.xlabel);
-  end
-  % ylabel
-  if isfield(sa,{'ylabel'})
-    va.ylabel = ylabel(sa.ylabel);
-  end
   % zlabel
   if isfield(sa,{'zlabel'})
     va.zlabel = zlabel(sa.zlabel);
   end
+  
+  %% c
+  % clim
+  if isfield(sa,{'clim'})
+      set(gca(),'clim',sa.clim);
+  end
+  
+  %% axis
   % title
   if isfield(sa,{'title'})
     va.title  = title (sa.title);
@@ -147,6 +190,16 @@ function varargout = fig_axis(varargin)
     if ~isfield(sa,'plegend'), sa.plegend = 'NorthWest'; end
     va.hlegend = legend(sa.ilegend,sa.tlegend,'location',sa.plegend);
   end
+  % visible
+  if isfield(sa,{'visible'})
+      set(ca,'visible',sa.visible);
+  end
+  % ratio
+  if isfield(sa,{'ratio'})
+      sa.ratio(end+1:3) = 1;
+      set(ca,'PlotBoxAspectRatio',sa.ratio);
+  end
+  
   
   %% output
   if nargout; varargout{1} = va; end

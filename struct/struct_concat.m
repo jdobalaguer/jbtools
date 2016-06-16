@@ -27,6 +27,10 @@ function s = struct_concat(varargin)
     for i_f = 1:n_f
         t_f = f{i_f};
         t_v = cellfun(@(x)x{i_f},v,'UniformOutput',false);
-        s.(t_f) = cat(d,t_v{:});
+        try
+            s.(t_f) = cat(d,t_v{:});
+        catch
+            s.(t_f) = t_v;
+        end
     end
 end

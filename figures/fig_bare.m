@@ -1,6 +1,6 @@
 
-function h = fig_bare(m,e,c,g,b,w)
-    %% h = FIG_BARE(values,errors,color,groups,bars,width)
+function h = fig_bare(m,e,c,g,b,w,l)
+    %% h = FIG_BARE(values,errors,color,groups,bars,width,ylimit)
     % Create bars with standard errors
     % the error bar goes 1e up and 1e down
 
@@ -12,10 +12,11 @@ function h = fig_bare(m,e,c,g,b,w)
 
     % func_default
     func_default('e',zeros(size(m)));
-    func_default('c',fig_color('hsv',n(2)));
+    func_default('c',fig_color('w',n(2)));
     func_default('g','');
     func_default('b','');
     func_default('w',1);
+    func_default('l',[0,max(mat2vec(m+e))]);
 
     % assert
     assertSize(m,e);
@@ -31,6 +32,7 @@ function h = fig_bare(m,e,c,g,b,w)
     assert(iscellstr(b),'fig_bare: error. [bars] must be a cell of strings');
     assert(numel(g)==n(1),'fig_bare:error. non-consistent length of [groups]');
     assert(numel(b)==n(2),'fig_bare:error. non-consistent length of [bars]');
+    assert(numel(l)==2,   'fig_bare:error. ylimit must have numel 2');
     
     % plot bars
     hold('on');
@@ -72,7 +74,7 @@ function h = fig_bare(m,e,c,g,b,w)
     % bars
     for i = 1:n(2)
         for j = 1:n(1)
-            if ~isempty(b{i}), text(x(j,i),-0.2, b{i}, 'Rotation', 45, 'HorizontalAlignment', 'right'); end
+            if ~isempty(b{i}), text(x(j,i),l(1)-0.05*diff(l), b{i}, 'Rotation', 45, 'HorizontalAlignment', 'right'); end
         end
     end
 end
