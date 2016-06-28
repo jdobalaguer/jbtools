@@ -9,7 +9,10 @@ function nnet = nnet_example()
     %% function
     % neural network
     nnet = nnet_create('dot',         {.01 * randn( 6,12)}, ...
+                       'sum',         {.01 * randn( 1,12)}, ...
+                       'relu',        {}, ...
                        'dot',         {.01 * randn(12,12)}, ...
+                       'sum',         {.01 * randn( 1,12)}, ...
                        'sqeuclidean', {},                   ...
                        'sumbatch',    {}                    );
     
@@ -35,7 +38,7 @@ function nnet = nnet_example()
     derive = nnet_derive(nnet,output,label);
     
     % training
-    lrate = 0.001;
+    lrate = 0.01;
     loss = nan(3e3,1);
     for i = 1:length(loss)
         nnet = nnet_train(nnet,input,label,lrate);

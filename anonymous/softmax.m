@@ -1,23 +1,21 @@
 
-function i = softmax(w,t)
-    %% i_w = SOFTMAX(w,t)
-    % random selection using a softmax rule
-    % w = weights
-    % t = temperature
-    % i = index chosen
+function p = softmax(l,d,b)
+    %% p = SOFTMAX(l,d,b)
+    % softmax probability
+    % l = logits
+    % b = beta (inv temperature)
+    % d = dimension
+    % p = probability
     
     %% function
-    w = w / t;
-    e = exp(w);
-    i = randsel(e);
-end
-
-%% auxiliar
-function i_w = randsel(w)
-    x = rand()* sum(w);
-    i_w = 1;
-    while x > w(i_w)
-        x = x - w(i_w);
-        i_w = i_w + 1;
-    end
+    func_default('d',1);
+    func_default('b',1);
+    l(~l(:)) = nan;
+    x = ones(1,ndims(l));
+    x(d) = size(l,d);
+    m = l - repmat(max(l,[],d),x);
+    q = exp(b*m);
+    s = repmat(nansum(q,d),x);
+    p = q ./ s;
+    p(isnan(p(:))) = 0;
 end

@@ -25,13 +25,18 @@ function nnet = nnet_create(varargin)
         type = var{i};
         pars = val{i};
         switch type
+        % linear operations
             case 'dot',         [output,derive] = nnet_layer_dot();
-%             case 'sum',         [output,derive] = nnet_layer_sum();
-%             case 'softmax',     [output,derive] = nnet_layer_softmax();
+            case 'sum',         [output,derive] = nnet_layer_sum();
+        % non-linear operations
+            case 'softmax',     [output,derive] = nnet_layer_softmax();
             case 'sigmoid',     [output,derive] = nnet_layer_sigmoid();
+            case 'relu',        [output,derive] = nnet_layer_relu();
+        % losses
             case 'sqeuclidean', [output,derive] = nnet_layer_sqeuclidean();
-%             case 'euclidean',   [output,derive] = nnet_layer_euclidean();
-%             case 'xentropy',    [output,derive] = nnet_layer_xentropy();
+            % case 'euclidean',   [output,derive] = nnet_layer_euclidean();
+            % case 'xentropy',    [output,derive] = nnet_layer_xentropy();
+        % shrink batch
             case 'sumbatch',    [output,derive] = nnet_layer_sumbatch();
             case 'meanbatch',   [output,derive] = nnet_layer_meanbatch();
             otherwise,      error('nnet_create: error. layer "%s" not valid',type);
@@ -40,7 +45,9 @@ function nnet = nnet_create(varargin)
     end
 end
 
-%% auxiliar (dot)
+%% auxiliar (linear operations)
+
+% dot (matrix product)
 function [output,derive] = nnet_layer_dot()
     function y = func_output(l,x,i)
         [w] = func_deal(l.parameters{:});
@@ -54,33 +61,40 @@ function [output,derive] = nnet_layer_dot()
     derive = @func_derive;
 end
 
-%% auxiliar (sum)
-% function [output,derive] = nnet_layer_sum()
-%     function y = func_output(l,x,i)
-%         [b] = func_deal(l.parameters{:});
-%         y = x + repmat(b,[size(x,1),1]);
-%     end
-%     function d = func_derive(l,x,y,e,i)
-%         d = {e, mean(e,1)};
-%         error('TO CHECK');
-%     end
-%     output = @func_output;
-%     derive = @func_derive;
-% end
+% sum (biases)
+function [output,derive] = nnet_layer_sum()
+    function y = func_output(l,x,i)
+        [b] = func_deal(l.parameters{:});
+        y = x + repmat(b,[size(x,1),1]);
+    end
+    function d = func_derive(l,x,y,e,i)
+        d = {e, sum(e,1)};
+    end
+    output = @func_output;
+    derive = @func_derive;
+end
 
-%% auxiliar (softmax)
-% function [output,derive] = nnet_layer_softmax()
-%     function y = func_output(l,x,i)
-%         y = x; % TODO
-%     end
-%     function d = func_derive(l,x,y,e,i)
-%         d = e; % TODO
-%     end
-%     output = @func_output;
-%     derive = @func_derive;
-% end
+%% auxiliar (nonlinear operations)
 
-%% auxiliar (sigmoid)
+% softmax
+function [output,derive] = nnet_layer_softmax()
+    function y = func_output(l,x,i)
+        x(~x(:)) = nan;
+        z = [1,size(x,2)];
+        m = x - repmat(max(x,[],2),z);
+        q = exp(m);
+        s = repmat(nansum(q,2),z);
+        y = q ./ s;
+        y(isnan(y(:))) = 0;
+    end
+    function d = func_derive(l,x,y,e,i) % taken from tensorflow "nn_grad.py"
+        d = {e - repmat(sum(e .* y, 1), [size(y,1), 1]) .* y};
+    end
+    output = @func_output;
+    derive = @func_derive;
+end
+
+% sigmoid
 function [output,derive] = nnet_layer_sigmoid()
     function y = func_output(l,x,i)
         y = 1 ./ (1 + exp(-x));
@@ -92,7 +106,22 @@ function [output,derive] = nnet_layer_sigmoid()
     derive = @func_derive;
 end
 
-%% auxiliar (sqeuclidean)
+
+% log
+function [output,derive] = nnet_layer_relu()
+    function y = func_output(l,x,i)
+        y = x .* double(x > 0);
+    end
+    function d = func_derive(l,x,y,e,i)
+        d = { e .* double(x > 0) };
+    end
+    output = @func_output;
+    derive = @func_derive;
+end
+
+%% auxiliar (losses)
+
+% sqeuclidean (squared euclidean, MSE)
 function [output,derive] = nnet_layer_sqeuclidean()
     function y = func_output(l,x,i)
         e = (x - i);
@@ -106,7 +135,7 @@ function [output,derive] = nnet_layer_sqeuclidean()
     derive = @func_derive;
 end
 
-%% auxiliar (euclidean)
+% euclidean (squared root of MSE)
 % function [output,derive] = nnet_layer_euclidean()
 %     function y = func_output(l,x,i)
 %         e = (x - i);
@@ -122,7 +151,7 @@ end
 %     derive = @func_derive;
 % end
 
-%% auxiliar (xentropy)
+% xentropy (cross-entropy)
 % function [output,derive] = nnet_layer_xentropy()
 %     function y = func_output(l,x,i)
 %         y = sum(l .* log(x), 2);
@@ -134,7 +163,9 @@ end
 %     derive = @func_derive;
 % end
 
-%% auxiliar (sumbatch)
+%% auxiliar (shrink batch)
+
+% sumbatch
 function [output,derive] = nnet_layer_sumbatch()
     function y = func_output(l,x,i)
         y = sum(x,1);
@@ -147,7 +178,7 @@ function [output,derive] = nnet_layer_sumbatch()
     derive = @func_derive;
 end
 
-%% auxiliar (meanbatch)
+% meanbatch
 function [output,derive] = nnet_layer_meanbatch()
     function y = func_output(l,x,i)
         y = mean(x,1);
