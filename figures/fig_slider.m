@@ -107,6 +107,7 @@ function fig_slider(v,x,l,r)
 
         % aesthetics
         sa.clim   = ranger(v);
+        if ~diff(sa.clim), sa.clim = sa.clim + [-eps('single'),+eps('single')]; end
         sa.ylabel = l{1};
         sa.xlabel = l{2};
         sa.xtick  = 1:s(2);

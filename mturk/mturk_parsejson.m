@@ -86,8 +86,9 @@ function [data] = mturk_parsejson(json)
             value = parse_value();
 
             if isempty(value)
-                ME = MException('json:parse_array',['Parsed an empty value: ' json]);
-                ME.throw;
+%                 ME = MException('json:parse_array',['Parsed an empty value: ' json]);
+%                 ME.throw;
+                warning('Parsed an empty value');
             end
             data{end+1} = value; %#ok<AGROW>
 
