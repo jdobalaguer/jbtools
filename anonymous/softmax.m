@@ -3,8 +3,8 @@ function p = softmax(l,d,b)
     %% p = SOFTMAX(l,d,b)
     % softmax probability
     % l = logits
-    % b = beta (inv temperature)
     % d = dimension
+    % b = beta (inv temperature)
     % p = probability
     
     %% function

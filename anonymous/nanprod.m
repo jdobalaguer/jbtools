@@ -1,9 +1,9 @@
 
-function S = nanprod(varargin)
-    %% S = nanprod(X)
+function s = nanprod(varargin)
+    %% s = NANPROD(x[,d])
     % See also prod
     
     %% function
     varargin{1}(isnan(varargin{1})) = 1;
-    S = prod(varargin{:});
+    s = prod(varargin{:});
 end

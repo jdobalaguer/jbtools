@@ -47,9 +47,9 @@ function scan = scan_tbte(scan)
 
         % estimation
         scan = scan_glm_estimation(scan);       % SPM estimation
-        scan = scan_glm_copy(scan,'first','mask'); % copy
-        scan = scan_glm_copy(scan,'first','beta'); % copy
-        scan = scan_glm_copy(scan,'first','spm');  % copy
+        scan = scan_glm_copy(scan,'first','mask',0); % copy
+        scan = scan_glm_copy(scan,'first','beta',0); % copy
+        scan = scan_glm_copy(scan,'first','spm', 0); % copy
         
         % function
         scan = scan_tbte_function(scan);

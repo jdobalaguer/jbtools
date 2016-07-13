@@ -6,6 +6,7 @@ function scan = scan_initialize_template(type)
     %   >> help scan;
     
     %% function
+    func_default('type','none');
     
     % parameter
     scan.parameter.scanner.nslices      = []; ... scanner

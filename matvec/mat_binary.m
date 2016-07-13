@@ -1,7 +1,7 @@
 
 
 function m = mat_binary(n)
-    %% m = JB_BINARYTABLE(n)
+    %% m = MAT_BINARYTABLE(n)
     % create a matrix with all possible binary vectors of length n.
     % n : number of columns
     % m : logical matrix of size [2^n,n]
