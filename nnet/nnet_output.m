@@ -6,7 +6,7 @@ function output = nnet_output(nnet,input,label)
     %% function
     
     % default
-    func_default('label',[]);
+    func_default('label',cell(size(nnet)));
     
     % variables
     n    = length(nnet);
@@ -15,7 +15,7 @@ function output = nnet_output(nnet,input,label)
     
     % make predictions
     for i = 1:n
-        h{i+1} = nnet(i).output(nnet(i), h{i}, label);
+        h{i+1} = nnet(i).output(nnet(i), h{i}, label{i});
     end
     
     % return

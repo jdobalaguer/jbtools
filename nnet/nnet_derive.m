@@ -6,7 +6,7 @@ function derive = nnet_derive(nnet,output,label)
     %% function
     
     % default
-    func_default('label',[]);
+    func_default('label',cell(size(nnet)));
     
     % variables
     n      = length(nnet);
@@ -15,7 +15,7 @@ function derive = nnet_derive(nnet,output,label)
     
     % make predictions
     for i = n:-1:1
-        d{i} = nnet(i).derive(nnet(i), output{i}, output{i+1}, d{i+1}{1}, label);
+        d{i} = nnet(i).derive(nnet(i), output{i}, output{i+1}, d{i+1}{1}, label{i});
     end
     
     % return

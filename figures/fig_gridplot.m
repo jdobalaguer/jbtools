@@ -6,4 +6,5 @@ function h = fig_gridplot(m,n,i,j)
     %% function
     ij = (i-1)*n + j;
     h  = subplot(m,n,ij);
+    hold('on');
 end

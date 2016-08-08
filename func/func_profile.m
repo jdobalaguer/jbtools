@@ -31,5 +31,7 @@ function func_profile(file,path,args)
     
     % stop
     profile('off');
-    profsave(profile('info'),path);
+    try %#ok<TRYNC>
+        profsave(profile('info'),path);
+    end
 end

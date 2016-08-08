@@ -33,7 +33,6 @@ function varargout = bayes_pdf(x,varargin)
     if nargout, varargout = [{pdf},z]; return; end %#ok<VARARG>
     
     % plot
-    fig_figure();
     switch(size(x,2))
         case 1
             plot(z{1},pdf,'LineStyle','-','LineWidth',3);
