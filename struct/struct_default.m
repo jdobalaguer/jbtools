@@ -1,7 +1,7 @@
 
 function s = struct_default(o,t)
     %% s = STRUCT_DEFAULT(o,t)
-    % complete template struct [t] with options struct [t] recursively
+    % complete template struct [t] with options struct [o] recursively
     % o : struct with input options
     % t : template with default values
     % s : resulting struct

@@ -67,7 +67,7 @@ function model = model_example()
     model.grad.costfunc = @test_costfunc;
     model.grad.costpars = struct();
     model.grad.subject  = data.subject;
-    model.grad.solver   = struct('solver',{'fminsearch'},'options',{[]});
+    model.grad.search   = struct('solver',{'fminsearch'},'options',{[]});
     model = model_gradient(model);
 end
 

@@ -6,6 +6,10 @@ function scan = scan_atlas_install(scan,atlas)
     % to list main functions, try
     %   >> help scan;
     
+    %% notes
+    % TODO: add http://www.princeton.edu/~napl/vtpm.htm     (website)
+    %           http://www.ncbi.nlm.nih.gov/pubmed/25452571 (paper)
+    
     %% function
     
     % default

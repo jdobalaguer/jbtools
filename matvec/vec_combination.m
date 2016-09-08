@@ -3,6 +3,7 @@ function m = vec_combination(varargin)
     % create a matrix with all possible combinations of {x}
     % x : vectors with regressors
     % m : resulting matrix
+    % see also fullfact
 
     %% based on..
     % ALLCOMB - All combinations
