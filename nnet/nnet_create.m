@@ -27,19 +27,23 @@ function nnet = nnet_create(varargin)
         switch type
         % linear operations
             case 'dot',         [output,derive] = nnet_layer_dot();
-            case 'batchdot',    [output,derive] = nnet_layer_batchdot();
+%             case 'batchdot',    [output,derive] = nnet_layer_batchdot();
             case 'sum',         [output,derive] = nnet_layer_sum();
         % non-linear operations
-%             case 'softmax',     [output,derive] = nnet_layer_softmax();
+            case 'eye',         [output,derive] = nnet_layer_eye();
+            case 'softmax',     [output,derive] = nnet_layer_softmax();
             case 'sigmoid',     [output,derive] = nnet_layer_sigmoid();
+            case 'tanh',        [output,derive] = nnet_layer_tanh();
             case 'relu',        [output,derive] = nnet_layer_relu();
+            case 'sqrt',        [output,derive] = nnet_layer_sqrt();
         % losses
             case 'sqeuclidean', [output,derive] = nnet_layer_sqeuclidean();
-            % case 'euclidean',   [output,derive] = nnet_layer_euclidean();
-            % case 'xentropy',    [output,derive] = nnet_layer_xentropy();
+            case 'euclidean',   [output,derive] = nnet_layer_euclidean();
+            case 'xentropy',    [output,derive] = nnet_layer_xentropy();
+            case 'loglhood',    [output,derive] = nnet_layer_loglhood();
         % shrink batch
             case 'sumbatch',    [output,derive] = nnet_layer_sumbatch();
-%             case 'meanbatch',   [output,derive] = nnet_layer_meanbatch();
+            case 'meanbatch',   [output,derive] = nnet_layer_meanbatch();
             otherwise,      error('nnet_create: error. layer "%s" not valid',type);
         end
         nnet(i) = struct('type',{type},'parameters',{pars},'output',{output},'derive',{derive});
@@ -47,6 +51,18 @@ function nnet = nnet_create(varargin)
 end
 
 %% auxiliar (linear operations)
+
+% eye (identity)
+function [output,derive] = nnet_layer_eye()
+    function y = func_output(l,x,i)
+        y = x;
+    end
+    function d = func_derive(l,x,y,e,i)
+        d = {e};
+    end
+    output = @func_output;
+    derive = @func_derive;
+end
 
 % dot (matrix product)
 function [output,derive] = nnet_layer_dot()
@@ -62,31 +78,31 @@ function [output,derive] = nnet_layer_dot()
     derive = @func_derive;
 end
 
-% batchdot (matrix product, with different for each sample within the batch)
-function [output,derive] = nnet_layer_batchdot()
-    function y = func_output(l,x,i)
-        [w] = func_deal(l.parameters{:});
-        assert(size(w,3) == size(x,1),'nnet_layer_batchdot: func_output: error. [w] and [x] do not match');
-        y = nan([size(x,1),size(w,2)]);
-        for k = 1:size(w,3)
-            y(k,:) = x(k,:) * w(:,:,k);
-        end
-    end
-    function d = func_derive(l,x,y,e,i)
-        [w] = func_deal(l.parameters{:});
-        d = cell(1,2);
-        d{1} = nan([size(e,1),size(w,1)]);
-        d{2} = repmat(x'*e, [1,1,size(w,3)]);
-        for k = 1:size(w,3)
-            d{1}(k,:) = e(k,:)*w(:,:,k)';
-            xx = zeros(size(x));
-            xx(k,:) = x(k,:);
-            d{2}(:,:,k) = xx' * e;
-        end
-    end
-    output = @func_output;
-    derive = @func_derive;
-end
+% % batchdot (matrix product, with different for each sample within the batch)
+% function [output,derive] = nnet_layer_batchdot()
+%     function y = func_output(l,x,i)
+%         [w] = func_deal(l.parameters{:});
+%         assert(size(w,3) == size(x,1),'nnet_layer_batchdot: func_output: error. [w] and [x] do not match');
+%         y = nan([size(x,1),size(w,2)]);
+%         for k = 1:size(w,3)
+%             y(k,:) = x(k,:) * w(:,:,k);
+%         end
+%     end
+%     function d = func_derive(l,x,y,e,i)
+%         [w] = func_deal(l.parameters{:});
+%         d = cell(1,2);
+%         d{1} = nan([size(e,1),size(w,1)]);
+%         d{2} = repmat(x'*e, [1,1,size(w,3)]);
+%         for k = 1:size(w,3)
+%             d{1}(k,:) = e(k,:)*w(:,:,k)';
+%             xx = zeros(size(x));
+%             xx(k,:) = x(k,:);
+%             d{2}(:,:,k) = xx' * e;
+%         end
+%     end
+%     output = @func_output;
+%     derive = @func_derive;
+% end
 
 % sum (biases)
 function [output,derive] = nnet_layer_sum()
@@ -103,23 +119,25 @@ end
 
 %% auxiliar (nonlinear operations)
 
-% % softmax
-% function [output,derive] = nnet_layer_softmax()
-%     function y = func_output(l,x,i)
-%         x(~x(:)) = nan;
-%         z = [1,size(x,2)];
-%         m = x - repmat(max(x,[],2),z);
-%         q = exp(m);
-%         s = repmat(nansum(q,2),z);
-%         y = q ./ s;
-%         y(isnan(y(:))) = 0;
-%     end
-%     function d = func_derive(l,x,y,e,i) % taken from tensorflow "nn_grad.py"
-%         d = {e - repmat(sum(e .* y, 1), [size(y,1), 1]) .* y};
-%     end
-%     output = @func_output;
-%     derive = @func_derive;
-% end
+% softmax
+function [output,derive] = nnet_layer_softmax()
+    function y = func_output(l,x,i)
+        x(~x(:)) = nan;
+        z = [1,size(x,2)];
+        m = x - repmat(max(x,[],2),z);
+        q = exp(m);
+        s = repmat(nansum(q,2),z);
+        y = q ./ s;
+        y(isnan(y(:))) = 0;
+    end
+    function d = func_derive(l,x,y,e,i)
+        % see "http://stackoverflow.com/questions/33541930/how-to-implement-the-softmax-derivative-independently-from-any-loss-function"
+        dx = y .* e;
+        d = {dx - (y.* repmat(sum(dx,2),[1,size(dx,2)]))};
+    end
+    output = @func_output;
+    derive = @func_derive;
+end
 
 % sigmoid
 function [output,derive] = nnet_layer_sigmoid()
@@ -133,14 +151,38 @@ function [output,derive] = nnet_layer_sigmoid()
     derive = @func_derive;
 end
 
+% tanh
+function [output,derive] = nnet_layer_tanh()
+    function y = func_output(l,x,i)
+        y = tanh(x);
+    end
+    function d = func_derive(l,x,y,e,i)
+        d = {e .* (1 - y.*y)};
+    end
+    output = @func_output;
+    derive = @func_derive;
+end
 
-% log
+% relu
 function [output,derive] = nnet_layer_relu()
     function y = func_output(l,x,i)
         y = x .* double(x > 0);
     end
     function d = func_derive(l,x,y,e,i)
-        d = { e .* double(x > 0) };
+        d = {e .* double(x > 0) };
+    end
+    output = @func_output;
+    derive = @func_derive;
+end
+
+% sqrt (square root)
+function [output,derive] = nnet_layer_sqrt()
+    function y = func_output(l,x,i)
+        y = sqrt(x);
+        y(x<=0) = nan;
+    end
+    function d = func_derive(l,x,y,e,i)
+        d = {e ./ 2 ./ y };
     end
     output = @func_output;
     derive = @func_derive;
@@ -148,47 +190,56 @@ end
 
 %% auxiliar (losses)
 
-% sqeuclidean (squared euclidean, MSE)
+% sqeuclidean (squared euclidean distance)
 function [output,derive] = nnet_layer_sqeuclidean()
     function y = func_output(l,x,i)
-        e = (x - i);
-        y = sum(e.*e, 2);
+        dx = (x - i);
+        y  = sum(dx.*dx, 2);
     end
     function d = func_derive(l,x,y,e,i)
-        e = (x - i);
-        d = {2 * e};
+        d = {repmat(e,[1,size(x,2)]) .* 2 .* (x - i)};
     end
     output = @func_output;
     derive = @func_derive;
 end
 
-% euclidean (squared root of MSE)
-% function [output,derive] = nnet_layer_euclidean()
-%     function y = func_output(l,x,i)
-%         e = (x - i);
-%         y = sqrt(sum(e.*e, 2));
-%     end
-%     function d = func_derive(l,x,y,e,i)
-%         e = (x - i);
-%         d = {e ./ repmat(y,[1,size(e,2)])};
-%         error('TO CHECK');
-% 
-%     end
-%     output = @func_output;
-%     derive = @func_derive;
-% end
+% euclidean
+function [output,derive] = nnet_layer_euclidean()
+    function y = func_output(l,x,i)
+        dx = (x - i);
+        y = sqrt(sum(dx.*dx, 2));
+    end
+    function d = func_derive(l,x,y,e,i)
+        d = {e .* (x - i) ./ repmat(y,[1,size(x,2)])};
+    end
+    output = @func_output;
+    derive = @func_derive;
+end
 
-% xentropy (cross-entropy)
-% function [output,derive] = nnet_layer_xentropy()
-%     function y = func_output(l,x,i)
-%         y = sum(l .* log(x), 2);
-%     end
-%     function d = func_derive(l,x,y,e,i)
-%         error('TODO');
-%     end
-%     output = @func_output;
-%     derive = @func_derive;
-% end
+% xentropy (cross-entropy for softmax)
+function [output,derive] = nnet_layer_xentropy()
+    function y = func_output(l,x,i)
+        y = -sum(i .* log(x), 2);
+    end
+    function d = func_derive(l,x,y,e,i)
+        d = { -repmat(e,[1,size(x,2)]) .* i ./ x };
+    end
+    output = @func_output;
+    derive = @func_derive;
+end
+
+% loglhood (log-likelihood for sigmoid)
+function [output,derive] = nnet_layer_loglhood()
+    function y = func_output(l,x,i)
+        y = sum(-(i .* log(x) + (1-i) .* log(1-x)),2);
+    end
+    function d = func_derive(l,x,y,e,i)
+        d = { repmat(e,[1,size(x,2)]) .* (((1-i)./(1-x)) - (i ./ x)) };
+    end
+    output = @func_output;
+    derive = @func_derive;
+end
+
 
 %% auxiliar (shrink batch)
 
@@ -199,22 +250,22 @@ function [output,derive] = nnet_layer_sumbatch()
     end
     function d = func_derive(l,x,y,e,i)
         m = size(x,1);
-        d = {e * ones(m,1)};
+        d = {repmat(e,[m,1])};
     end
     output = @func_output;
     derive = @func_derive;
 end
 
-% % meanbatch
-% function [output,derive] = nnet_layer_meanbatch()
-%     function y = func_output(l,x,i)
-%         y = mean(x,1);
-%     end
-%     function d = func_derive(l,x,y,e,i)
-%         m = size(x,1);
-%         d = {e * ones(m,1) ./ m};
-%     end
-%     output = @func_output;
-%     derive = @func_derive;
-% end
+% meanbatch
+function [output,derive] = nnet_layer_meanbatch()
+    function y = func_output(l,x,i)
+        y = mean(x,1);
+    end
+    function d = func_derive(l,x,y,e,i)
+        m = size(x,1);
+        d = {repmat(e,[m,1]) ./ m};
+    end
+    output = @func_output;
+    derive = @func_derive;
+end
 

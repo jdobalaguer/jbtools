@@ -6,6 +6,9 @@ function r = cell_func(varargin)
     % e.g.
     %   c = cell_fun(@(x,y)x+y,{1,{1,2},3},{1,{1,2},3})
     
+    %% notes
+    % TODO. automatic unif false?
+    
     %% function
     
     % set arguments
@@ -27,7 +30,7 @@ function r = cell_func(varargin)
         
         % local function
         if all(cellfun(@iscell,v))
-            r{i} = cell_fun(f,v{:});
+            r{i} = cell_func(f,v{:});
         else
             r{i} = f(v{:});
         end

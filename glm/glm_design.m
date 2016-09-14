@@ -11,6 +11,7 @@ function x = glm_design(s,m)
     
     % default model
     m = struct_default(m,glm_model());
+    if isempty(m.model), m.model = eye(length(m.regressor)); end
     
     % subject stuff
     x_subject = s.(m.subject);

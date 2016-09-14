@@ -12,6 +12,7 @@ function varargout = glm_between(a,m,o)
     
     % default model
     m = struct_default(m,glm_model());
+    if isempty(m.model), m.model = eye(length(m.regressor)); end
     
     % default options
     func_default('o',[]);

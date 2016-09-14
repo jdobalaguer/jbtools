@@ -1,6 +1,6 @@
 
 function derive = nnet_derive(nnet,output,label)
-    %% nnet = NNET_DERIVE(nnet,output,label)
+    %% derive = NNET_DERIVE(nnet,output,label)
     % train a neural network with back-propagation gradient-descent.
     
     %% function
