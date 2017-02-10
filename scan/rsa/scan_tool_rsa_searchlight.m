@@ -68,7 +68,7 @@ end
 
 %% auxiliar: sphereCentre
 function ctrRelSphereSUBs = sphereCentre(scan)
-	voxSize_mm          = scan_tool_rsa_voxelsize(scan,scan.running.meta);
+	voxSize_mm          = scan_tool_voxelsize(scan,scan.running.meta);
 	searchlightRad_mm   = scan.job.searchlight;
 	rad_vox             = searchlightRad_mm./voxSize_mm;
 	minMargin_vox       = floor(rad_vox);

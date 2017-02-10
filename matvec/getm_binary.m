@@ -18,6 +18,6 @@ function m = getm_binary(v,n)
     
     % create matrix
     l = numel(v);
-    m = false(n,l);
+    m = false(l,n);
     for i = 1:l, m(i,v(i)) = true; end
 end

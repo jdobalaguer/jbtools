@@ -27,12 +27,14 @@ function varargout = fig_axis(varargin)
   % sa.ylabel = 'ylabel';
   % sa.zlabel = 'zlabel';
   % sa.ilegend = [obj1, obj2, ...];
-  % sa.tlegend = {object 1','object 2'};
+  % sa.tlegend = {'object 1','object 2'};
   % sa.plegend = 'SouthEast';
   % sa.title   = 'title';
   % sa.ratio   = [1,1];
+  % sa.box     = 'on';
 
   %% input
+  func_default('varargin',{struct()});
   if isstruct(varargin{1}) && nargin==1
       sa = varargin{1};
       ca = [];
@@ -67,11 +69,13 @@ function varargout = fig_axis(varargin)
   if isfield(sa,{'xytick'})
       sa.xtick = sa.xytick;
       sa.ytick = sa.xytick;
+      sa.ztick = sa.xytick;
   end
   % xylim
   if isfield(sa,{'xylim'})
       sa.xlim = sa.xylim;
       sa.ylim = sa.xylim;
+      sa.zlim = sa.xylim;
   end
   % xycolor
   if isfield(sa,{'xycolor'})
@@ -199,7 +203,10 @@ function varargout = fig_axis(varargin)
       sa.ratio(end+1:3) = 1;
       set(ca,'PlotBoxAspectRatio',sa.ratio);
   end
-  
+  % box
+  if isfield(sa,{'box'})
+    set(ca,'Box',sa.box);
+  end
   
   %% output
   if nargout; varargout{1} = va; end

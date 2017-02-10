@@ -1,7 +1,7 @@
 
-function mm = scan_tool_rsa_voxelsize(scan,meta) %#ok<INUSL>
-    %% mm = SCAN_TOOL_RSA_VOXELSIZE(scan,meta)
-    % RSA toolbox - get the size of voxels (in mm)
+function mm = scan_tool_voxelsize(scan,meta) %#ok<INUSL>
+    %% mm = SCAN_TOOL_VOXELSIZE(scan,meta)
+    % get the size of voxels (in mm)
     
     %% notes
     % this is based on xu cui's function @cor2mni

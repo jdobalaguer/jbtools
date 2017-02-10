@@ -35,6 +35,7 @@ function h = fig_bare(m,e,c,g,b,w,l)
     assert(numel(l)==2,   'fig_bare:error. ylimit must have numel 2');
     
     % plot bars
+    was_hold = ishold();
     hold('on');
     if r
         for i = 1:n(2)
@@ -65,7 +66,7 @@ function h = fig_bare(m,e,c,g,b,w,l)
         end
         h.errors = errorbar(x,m,e,'k','linestyle', 'none','linewidth',2);
     end
-    hold('off');
+    if ~was_hold, hold('off'); end
     
     % groups
     t = get(gca(),'ticklength');

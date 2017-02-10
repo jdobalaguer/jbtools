@@ -18,6 +18,8 @@ function scan = scan_glm_flag(scan)
         % no
         case 'no function'
             redo = [1,1,1,1,0];
+        case 'no first'
+            redo = [1,1,0,1,1];
         % to
         case 'to second'
             redo = [1,1,1,1,0];

@@ -36,6 +36,9 @@ function nnet = nnet_create(varargin)
             case 'tanh',        [output,derive] = nnet_layer_tanh();
             case 'relu',        [output,derive] = nnet_layer_relu();
             case 'sqrt',        [output,derive] = nnet_layer_sqrt();
+            case 'abs',         [output,derive] = nnet_layer_abs();
+            case 'sin',         [output,derive] = nnet_layer_sin();
+            case 'janu',        [output,derive] = nnet_layer_janu();
         % losses
             case 'sqeuclidean', [output,derive] = nnet_layer_sqeuclidean();
             case 'euclidean',   [output,derive] = nnet_layer_euclidean();
@@ -188,6 +191,42 @@ function [output,derive] = nnet_layer_sqrt()
     derive = @func_derive;
 end
 
+% abs (absolute value)
+function [output,derive] = nnet_layer_abs()
+    function y = func_output(l,x,i)
+        y = abs(x);
+    end
+    function d = func_derive(l,x,y,e,i)
+        d = {e .* sign(x)};
+    end
+    output = @func_output;
+    derive = @func_derive;
+end
+
+% sin (trigonometric sinus)
+function [output,derive] = nnet_layer_sin()
+    function y = func_output(l,x,i)
+        y = sin(x);
+    end
+    function d = func_derive(l,x,y,e,i)
+        d = {e .* cos(x)};
+    end
+    output = @func_output;
+    derive = @func_derive;
+end
+
+% janu (jan's unit)
+function [output,derive] = nnet_layer_janu()
+    function y = func_output(l,x,i)
+        y = abs(mod(x+1,2)-1);
+    end
+    function d = func_derive(l,x,y,e,i)
+        d = {e .* sign(mod(x+1,2)-1)};
+    end
+    output = @func_output;
+    derive = @func_derive;
+end
+
 %% auxiliar (losses)
 
 % sqeuclidean (squared euclidean distance)
@@ -210,7 +249,7 @@ function [output,derive] = nnet_layer_euclidean()
         y = sqrt(sum(dx.*dx, 2));
     end
     function d = func_derive(l,x,y,e,i)
-        d = {e .* (x - i) ./ repmat(y,[1,size(x,2)])};
+        d = {repmat(e,[1,size(x,2)]) .* (x - i) ./ repmat(y,[1,size(x,2)])};
     end
     output = @func_output;
     derive = @func_derive;

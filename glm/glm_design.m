@@ -28,7 +28,8 @@ function x = glm_design(s,m)
     for i_subject = 1:n_subject
         ii_subject   = (x_subject == u_subject(i_subject));
         x{i_subject} = x_regressor(ii_subject,:);
-        if m.zscore, x{i_subject} = nan2zero(mat_zscore(x{i_subject},1)); end
+        if m.zscore, x{i_subject} = nan2zero(mat_zscore(x{i_subject},1)); end % before interactions
         x{i_subject} = x2fx(x{i_subject},m.model);
+        if m.zscore, x{i_subject} = nan2zero(mat_zscore(x{i_subject},1)); end % after interactions
     end
 end

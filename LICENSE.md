@@ -39,6 +39,9 @@ D3/PRIVATE/WEBSERVER/JAVATCPSERVER.M,
 FIGURES/FIG_4D.M
     Santiago Herce Castañón
 
+FIGURES/FIG_DCOLOR.M
+    John Barber
+
 FILE/FILE_2ABSOLUTE.M
     Jan Simon, Heidelberg - matlab.2013@n-simon.de
 
@@ -73,5 +76,5 @@ SCAN/SAVE/PRIVATE/HLP_SERIALIZE.M, HLP_DESERIALIZE.M
     Christian Kothe, Swartz Center for Computational Neuroscience, UCSD
     adapted from "SERIALIZE.M" and "DESERIALIZE.M", by Tim Hutt
 
-SCAN/TOOL/SCAN_TOOL_RSA_VOXELSIZE.M
+SCAN/TOOL/SCAN_TOOL_VOXELSIZE.M
     by Xu Cui - http://www.alivelearn.net/?p=1101

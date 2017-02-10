@@ -1,42 +1,42 @@
-function [h,c] = dcolor(varargin)
+function [h,c] = fig_dcolor(varargin)
 % Plot a complex-valued matrix or function using domain coloring
 %
 % SYNTAX
 %
-% DCOLOR(W)
-% DCOLOR(X,Y,W)
-% DCOLOR(@FZ)
-% DCOLOR(D,@FZ)
-% DCOLOR(X,Y,@FZ)
-% DCOLOR(...,'cfun',CFUN)
-% DCOLOR(...,'cfun',@CFUN)
-% DCOLOR('cfun',CFUN)
-% DCOLOR('cfun',@CFUN)
-% DCOLOR(...,'grid')
-% DCOLOR(AH,...)
-% H = DCOLOR(...)
-% [H,C] = DCOLOR(...)
+% FIG_DCOLOR(W)
+% FIG_DCOLOR(X,Y,W)
+% FIG_DCOLOR(@FZ)
+% FIG_DCOLOR(D,@FZ)
+% FIG_DCOLOR(X,Y,@FZ)
+% FIG_DCOLOR(...,'cfun',CFUN)
+% FIG_DCOLOR(...,'cfun',@CFUN)
+% FIG_DCOLOR('cfun',CFUN)
+% FIG_DCOLOR('cfun',@CFUN)
+% FIG_DCOLOR(...,'grid')
+% FIG_DCOLOR(AH,...)
+% H = FIG_DCOLOR(...)
+% [H,C] = FIG_DCOLOR(...)
 %
 % DESCRIPTION 
 %
-% DCOLOR(W) 
+% FIG_DCOLOR(W) 
 %
-% Produce a plot of the complex matrix W.  DCOLOR uses one of several
+% Produce a plot of the complex matrix W.  FIG_DCOLOR uses one of several
 % coloring functions to display both the angle and modulus of the data on
 % the same plot.  This technique is known as domain coloring, and is useful
 % to visualize the behavior and characteristics of complex-valued
 % functions.
 %
-% DCOLOR(X,Y,W)
+% FIG_DCOLOR(X,Y,W)
 %
 % Make a plot using the grid defined by X and Y.  The inputs X and Y can be
 % vectors or matrices.  Their sizes must correspond to the size of W.
 %
-% DCOLOR(@FZ)
-% DCOLOR(D,@FZ)
-% DCOLOR(X,Y,@FZ)
+% FIG_DCOLOR(@FZ)
+% FIG_DCOLOR(D,@FZ)
+% FIG_DCOLOR(X,Y,@FZ)
 %
-% Calling DCOLOR with a function handle input, @FZ, will evaluate the
+% Calling FIG_DCOLOR with a function handle input, @FZ, will evaluate the
 % specified function and plot the results.  The function specified by @FZ
 % must accept a single complex input matrix, and return a complex matrix as
 % output. By default, the function will be evaluated over the interval
@@ -46,8 +46,8 @@ function [h,c] = dcolor(varargin)
 % using MESHGRID(X,Y)) or as MxN arrays, @FZ will be evaluated at the
 % points X+iY.
 %
-% DCOLOR(...,'cfun',CFUN)
-% DCOLOR(...,'cfun',@CFUN)
+% FIG_DCOLOR(...,'cfun',CFUN)
+% FIG_DCOLOR(...,'cfun',@CFUN)
 %
 % Specifying the property/value pair 'cfun',CFUN, where CFUN is a number
 % corresponding to one of the built-in coloring functions, will use the
@@ -63,43 +63,43 @@ function [h,c] = dcolor(varargin)
 % function must accept a single MxN complex array and return an MxNx3 array
 % of RGB triplets (normalized to [0,1]).  
 %
-% DCOLOR('cfun',CFUN)
-% DCOLOR('cfun',@CFUN)
+% FIG_DCOLOR('cfun',CFUN)
+% FIG_DCOLOR('cfun',@CFUN)
 %
-% Calling DCOLOR with the 'cfun',CFUN argument pair but no W data will
+% Calling FIG_DCOLOR with the 'cfun',CFUN argument pair but no W data will
 % produce a plot of the coloring function evaluated over [-1-i,1+i]. This
 % can be useful for comparing and understanding the coloring functions.
 %
-% DCOLOR(...,'grid')
+% FIG_DCOLOR(...,'grid')
 %
 % Supplying the optional argument, 'grid', will superimpose a grid in the
 % w-domain by creating contours of the real and imaginary parts of W.  The
 % real contours are shown with solid lines and the imaginary contours with 
 % dotted lines.
 % 
-% DCOLOR(AH,...)
+% FIG_DCOLOR(AH,...)
 %
 % Make the plot in the axes referenced by the handle AH instead of gca().
 %
-% H = DCOLOR(...)
+% H = FIG_DCOLOR(...)
 %
-% Return a handle to the image or surface object created by DCOLOR.
+% Return a handle to the image or surface object created by FIG_DCOLOR.
 %
-% [H,C] = DCOLOR(...)
+% [H,C] = FIG_DCOLOR(...)
 %
 % In addition to the graphics handle H, return the image color data in C.
 %
 % REMARKS 
 % 
-% If X and Y are matrices or non-regularly spaced vectors, DCOLOR will plot
+% If X and Y are matrices or non-regularly spaced vectors, FIG_DCOLOR will plot
 % the data as a surface object.  Otherwise, the data will be plotted as an
 % image object.  
 %
-% DCOLOR attempts to calculate an optimal number of contour levels when
+% FIG_DCOLOR attempts to calculate an optimal number of contour levels when
 % called with the 'grid' option.  However, the results may not be
 % satisfactory for some inputs.  If the resulting grid is too sparse or too
 % dense, create contours separately as follows:
-%   1) Call DCOLOR without the 'grid' option
+%   1) Call FIG_DCOLOR without the 'grid' option
 %   2) Set the axes hold property to 'on'
 %   3) Call CONTOUR(X,Y,REAL(W)) and CONTOUR(X,Y,IMAG(W)).  If desired,
 %   supply a list of contour levels to the CONTOUR function.
@@ -156,13 +156,13 @@ function [h,c] = dcolor(varargin)
 % Z = X+1i*Y;
 % W = 10*(Z-(12-5i)).*(Z-(14-4.6i)).*(Z+(7+14i)).*(1./(Z-15i)).^3;
 % figure
-% dcolor(x,y,W,'CFun',1,'grid')
+% fig_dcolor(x,y,W,'CFun',1,'grid')
 % axis square
 % figure
-% dcolor(x,y,W,'cfun',3)
+% fig_dcolor(x,y,W,'cfun',3)
 % axis square
 % figure
-% dcolor(x,y,W,'cfun',4)
+% fig_dcolor(x,y,W,'cfun',4)
 % axis square
 %
 % % Example 2: Evaluate a Complex-valued Function Over a Specified Domain
@@ -170,7 +170,7 @@ function [h,c] = dcolor(varargin)
 % D = 1/sqrt(2)*[(-1 - 1*i),(1 + 1*i)];
 % fz = @(z)(exp(1./z));
 % figure
-% dcolor(D,fz)
+% fig_dcolor(D,fz)
 % axis square
 %
 % % Example 3: A Complex Function in Polar Coordinates
@@ -179,7 +179,7 @@ function [h,c] = dcolor(varargin)
 % Z = X+1i*Y;
 % W =.5*(Z.^8-1).^(1/4).*(1./Z.^4).*(Z-1+1i).*(Z+1-1i).*(Z-1-1i).*(Z+1+1i);
 % figure
-% dcolor(X,Y,W)
+% fig_dcolor(X,Y,W)
 % axis square
 %
 % REFERENCES
@@ -195,7 +195,7 @@ function [h,c] = dcolor(varargin)
 % http://en.wikipedia.org/wiki/Domain_coloring
 %
 
-% dcolor.m 
+% fig_dcolor.m 
 % Copyright (c) 2010-2011 by John Barber
 % Distribution and use of this software is governed by the terms in the 
 % accompanying license file.
@@ -210,7 +210,7 @@ function [h,c] = dcolor(varargin)
 %       - Added grid option
 %       - Changed default plot type from surface to image
 %       - Reduced memory usage
-%       - Renamed from cplxpcolor.m to dcolor.m
+%       - Renamed from cplxpcolor.m to fig_dcolor.m
 % v 2.1 : 2011-Feb-15
 %       - Added image color data output
 
@@ -432,7 +432,7 @@ if nargout == 2
     c = CData;
 end
 
-end % End of function dcolor
+end % End of function fig_dcolor
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -449,7 +449,7 @@ function  CData = DColorColorFunctions(w,cFunction)
 %
 % Transforms the complex data in the MxN matrix W into an MxNx3 array of
 % RGB values using the algorithm selected by cFunction.  Subfunction used
-% by dcolor.m.
+% by fig_dcolor.m.
 %
 
 %% Calculate the color data matrix in HSV space
@@ -644,11 +644,11 @@ end % End of function DColorColorFunctions
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function gridLevels = DColorGrid(w)
-% Get contour levels for a grid overlay on a DCOLOR plot.
+% Get contour levels for a grid overlay on a FIG_DCOLOR plot.
 %
-% The grid overlay on a DCOLOR plot is created by calling CONTOUR() twice
-% with the real and imaginary parts of W.  Because DCOLOR plots often have
-% a large dynamic range, DCOLORGRID tries to calculate log-scale contour
+% The grid overlay on a FIG_DCOLOR plot is created by calling CONTOUR() twice
+% with the real and imaginary parts of W.  Because FIG_DCOLOR plots often have
+% a large dynamic range, FIG_DCOLORGRID tries to calculate log-scale contour
 % levels (for both positive and negative data) which are then supplied to
 % the CONTOUR routine in place of the default values.  It doesn't always
 % work out perfectly, but usually looks better than the default output of

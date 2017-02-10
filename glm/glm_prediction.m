@@ -1,12 +1,12 @@
 
 function z = glm_prediction(a,x,o)
-    %% z = GLM_PREDICTION(b,x,o)
+    %% z = GLM_PREDICTION(a,x,o)
     % Build the prediction [z] from the regressors [x] and the coefficients [b]
     % 
-    % a : cell of vectors  : coefficients
-    % x : cell of matrices : design
-    % o : struct           : options
-    % z : cell of vectors  : predictions
+    % a : vector of structs : estimation
+    % x : cell of matrices  : design
+    % o : struct            : options
+    % z : cell of vectors   : predictions
     
     %% function
     

@@ -45,6 +45,7 @@ function color = fig_color(scheme,n)
         case 'jet_positive'; color = 255.*fig_color('jet',2*n); color = color(n+(1:n),:);
         case 'jet_negative'; color = 255.*fig_color('jet',2*n); color = color(1:n,:);
         case 'parula';  f = figure(); color = 255.*parula(n); close(f);
+        case 'bone';    f = figure(); color = 255.*bone(n);   close(f);
         % palettes (see http://www.colourlovers.com)
         case 'cegato';  color = [029,012,108;237,131,046;233,199,234;061,197,184;215,250,015];
         case 'cucumber';color = [110,009,041;201,215,104;231,247,174;087,080,052;001,201,182];

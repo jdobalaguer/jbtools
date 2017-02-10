@@ -17,7 +17,7 @@ function userOptions = scan_tool_rsa_userOptions(scan,i_subject)
 
     % SEARCHLIGHT OPTIONS
     userOptions.structuralsPath = fullfile(scan.directory.nii,'[[subjectName]]/structural/normalisation/4/');
-    userOptions.voxelSize = scan_tool_rsa_voxelsize(scan,scan.running.meta);
+    userOptions.voxelSize = scan_tool_voxelsize(scan,scan.running.meta);
     userOptions.searchlightRadius = 15;
 
     % EXPERIMENTAL SETUP

@@ -14,7 +14,7 @@ function a = glm_estimation(x,y,o)
     assertLength(x,y);
     
     % default options
-    func_default('o',[]);
+    func_default('o',struct());
     o = struct_default(o,glm_options());
     o_pair = struct2pair(struct_rm(o,'dist','zscore'));
     
