@@ -14,7 +14,7 @@ function y = vec_replace(x,a,b)
     assertSize(a,b);
     
     % replace
-    y = x;
+    y = double(x);
     for i = 1:length(a)
         if isnan(a{i}), ii = isnan(x);
         else            ii = (x == a{i});

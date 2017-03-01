@@ -16,7 +16,9 @@ function h = fig_shade(varargin)
     % default
     varargin(end+1:5) = {[]};
     [x,my,sy,c,a] = deal(varargin{1:5});
+    x  = mat2row(x);
     my = mat2row(my);
+    sy = mat2row(sy);
     func_default('x',1:length(my));
     func_default('sy',zeros(size(my)));
     func_default('c','b');

@@ -18,6 +18,9 @@ function model = model_simulation(model)
     if ~struct_isfield(model,'simu.pars') || struct_isempty(model.simu.pars)
         model.simu.pars = struct('null',0);
     end
+    if ~struct_isfield(model,'simu.glob')
+        model.simu.glob = struct();
+    end
     model.simu.pars = struct_mat2vec(model.simu.pars);
     u_pars = fieldnames(model.simu.pars);
     n_pars = length(u_pars);
@@ -40,9 +43,10 @@ function model = model_simulation(model)
     
     % initialize result
     data = struct_filter(model.simu.data,[]);
+    glob = model.simu.glob;
     pars = [u_pars';num2cell(u_comb(1,:))];
     pars = struct(pars{:});
-    model.simu.result.simulation = model.simu.func(data,pars);
+    model.simu.result.simulation = model.simu.func(data,pars,glob);
     u_result = fieldnames(model.simu.result.simulation);
     n_result = length(u_result);
     for i_result = 1:n_result
@@ -76,7 +80,7 @@ function model = model_simulation(model)
                 pars = struct(pars{:});
                 
                 % run
-                parfor_result(i_comb) = parfor_func(data,pars);
+                parfor_result(i_comb) = parfor_func(data,pars,glob);
                 
                 % progress
                 func_wait([],fw);

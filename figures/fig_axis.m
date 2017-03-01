@@ -82,6 +82,11 @@ function varargout = fig_axis(varargin)
       sa.xcolor = sa.xycolor;
       sa.ycolor = sa.xycolor;
   end
+  % xycolor
+  if isfield(sa,{'xygrid'})
+      sa.xgrid = sa.xygrid;
+      sa.ygrid = sa.xygrid;
+  end
   
   %% x
   % xtick

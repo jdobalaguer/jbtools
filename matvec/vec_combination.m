@@ -66,9 +66,9 @@ function m = vec_combination(varargin)
     % 3.0 (may 2012) removed check for doubles so character arrays are accepted
     % 4.0 (feb 2014) added support for cell arrays
 
-    error(nargchk(1,Inf,nargin)) ;
+    narginchk(1,Inf);
 
-    NC = nargin ;
+    NC = nargin;
 
     % check if we should flip the order
     if ischar(varargin{end}) && (strcmpi(varargin{end},'matlab') || strcmpi(varargin{end},'john')),

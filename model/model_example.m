@@ -31,7 +31,7 @@ function model = model_example()
     model.simu.data     = data;
     model.simu.subject  = data.subject;
     model = model_simulation(model);     % get model preditions
-    model = model_reconstruction(model); % merge predictions across subjets
+    model = model_reconstruction_simu(model); % merge predictions across subjects
 
     % EXHAUSTIVE COST MINIMSATION
     model.cost.func     = @test_costfunc;
@@ -72,7 +72,7 @@ function model = model_example()
 end
 
 %% simulation function
-function result = test_simufunc(data,pars)
+function result = test_simufunc(data,pars,glob)
     a = pars.a;
     b = pars.b;
     c = pars.c;
