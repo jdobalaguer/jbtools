@@ -55,7 +55,7 @@ function model = model_example()
     model.xval.leave    = 1; % leave-one-out
     model = model_xval(model);
     
-    % BAYES/MAP PREDICTIONS
+    % BAYES COMBINED PREDICTIONS
     % this would require the cost to be a likelihood function
     model.bayes.func    = 'negative log-likelihood';
     % model = model_bayes(model);
@@ -72,7 +72,7 @@ function model = model_example()
 end
 
 %% simulation function
-function result = test_simufunc(data,pars,glob)
+function result = test_simufunc(data,pars,glob) %#ok<INUSD>
     a = pars.a;
     b = pars.b;
     c = pars.c;
