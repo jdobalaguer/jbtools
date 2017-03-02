@@ -1,5 +1,5 @@
 
-function result = model_gradient_parfor(problem,parfor_x0,parfor_simu_pars,parfor_simu_func,parfor_cost_pars,parfor_cost_func,parfor_data)
+function result = model_gradient_parfor(problem,parfor_x0,parfor_simu_glob,parfor_simu_pars,parfor_simu_func,parfor_cost_pars,parfor_cost_func,parfor_data)
 
     %% function
     
@@ -31,7 +31,7 @@ function result = model_gradient_parfor(problem,parfor_x0,parfor_simu_pars,parfo
     function cost = cost_function(x)
         pars = [parfor_simu_pars';num2cell(x')];
         pars = struct(pars{:});
-        simu = parfor_simu_func(parfor_data,pars);
+        simu = parfor_simu_func(parfor_data,pars,parfor_simu_glob);
         cost = parfor_cost_func(parfor_data,simu,parfor_cost_pars);
     end 
 end
