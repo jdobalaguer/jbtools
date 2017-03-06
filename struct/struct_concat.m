@@ -30,7 +30,10 @@ function s = struct_concat(varargin)
         try
             s.(t_f) = cat(d,t_v{:});
         catch
-            s.(t_f) = t_v;
+            if isvector(t_v) && iscell(t_v) && (numel(t_v)==nargin-1)
+                s.(t_f) = mat_reshape(t_v,[ones(1,d-1),numel(t_v)]);
+            else              s.(t_f) = t_v;
+            end
         end
     end
 end

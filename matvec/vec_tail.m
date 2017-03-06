@@ -9,5 +9,6 @@ function y = vec_tail(x,n)
     
     % assert
     func_default('n',1);
+    if n<0, n = numel(x)+n; end
     y = x(n+1:end);
 end

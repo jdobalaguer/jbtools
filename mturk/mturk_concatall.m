@@ -15,7 +15,7 @@ function ret = mturk_concatall(s)
             case 'sdata'
                 catdim = 1;
             case 'edata'
-                catdim = 0;
+                catdim = 1;
             case 'parameters'
                 catdim = 0;
             case 'numbers'

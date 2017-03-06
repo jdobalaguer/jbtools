@@ -9,5 +9,6 @@ function y = vec_head(x,n)
     
     % assert
     func_default('n',1);
+    if n<0, n = numel(x)+n; end
     y = x(1:n);
 end
