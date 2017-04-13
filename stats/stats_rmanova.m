@@ -1,7 +1,10 @@
 
 function [h,p,F,stats,rm] = stats_rmanova(x,l)
-    %% [h,p,F,stats,rm] = STATS_RMANOVA(x)
+    %% [h,p,F,stats,rm] = STATS_RMANOVA(x,l)
     % repeated measures ANOVA
+    % x : matrix. the data, with one dimension per factor
+    %             the first dimension correspond must correspond to subjects
+    % l : cell of strings. one label per factor
     
     %% function
     
