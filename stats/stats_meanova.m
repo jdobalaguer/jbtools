@@ -8,14 +8,14 @@ function [h,p,F,stats,lme] = stats_meanova(x,l)
     % l : cell of strings. one label per factor
     
     %% function
-    warning('this has not been tested yet');
+    warning('this has not been tested yet - and the anova''s WM is not set!');
     
     % assert
     if ismember('Target',strtrim(l)),  func_error('"Target"  is not a valid label'); end
     if ismember('Subject',strtrim(l)), func_error('"Subject" is not a valid label'); end
 
     % linear mixed-effects model
-    [lme,effects] = stats_lme(x,l);    
+    [lme,effects] = stats_lme(x,l);
     
     % ANOVA
     stats = anova(lme);
