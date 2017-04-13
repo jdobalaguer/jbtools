@@ -2,8 +2,8 @@
 function y = vec_replace(x,a,b)
     %% y = VEC_REPLACE(x,a,b)
     % x = input vector
-    % a = element (found) in x
-    % b = element (replaced) in y
+    % a = cell with elements (found) in x
+    % b = cell with elements (replaced) in y
     % y = output vector
     
     %% function

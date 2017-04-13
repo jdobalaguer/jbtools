@@ -1,5 +1,5 @@
 
-function func_error(text)
+function func_error(varargin)
     %% FUNC_ERROR(text)
     % throw a formatted error
     % text : message
@@ -8,5 +8,5 @@ function func_error(text)
     % this can be improved. currently, the error is always thrown from func_error()
     
     %% function
-    error('%s : %s',func_caller(),text);
+    error('%s : %s',func_caller(),sprintf(varargin{:}));
 end
