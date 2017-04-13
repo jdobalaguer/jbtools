@@ -1,7 +1,7 @@
 
 function [h,p,F,stats,rm] = stats_rmanova(x,l)
     %% [h,p,F,stats,rm] = STATS_RMANOVA(x)
-    % parametric repeated measures ANOVA
+    % repeated measures ANOVA
     
     %% function
     
@@ -19,10 +19,10 @@ function [h,p,F,stats,rm] = stats_rmanova(x,l)
     
     % create table
     tbl = table(data{:},'VariableNames',strcat(labels{:}));
-    within = table(labels{:},'VariableNames',l);
 
     % rm model
     modelspec = [strjoin(strcat(labels{:}),','),'~1'];
+    within    = table(labels{:},'VariableNames',l);
     rm = fitrm(tbl,modelspec,'WithinDesign',within);
     
     % effects

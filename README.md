@@ -44,7 +44,7 @@ If you want to update the toolbox (only from UNIX/Linux), simply do
 [scan](scan) IN CONSTRUCTION - is a pipeline that runs many kinds of fMRI analyses with minimal effort. it requires SPM12.
 
 #### stats
-[stats](stats) IN CONSTRUCTION - is a set of functions for statistical analyses. it will hopefully include parametrical, non-parametrical and bayesian approaches (but who knows..)
+[stats](stats) IN CONSTRUCTION - is a set of functions for frequentist and bayesian statistical analyses.
 
 #### struct & cell
 [struct](struct) set of functions for manipulation of struct variables.
