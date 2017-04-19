@@ -46,5 +46,5 @@ function [lme,effects] = stats_lme(x,l)
     
     % fit linear mixed model
     modelspec = ['Target ~ ',strjoin(effects,' + '),' + (1|Subject)'];
-    lme = fitlme(tbl,modelspec);
+    lme = fitlme(tbl,modelspec,'FitMethod','reml','DummyVarCoding','effects');
 end

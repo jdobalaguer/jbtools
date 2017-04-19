@@ -2,6 +2,7 @@
 function varargout = getm_hist(varargin)
     %% [z,u] = GETM_HIST(x1[,x2][,x3][...])
     % returns the histogram of combinations of x1, x2, ..
+    % see also crosstab
     
     %% function
     y = ones(size(varargin{1}));
