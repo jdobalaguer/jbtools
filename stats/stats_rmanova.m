@@ -7,7 +7,8 @@ function varargout = stats_rmanova(x,l)
     % l : cell of strings. one label per factor
     
     %% example
-    % >> stats_rmanova(randn(20,2,3) + reshape([-1,+1,0;+1,-1,0],[1,2,3]));
+    % x = randn(20,2,3) + reshape([-1,+1,0;+1,-1,0],[1,2,3]);
+    % >> stats_rmanova(x);
     
     %% function
     varargout = {};

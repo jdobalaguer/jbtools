@@ -1,29 +1,25 @@
 
 function varargout = stats_mxanova(x,l)
     %% [h,p,F,stats,terms] = stats_mxanova(x[,l])
+    % ANOVA for mixed designs (it automatically detects subject nested factors)
+    % x : matrix. the data, with one dimension per factor
+    %             the first dimension correspond must correspond to subjects
+    %             with NaNs where missing data
+    % l : cell of strings. one label per factor
 
-    %% notes
-    % do i need to specify the subject as a random nested factor?
-    
     %% example
-    % x = {};
-    % x{1} = [repmat(mat2vec(1:32),[4,1]);repmat(mat2vec(33:64),[4,1])];
-    % x{2} = repmat(permat([1;2],[128,1]),[ 1,1]);
-    % x{3} = repmat(permat([1;2],[ 64,1]),[ 2,1]);
-    % x{4} = repmat(permat([1;2],[ 32,1]),[ 4,1]);
-    % x = cat(2,x{:});
-    % 
-    % y = randn(size(x,1),1);
-    % y(x(:,2)==1 & x(:,3)==1) = y(x(:,2)==1 & x(:,3)==1) - 1;
-    % y(x(:,2)==2 & x(:,3)==1) = y(x(:,2)==2 & x(:,3)==1) + 1;
-    % y(x(:,2)==1 & x(:,3)==2) = y(x(:,2)==1 & x(:,3)==2) + 1;
-    % y(x(:,2)==2 & x(:,3)==2) = y(x(:,2)==2 & x(:,3)==2) - 1;
-    % 
-    % nested = zeros(4,4); nested(1,2) = 1;
-    % vnames = {'Subject','A','B','C'};
-    % [P,T,STATS,TERMS] = anovan(y,x,'random',1,'nested',nested,'varnames',vnames,'model','full');
-    % 
-    % T(:,[1,3,6,7])
+    % a{1} = [repmat(mat2vec(1:32),[4,1]);repmat(mat2vec(33:64),[4,1])];
+    % a{2} = repmat(permat([1;2],[128,1]),[ 1,1]);
+    % a{3} = repmat(permat([1;2],[ 64,1]),[ 2,1]);
+    % a{4} = repmat(permat([1;2],[ 32,1]),[ 4,1]);
+    % a = cat(2,a{:});
+    % b = randn(size(a,1),1);
+    % b(a(:,2)==1 & a(:,3)==1) = b(a(:,2)==1 & a(:,3)==1) - 1;
+    % b(a(:,2)==2 & a(:,3)==1) = b(a(:,2)==2 & a(:,3)==1) + 1;
+    % b(a(:,2)==1 & a(:,3)==2) = b(a(:,2)==1 & a(:,3)==2) + 1;
+    % b(a(:,2)==2 & a(:,3)==2) = b(a(:,2)==2 & a(:,3)==2) - 1;
+    % x = getm_mean(b,a(:,1),a(:,2),a(:,3),a(:,4));
+    % >> stats_mxanova(x);
 
     %% function
     varargout = {};

@@ -6,12 +6,8 @@ function varargout = stats_ubanova(x,l)
     %             the first dimension correspond must correspond to subjects
     %             with NaNs where missing data
     % l : cell of strings. one label per factor
-
-    %% notes
-    % should i specify the subjects as a random factor?
     
     %% example
-    % a = cell(1,4);
     % a{1} = mat2vec(1:256);
     % a{2} = repmat(permat([1;2],[128,1]),[ 1,1]);
     % a{3} = repmat(permat([1;2],[ 64,1]),[ 2,1]);
@@ -23,7 +19,7 @@ function varargout = stats_ubanova(x,l)
     % b(a(:,3)==1 & a(:,4)==2) = b(a(:,3)==1 & a(:,4)==2) + 1;
     % b(a(:,3)==2 & a(:,4)==2) = b(a(:,3)==2 & a(:,4)==2) - 1;
     % x = getm_mean(b,a(:,1),a(:,2),a(:,3),a(:,4));
-    % >> stats_ubanova(x)
+    % >> stats_ubanova(x);
     
     %% function
     varargout = {};
