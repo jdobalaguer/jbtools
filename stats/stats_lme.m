@@ -9,6 +9,9 @@ function [lme,effects] = stats_lme(x,l)
     
     %% function
     
+    % default
+    func_default('l',num2cell(char('A'+(0:ndims(x)-2))));
+    
     % assert
     if ismember('Target',strtrim(l)),  func_error('"Target"  is not a valid label'); end
     if ismember('Subject',strtrim(l)), func_error('"Subject" is not a valid label'); end
