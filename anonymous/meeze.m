@@ -1,18 +1,16 @@
 
-function y = meeze(x,dim)
-    %% y = meeze(x,dim)
+function y = meeze(x,d)
+    %% y = meeze(x[,d])
+    % get the mean, and squeeze through those dimensions
+    % x : matrix. input values
+    % d : vector. dimensions to remove
     
     %% function
-    if nargin==1
-        y = squeeze(nanmean(x));
-        if isvector(y), y = mat2vec(y); end
-    else
-        y = x;
-        n = length(dim);
-        for i=1:n,
-            y = nanmean(y,dim(i));
-        end
-        y = squeeze(y);
-        if isvector(y), y = mat2vec(y); end
+    func_default('d',1);
+    y = x;
+    n = length(d);
+    for i=1:n
+        y = nanmean(y,d(i));
     end
+    y = mat_squeeze(y,d);
 end

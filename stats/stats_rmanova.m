@@ -1,12 +1,19 @@
 
-function [h,p,F,stats,rm] = stats_rmanova(x,l)
-    %% [h,p,F,stats,rm] = STATS_RMANOVA(x,l)
-    % repeated measures ANOVA
+function varargout = stats_rmanova(x,l)
+    %% [h,p,F,stats,rm] = STATS_RMANOVA(x[,l])
+    % Repeated measures ANOVA
     % x : matrix. the data, with one dimension per factor
     %             the first dimension correspond must correspond to subjects
     % l : cell of strings. one label per factor
     
+    %% example
+    % >> stats_rmanova(randn(20,2,3) + reshape([-1,+1,0;+1,-1,0],[1,2,3]));
+    
     %% function
+    varargout = {};
+    
+    % default
+    func_default('l',num2cell(char('A'+(0:ndims(x)-2))));
     
     % reshape data
     s = size(x);
@@ -52,6 +59,8 @@ function [h,p,F,stats,rm] = stats_rmanova(x,l)
         for i = 1:numel(h)
             fprintf('Effect %02d: %-18s F(%3.2f,%3.2f)=%4.3f,\tp=%4.3f \n',i,effects{i},dfn(i),dfd(i),F(i),p(i));
         end
+    else
+        varargout = {h,p,F,stats,rm};
     end
     
 end
