@@ -1,6 +1,6 @@
 
 function varargout = stats_ubanova(x,l)
-    %% [h,p,F,stats,terms] = stats_ubanova(x[,l])
+    %% [h,p,F,tbl,stats,terms] = stats_ubanova(x[,l])
     % Unbalanced ANOVA
     % x : matrix. the data, with one dimension per factor
     %             the first dimension correspond must correspond to subjects
@@ -61,6 +61,6 @@ function varargout = stats_ubanova(x,l)
             fprintf('Effect %02d: %-18s F(%3.2f,%3.2f)=%4.3f,\tp=%4.3f \n',i,effects{i},dfn(i),dfd(i),F(i),p(i));
         end
     else
-        varargout = {h,p,F,stats,terms};
+        varargout = {h,p,F,tbl,stats,terms};
     end
 end

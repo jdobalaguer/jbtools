@@ -1,6 +1,6 @@
 
 function varargout = stats_mxanova(x,l)
-    %% [h,p,F,stats,terms] = stats_mxanova(x[,l])
+    %% [h,p,F,tbl,stats,terms] = stats_mxanova(x[,l])
     % ANOVA for mixed designs (it automatically detects subject nested factors)
     % x : matrix. the data, with one dimension per factor
     %             the first dimension correspond must correspond to subjects
@@ -42,6 +42,7 @@ function varargout = stats_mxanova(x,l)
         end
     end
     clear i ii;
+    func_assert(~isempty(d),'error. [x] must include one between-subjects variable');
     
     % define grid
     s = size(x);
@@ -58,20 +59,14 @@ function varargout = stats_mxanova(x,l)
     % labels
     l = [{'Subject'},l];
     
-    % effects
-    effects = cell(1,numel(l));
-    for i = 1:numel(l)
-        effects{i} = combnk(l,i);
-        effects{i} = mat2cell(effects{i},ones(1,size(effects{i},1)),size(effects{i},2));
-    end
-    effects = cat(1,effects{:});
-    effects = cellfun(@(c)strjoin(c,'*'),effects,'UniformOutput',false);
-    
     % ANOVA
     nested = zeros(n); nested(1,d) = 1;
     [p,tbl,stats,terms] = anovan(x,t,'display','off','varnames',l,...
                                      'random',1,'nested',nested,...
                                      'model','full');
+                                 
+    % effects
+    effects = tbl(2:end-2,1);
     
     % return
     h   = (p < 0.05);
@@ -85,6 +80,6 @@ function varargout = stats_mxanova(x,l)
             fprintf('Effect %02d: %-18s F(%3.2f,%3.2f)=%4.3f,\tp=%4.3f \n',i,effects{i},dfn(i),dfd(i),F(i),p(i));
         end
     else
-        varargout = {h,p,F,stats,terms};
+        varargout = {h,p,F,tbl,stats,terms};
     end
 end

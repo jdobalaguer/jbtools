@@ -13,6 +13,9 @@ function varargout = stats_rmanova(x,l)
     %% function
     varargout = {};
     
+    % assert
+    func_assert(all(~isnan(x(:))),'error. [x] does not correspond to a repeated measures design.');
+    
     % default
     func_default('l',num2cell(char('A'+(0:ndims(x)-2))));
     
