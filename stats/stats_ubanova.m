@@ -52,13 +52,13 @@ function varargout = stats_ubanova(x,l)
     % return
     h   = (p < 0.05);
     F   = cell2mat(tbl(2:end-2,6));
-    dfd = zeros(size(p));
+    dfd = repmat(stats.dfe,size(p));
     dfn = cell2mat(tbl(2:end-2,3));
     
     % print
     if ~nargout
         for i = 1:numel(h)
-            fprintf('Effect %02d: %-18s F(%3.2f,%3.2f)=%4.3f,\tp=%4.3f \n',i,effects{i},dfn(i),dfd(i),F(i),p(i));
+            fprintf('Effect %02d: %-18s F(%3.0f,%3.0f) = %7.3f,\tp=%7.3f \n',i,effects{i},dfn(i),dfd(i),F(i),p(i));
         end
     else
         varargout = {h,p,F,tbl,stats,terms};

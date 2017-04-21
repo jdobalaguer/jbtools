@@ -61,7 +61,7 @@ function varargout = stats_rmanova(x,l)
     % print
     if ~nargout
         for i = 1:numel(h)
-            fprintf('Effect %02d: %-18s F(%3.2f,%3.2f)=%4.3f,\tp=%4.3f \n',i,effects{i},dfn(i),dfd(i),F(i),p(i));
+            fprintf('Effect %02d: %-18s F(%3.0f,%3.0f) = %7.3f,\tp=%7.3f \n',i,effects{i},dfn(i),dfd(i),F(i),p(i));
         end
     else
         varargout = {h,p,F,stats,rm};

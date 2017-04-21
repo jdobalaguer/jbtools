@@ -29,7 +29,7 @@ function varargout = stats_mxanova(x,l)
     func_default('l',num2cell(char('A'+(0:n-2))));
     
     % assert
-    if ismember('Subject',strtrim(l)), func_error('"Subject" is not a valid label'); end
+    func_assert(~ismember('Subject',strtrim(l)),'"Subject" is not a valid label');
     
     % find random factors
     d = [];
@@ -37,12 +37,17 @@ function varargout = stats_mxanova(x,l)
         ii = num2cell(ones(1,n));
         ii{1} = 1:size(x,1);
         ii{i} = 1:size(x,i);
-        if all(sum(~isnan(squeeze(x(ii{:}))),2)==1)
+        if any(sum(~isnan(squeeze(x(ii{:}))),2)==1)
             d(end+1) = i;
         end
     end
-    clear i ii;
-    func_assert(~isempty(d),'error. [x] must include one between-subjects variable');
+    
+    % assert mixed design matrix
+    ii = num2cell(ones(n,1));
+    ii([1,d]) = arrayfun(@(s)1:s,mat_size(x,[1,d]),'UniformOutput',false);
+    z = ~isnan(x(ii{:}));
+    func_assert(all(sum(z(:,:),2)==1),'[x] does not conform to a mixed design');
+    clear i ii z;
     
     % define grid
     s = size(x);
@@ -69,15 +74,19 @@ function varargout = stats_mxanova(x,l)
     effects = tbl(2:end-2,1);
     
     % return
+    ii_random = find(strcmp(tbl(2:end-2,8),'random'));
+    ii_fixed  = find(strcmp(tbl(2:end-2,8),'fixed'));
     h   = (p < 0.05);
     F   = cell2mat(tbl(2:end-2,6));
-    dfd = nan(size(p));
-    dfn = cell2mat(tbl(2:end-2,3));
+    dfd = repmat(unique(cell2mat(tbl(ii_random+1,3))),size(p));
+    dfn = repmat(unique(cell2mat(tbl(ii_fixed+1,3))),size(p));
+    dfd(ii_random) = 0;
+    dfn(ii_random) = 0;
     
     % print
     if ~nargout
         for i = 1:numel(h)
-            fprintf('Effect %02d: %-18s F(%3.2f,%3.2f)=%4.3f,\tp=%4.3f \n',i,effects{i},dfn(i),dfd(i),F(i),p(i));
+            fprintf('Effect %02d: %-18s F(%3.0f,%3.0f) = %7.3f,\tp=%7.3f \n',i,effects{i},dfn(i),dfd(i),F(i),p(i));
         end
     else
         varargout = {h,p,F,tbl,stats,terms};
