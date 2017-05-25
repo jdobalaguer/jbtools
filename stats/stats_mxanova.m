@@ -75,17 +75,15 @@ function varargout = stats_mxanova(x,l)
     
     % return
     ii_random = find(strcmp(tbl(2:end-2,8),'random'));
-    ii_fixed  = find(strcmp(tbl(2:end-2,8),'fixed'));
     h   = (p < 0.05);
     F   = cell2mat(tbl(2:end-2,6));
-    dfd = repmat(unique(cell2mat(tbl(ii_random+1,3))),size(p));
-    dfn = repmat(unique(cell2mat(tbl(ii_fixed+1,3))),size(p));
-    dfd(ii_random) = 0;
-    dfn(ii_random) = 0;
+    dfn = cell2mat(tbl(2:end-2,3));
+    dfd = repmat(tbl{2,3},size(dfn));
     
     % print
     if ~nargout
         for i = 1:numel(h)
+            if ismember(i,ii_random), continue; end
             fprintf('Effect %02d: %-18s F(%3.0f,%3.0f) = %7.3f,\tp=%7.3f \n',i,effects{i},dfn(i),dfd(i),F(i),p(i));
         end
     else

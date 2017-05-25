@@ -1,11 +1,14 @@
 
-function i = randsel(p,d)
-    %% i = RANDSEL(p,d)
+function i = mat_probsample(p,d)
+    %% i = MAT_PROBSAMPLE(p,d)
     % select random samples [i] from a matrix of probabilities [p]
     % along a certain dimension [d]
     % p : matrix, probabilities
     % d : scalar, dimension (default 1)
     % i : matrix, index of the random samples
+    
+    %% note
+    % previously called "randsel"
     
     %% function
     
@@ -29,5 +32,5 @@ function i = randsel(p,d)
     m = m{d};
     
     % selection
-    i = max((v > c) .* m, [], d);
+    i = max((v > c) .* m, [], d) + 1;
 end

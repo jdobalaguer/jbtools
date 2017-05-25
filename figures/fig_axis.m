@@ -69,23 +69,46 @@ function varargout = fig_axis(varargin)
   if isfield(sa,{'xytick'})
       sa.xtick = sa.xytick;
       sa.ytick = sa.xytick;
-      sa.ztick = sa.xytick;
+  end
+  % xyticklabel
+  if isfield(sa,{'xyticklabel'})
+      sa.xticklabel = sa.xyticklabel;
+      sa.yticklabel = sa.xyticklabel;
   end
   % xylim
   if isfield(sa,{'xylim'})
       sa.xlim = sa.xylim;
       sa.ylim = sa.xylim;
-      sa.zlim = sa.xylim;
   end
   % xycolor
   if isfield(sa,{'xycolor'})
       sa.xcolor = sa.xycolor;
       sa.ycolor = sa.xycolor;
   end
-  % xycolor
+  % xygrid
   if isfield(sa,{'xygrid'})
       sa.xgrid = sa.xygrid;
       sa.ygrid = sa.xygrid;
+  end
+  
+  %% x & y & z
+  % xyztick
+  if isfield(sa,{'xyztick'})
+      sa.xtick = sa.xytick;
+      sa.ytick = sa.xytick;
+      sa.ztick = sa.xytick;
+  end
+  % xyzticklabel
+  if isfield(sa,{'xyzticklabel'})
+      sa.xticklabel = sa.xyticklabel;
+      sa.yticklabel = sa.xyticklabel;
+      sa.zticklabel = sa.xyticklabel;
+  end
+  % xyzlim
+  if isfield(sa,{'xyzlim'})
+      sa.xlim = sa.xylim;
+      sa.ylim = sa.xylim;
+      sa.zlim = sa.xylim;
   end
   
   %% x
