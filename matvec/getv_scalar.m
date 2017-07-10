@@ -7,15 +7,15 @@ function y = getv_scalar(varargin)
     %% function
     
     % default
-    assert(nargin > 1, 'jb_setvector: error. not enough inputs');
+    func_assert(nargin > 1, 'error. not enough inputs');
     m = varargin{1};
     x = fliplr(varargin(2:end));
     l = length(x{1});
     
     % assert
     for i=1:nargin-1
-        assert(isvector(x) ,    'jb_setvector: error. x(%d) is not a vector',i);
-        assert(length(x{i})==l, 'jb_setvector: error. x(%d) has wrong length',i);
+        func_assert(isvector(x) ,    'error. x(%d) is not a vector',i);
+        func_assert(length(x{i})==l, 'error. x(%d) has wrong length',i);
     end
     
     % set inputs

@@ -18,8 +18,6 @@ function y = glm_target(s,m)
     
     % get target across subjects
     x_target = s.(m.target);
-    assertVector(x_target)
-    x_target = mat2vec(x_target);
 
     % create target vectors
     y = cell(n_subject,1);

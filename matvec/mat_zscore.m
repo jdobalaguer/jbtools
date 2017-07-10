@@ -24,5 +24,5 @@ function z = mat_zscore(x,d)
         
     % z-score
     z = (x - m) ./ s;
-    if ~s, z(:) = nan; end
+%     if ~s, z(:) = nan; end
 end

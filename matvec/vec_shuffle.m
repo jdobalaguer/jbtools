@@ -1,7 +1,7 @@
 
 function z = vec_shuffle(varargin)
-    %% [z] = VEC_DEMEAN(y[,x1][,x2])
-    % de-mean matrix [y], independently for each combination of indices in {x}
+    %% [z] = VEC_SHUFFLE(y[,x1][,x2])
+    % shuffle vector/matrix [y], independently for each combination of indices in {x}
     
     %% function
     

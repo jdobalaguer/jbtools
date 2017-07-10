@@ -221,6 +221,7 @@ function varargout = fig_axis(varargin)
   if isfield(sa,{'ilegend','tlegend'})
     if ~isfield(sa,'plegend'), sa.plegend = 'NorthWest'; end
     va.hlegend = legend(sa.ilegend,sa.tlegend,'location',sa.plegend);
+    legend('boxoff');
   end
   % visible
   if isfield(sa,{'visible'})

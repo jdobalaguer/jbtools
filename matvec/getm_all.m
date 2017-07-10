@@ -15,10 +15,10 @@ function [z,u] = getm_all(varargin)
     % variables
     y = varargin{1};
     x = varargin(2:end);
-    l = length(y);
+    l = size(y,1);
     
     % columns & rows
-    if isvector(y), y = mat2vec(y); end
+    %if isvector(y), y = mat2vec(y); end
     x = cellfun(@mat2vec,x,'UniformOutput',false);
     
     % assert
@@ -26,7 +26,7 @@ function [z,u] = getm_all(varargin)
     assertSize(y(:,1),x{:});
     
     % set inputs
-    if isvector(y), y = mat2vec(y); end
+    %if isvector(y), y = mat2vec(y); end
     x = cellfun(@double, x,'UniformOutput',false);
     x = cellfun(@mat2vec,x,'UniformOutput',false);
     x = cell2mat(x);
@@ -62,8 +62,10 @@ function [z,u] = getm_all(varargin)
         z = qz;
         u = qu;
     end
-    z = reshape(z,s);
+    z = mat_reshape(z,s);
     z = permute(z,fliplr(1:length(size(z))));
+    
+    if isvector(z), z = mat2vec(z); end
 end
 
 function ii = findrow(v,m)

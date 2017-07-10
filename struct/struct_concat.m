@@ -7,6 +7,7 @@ function s = struct_concat(varargin)
     % s  : resulting struct
     
     %% function
+    if nargin==2, s = varargin{2}; return; end
     
     % dimension
     d = varargin{1};

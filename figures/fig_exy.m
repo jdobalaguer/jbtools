@@ -44,10 +44,8 @@ function h = fig_exy(varargin)
     
     % plot
     switch mode
-        case 'line',
-            hold('on');
-            h = arrayfun(@(mx,my,sx,sy)fig_circle(mx,my,sx,sy,'Color',c,'LineStyle','--'),mx,my,sx,sy,'UniformOutput',false);
-            h = [h{:}];
+        case 'line'
+            h = fig_line(mx,my,c);
         case 'marker'
             h = fig_combination('marker',mx,my,sy,c,a);
         case 'pip'

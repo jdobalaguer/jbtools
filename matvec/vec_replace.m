@@ -19,7 +19,7 @@ function y = vec_replace(x,a,b)
         if isnan(a{i}), ii = isnan(x);
         else            ii = (x == a{i});
         end
-        assertWarning(any(ii),'vec_replace: warning. not any "%s"',num2str(a{i}));
+        assertWarning(any(ii(:)),'vec_replace: warning. not any "%s"',num2str(a{i}));
         y(ii) = b{i};
     end
 end

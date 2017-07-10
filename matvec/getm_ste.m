@@ -1,6 +1,7 @@
 
 function varargout = getm_ste(varargin)
-    % [z,u] = getm_ste(y,x1[,x2][,x3][...])
+    %% [z,u] = GETM_STE(y,x1[,x2][,x3][...])
     
-    [varargout{1:nargout}] = getm_func(@nanste,varargin{:});
+    %% function
+    [varargout{1:nargout}] = getm_func(@(y)nanste(y,1),varargin{:});
 end

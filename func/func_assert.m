@@ -1,6 +1,6 @@
 
 function func_assert(condition,varargin)
-    %% FUNC_ASSERT(text)
+    %% FUNC_ASSERT(condition,text)
     % assert and throw a formatted error
     % text : message
     

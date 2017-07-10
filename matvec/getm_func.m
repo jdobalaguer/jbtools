@@ -6,5 +6,8 @@ function [z,u] = getm_func(varargin)
     
     %% function
     [z,u] = getm_all(varargin{2:end});
-    z = cellfun(varargin{1},z);
+    s = [mat_size(z),size(varargin{2},2)];
+    z = cellfun(varargin{1},z,'UniformOutput',false);
+    z = cat(1,z{:});
+    z = mat_reshape(z,s);
 end

@@ -5,7 +5,7 @@ function h = fig_gridsquareplot(n,i)
     
     %% function
     b = round(sqrt(n*16/9));
-    a = ceil(b*9/16);
+    a = ceil(n/b);
     h  = subplot(a,b,i);
     hold('on');
 end

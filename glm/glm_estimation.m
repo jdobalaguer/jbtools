@@ -24,7 +24,11 @@ function a = glm_estimation(x,y,o)
     % estimation
     a = cell(n_subject,1);
     for i_subject = 1:n_subject
-        [~,~,a{i_subject}] = glmfit(x{i_subject},y{i_subject},o.dist,o_pair{:});
+        a{i_subject} = cell(size(y{i_subject},2),1);
+        for i_y = 1:size(y{i_subject},2)
+            [~,~,a{i_subject}{i_y}] = glmfit(x{i_subject},y{i_subject}(:,i_y),o.dist,o_pair{:});
+        end
+        a{i_subject} = struct_concat(3,a{i_subject}{:});
     end
     a = cat(1,a{:});
 end

@@ -6,7 +6,7 @@ function h = fig_circle(varargin)
     %% function
     
     % default
-    varargin(end+1:5) = {[]};
+    varargin(end+1:4) = {[]};
     cx = varargin{1};
     cy = varargin{2};
     rx = varargin{3};
