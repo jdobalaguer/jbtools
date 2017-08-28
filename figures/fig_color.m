@@ -57,30 +57,34 @@ function color = fig_color(scheme,n)
         case 'wong';    color = [148,188,218;144,055,028;071,006,047;143,119,044;216,199,225];
         case 'clovers'; color = [233,127,002;189,021,080;073,010,061;011,072,107;138,155,015;003,054,073];
         % HSV
-        case 'hsv';
+        case 'hsv'
             color_hsv = nan(n,3);
             color_hsv(:,1) = linspace(1/n,1,n);
             color_hsv(:,2) = 1;
             color_hsv(:,3) = 1;
             color = 255 * hsv2rgb(color_hsv);
-        case 'hsv_3';
+        case 'hsv_3'
             color_hsv = nan(n,3);
             color_hsv(:,1) = linspace(1/3/n,1/3,n);
             color_hsv(:,2) = 1;
             color_hsv(:,3) = 1;
             color = 255 * hsv2rgb(color_hsv);
-        case 'hsv_4';
+        case 'hsv_4'
             color_hsv = nan(n,3);
             color_hsv(:,1) = linspace(1/4/n,1/4,n);
             color_hsv(:,2) = 1;
             color_hsv(:,3) = 1;
             color = 255 * hsv2rgb(color_hsv);
-        case 'hsv_6';
+        case 'hsv_6'
             color_hsv = nan(n,3);
             color_hsv(:,1) = linspace(1/6/n,1/6,n);
             color_hsv(:,2) = 1;
             color_hsv(:,3) = 1;
             color = 255 * hsv2rgb(color_hsv);
+        case {'colorcet L1','colorcet L2','colorcet L3','colorcet L4','colorcet L5','colorcet L6','colorcet L7','colorcet L8','colorcet L9','colorcet L10','colorcet L11','colorcet L12','colorcet L13','colorcet L14','colorcet L15','colorcet D1','colorcet D2','colorcet D3','colorcet D4','colorcet D5','colorcet D6','colorcet D7','colorcet D8','colorcet D9','colorcet D10','colorcet D11','colorcet D12','colorcet C1','colorcet C2','colorcet C3','colorcet C4','colorcet C5','colorcet C6','colorcet C7','colorcet C8','colorcet C9','colorcet R1','colorcet R2','colorcet R3','colorcet I1','colorcet I2','colorcet I3'}
+            name  = regexp(scheme,'colorcet (\w*)','tokens');
+            color = 255 * colorcet(name{1}{1});
+            color = interp1(1:256,color,linspace(1,256,n));
     % psychtoolbox
         otherwise
             assert(logical(exist('get_color.m','file')),sprintf('fig_color: scheme "%s" not valid',scheme));

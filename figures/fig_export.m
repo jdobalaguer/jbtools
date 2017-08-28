@@ -19,7 +19,7 @@ function fig_export(fname,handle)
     
     %% set
     % handle
-    handle = ['-f',num2str(handle)];
+    handle = ['-f',num2str(handle.Number)];
     
     % extension
     extension(1) = []; % remove dot

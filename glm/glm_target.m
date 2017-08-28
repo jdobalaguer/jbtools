@@ -24,6 +24,6 @@ function y = glm_target(s,m)
     for i_subject = 1:n_subject
         ii_subject = (x_subject == u_subject(i_subject));
         y{i_subject} = x_target(ii_subject,:);
-        if m.zscore, y{i_subject} = nan2zero(mat_zscore(y{i_subject},1)); end
+       if m.zscore, y{i_subject} = nan2zero(mat_zscore(y{i_subject},1)); end
     end
 end

@@ -13,13 +13,13 @@ function z = mat_zscore(x,d)
     % global z-scoring
     if isempty(d)
         m = nanmean(x(:));
-        s = nanstd (x(:),0);
+        s = nanstd (x(:),1);
     % dimension specific
     else
         r = ones(1,ndims(x));
         r(d) = size(x,d);
         m = repmat(nanmean(x,d),r);
-        s = repmat(nanstd (x,0,d),r);
+        s = repmat(nanstd (x,1,d),r);
     end
         
     % z-score

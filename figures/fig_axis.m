@@ -90,6 +90,11 @@ function varargout = fig_axis(varargin)
       sa.xgrid = sa.xygrid;
       sa.ygrid = sa.xygrid;
   end
+  % xylabel
+  if isfield(sa,{'xylabel'})
+      sa.xlabel = sa.xylabel;
+      sa.ylabel = sa.xylabel;
+  end
   
   %% x & y & z
   % xyztick

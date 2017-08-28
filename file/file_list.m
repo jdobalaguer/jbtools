@@ -48,7 +48,7 @@ function [file,dirs] = file_list(path,mode)
             end
         case 'absolute'
             for i = 1:length(file)
-                file{i} = file_2absolute([fileparts(path),filesep,file{i}]);
+                file{i} = fullfile(list(i).folder,file{i});
             end
         otherwise
             error('file_list: mode "%s" not valid',mode);
