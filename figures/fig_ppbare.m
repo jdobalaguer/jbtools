@@ -1,11 +1,12 @@
 
-function [h,s] = fig_pbare(x,c,g,b,w,t)
-    %% [h,s] = FIG_PBARE(values,color,groups,bars,width,tstatopts)
+function [h,s] = fig_ppbare(m,e,p,c,g,b,w,t)
     % Create bars with p-value indicators
     
     %% function
     
     % default
+    func_default('e',[]);
+    func_default('p',[]);
     func_default('c',[]);
     func_default('g',[]);
     func_default('b',[]);
@@ -13,20 +14,15 @@ function [h,s] = fig_pbare(x,c,g,b,w,t)
     func_default('t',{});
     
     % values
-    [m,e] = deeze(x,1);
     h = fig_bare(m,e,c,g,b,w);
     
-    % return
-    if ndims(x)>3, s = struct(); return; end
-    
     % statistics
-    [~,p,ci,s] = ttest(x,[],t{:});
+    s = struct();
     s.p  = p;
-    s.ci = ci;
     
     % plot stars
-    for i_group = 1:mat_size(x,3)
-        for i_value = 1:mat_size(x,2)
+    for i_group = 1:mat_size(m,2)
+        for i_value = 1:mat_size(m,1)
             % get position
             px = h.errors(i_group).XData(i_value);
             py = h.errors(i_group).YData(i_value);

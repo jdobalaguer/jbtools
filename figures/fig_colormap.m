@@ -16,5 +16,6 @@ function color = fig_colormap(v,scheme,r)
     f = 1 + round((n-1) .* (v - r(1)) ./ (r(2) - r(1)));
     f(f<1) = 1;
     f(f>n) = n;
-    color = c(f,:);
+    color = nan(numel(f),3);
+    color(~isnan(f),:) = c(f(~isnan(f)),:);
 end

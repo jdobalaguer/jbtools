@@ -10,7 +10,6 @@ function p = softmax(l,d,b)
     %% function
     func_default('d',1);
     func_default('b',1);
-    l(~l(:)) = nan;
     x = ones(1,ndims(l));
     x(d) = size(l,d);
     m = l - repmat(max(l,[],d),x);

@@ -9,5 +9,6 @@ function y = vec_body(x,n)
     
     % assert
     func_default('n',1);
-    y = x(n+1:end-n);
+    s = size(x); s(1) = s(1)-2*n;
+    y = reshape(x(n+1:end-n,:),s);
 end
