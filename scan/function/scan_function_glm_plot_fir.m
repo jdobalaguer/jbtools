@@ -34,17 +34,17 @@ function auxiliar_fir(varargin)
     fir = tcan.function.get.fir(tcan,level,type,mask,contrast);
 
     % plot
-    if ~nargout,
+    if ~nargout
         switch level
             case 'first'
                 fir = nanmean(fir,4);
                 fir = nanmean(fir,2);
                 [m,e] = deal(mat2vec(nanmean(fir,1))',mat2vec(nanste(fir,1))');
-                x = 1:length(m);
+                x = linspace(0,tcan.job.basisFunction.parameters.length,tcan.job.basisFunction.parameters.order); %1:length(m);
                 fig_figure(plot_args.figure);
                 fig_combination({'marker'},x,m,e,plot_args.color_stroke);
                 fig_spline({'shade','pip','line'},x,m,e,plot_args.color_stroke);
-                plot(zeros(size(m)),'k--');
+                plot([0,tcan.job.basisFunction.parameters.length],[0,0],'k--'); %plot(zeros(size(m)),'k--');
             case 'second'
                 fir = meeze(fir,[2,4]);
                 fir = fir';

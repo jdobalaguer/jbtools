@@ -22,7 +22,7 @@ function job = scan_initialize_template_job_tbte(type)
     job.whatToDo           = 'all';
     
     % condition
-    job.condition = struct('subject',{},'session',{},'onset',{},'discard',{},'name',{},'duration',{});
+    job.condition = struct('subject',{},'session',{},'onset',{},'discard',{},'name',{},'split',{},'duration',{});
     
     % regressor
     job.regressor = struct('name',{},'file',{},'type',{},'filter',{},'covariate',{});

@@ -48,6 +48,7 @@ function scan = scan_initialize_template(type)
     scan.directory.mask             = file_endsep(fullfile(scan.directory.data,'mask'));
     scan.directory.glm              = file_endsep(fullfile(scan.directory.data,'glm'));
     scan.directory.tbte             = file_endsep(fullfile(scan.directory.data,'tbte'));
+    scan.directory.stem             = file_endsep(fullfile(scan.directory.data,'stem'));
     scan.directory.mvpa             = file_endsep(fullfile(scan.directory.data,'mvpa'));
     scan.directory.rsa              = file_endsep(fullfile(scan.directory.data,'rsa'));
     

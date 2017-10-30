@@ -26,7 +26,7 @@ function scan = scan_autocomplete_tbte(scan)
     % condition
     for i_subject = 1:scan.running.subject.number
         for i_session = 1:scan.running.subject.session(i_subject)
-            scan.running.condition{i_subject}{i_session} = struct('main',{},'name',{},'version',{},'onset',{},'subname',{},'level',{},'duration',{});
+            scan.running.condition{i_subject}{i_session} = struct('main',{},'name',{},'version',{},'onset',{},'subname',{},'level',{},'split',{},'duration',{});
             for i_condition = 1:length(scan.job.condition)
                 ii_subject  = (scan.job.condition(i_condition).subject == scan.running.subject.unique(i_subject));
                 ii_session  = (scan.job.condition(i_condition).session == i_session);
@@ -41,6 +41,7 @@ function scan = scan_autocomplete_tbte(scan)
                     'onset'    , {scan.job.condition(i_condition).onset(ii_data) + scan.parameter.scanner.reft0 - scan.job.delayOnset}, ...
                     'subname'  , {{}}, ...
                     'level'    , {{}}, ...
+                    'split'    , {scan.job.condition(i_condition).split}, ...
                     'duration' , {scan.job.condition(i_condition).duration});
             end
         end

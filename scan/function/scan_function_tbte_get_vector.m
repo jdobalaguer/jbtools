@@ -44,7 +44,9 @@ function varargout = auxiliar_vector(varargin)
         ii_column  = (ii_session & ii_order & ii_name);
         switch field
             case 'onset'
-                onset = [tcan.running.condition{i_subject}{i_session}.onset];
+                onset = {tcan.running.condition{i_subject}{i_session}.onset};
+                onset = cellfun(@mat2vec,onset,'UniformOutput',false);
+                onset = cat(1,onset{:});
                 ii_name = strcmp({tcan.running.condition{i_subject}{i_session}.name},name);
                 onset = onset(ii_name);
                 varargout = {mat2vec(onset)};
