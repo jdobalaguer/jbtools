@@ -9,7 +9,7 @@ function y = meeze(x,d)
     func_default('d',1);
     y = x;
     n = length(d);
-    for i=1:n
+    for i = 1:n
         y = nanmean(y,d(i));
     end
     y = mat_squeeze(y,d);

@@ -9,7 +9,7 @@ function y = mat_squeeze(x,d)
     %% function
     
     % default
-    func_default('d',vec_filter(1:ndims(x),@(i)mat_size(x,i)==1));
+    func_default('d',vec_filter(1:mat_ndims(x),@(i)mat_size(x,i)==1));
     
     % assert
     s = size(x);
@@ -18,5 +18,6 @@ function y = mat_squeeze(x,d)
     
     % squeeze
     s(d) = [];
-    y = mat_reshape(x,s);
+    y = x;
+    if ~isempty(s), y = mat_reshape(x,s); end
 end
