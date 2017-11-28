@@ -42,8 +42,9 @@ function varargout = auxiliar_roi(varargin)
             for i_subject = 1:tcan.running.subject.number
                 for i_session = 1:tcan.running.subject.session(i_subject)
                     u_column = unique(tcan.running.design(i_subject).column.name);
-                    if length(matlab.lang.makeValidName(u_column)) < length(u_column)
-                        scan_tool_warning('two or more columns share the same name');
+                    s_column = makeValidName(u_column);
+                    if length(unique(s_column)) < length(u_column)
+                        scan_tool_warning(tcan,false,'two or more columns share the same name');
                     end
                     ii_session = (tcan.running.design(i_subject).column.session == i_session);
                     for i_column = 1:length(u_column)
@@ -53,7 +54,7 @@ function varargout = auxiliar_roi(varargin)
                         for i_order = 1:length(u_order)
                             file = fullfile(tcan.running.directory.copy.first.beta,u_column{i_column},sprintf('subject_%03i session_%03i order_%03i.nii',tcan.running.subject.unique(i_subject),i_session,u_order(i_order)));
                             vol  = scan_nifti_load(file,mask);
-                            roi.(matlab.lang.makeValidName(u_column{i_column})){i_subject}(:,i_order,i_session) = vol;
+                            roi.(s_column{i_column}){i_subject}(:,i_order,i_session) = vol;
                         end
                     end
                 end
@@ -64,8 +65,9 @@ function varargout = auxiliar_roi(varargin)
             roi = struct();
             for i_subject = 1:tcan.running.subject.number
                 u_contrast = unique({tcan.running.contrast{i_subject}.name});
-                if length(unique(matlab.lang.makeValidName(u_contrast))) < length(u_contrast)
-                    scan_tool_warning('two or more contrasts share the same valid name');
+                s_contrast = makeValidName(u_contrast);
+                if length(unique(s_contrast)) < length(u_contrast)
+                    scan_tool_warning(tcan,false,'two or more contrasts share the same valid name');
                 end
                 for i_contrast = 1:length(u_contrast)
                     ii_contrast = strcmp(u_contrast{i_contrast},{tcan.running.contrast{i_subject}.name});
@@ -73,7 +75,7 @@ function varargout = auxiliar_roi(varargin)
                     for i_order = 1:length(u_order)
                         file = fullfile(tcan.running.directory.copy.first.contrast,sprintf('%s_%03i',u_contrast{i_contrast},u_order(i_order)),sprintf('subject_%03i.nii',tcan.running.subject.unique(i_subject)));
                         vol  = scan_nifti_load(file,mask);
-                        roi.(matlab.lang.makeValidName(u_contrast{i_contrast})){i_subject}(:,i_order,1) = vol;
+                        roi.(s_contrast{i_contrast}){i_subject}(:,i_order,1) = vol;
                     end
                 end
             end
@@ -83,8 +85,9 @@ function varargout = auxiliar_roi(varargin)
             roi = struct();
             for i_subject = 1:tcan.running.subject.number
                 u_contrast = unique({tcan.running.contrast{i_subject}.name});
-                if length(unique(matlab.lang.makeValidName(u_contrast))) < length(u_contrast)
-                    scan_tool_warning('two or more contrasts share the same valid name');
+                s_contrast = makeValidName(u_contrast);
+                if length(unique(s_contrast)) < length(u_contrast)
+                    scan_tool_warning(tcan,false,'two or more contrasts share the same valid name');
                 end
                 for i_contrast = 1:length(u_contrast)
                     ii_contrast = strcmp(u_contrast{i_contrast},{tcan.running.contrast{i_subject}.name});
@@ -92,7 +95,7 @@ function varargout = auxiliar_roi(varargin)
                     for i_order = 1:length(u_order)
                         file = fullfile(tcan.running.directory.copy.first.statistic,sprintf('%s_%03i',u_contrast{i_contrast},u_order(i_order)),sprintf('subject_%03i.nii',tcan.running.subject.unique(i_subject)));
                         vol  = scan_nifti_load(file,mask);
-                        roi.(matlab.lang.makeValidName(u_contrast{i_contrast})){i_subject}(:,i_order,1) = vol;
+                        roi.(s_contrast{i_contrast}){i_subject}(:,i_order,1) = vol;
                     end
                 end
             end
@@ -101,7 +104,8 @@ function varargout = auxiliar_roi(varargin)
         case 'second:beta'
             roi = struct();
             u_contrast = unique({tcan.running.contrast{1}.name});
-            if length(matlab.lang.makeValidName(u_contrast)) < length(u_contrast)
+            s_contrast = makeValidName(u_contrast);
+            if length(s_contrast) < length(u_contrast)
                 scan_tool_warning('two or more contrasts share the same name');
             end
             for i_contrast = 1:length(u_contrast)
@@ -110,7 +114,7 @@ function varargout = auxiliar_roi(varargin)
                 for i_order = 1:length(u_order)
                     file = fullfile(tcan.running.directory.copy.second.beta,sprintf('%s_%03i.nii',u_contrast{i_contrast},u_order(i_order)));
                     vol  = scan_nifti_load(file,mask);
-                    roi.(matlab.lang.makeValidName(u_contrast{i_contrast}))(:,i_order,1) = vol;
+                    roi.(s_contrast{i_contrast})(:,i_order,1) = vol;
                 end
             end
 
@@ -118,8 +122,9 @@ function varargout = auxiliar_roi(varargin)
         case 'second:contrast'
             roi = struct();
             u_contrast = unique({tcan.running.contrast{1}.name});
-            if length(matlab.lang.makeValidName(u_contrast)) < length(u_contrast)
-                scan_tool_warning('two or more contrasts share the same name');
+            s_contrast = makeValidName(u_contrast);
+            if length(s_contrast) < length(u_contrast)
+                scan_tool_warning(tcan,false,'two or more contrasts share the same valid name');
             end
             for i_contrast = 1:length(u_contrast)
                 ii_contrast = strcmp(u_contrast{i_contrast},{tcan.running.contrast{1}.name});
@@ -127,7 +132,7 @@ function varargout = auxiliar_roi(varargin)
                 for i_order = 1:length(u_order)
                     file = fullfile(tcan.running.directory.copy.second.contrast,sprintf('%s_%03i.nii',u_contrast{i_contrast},u_order(i_order)));
                     vol  = scan_nifti_load(file,mask);
-                    roi.(matlab.lang.makeValidName(u_contrast{i_contrast}))(:,i_order,1) = vol;
+                    roi.(s_contrast{i_contrast})(:,i_order,1) = vol;
                 end
             end
 
@@ -135,8 +140,9 @@ function varargout = auxiliar_roi(varargin)
         case 'second:statistic'
             roi = struct();
             u_contrast = unique({tcan.running.contrast{1}.name});
-            if length(matlab.lang.makeValidName(u_contrast)) < length(u_contrast)
-                scan_tool_warning('two or more contrasts share the same name');
+            s_contrast = makeValidName(u_contrast);
+            if length(s_contrast) < length(u_contrast)
+                scan_tool_warning(tcan,false,'two or more contrasts share the same valid name');
             end
             for i_contrast = 1:length(u_contrast)
                 ii_contrast = strcmp(u_contrast{i_contrast},{tcan.running.contrast{1}.name});
@@ -144,7 +150,7 @@ function varargout = auxiliar_roi(varargin)
                 for i_order = 1:length(u_order)
                     file = fullfile(tcan.running.directory.copy.second.statistic,sprintf('%s_%03i.nii',u_contrast{i_contrast},u_order(i_order)));
                     vol  = scan_nifti_load(file,mask);
-                    roi.(matlab.lang.makeValidName(u_contrast{i_contrast}))(:,i_order,1) = vol;
+                    roi.(s_contrast{i_contrast})(:,i_order,1) = vol;
                 end
             end
     end

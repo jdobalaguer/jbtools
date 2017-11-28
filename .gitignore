@@ -1,4 +1,5 @@
 startup.m
 scan/atlas/private
 scan/glm/private
-
+.DS_Store
+*/.DS_Store

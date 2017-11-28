@@ -13,7 +13,9 @@ function scan_nifti_save(file,vol,template)
     
     % remove pinfo
     template = struct_rm(template,'pinfo');
-    template.private.dat.dtype = 'FLOAT32';
+    try
+        template.private.dat.dtype = 'FLOAT32';
+    end
     
     % file
     template.fname = file;

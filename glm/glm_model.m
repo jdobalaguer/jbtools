@@ -11,5 +11,6 @@ function m = glm_model()
     m.target      = [];             % target fieldname
     m.regressor   = {};             % regressor fieldnames
     m.model       = [];             % weights for main effect / interactions, see x2fx
-    m.zscore      = true;           % z-score regressors and target?
+    m.zscoreX     = false;          % z-score regressors?
+    m.zscoreY     = false;          % z-score target?
 end

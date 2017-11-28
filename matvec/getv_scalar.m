@@ -27,7 +27,7 @@ function y = getv_scalar(varargin)
     n = size(u,1);
     
     % set values
-    y = size(varargin{2});
+    y = nan(size(varargin{2}));
     for i = 1:n
         row = u(i,:);
         ii = findrow(row,x);

@@ -54,6 +54,11 @@ function [h,s] = fig_pbare(x,c,g,b,w,t)
                 set(f,'FontSize',20)
                 set(f,'HorizontalAlignment',ph);
                 set(f,'VerticalAlignment',  pv);
+            elseif 0.07 > s.p(1,i_value,i_group)
+                f = text(px,2*pz-py,'#');
+                set(f,'FontSize',10)
+                set(f,'HorizontalAlignment',ph);
+                set(f,'VerticalAlignment',  pv);
             end
         end
     end

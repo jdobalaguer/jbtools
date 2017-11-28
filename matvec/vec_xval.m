@@ -31,11 +31,13 @@ function y = vec_xval(x,s,c,f,min_s)
             ii_s = (s == u_s(i_s));
             ii_c = (c == u_c(i_c));
             
+            if ~sum(ii_s & ii_c), continue; end
+            
             % criterion for cross-validation
             if (sum(getm_sum(~ii_s & ii_c,s)>0) < min_s), continue; end
             
             % cross-generalise
-            y(ii_s & ii_c,:) = f(x(~ii_s & ii_c,:));
+            y(ii_s & ii_c,:) = repmat(f(x(~ii_s & ii_c,:)),[sum(ii_s & ii_c),1]);
         end
     end
 end
