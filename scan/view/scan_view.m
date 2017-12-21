@@ -1,12 +1,12 @@
 
-function obj = scan_view(varargin)
+function obj = scan_view(scan,varargin)
     %% SCAN_VIEW(scan,file1,file2,..)
     % tool to visualize statistical maps
     % to list main functions, try
     %   >> help scan;
     
     %% function
-    obj = new_parse(varargin{:});
+    obj = new_parse(scan,varargin{:});
     if isempty(obj.dat.statistics)
         scan_tool_warning(obj.scan,false,'no files found');
         delete(obj);

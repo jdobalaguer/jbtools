@@ -27,8 +27,9 @@ function varargout = auxiliar_allRdmModel(varargin)
     % get all RDMs
     allRDMs = {};
     for i_subject = 1:tcan.running.subject.number
-        for i_session = 1:tcan.running.subject.session(i_subject)
-            allRDMs{i_subject}{i_session} = tcan.function.get.rdmModel(tcan,i_subject,i_session,i_model,mask); %#ok<AGROW>
+        [u_session,n_session] = numbers(tcan.running.subject.session{i_subject});
+        for i_session = 1:n_session
+            allRDMs{i_subject}{i_session} = tcan.function.get.rdmModel(tcan,i_subject,u_session(i_session),i_model,mask); %#ok<AGROW>
         end
     end
     

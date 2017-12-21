@@ -19,8 +19,9 @@ function scan = scan_rsa_roi_first(scan)
     for i_subject = 1:scan.running.subject.number
 
         % group volumes
-        r = nan(scan.running.subject.session(i_subject),numel(scan.job.model));
-        for i_session = 1:scan.running.subject.session(i_subject)
+        [u_session,n_session] = numbers(scan.running.subject.session{i_subject});
+        r = nan(n_session,numel(scan.job.model));
+        for i_session = 1:n_session
             r(i_session,:) = mat2vec(scan.result.zero{i_subject}{i_session}.r);
         end
 

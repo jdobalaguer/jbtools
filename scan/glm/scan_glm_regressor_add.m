@@ -16,7 +16,8 @@ function scan = scan_glm_regressor_add(scan)
     % realignment
     if scan.job.realignCovariate
         for i_subject = 1:scan.running.subject.number
-            for i_session = 1:scan.running.subject.session(i_subject)
+            [u_session,n_session] = numbers(scan.running.subject.session{i_subject});
+            for i_session = 1:n_session
                 scan.running.regressor{i_subject}{i_session}.name(end+1:end+6)        = num2leg(1:6,'realignment %03i');
                 scan.running.regressor{i_subject}{i_session}.regressor(:,end+1:end+6) = load(file_match([scan.running.directory.nii.epi3.realignment{i_subject}{i_session},'*.txt'],'absolute'));
                 scan.running.regressor{i_subject}{i_session}.filter(end+1:end+6)      = false(1,6);
@@ -34,9 +35,10 @@ function scan = scan_glm_regressor_add(scan)
             case 'mask'
                 % type mask
                 mask = scan_nifti_load(fullfile(scan.directory.mask,scan.job.regressor(i_regressor).file));
-                scan = scan_tool_progress(scan,sum(scan.running.subject.session));
+                scan = scan_tool_progress(scan,sum(cellfun(@numel,scan.running.subject.session)));
                 for i_subject = 1:scan.running.subject.number
-                    for i_session = 1:scan.running.subject.session(i_subject)
+                    [u_session,n_session] = numbers(scan.running.subject.session{i_subject});
+                    for i_session = 1:n_session
                         vols = scan_nifti_load(scan.running.file.nii.epi3.(scan.job.image){i_subject}{i_session},mask);
                         vols = cellfun(@nanmean,vols);
                         scan.running.regressor{i_subject}{i_session}.name{end+1}        = scan.job.regressor(i_regressor).name;
@@ -49,17 +51,17 @@ function scan = scan_glm_regressor_add(scan)
                 end
                 scan = scan_tool_progress(scan,0);
             
-            case 'mat',
+            case 'mat'
                 % type mat-file
                 regressor = file_loadvar(fullfile(scan.directory.regressor,scan.job.regressor(i_regressor).file),'regressor');
-                scan = scan_tool_progress(scan,sum(scan.running.subject.session));
+                scan = scan_tool_progress(scan,sum(cellfun(@numel,scan.running.subject.session)));
                 for i_subject = 1:scan.running.subject.number
-                    subject = scan.running.subject.unique(i_subject);
+                    subject = (scan.subject.selection == scan.running.subject.unique(i_subject));
                     scan_tool_assert(scan,~isempty(regressor{subject}),                                        'regressor "%s" is empty for subject "%03i"',scan.job.regressor(i_regressor).file,subject);
-                    scan_tool_assert(scan,length(regressor{subject})==scan.running.subject.session(i_subject), 'regressor "%s" has wrong number of sessions for subject "%s"',scan.job.regressor(i_regressor).file,subject);
-                    for i_session = 1:scan.running.subject.session(i_subject)
+                    [u_session,n_session] = numbers(scan.running.subject.session{i_subject});
+                    for i_session = 1:n_session
                         scan.running.regressor{i_subject}{i_session}.name{end+1}        = scan.job.regressor(i_regressor).name;
-                        scan.running.regressor{i_subject}{i_session}.regressor(:,end+1) = regressor{subject}{i_session};
+                        scan.running.regressor{i_subject}{i_session}.regressor(:,end+1) = regressor{subject}{u_session(i_session)};
                         scan.running.regressor{i_subject}{i_session}.filter(end+1)      = scan.job.regressor(i_regressor).filter;
                         scan.running.regressor{i_subject}{i_session}.zscore(end+1)      = scan.job.regressor(i_regressor).zscore;
                         scan.running.regressor{i_subject}{i_session}.covariate(end+1)   = scan.job.regressor(i_regressor).covariate;

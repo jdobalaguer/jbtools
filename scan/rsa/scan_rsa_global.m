@@ -14,9 +14,9 @@ function scan = scan_rsa_global(scan)
     scan = scan_tool_progress(scan,1);
     
     % variables
-    beta    = double(scan.running.load.beta);
-    subject = double(scan.running.load.subject);
-    session = double(scan.running.load.session);
+    beta    = single(scan.running.load.beta);
+    subject = single(scan.running.load.subject);
+    session = single(scan.running.load.session);
     [~,~,name] = unique(scan.running.load.name);
     
     % global transformation

@@ -20,7 +20,7 @@ function scan = scan_rsa_searchlight_function(scan)
     scan = scan_function_rsa_get_rdm(scan);
     scan = scan_function_rsa_get_model(scan);
     scan = scan_function_rsa_get_rdmModel(scan);
-    scan = scan_function_rsa_get_rdmModel(scan);
+    scan = scan_function_rsa_get_allRdm(scan);
     scan = scan_function_rsa_get_allRdmModel(scan);
     scan = scan_function_rsa_get_avgRdmModel(scan);
     

@@ -41,7 +41,7 @@ function varargout = auxiliar_beta(varargin)
     u_covariate   = tcan.function.get.vector(tcan,i_subject,i_session,order,name,'covariate');
 
     % files
-    file = cellfun(@(s,r,o) sprintf('subject_%03i session_%03i order_%03i.nii',s,r,o),num2cell(mat2vec(tcan.running.subject.unique(u_subject))),num2cell(u_session),num2cell(u_order),'UniformOutput',false);
+    file = cellfun(@(s,r,o) sprintf('subject_%03i session_%03i order_%03i.nii',s,r,o),num2cell(mat2vec(u_subject)),num2cell(u_session),num2cell(u_order),'UniformOutput',false);
     file = fullfile(tcan.running.directory.copy.first.beta,strcat(name,u_version),file);
     file(logical(u_covariate)) = [];
 

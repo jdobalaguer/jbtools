@@ -18,9 +18,10 @@ function scan = scan_rsa_model_column(scan)
         % columns
         j_column = 0;
         for i_subject = 1:scan.running.subject.number
-            ii_subject = (x_column.subject == i_subject);
-            for i_session = 1:scan.running.subject.session(i_subject)
-                ii_session = (x_column.session == i_session);
+            ii_subject = (x_column.subject == scan.running.subject.unique(i_subject));
+            [u_session,n_session] = numbers(scan.running.subject.session{i_subject});
+            for i_session = 1:n_session
+                ii_session = (x_column.session == u_session(i_session));
                 for i_condition = 1:length(scan.job.glm.condition)
                     for i_order = 1:length(scan.job.glm.order)
                         ii_condition = strcmp(x_column.name,scan.job.glm.condition{i_condition});

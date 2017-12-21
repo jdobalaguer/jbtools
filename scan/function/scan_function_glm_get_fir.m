@@ -41,7 +41,7 @@ function varargout = auxiliar_fir(varargin)
         % first level beta
         case 'first:beta'
             for i_subject = 1:tcan.running.subject.number
-                n_session = tcan.running.subject.session(i_subject);
+                [u_session,n_session] = numbers(tcan.running.subject.session{i_subject});
                 u_order   = unique(tcan.running.design(i_subject).column.order(strcmp(contrast,tcan.running.design(i_subject).column.name)));
                 n_order   = length(u_order);
                 fir(i_subject,:,1:n_order,1:n_session) = roi.(matlab.lang.makeValidName(contrast)){i_subject}; %#ok<*AGROW>

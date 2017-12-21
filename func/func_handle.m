@@ -6,7 +6,7 @@ function func = func_handle(file)
     %% function
     here = pwd();
     [path,name] = fileparts(file);
-    cd(path);
+    if ~isempty(path), cd(path); end
     func = str2func(name);
     cd(here);
 end

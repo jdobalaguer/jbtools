@@ -40,19 +40,20 @@ function varargout = auxiliar_roi(varargin)
         case 'first:beta'
             roi = struct();
             for i_subject = 1:tcan.running.subject.number
-                for i_session = 1:tcan.running.subject.session(i_subject)
+                [u_session,n_session] = numbers(tcan.running.subject.session{i_subject});
+                for i_session = 1:n_session
                     u_column = unique(tcan.running.design(i_subject).column.name);
                     s_column = makeValidName(u_column);
                     if length(unique(s_column)) < length(u_column)
                         scan_tool_warning(tcan,false,'two or more columns share the same name');
                     end
-                    ii_session = (tcan.running.design(i_subject).column.session == i_session);
+                    ii_session = (tcan.running.design(i_subject).column.session == u_session(i_session));
                     for i_column = 1:length(u_column)
                         ii_column = strcmp(tcan.running.design(i_subject).column.name,u_column{i_column});
                         if any(tcan.running.design(i_subject).column.covariate(ii_column & ii_session)), continue; end
                         u_order  = unique(tcan.running.design(i_subject).column.order(ii_column & ii_session));
                         for i_order = 1:length(u_order)
-                            file = fullfile(tcan.running.directory.copy.first.beta,u_column{i_column},sprintf('subject_%03i session_%03i order_%03i.nii',tcan.running.subject.unique(i_subject),i_session,u_order(i_order)));
+                            file = fullfile(tcan.running.directory.copy.first.beta,u_column{i_column},sprintf('subject_%03i session_%03i order_%03i.nii',tcan.running.subject.unique(i_subject),u_session(i_session),u_order(i_order)));
                             vol  = scan_nifti_load(file,mask);
                             roi.(s_column{i_column}){i_subject}(:,i_order,i_session) = vol;
                         end

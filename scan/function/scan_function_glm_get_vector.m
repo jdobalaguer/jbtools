@@ -32,7 +32,7 @@ function varargout = auxiliar_vector(varargin)
         case 'onset'
             v = nan(size(auxiliar_vector(tcan,i_subject,i_session,order,name,'subject'))); varargout = {mat2vec(v)}; return;
         case 'subject'
-            v = repmat(i_subject,[1,sum(ii_column)]);
+            v = repmat(tcan.running.subject.unique(i_subject),[1,sum(ii_column)]);
         case {'session','order','covariate','main','name','version'}
             v = tcan.running.design(i_subject).column.(field)(ii_column);
         otherwise

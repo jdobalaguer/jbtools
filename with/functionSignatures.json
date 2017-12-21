@@ -1,0 +1,7 @@
+{
+"with_cd":     {"inputs":[{"name":"filewith", "kind":"required", "type":[["identifier=function,package,classdef"], ["filepath=*.m,*.mlx,*.mdl,*.slx"], ["char"]]}]},
+"with_copy":   {"inputs":[{"name":"filewith", "kind":"required", "type":[["identifier=function,package,classdef"], ["filepath=*.m,*.mlx,*.mdl,*.slx"], ["char"]]}]},
+"with_delete": {"inputs":[{"name":"filewith", "kind":"required", "type":[["identifier=function,package,classdef"], ["filepath=*.m,*.mlx,*.mdl,*.slx"], ["char"]]}]},
+"with_edit":   {"inputs":[{"name":"filewith", "kind":"required", "type":[["identifier=function,package,classdef"], ["filepath=*.m,*.mlx,*.mdl,*.slx"], ["char"]]}]},
+"with_finder": {"inputs":[{"name":"filewith", "kind":"required", "type":[["identifier=function,package,classdef"], ["filepath=*.m,*.mlx,*.mdl,*.slx"], ["char"]]}]}
+}

@@ -9,8 +9,11 @@ function scan = scan_rsa_searchlight(scan)
     if scan_tool_isdone(scan), return; end
     if isempty(scan.job.searchlight) || ~scan.job.searchlight, return; end
     
+    % loadRDM
+    [scan,rdm] = scan_rsa_searchlight_loadRDM(scan);
+    
     % estimation
-    scan = scan_rsa_searchlight_estimation(scan);
+    scan = scan_rsa_searchlight_estimation(scan,rdm);
 
     % analysis
     scan = scan_rsa_searchlight_first(scan);

@@ -15,7 +15,7 @@ function scan = scan_glm_condition_concat(scan)
     
     % print
     scan_tool_print(scan,false,'\nConcatenate session (condition) : ');
-    scan = scan_tool_progress(scan,sum(scan.running.subject.session));
+    scan = scan_tool_progress(scan,sum(cellfun(@numel,scan.running.subject.session)));
     
     % subject
     for i_subject = 1:scan.running.subject.number
@@ -30,7 +30,8 @@ function scan = scan_glm_condition_concat(scan)
         condition = struct('main',u_name,'name',u_name,'version',{''},'onset',{[]},'subname',u_subname,'level',{[]},'duration',{[]});
         
         % session
-        for i_session = 1:scan.running.subject.session(i_subject)
+        [u_session,n_session] = numbers(scan.running.subject.session{i_subject});
+        for i_session = 1:n_session
             
             % condition
             for i_condition = 1:length(u_name)

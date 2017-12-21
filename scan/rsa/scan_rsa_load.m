@@ -11,12 +11,13 @@ function scan = scan_rsa_load(scan)
     
     % print
     scan_tool_print(scan,false,'\nLoad GLM conditions : ');
-    scan = scan_tool_progress(scan,sum(scan.running.subject.session));
+    scan = scan_tool_progress(scan,sum(cellfun(@numel,scan.running.subject.session)));
     
     scan.running.load = struct('beta',{[]},'subject',{[]},'session',{[]},'order',{[]},'main',{{}},'name',{{}},'version',{{}},'onset',{[]},'gen',{[]});
     scan.running.load.gen = struct('condition',{{}},'isubject',{[]},'isession',{[]},'order',{[]});
     for i_subject = 1:scan.running.subject.number
-        for i_session = 1:scan.running.subject.session(i_subject)
+        [u_session,n_session] = numbers(scan.running.subject.session{i_subject});
+        for i_session = 1:n_session
             for i_condition = 1:length(scan.job.glm.condition)
                 for i_order = 1:length(scan.job.glm.order)
                     condition = scan.job.glm.condition{i_condition};

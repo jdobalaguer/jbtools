@@ -10,7 +10,7 @@ function scan = scan_rsa_concat(scan)
     if ~scan.job.concatSessions, return; end
     
     % concatenation
-    scan.running.subject.session(:) = 1;
+    scan.running.subject.session(:) = {1};
     
     % done
     scan = scan_tool_done(scan);

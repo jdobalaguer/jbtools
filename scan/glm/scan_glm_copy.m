@@ -95,17 +95,41 @@ function scan = scan_glm_copy(scan,level,type,force)
             end
             scan = scan_tool_progress(scan,0);
         
-        % first level residuals
-        case 'first:residual'
+        % first level mean squared (MS) residuals
+        case 'first:residualMS'
             if ~force && ~any(ismember('spm_1',scan.job.copyFolder)), return; end
             if ~force && ~scan.running.flag.design, return; end
             scan_tool_print(scan,false,'\nCopy residual maps (first level) : ');
             scan = scan_tool_progress(scan,scan.running.subject.number);
             for i_subject = 1:scan.running.subject.number
                 original  = fullfile(scan.running.directory.original.first{i_subject},'ResMS.nii');
-                copy      = fullfile(scan.running.directory.copy.first.residual,sprintf('subject_%03i.nii',scan.running.subject.unique(i_subject)));
+                copy      = fullfile(scan.running.directory.copy.first.residual,sprintf('subject_%03i_MS.nii',scan.running.subject.unique(i_subject)));
                 file_mkdir(fileparts(copy));
                 scan_tool_copy(original,copy);
+                scan = scan_tool_progress(scan,[]);
+            end
+            scan = scan_tool_progress(scan,0);
+            
+        % first level all residuals
+        case 'first:residual'
+            if ~force && ~any(ismember('spm_1',scan.job.copyFolder)), return; end
+            if ~force && ~scan.running.flag.design, return; end
+            scan_tool_print(scan,false,'\nCopy residual maps (first level) : ');
+            scan = scan_tool_progress(scan,scan.running.subject.number);
+            for i_subject = 1:scan.running.subject.number
+                spm = fullfile(scan.running.directory.original.first{i_subject},'SPM.mat');
+                spm_write_residuals(spm,0);
+                % copy mean square
+                original  = fullfile(scan.running.directory.original.first{i_subject},'ResMS.nii');
+                copy      = fullfile(scan.running.directory.copy.first.residual,sprintf('subject_%03i_MS.nii',scan.running.subject.unique(i_subject)));
+                file_mkdir(fileparts(copy));
+                scan_tool_copy(original,copy);
+                % copy all other files
+                original  = file_list(fullfile(scan.running.directory.original.first{i_subject},'Res_*.nii'),'absolute');
+                copy      = fullfile(scan.running.directory.copy.first.residual,strrep(file_2local(original),'Res_',sprintf('subject_%03i_',scan.running.subject.unique(i_subject))));
+                scan_tool_copy(original,copy);
+                cellfun(@file_delete,original,'UniformOutput',false);
+                % progress
                 scan = scan_tool_progress(scan,[]);
             end
             scan = scan_tool_progress(scan,0);

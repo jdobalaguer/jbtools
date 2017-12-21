@@ -23,7 +23,8 @@ function scan = scan_glm_ppi(scan)
         for i_subject = 1:scan.running.subject.number
 
             % session
-            for i_session = 1:length(scan.running.regressor{i_subject})
+            [u_session,n_session] = numbers(scan.running.subject.session{i_subject});
+            for i_session = 1:n_session
                 if isempty(condition{i_subject}{i_session}), continue; end
             
                 % regressor (i.e. physiological)

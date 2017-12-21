@@ -1,0 +1,4 @@
+{
+"scan_view":      {"inputs":[{"name":"scan", "kind":"required"                       },
+                             {"name":"varargin", "kind":"required", "type":"filepath"}]}
+}

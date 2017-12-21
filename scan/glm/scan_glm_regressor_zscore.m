@@ -11,13 +11,14 @@ function scan = scan_glm_regressor_zscore(scan)
     
     % print
     scan_tool_print(scan,false,'\nZ-score regressor : ');
-    scan = scan_tool_progress(scan,sum(scan.running.subject.session));
+    scan = scan_tool_progress(scan,sum(cellfun(@numel,scan.running.subject.session)));
     
     % subject
     for i_subject = 1:scan.running.subject.number
         
         % session
-        for i_session = 1:length(scan.running.regressor{i_subject})
+        [u_session,n_session] = numbers(scan.running.subject.session{i_subject});
+        for i_session = 1:n_session
             
             % regressor
             for i_regressor = 1:size(scan.running.regressor{i_subject}{i_session}.regressor,2)

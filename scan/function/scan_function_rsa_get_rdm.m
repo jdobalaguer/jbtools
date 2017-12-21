@@ -26,13 +26,31 @@ function varargout = auxiliar_rdm(varargin)
     
     % mask & beta
     mask = scan_nifti_load(fullfile(tcan.directory.mask,mask));
-    beta = scan_tool_rsa_fMRIDataPreparation(tcan,i_subject,i_session);
+    beta = scan_tool_rsa_fMRIDataPreparation(tcan,tcan.running.subject.unique(i_subject),tcan.running.subject.session{i_subject}(i_session));
     mask = mask & all(beta,2) & all(~isnan(beta),2);
     beta = beta(mask,:);
+    beta = beta';
+    
+    % whitening
+    if tcan.job.whitening
+        R = getResiduals(tcan,i_subject,mask);
+        beta = scan_tool_rsa_whitening(tcan,beta,R,i_subject,i_session);
+    end
     
     % get RDM
-    rdm  = scan_tool_rsa_buildrdm(tcan,beta');
+    rdm  = scan_tool_rsa_buildrdm(tcan,beta,i_subject,i_session);
     
     % retugn
     varargout = {rdm};
 end
+
+%% auxiliar: getResiduals
+function R = getResiduals(scan,i_subject,mask)
+    R = {};
+    if ~scan.job.whitening, return; end
+    R = scan_nifti_load(scan.running.glm.running.file.residual.volumes{i_subject},mask);
+    R = cat(2,R{:})';
+    u_session = unique(scan.running.glm.running.subject.session{i_subject});
+    R = mat2cell(R,arrayfun(@(s)sum(scan.running.glm.running.design(i_subject).row.session==s),u_session),size(R,2));
+end
+

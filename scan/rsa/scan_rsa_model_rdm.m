@@ -21,16 +21,16 @@ function scan = scan_rsa_model_rdm(scan)
         
         % subject
         for i_subject = 1:scan.running.subject.number
-            ii_subject = (x_subject == i_subject);
+            ii_subject = (x_subject == scan.running.subject.unique(i_subject));
             
             % concatenation
-            n_session = scan.running.subject.session(i_subject);
+            [u_session,n_session] = numbers(scan.running.subject.session{i_subject});
             if scan.job.concatSessions, n_session = 1; end
             rdm{i_subject} = cell(1,n_session);
             
             % session
             for i_session = 1:n_session
-                ii_session = (x_session == i_session);
+                ii_session = (x_session == u_session(i_session));
                 
                 % concatenation
                 if scan.job.concatSessions, ii_session(:) = 1; end
@@ -48,8 +48,8 @@ function scan = scan_rsa_model_rdm(scan)
                 [x,y] = deal(x(ix),x(iy));
                 ii = (~arrayfun(scan.job.model(i_model).filter,x,y));
                 rdm{i_subject}{i_session}.filter  = ~ii;
-                rdm{i_subject}{i_session}.rdm     = nan(size(ii));
-                rdm{i_subject}{i_session}.rdm(ii) = double(arrayfun(scan.job.model(i_model).function,x(ii),y(ii)));
+                rdm{i_subject}{i_session}.rdm     = nan(size(ii),'single');
+                rdm{i_subject}{i_session}.rdm(ii) = single(arrayfun(scan.job.model(i_model).function,x(ii),y(ii)));
             end
             
             % wait

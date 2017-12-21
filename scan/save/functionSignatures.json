@@ -1,0 +1,4 @@
+{
+"scan_load":      {"inputs":[{"name":"scan",           "kind":"required"                   },
+                             {"name":"scan_directory", "kind":"required", "type":"filepath"}]}
+}

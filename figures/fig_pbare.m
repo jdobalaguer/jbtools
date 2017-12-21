@@ -6,11 +6,15 @@ function [h,s] = fig_pbare(x,c,g,b,w,t)
     %% function
     
     % default
-    func_default('c',[]);
+    func_default('c',fig_color('w',size(x,3)));
     func_default('g',[]);
     func_default('b',[]);
     func_default('w',[]);
     func_default('t',{});
+    
+    % colour for the text
+    ct = c;
+    if all(ct(:)==1), ct(:) = 0; end
     
     % values
     [m,e] = deeze(x,1);
@@ -40,22 +44,22 @@ function [h,s] = fig_pbare(x,c,g,b,w,t)
             end
             % plot
             if 0.001 > s.p(1,i_value,i_group)
-                f = text(px,pz,'***');
+                f = text(px,pz,'***','Color',ct(i_group,:));
                 set(f,'FontSize',20)
                 set(f,'HorizontalAlignment',ph);
                 set(f,'VerticalAlignment',  pv);
             elseif 0.01 > s.p(1,i_value,i_group)
-                f = text(px,pz,'**');
+                f = text(px,pz,'**','Color',ct(i_group,:));
                 set(f,'FontSize',20)
                 set(f,'HorizontalAlignment',ph);
                 set(f,'VerticalAlignment',  pv);
             elseif 0.05 > s.p(1,i_value,i_group)
-                f = text(px,pz,'*');
+                f = text(px,pz,'*','Color',ct(i_group,:));
                 set(f,'FontSize',20)
                 set(f,'HorizontalAlignment',ph);
                 set(f,'VerticalAlignment',  pv);
             elseif 0.07 > s.p(1,i_value,i_group)
-                f = text(px,2*pz-py,'#');
+                f = text(px,2*pz-py,'#','Color',ct(i_group,:));
                 set(f,'FontSize',10)
                 set(f,'HorizontalAlignment',ph);
                 set(f,'VerticalAlignment',  pv);

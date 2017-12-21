@@ -40,7 +40,7 @@ function scan = scan_rsa_beta(scan)
                     if ~any(ii), continue; end
                     
                     % load
-                    scan.running.load.beta(ii,:) = scan.running.glm.function.get.beta(scan.running.glm,isubject,isession,order,condition,'');
+                    scan.running.load.beta(ii,:) = single(scan.running.glm.function.get.beta(scan.running.glm,isubject,isession,order,condition,''));
                 end
             end
             

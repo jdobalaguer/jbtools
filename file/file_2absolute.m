@@ -1,5 +1,5 @@
 
-function File = file_2absolute(File, Style)
+function File = file_2absolute(File)
     %% path = FILE_2ABSOLUTE(path)
     % transform path to "absolute"
 

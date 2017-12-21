@@ -20,7 +20,8 @@ function scan = scan_rsa_model_level(scan)
         
         % set level
         for i_subject = 1:scan.running.subject.number
-            for i_session = 1:scan.running.subject.session(i_subject)
+            [u_session,n_session] = numbers(scan.running.subject.session{i_subject});
+            for i_session = 1:n_session
 
                 u_condition = scan.job.glm.condition;
                 for i_condition = 1:length(u_condition)

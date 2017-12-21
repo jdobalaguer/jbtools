@@ -1,15 +1,15 @@
 
-function text = file_read(filename)
-    %% text = FILE_READ(filename)
+function text = file_read(path)
+    %% text = FILE_READ(path)
     % read a text file
     
     %% function
 
     % open
-    fid = fopen(filename,'r');
+    fid = fopen(path,'r');
     % check
     if fid<0
-        error(['couldn''t open "',filename,'"']);
+        error(['couldn''t open "',path,'"']);
     end
     
     % read

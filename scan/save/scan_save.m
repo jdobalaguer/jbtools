@@ -39,6 +39,7 @@ function scan = scan_save(scan)
         try
             % fprintf('%02i %d %s \n',byts(i_field),allow_serialize(flat.(u_field{i_field})),u_field{i_field}); continue;
             assert(allow_serialize(flat.(u_field{i_field})));
+            assert(bytes(val) < 1e8);
             auxiliar_fast(file,val);
         catch
             if bytes(val) < 2e9,    auxiliar_small(file,val);

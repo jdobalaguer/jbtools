@@ -27,8 +27,9 @@ function scan = scan_rsa_searchlight_first(scan)
             file_mkdir(fileparts(first_rmap_image));
             
             % group volumes
-            [group_image_rs,group_smooth_rs] = deal(nan(scan.running.subject.session(i_subject),prod(scan.running.meta.dim)));
-            for i_session = 1:scan.running.subject.session(i_subject)
+            [u_session,n_session] = numbers(scan.running.subject.session{i_subject});
+            [group_image_rs,group_smooth_rs] = deal(nan(n_session,prod(scan.running.meta.dim)));
+            for i_session = 1:n_session
                 group_image_rs (i_session,:) = mat2vec(scan.result.zero{i_subject}{i_session}.image.rs (:,:,:,i_model));
                 group_smooth_rs(i_session,:) = mat2vec(scan.result.zero{i_subject}{i_session}.smooth.rs(:,:,:,i_model));
             end

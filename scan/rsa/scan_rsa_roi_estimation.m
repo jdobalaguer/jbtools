@@ -11,11 +11,12 @@ function scan = scan_rsa_roi_estimation(scan)
     
     % print
     scan_tool_print(scan,false,'\nRSA estimation : ');
-    scan = scan_tool_progress(scan,sum(scan.running.subject.session));
+    scan = scan_tool_progress(scan,sum(cellfun(@numel,scan.running.subject.session)));
     
     % subject
     for i_subject = 1:scan.running.subject.number
-        for i_session = 1:scan.running.subject.session(i_subject)
+        [u_session,n_session] = numbers(scan.running.subject.session{i_subject});
+        for i_session = 1:n_session
         
             % get models
             u_model = nan(length(scan.running.model(1).rdm{i_subject}{i_session}.rdm),numel(scan.job.model));
@@ -26,27 +27,30 @@ function scan = scan_rsa_roi_estimation(scan)
             end
 
             % get beta
-            beta = scan_tool_rsa_fMRIDataPreparation(scan,i_subject,i_session);
+            beta = scan_tool_rsa_fMRIDataPreparation(scan,scan.running.subject.unique(i_subject),u_session(i_session));
 
             % get mask
             mask = scan.running.mask(i_subject);
             mask.valid = false(size(mask.mask));
             mask.valid = mask.mask & all(beta,2) & all(~isnan(beta),2);
             beta = beta(mask.valid,:);
-
-            % mahalanobis projection
-            [X,Y] = mahalanobisProjection(scan,i_subject,i_session);
-
-            % transformation
             beta = beta';
+
+            % whitening
+            if scan.job.whitening
+                R = getResiduals(scan,i_subject,mask);
+                beta = scan_tool_rsa_whitening(scan,beta,R,i_subject,i_session);
+            end
+
+            % build RDM and compare it with models
             beta = scan_tool_rsa_transformation(scan,beta);
-            
-            % build RDM
-            rdm  = scan_tool_rsa_buildrdm(scan,beta,X,Y);
-            % compare RDM with models
+            rdm  = scan_tool_rsa_buildrdm(scan,beta,i_subject,i_session);
             [r,p] = scan_tool_rsa_comparison(scan,rdm,u_model,u_filter);
+            
+            % save
             scan.result.zero{i_subject}{i_session}.r = r;
             scan.result.zero{i_subject}{i_session}.p = p;
+            if scan.job.saveRDM, scan.result.rdm{i_subject}{i_session} = rdm; end
             
             % wait
             scan = scan_tool_progress(scan,[]);
@@ -58,15 +62,12 @@ function scan = scan_rsa_roi_estimation(scan)
     scan = scan_tool_done(scan);
 end
 
-%% auxiliar: mahalanobisProjection
-function [X,Y] = mahalanobisProjection(scan,i_subject,i_session)
-    [X,Y] = deal([]);
-    if ~strcmp(scan.job.distance,'mahalanobis'), return; end
-    ii_session_column = (scan.running.glm.running.design(i_subject).column.session == i_session);
-    ii_session_row    = (scan.running.glm.running.design(i_subject).row.session    == i_session);
-    if scan.job.concatSessions, ii_session_column(:) = true; end
-    if scan.job.concatSessions, ii_session_row(:) = true; end
-    X = scan.running.glm.running.design(i_subject).matrix(ii_session_row,ii_session_column);
-    Y = file_loadvar(fullfile(scan.directory.xY,sprintf('subject_%03i.mat',scan.running.subject.unique(i_subject))),'y');
-    Y = Y(ii_session_row,:);
+%% auxiliar: getResiduals
+function R = getResiduals(scan,i_subject,mask)
+    R = {};
+    if ~scan.job.whitening, return; end
+    R = scan_nifti_load(scan.running.glm.running.file.residual.volumes{i_subject},mask.valid);
+    R = cat(2,R{:})';
+    u_session = unique(scan.running.glm.running.subject.session{i_subject});
+    R = mat2cell(R,arrayfun(@(s)sum(scan.running.glm.running.design(i_subject).row.session==s),u_session),size(R,2));
 end

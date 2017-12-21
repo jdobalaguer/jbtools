@@ -1,6 +1,6 @@
 
 function [z,p] = scan_tool_rsa_comparison(scan,rdm,models,filters)
-    %% [z,p] = SCAN_TOOL_RSA_COMPARISON(comparison,rdm,models)
+    %% [z,p] = SCAN_TOOL_RSA_COMPARISON(comparison,rdm,models,filters)
     % RSA toolbox - create RDM
     % to list main functions, try
     %   >> help scan;
@@ -25,11 +25,8 @@ function [z,p] = scan_tool_rsa_comparison(scan,rdm,models,filters)
         case 'diff'
             [z,p] = deal(nan(1,size(models,2)));
             for i_model = 1:size(models,2)
-%                 ii_filter  = ~filters(:,i_model);
-%                 t_model    = logical(models(ii_filter,i_model));
-%                 t_rdm      = rdm(ii_filter);
-%                 z(i_model) = mean(t_rdm(t_model==1)) - mean(t_rdm(t_model==0));
-                z(i_model) = mean(rdm(models(:,i_model)==1)) - mean(rdm(models(:,i_model)==0));
+%                 z(i_model) = mean(rdm(models(:,i_model)==1)) - mean(rdm(models(:,i_model)==0));
+                z(i_model) = nansum([nanmean(rdm(models(:,i_model)==1)),-nanmean(rdm(models(:,i_model)==0))]);
             end
         case 'glm'
             indices = all(indices,2);

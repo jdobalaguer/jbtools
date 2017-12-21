@@ -23,6 +23,9 @@ function z = deepen(s)
     z = struct();
     for i = 1:length(f)
         cmd = ['z.',f{i},' = s.',u{i},';'];
-        eval(cmd);
+        try
+            eval(cmd);
+        catch err
+        end
     end
 end

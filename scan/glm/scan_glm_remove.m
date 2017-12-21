@@ -11,11 +11,12 @@ function scan = scan_glm_remove(scan)
     
     % print
     scan_tool_print(scan,false,'\nRemove volumes : ');
-    scan = scan_tool_progress(scan,sum(scan.running.subject.session));
+    scan = scan_tool_progress(scan,sum(cellfun(@numel,scan.running.subject.session)));
     
     
     for i_subject = 1:scan.running.subject.number
-        for i_session = 1:scan.running.subject.session(i_subject)
+        [u_session,n_session] = numbers(scan.running.subject.session{i_subject});
+        for i_session = 1:n_session
             % remove files
             scan.running.file.nii.epi3.(scan.job.image){i_subject}{i_session}(1:scan.job.removeVolumes) = [];
             

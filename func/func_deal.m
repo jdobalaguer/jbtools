@@ -6,7 +6,10 @@ function varargout = func_deal(varargin)
     % inputs are ignored and outputs are assigned with [].
     
     %% function
-    varargout = cell(1,max(nargin,nargout));
-    varargout(1:nargin) = varargin;
+    ux = varargin;
+    if iscell(ux) && isscalar(ux), ux = ux{1}; end
+    nx = length(ux);
+    varargout = cell(1,max(nx,nargout));
+    varargout(1:nx) = ux;
     varargout = varargout(1:nargout);
 end

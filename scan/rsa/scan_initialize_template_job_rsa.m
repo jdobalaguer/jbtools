@@ -18,10 +18,12 @@ function job = scan_initialize_template_job_rsa(type)
     job.comparison         = 'spearman';
     job.distance           = 'euclidean';
     job.global             = 'none';
+    job.loadRDM            = '';
     job.saveRDM            = false;
     job.searchlight        = [];
     job.transformation     = 'none';
     job.whatToDo           = 'all';
+    job.whitening          = false;
     
     % model
     job.model = struct('name',{},'condition',{},'subname',{},'level',{},'function',{},'filter',{});

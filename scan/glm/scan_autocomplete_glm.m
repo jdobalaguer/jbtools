@@ -39,11 +39,12 @@ function scan = scan_autocomplete_glm(scan)
     
     % condition
     for i_subject = 1:scan.running.subject.number
-        for i_session = 1:scan.running.subject.session(i_subject)
+        [u_session,n_session] = numbers(scan.running.subject.session{i_subject});
+        for i_session = 1:n_session
             scan.running.condition{i_subject}{i_session} = struct('main',{},'name',{},'version',{},'onset',{},'subname',{},'level',{},'duration',{});
             for i_condition = 1:length(scan.job.condition)
                 ii_subject  = (scan.job.condition(i_condition).subject == scan.running.subject.unique(i_subject));
-                ii_session  = (scan.job.condition(i_condition).session == i_session);
+                ii_session  = (scan.job.condition(i_condition).session == u_session(i_session));
                 ii_discard  = (scan.job.condition(i_condition).discard);
                 func_default('ii_discard',false(size(ii_subject)));
                 ii_data  = (ii_subject & ii_session & ~ii_discard);
@@ -56,13 +57,26 @@ function scan = scan_autocomplete_glm(scan)
                     'subname'  , {scan.job.condition(i_condition).subname}, ...
                     'level'    , {cell2mat(cellfun(@(x)double(mat2vec(x(ii_data))),scan.job.condition(i_condition).level,'UniformOutput',false))}, ...
                     'duration' , {scan.job.condition(i_condition).duration(ii_data)});
+                % remove constant regressors
+                if ~scan.job.concatSessions
+                  to_remove = false(1,length(scan.running.condition{i_subject}{i_session}(end).subname));
+                  for i_level = 1:length(scan.running.condition{i_subject}{i_session}(end).subname)
+                      if isscalar(unique(scan.running.condition{i_subject}{i_session}(end).level(:,i_level)))
+                          scan_tool_warning(scan,true,'subject "%03i" session "%03i" condition "%s" level "%s" removed because it''s constant',scan.running.subject.unique(i_subject),u_session(i_session),scan.running.condition{i_subject}{i_session}(end).name,scan.running.condition{i_subject}{i_session}(end).subname{i_level});
+                          to_remove(i_level) = true;
+                      end
+                  end
+                  scan.running.condition{i_subject}{i_session}(end).subname(to_remove) = [];
+                  scan.running.condition{i_subject}{i_session}(end).level(:,to_remove) = [];
+                end
             end
         end
     end
     
     % regressor
     for i_subject = 1:scan.running.subject.number
-        for i_session = 1:scan.running.subject.session(i_subject)
+        [u_session,n_session] = numbers(scan.running.subject.session{i_subject});
+        for i_session = 1:n_session
             scan.running.regressor{i_subject}{i_session} = struct('name',{{}},'regressor',{[]},'filter',{[]},'zscore',{[]},'covariate',{[]});
         end
     end

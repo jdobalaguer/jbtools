@@ -21,7 +21,7 @@ function scan = scan_glm_estimation(scan)
     scan = scan_tool_progress(scan,0);
     
     % save
-    scan.running.jobs.design = spm;
+    scan.running.jobs.estimation = spm;
     
     % done
     scan = scan_tool_done(scan);

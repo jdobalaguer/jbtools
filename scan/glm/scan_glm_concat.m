@@ -27,7 +27,7 @@ function scan = scan_glm_concat(scan)
     scan = scan_tool_progress(scan,0);
     
     % change sessions
-    scan.running.subject.session(:) = 1;
+    scan.running.subject.session(:) = {1};
     
     % done
     scan = scan_tool_done(scan);

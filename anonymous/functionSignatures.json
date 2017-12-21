@@ -1,0 +1,3 @@
+{
+"finder": {"inputs":[{"name":"file", "kind":"required", "type":"filepath"}]}
+}

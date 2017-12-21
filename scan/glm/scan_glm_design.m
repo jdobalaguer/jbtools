@@ -41,10 +41,12 @@ function spm = auxiliar(scan,i_subject)
     spm{1}.spm.stats.fmri_spec.global = 'none';
     if scan.job.globalScaling, spm{1}.spm.stats.fmri_spec.global = 'scaling'; end
     spm{1}.spm.stats.fmri_spec.mask = {''};
+    spm{1}.spm.stats.fmri_spec.mthresh = spm_get_defaults('mask.thresh');
     spm{1}.spm.stats.fmri_spec.cvi = spm_get_defaults('stats.fmri.cvi');
 
     % session
-    for i_session = 1:scan.running.subject.session(i_subject)
+    [u_session,n_session] = numbers(scan.running.subject.session{i_subject});
+    for i_session = 1:n_session
         spm{1}.spm.stats.fmri_spec.sess(i_session).scans = scan.running.file.nii.epi3.(scan.job.image){i_subject}{i_session};
         spm{1}.spm.stats.fmri_spec.sess(i_session).hpf   = spm_get_defaults('stats.fmri.hpf');
         spm{1}.spm.stats.fmri_spec.sess(i_session).cond  = struct('name',{},'onset',{},'duration',{},'tmod',{},'pmod',{});

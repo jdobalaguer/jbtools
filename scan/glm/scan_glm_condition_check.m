@@ -11,13 +11,14 @@ function scan = scan_glm_condition_check(scan)
     
     % print
     scan_tool_print(scan,false,'\nCheck condition : ');
-    scan = scan_tool_progress(scan,sum(scan.running.subject.session));
+    scan = scan_tool_progress(scan,sum(cellfun(@numel,scan.running.subject.session)));
     
     % subject
     for i_subject = 1:scan.running.subject.number
         
         % session
-        for i_session = 1:scan.running.subject.session(i_subject)
+        [u_session,n_session] = numbers(scan.running.subject.session{i_subject});
+        for i_session = 1:n_session
             
             % number of volumes (the from covariate)
             n_volume = length(scan.running.file.nii.epi3.(scan.job.image){i_subject}{i_session});
@@ -33,7 +34,7 @@ function scan = scan_glm_condition_check(scan)
                     if ~isempty(scan.running.condition{i_subject}{i_session}(i_condition).level),
                         scan.running.condition{i_subject}{i_session}(i_condition).level(scans_to_remove,:) = [];
                     end
-                    scan_tool_warning(scan,true,'subject "%03i" session "%03i" condition "%s" removed %d samples',scan.running.subject.unique(i_subject),i_session,scan.running.condition{i_subject}{i_session}(i_condition).name,sum(scans_to_remove));
+                    scan_tool_warning(scan,true,'subject "%03i" session "%03i" condition "%s" removed %d samples',scan.running.subject.unique(i_subject),u_session(i_session),scan.running.condition{i_subject}{i_session}(i_condition).name,sum(scans_to_remove));
                 end
                 
             end

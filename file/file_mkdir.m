@@ -9,5 +9,5 @@ function file_mkdir(path)
     path = file_nendsep(path);
     rootpath = fileparts(path);
     if ~exist(rootpath,'dir'), file_mkdir(rootpath); end
-    if ~exist(path,'dir'),     mkdir(path);      end
+    if ~exist(path,'dir'),     mkdir(path);          end
 end

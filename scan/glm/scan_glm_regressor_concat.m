@@ -29,7 +29,8 @@ function scan = scan_glm_regressor_concat(scan)
         u_regressor.covariate = nan(size(u_name));
         
         % concatenate regressors
-        for i_session = 1:scan.running.subject.session(i_subject)
+        [u_session,n_session] = numbers(scan.running.subject.session{i_subject});
+        for i_session = 1:n_session
             t_regressor = zeros(size(scan.running.regressor{i_subject}{i_session}.regressor,1),length(u_name));
             for i_name = 1:length(u_name)
                 i_regressor = strcmp(scan.running.regressor{i_subject}{i_session}.name,u_name{i_name});
@@ -43,7 +44,7 @@ function scan = scan_glm_regressor_concat(scan)
         
         % constant
         s_volume = length(scan.running.file.nii.epi3.(scan.job.image){i_subject}{1});
-        for i_session = 2:scan.running.subject.session(i_subject)
+        for i_session = 2:n_session
             n_volume = length(scan.running.file.nii.epi3.(scan.job.image){i_subject}{i_session});
             u_regressor.name{end+1} = 'constant';
             u_regressor.regressor(s_volume+(1:n_volume),end+1) = 1;

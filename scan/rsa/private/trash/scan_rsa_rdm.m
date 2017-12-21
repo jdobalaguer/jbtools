@@ -23,7 +23,7 @@ function scan = scan_rsa_rdm(scan)
                         scan.running.rdm{i_subject}{i_session}(i_mask).vector = pdist(scan.running.bm{i_subject}{i_session}(i_mask).matrix',scan.job.distance);
                     case 'char'
                         switch scan.job.distance
-                            case {'euclidean','seuclidean','cityblock','minkowski','chebychev','mahalanobis','cosine','correlation','spearman','hamming','jaccard'}
+                            case {'euclidean','seuclidean','cityblock','minkowski','chebychev','cosine','correlation','spearman','hamming','jaccard'}
                                 scan.running.rdm{i_subject}{i_session}(i_mask).vector = pdist(scan.running.bm{i_subject}{i_session}(i_mask).matrix',scan.job.distance);
                             case {'linear0','linear1'}
                                 scan_tool_error(scan,'distance "%s" has not been implemented yet',scan.job.distance);

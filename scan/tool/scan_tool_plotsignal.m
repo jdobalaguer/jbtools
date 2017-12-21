@@ -25,17 +25,18 @@ function scan_tool_plotsignal(scan,n_volume,image)
     
     % print
     scan_tool_print(scan,false,'\nLoading volumes');
-    scan = scan_tool_progress(scan,sum(scan.running.subject.session));
+    scan = scan_tool_progress(scan,sum(cellfun(@numel,scan.running.subject.session)));
     
     % get signal
     signal = [];
     for i_subject = 1:scan.running.subject.number
-        for i_session = 1:scan.running.subject.session(i_subject)
+        [u_session,n_session] = numbers(scan.running.subject.session{i_subject});
+        for i_session = 1:n_session
             files = scan.running.file.nii.epi3.smooth{i_subject}{i_session};
 
             % filter out
             if     n_volume > 0,  files = files(1:n_volume);
-            elseif n_volume < 0,  files = files(end+n_volume+1,end);
+            elseif n_volume < 0,  files = files(end+n_volume+1:end);
             end
 
             volumes(i_session,:) = nanmean(cell2mat(scan_nifti_load(files)'));
