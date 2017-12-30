@@ -24,7 +24,7 @@ function model = model_reconstruction_simu(model)
     
     % result
     model.simu.result.reconstruction = struct_filter(model.simu.result.simulation(1),1);
-    model.simu.result.reconstruction = repmat(model.simu.result.reconstruction,[n_index,s_comb]);
+    model.simu.result.reconstruction = repmat(model.simu.result.reconstruction,[n_index,s_comb,1]);
     for i_index = 1:n_index
         for i_comb = 1:n_comb
             reconstruction = struct_func(@(x)repmat(x,[length(u_index{i_index}),1]),...

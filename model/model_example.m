@@ -47,13 +47,13 @@ function model = model_example()
     model_sliderr(model);
     
     % EXHAUSTIVE CROSS-VALIDATION
-    model.xval.func     = @test_costfunc;
-    model.xval.pars     = struct();
-    model.xval.simu     = {1};
-    model.xval.index    = model.simu.index;
-    model.xval.block    = data.block;
-    model.xval.leave    = 1; % leave-one-out
-    model = model_xval(model);
+    model.simuxval.func     = @test_costfunc;
+    model.simuxval.pars     = struct();
+    model.simuxval.simu     = {1};
+    model.simuxval.index    = model.simu.index;
+    model.simuxval.block    = data.block;
+    model.simuxval.leave    = 1; % leave-one-out
+    model = model_xval_simu(model);
     
     % BAYES COMBINED PREDICTIONS
     % this would require the cost to be a likelihood function

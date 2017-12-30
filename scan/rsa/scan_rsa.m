@@ -34,6 +34,7 @@ function scan = scan_rsa(scan)
     scan = scan_initialize(scan);               % initialize scan / SPM
     try
         % first steps
+        warning('off','stats:pdist:ConstantPoints');
         scan = scan_rsa_steps(scan);
 
         % load data & models

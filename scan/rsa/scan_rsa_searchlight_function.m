@@ -21,13 +21,16 @@ function scan = scan_rsa_searchlight_function(scan)
     scan = scan_function_rsa_get_model(scan);
     scan = scan_function_rsa_get_rdmModel(scan);
     scan = scan_function_rsa_get_allRdm(scan);
+    scan = scan_function_rsa_get_allModel(scan);
     scan = scan_function_rsa_get_allRdmModel(scan);
+    scan = scan_function_rsa_get_avgModel(scan);
     scan = scan_function_rsa_get_avgRdmModel(scan);
     
     % function @plot.*
     scan = scan_function_rsa_plot_rdm(scan);
     scan = scan_function_rsa_plot_model(scan);
     scan = scan_function_rsa_plot_rdmModel(scan);
+    scan = scan_function_rsa_plot_avgModel(scan);
     scan = scan_function_rsa_plot_avgRdmModel(scan);
 %     scan = scan_function_rsa_plot_comparison(scan); % plot comparison
     

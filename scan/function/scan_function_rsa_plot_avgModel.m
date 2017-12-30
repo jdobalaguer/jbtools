@@ -1,31 +1,31 @@
 
-function scan = scan_function_rsa_plot_avgRdmModel(scan)
-    %% scan = SCAN_FUNCTION_RSA_PLOT_AVGRDMMODEL(scan)
+function scan = scan_function_rsa_plot_avgModel(scan)
+    %% scan = SCAN_FUNCTION_RSA_PLOT_AVGMODEL(scan)
     % define function @plot.avgRdmModel
     % to list main functions, try
     %   >> help scan;
 
     %% function
     if ~scan.running.flag.function, return; end
-    scan.function.plot.avgRdmModel = @auxiliar_avgRdmModel;
+    scan.function.plot.avgModel = @auxiliar_avgModel;
 
 end
 
 %% auxiliar
-function auxiliar_avgRdmModel(varargin)
+function auxiliar_avgModel(varargin)
     if ~nargin, return; end
     assertStruct(varargin{1}); tcan = varargin{1};
-    if nargin<3 || strcmp(varargin{2},'help')
-        scan_tool_help(tcan,'@model(scan,i_model,mask)','This function plots the model RDM.');
+    if nargin<2 || strcmp(varargin{2},'help')
+        scan_tool_help(tcan,'@model(scan,i_model)','This function plots the model RDM.');
         return;
     end
 
     % default
-    [i_model,mask] = varargin{2:3};
-    plot_args = struct_default(pair2struct(varargin{4:end}),scan_function_plot_args());
+    [i_model] = varargin{2};
+    plot_args = struct_default(pair2struct(varargin{3:end}),scan_function_plot_args());
     
     % get RDM
-    rdm = tcan.function.get.avgRdmModel(tcan,i_model,mask);
+    rdm = tcan.function.get.avgModel(tcan,i_model);
     rdm = squareform(rdm);
     
     % get labels

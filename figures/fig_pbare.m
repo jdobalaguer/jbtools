@@ -1,6 +1,6 @@
 
-function [h,s] = fig_pbare(x,c,g,b,w,t)
-    %% [h,s] = FIG_PBARE(values,color,groups,bars,width,tstatopts)
+function [h,s] = fig_pbare(x,c,g,b,w,l,t)
+    %% [h,s] = FIG_PBARE(values,color,groups,bars,width,ylimit,tstatopts)
     % Create bars with p-value indicators
     
     %% function
@@ -10,7 +10,9 @@ function [h,s] = fig_pbare(x,c,g,b,w,t)
     func_default('g',[]);
     func_default('b',[]);
     func_default('w',[]);
+    func_default('l',[]);
     func_default('t',{});
+    x = double(x);
     
     % colour for the text
     ct = c;
@@ -18,7 +20,7 @@ function [h,s] = fig_pbare(x,c,g,b,w,t)
     
     % values
     [m,e] = deeze(x,1);
-    h = fig_bare(m,e,c,g,b,w);
+    h = fig_bare(m,e,c,g,b,w,l);
     
     % return
     if ndims(x)>3, s = struct(); return; end

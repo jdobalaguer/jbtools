@@ -24,8 +24,7 @@ function [r,p,n,rdm] = scan_tool_rsa_searchlight(scan,i_subject,i_session,rdm)
     
     % get mask
     mask = scan.running.mask(i_subject);
-	mask.valid = false(size(mask.mask));
-    mask.valid = mask.mask & all(beta,2) & all(~isnan(beta),2);
+    mask.valid = logical(mask.mask);
     beta = beta(mask.valid,:);
     
     % mask the relevant RDM subject/session

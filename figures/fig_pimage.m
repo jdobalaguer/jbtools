@@ -16,8 +16,8 @@ function h = fig_pimage(varargin)
             Y = 0.5:size(C,1)+0.5;
         case 3
             C = varargin{1};
-            X = varargin{2} - 0.5;
-            Y = varargin{3} - 0.5;
+            X = varargin{2}; X = X - 0.5*(X(2)-X(1));
+            Y = varargin{3}; Y = Y - 0.5*(Y(2)-Y(1));
             X(end+1)   = X(end) + 1;
             Y(end+1)   = Y(end) + 1;
         otherwise

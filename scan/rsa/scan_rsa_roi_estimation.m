@@ -31,10 +31,8 @@ function scan = scan_rsa_roi_estimation(scan)
 
             % get mask
             mask = scan.running.mask(i_subject);
-            mask.valid = false(size(mask.mask));
-            mask.valid = mask.mask & all(beta,2) & all(~isnan(beta),2);
-            beta = beta(mask.valid,:);
-            beta = beta';
+            mask.valid = logical(mask.mask);
+            beta = beta(mask.valid,:)';
 
             % whitening
             if scan.job.whitening

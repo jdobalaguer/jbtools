@@ -20,6 +20,8 @@ function h = fig_bare(m,e,c,g,b,w,l)
 
     % assert
     assertSize(m,e);
+    m = double(m);
+    e = double(e);
 
     %  transform
     if ischar(c),       c = fig_color(c,n(2));    end

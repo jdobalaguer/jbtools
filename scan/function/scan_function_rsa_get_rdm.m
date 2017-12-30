@@ -25,11 +25,9 @@ function varargout = auxiliar_rdm(varargin)
     [i_subject,i_session,mask] = varargin{2:4};
     
     % mask & beta
-    mask = scan_nifti_load(fullfile(tcan.directory.mask,mask));
+    mask = logical(scan_nifti_load(fullfile(tcan.directory.mask,mask)));
     beta = scan_tool_rsa_fMRIDataPreparation(tcan,tcan.running.subject.unique(i_subject),tcan.running.subject.session{i_subject}(i_session));
-    mask = mask & all(beta,2) & all(~isnan(beta),2);
-    beta = beta(mask,:);
-    beta = beta';
+    beta = beta(mask,:)';
     
     % whitening
     if tcan.job.whitening

@@ -44,12 +44,21 @@ end
 
 function rdm = crossEuclidean(scan,beta,i_subject,~)
     % note: this function should only be used with concatenated sessions
+    %       but i dont assert this because this also runs within a searchlight
     
     % vector conditions
-    ii_subject = (scan.running.load.subject == scan.running.subject.unique(i_subject));
-    x_session   = scan.running.load.session(ii_subject);
-    x_condition = scan.running.load.name(ii_subject);
-    [~,~,x_condition] = unique(x_condition);
+    if scan.job.padSessions
+        u_condition = mat2vec(1:length(scan.job.glm.condition));
+        u_session   = unique(scan.running.load.session,'stable');
+        [x_condition,x_session] = ndgrid(u_condition,u_session);
+        x_session   = mat2vec(x_session);
+        x_condition = mat2vec(x_condition);
+    else
+        ii_subject = (scan.running.load.subject == scan.running.subject.unique(i_subject));
+        x_session   = scan.running.load.session(ii_subject);
+        x_condition = scan.running.load.name(ii_subject);
+        [~,~,x_condition] = unique(x_condition);
+    end
     
     % numbers
     n_pattern  = length(x_condition);

@@ -27,9 +27,9 @@ function varargout = auxiliar_avgRdmModel(varargin)
     % get all RDMs
     avgRDMs = tcan.function.get.allRdmModel(tcan,i_model,mask);
     for i_subject = 1:tcan.running.subject.number
-        avgRDMs{i_subject} = mean(cat(3,avgRDMs{i_subject}{:}),3);
+        avgRDMs{i_subject} = nanmean(cat(3,avgRDMs{i_subject}{:}),3);
     end
-    avgRDMs = mean(cat(3,avgRDMs{:}),3);
+    avgRDMs = nanmean(cat(3,avgRDMs{:}),3);
     
     % return
     varargout = {avgRDMs};

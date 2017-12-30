@@ -19,6 +19,7 @@ function job = scan_initialize_template_job_rsa(type)
     job.distance           = 'euclidean';
     job.global             = 'none';
     job.loadRDM            = '';
+    job.padSessions        = false;
     job.saveRDM            = false;
     job.searchlight        = [];
     job.transformation     = 'none';
