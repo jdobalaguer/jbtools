@@ -17,5 +17,6 @@ function file_savevar(varargin)
     pair = varargin(3:end);
     func_default('version','-v7');
     s = pair2struct(pair); %#ok<NASGU>
+    file_mkdir(file_parts(path));
     save(path,version,'-struct','s');
 end

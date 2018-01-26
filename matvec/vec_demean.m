@@ -1,6 +1,6 @@
 
 function z = vec_demean(varargin)
-    %% [z] = VEC_DEMEAN(y[,x1][,x2])
+    %% [z] = VEC_DEMEAN(y[,x1][,x2][,..])
     % de-mean matrix [y], independently for each combination of indices in {x}
     
     %% function

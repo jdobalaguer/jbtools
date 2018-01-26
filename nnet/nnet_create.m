@@ -70,11 +70,11 @@ end
 % dot (matrix product)
 function [output,derive] = nnet_layer_dot()
     function y = func_output(l,x,i)
-        [w] = func_deal(l.parameters{:});
+        w = l.parameters{1};
         y = x * w;
     end
     function d = func_derive(l,x,y,e,i)
-        [w] = func_deal(l.parameters{:});
+        w = l.parameters{1};
         d = {e * w', x' * e};
     end
     output = @func_output;
@@ -110,7 +110,7 @@ end
 % sum (biases)
 function [output,derive] = nnet_layer_sum()
     function y = func_output(l,x,i)
-        [b] = func_deal(l.parameters{:});
+        b = l.parameters{1};
         y = x + repmat(b,[size(x,1),1]);
     end
     function d = func_derive(l,x,y,e,i)

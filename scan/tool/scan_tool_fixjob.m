@@ -1,23 +1,21 @@
 
-function scan = scan_tool_fixglm(scan,proj)
-    %% scan = SCAN_TOOL_FIXGLM(scan[,proj])
+function scan = scan_tool_fixjob(scan,path)
+    %% scan = SCAN_TOOL_FIXJOB(scan,path)
     % fix files and folders
     % to list main functions, try
     %   >> help scan;
-    
-    %% function
-    
-    % default
-    func_default('proj',file_name(scan.running.directory.job));
     
     % variables
     pwd_new = file_endsep(pwd());
     pwd_old = scan.directory.root;
     job_old = scan.running.directory.job;
-    job_new = file_endsep(fullfile(file_parts(strrep(job_old,pwd_old,pwd_new)),proj));
+    job_new = path;
     spm_old = scan.directory.spm;
     spm_new = file_endsep(fileparts(which('spm.m')));
     
+    % make it absolute
+    if file_islocal(job_new), job_new = file_endsep(fullfile(file_parts(strrep(job_old,pwd_old,pwd_new)),proj)); end
+    if file_isrel(job_new),   job_new = file_2absolute(job_new); end
     scan = nested(scan);
     
     %% nested

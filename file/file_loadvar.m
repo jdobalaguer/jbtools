@@ -7,11 +7,14 @@ function varargout = file_loadvar(varargin)
     % val  : value of variable
     
     %% function
-    path = varargin{1};
-    var = varargin(2:end);
-    mat = load(path,var{:});
-    varargout = cell(size(var));
+    path  = varargin{1};
+    var   = cellfun(@(s)strsplit(s,'.'),varargin(2:end),'UniformOutput',false);
+    first = unique(cellfun(@(v)v{1},var,'UniformOutput',false));
+    mat   = load(path,first{:});
+    varargout = repmat({mat},size(var));
     for i = 1:length(var)
-        varargout{i} = mat.(var{i});
+        for j = 1:length(var{i})
+            varargout{i} = varargout{i}.(var{i}{j});
+        end
     end
 end

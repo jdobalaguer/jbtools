@@ -11,7 +11,6 @@ TODO
 67. enable/disable first level GLM
 74. mat_elements (using sub2ind or ind2sub!)
 75. mat_squeeze([dim])
-76. scan_tool_fixPaths
 77. scan_view assert spm
 78. scan_view threshold for highest t-stat
 79. scan_glm assert lengths of conditions
@@ -25,6 +24,8 @@ TODO
 90. scan_tool_print without progress
 91. TFCE without normal second level (and copy)
 92. TFCE in scan_view
+93. include MARS atlantes in the scan toolbox (http://www.rbmars.dds.nl/lab/CBPatlases.html)
+93. include other FSL atlantes in the scan toolbox (https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Atlases)
 
 LONG TERM
 06. handle HDD writing depending on the size of [scan]
@@ -129,6 +130,8 @@ R6. in RSA we should recycle the onset information from the TBTE.
 71. scan_view error if no files
 72. scan_view center voxels in viewer
 73. add viewer alpha range
+76. scan_tool_fixjob
 85. scan_glm_copy force flags
 87. add multiple durations to scan_glm
 89. TFCE
+94. save activation tables as CSV

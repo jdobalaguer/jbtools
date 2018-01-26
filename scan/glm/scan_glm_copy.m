@@ -183,6 +183,42 @@ function scan = scan_glm_copy(scan,level,type,force)
             end
             scan = scan_tool_progress(scan,0);
             
+        % second level contrast
+        case 'second:contrastLOO'
+            if ~force && ~any(ismember('cont_2',scan.job.copyFolder)), return; end
+            if ~force && ~scan.running.flag.second, return; end
+            if ~force && ~strcmp(scan.job.type,'glm'), return; end
+            scan_tool_print(scan,false,'\nCopy contrast file (second level LOO) : ');
+            scan = scan_tool_progress(scan,length(scan.running.contrast{1}) * scan.running.subject.number);
+            for j_subject = 1:scan.running.subject.number
+            for i_contrast = 1:length(scan.running.contrast{j_subject})
+                original = fullfile(scan.running.directory.original.second,'LOO',sprintf('subject_%03i',j_subject),sprintf('%s_%03i',scan.running.contrast{j_subject}(i_contrast).name,scan.running.contrast{j_subject}(i_contrast).order),'con_0001.nii');
+                copy     = fullfile(scan.running.directory.copy.second.contrast,'LOO',sprintf('%s_%03i',scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order),sprintf('subject_%04i.nii',scan.running.subject.unique(j_subject)));
+                file_mkdir(fileparts(copy));
+                scan_tool_copy(original,copy);
+                scan = scan_tool_progress(scan,[]);
+            end
+            end
+            scan = scan_tool_progress(scan,0);
+            
+        % second level contrast
+        case 'second:statisticLOO'
+            if ~force && ~any(ismember('cont_2',scan.job.copyFolder)), return; end
+            if ~force && ~scan.running.flag.second, return; end
+            if ~force && ~strcmp(scan.job.type,'glm'), return; end
+            scan_tool_print(scan,false,'\nCopy contrast file (second level LOO) : ');
+            scan = scan_tool_progress(scan,length(scan.running.contrast{1}) * scan.running.subject.number);
+            for j_subject = 1:scan.running.subject.number
+            for i_contrast = 1:length(scan.running.contrast{j_subject})
+                original = fullfile(scan.running.directory.original.second,'LOO',sprintf('subject_%03i',j_subject),sprintf('%s_%03i',scan.running.contrast{j_subject}(i_contrast).name,scan.running.contrast{j_subject}(i_contrast).order),'spmT_0001.nii');
+                copy     = fullfile(scan.running.directory.copy.second.statistic,'LOO',sprintf('%s_%03i',scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order),sprintf('subject_%03i.nii',scan.running.subject.unique(j_subject)));
+                file_mkdir(fileparts(copy));
+                scan_tool_copy(original,copy);
+                scan = scan_tool_progress(scan,[]);
+            end
+            end
+            scan = scan_tool_progress(scan,0);
+        
         % second level statistic
         case 'second:tfce'
             if ~scan.job.tfce, return; end

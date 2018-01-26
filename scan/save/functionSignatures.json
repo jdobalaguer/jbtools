@@ -1,4 +1,4 @@
 {
-"scan_load":      {"inputs":[{"name":"scan",           "kind":"required"                   },
+"scan_load":      {"inputs":[{"name":"scan",           "kind":"required", "type":"filepath"},
                              {"name":"scan_directory", "kind":"required", "type":"filepath"}]}
 }

@@ -1,11 +1,16 @@
 
 function lcan = scan_load(scan,scan_directory)
+    %% scan = SCAN_LOAD(folder)
     %% scan = SCAN_LOAD(scan,folder)
     % load the [scan] struct
     % to list main functions, try
     %   >> help scan;
 
     %% function
+    if nargin == 1
+        scan_directory = scan;
+        scan = [];
+    end
     
     % variables
     scan_directory = file_endsep(scan_directory);

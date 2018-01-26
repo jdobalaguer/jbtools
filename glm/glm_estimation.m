@@ -16,7 +16,7 @@ function a = glm_estimation(x,y,o)
     % default options
     func_default('o',struct());
     o = struct_default(o,glm_options());
-    o_pair = struct2pair(struct_rm(o,'dist','zscore'));
+    o_pair = struct2pair(struct_rm(o,'dist'));
     
     % numbers
     n_subject = numel(x);

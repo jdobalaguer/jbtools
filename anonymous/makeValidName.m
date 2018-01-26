@@ -10,7 +10,7 @@ function N = makeValidName(S)
     if ischar(S), N = matlab.lang.makeValidName(S); return; end
     
     % make valid names
-    N = matlab.lang.makeValidName(S);
+    N = reshape(matlab.lang.makeValidName(S(:)),size(S));
     
     % fix conflicts
     u_N = unique(N);

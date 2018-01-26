@@ -50,7 +50,7 @@ function model = model_bayes(model)
     end
     assert(isequal(size(model.bayes.prior),size(model.cost.result.cost)),  'model_bayes: error. prior has wrong size');
     assert(all(model.bayes.prior(:) >= 0),                                 'model_bayes: error. prior is not a probability');
-    assert(all(abs(sum(model.bayes.prior(:,:,:),3) - 1) < 1e-5),           'model_bayes: error. prior is not a probability');
+    assert(all(mat2vec(abs(sum(model.bayes.prior(:,:,:),3) - 1))< 1e-5),   'model_bayes: error. prior is not a probability');
     
     % joint posterior (parameters)
     cost = model.cost.result.cost;

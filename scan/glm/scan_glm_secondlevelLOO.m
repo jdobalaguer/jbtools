@@ -47,13 +47,13 @@ function scan = scan_glm_secondlevelLOO(scan)
     
     % second level analyses
     scan_tool_print(scan,false,'\nSPM analysis (second level) : ');
-    scan = scan_tool_progress(scan,length(scan.running.contrast{1}) * (scan.running.subject.number - 1));
+    scan = scan_tool_progress(scan,length(scan.running.contrast{1}) * (scan.running.subject.number));
     scan.running.jobs.second = cell(scan.running.subject.number,1);
     for j_subject = 1:scan.running.subject.number
         clear spm;
         j_job = 0;
-        for i_contrast = 1:length(scan.running.contrast{1})
-            directory_second = fullfile(scan.running.directory.original.second,'LOO',sprintf('subject_%03i',j_subject),sprintf('%s_%03i',scan.running.contrast{1}(i_contrast).name,scan.running.contrast{1}(i_contrast).order));
+        for i_contrast = 1:length(scan.running.contrast{j_subject})
+            directory_second = fullfile(scan.running.directory.original.second,'LOO',sprintf('subject_%03i',j_subject),sprintf('%s_%03i',scan.running.contrast{j_subject}(i_contrast).name,scan.running.contrast{j_subject}(i_contrast).order));
             % design
             j_job = j_job + 1;
             spm{j_job}.spm.stats.factorial_design.dir                      = {directory_second}; %#ok<*AGROW>
