@@ -137,6 +137,10 @@ function varargout = fig_axis(varargin)
   if isfield(sa,{'xrotation'})
     set(ca,   'XTickLabelRotation',sa.xrotation);
   end
+  % xaxislocation
+  if isfield(sa,{'xaxislocation'})
+    set(ca,   'XAxisLocation',sa.xaxislocation);
+  end
   % xlim
   if isfield(sa,{'xlim'})
       xlim(sa.xlim);
@@ -170,6 +174,10 @@ function varargout = fig_axis(varargin)
   % yrotation
   if isfield(sa,{'yrotation'})
     set(ca,   'YTickLabelRotation',sa.yrotation);
+  end
+  % yaxislocation
+  if isfield(sa,{'yaxislocation'})
+    set(ca,   'YAxisLocation',sa.yaxislocation);
   end
   % ylim
   if isfield(sa,{'ylim'})

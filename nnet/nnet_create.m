@@ -26,11 +26,10 @@ function nnet = nnet_create(varargin)
         pars = val{i};
         switch type
         % linear operations
+            case 'eye',         [output,derive] = nnet_layer_eye();
             case 'dot',         [output,derive] = nnet_layer_dot();
-%             case 'batchdot',    [output,derive] = nnet_layer_batchdot();
             case 'sum',         [output,derive] = nnet_layer_sum();
         % non-linear operations
-            case 'eye',         [output,derive] = nnet_layer_eye();
             case 'softmax',     [output,derive] = nnet_layer_softmax();
             case 'sigmoid',     [output,derive] = nnet_layer_sigmoid();
             case 'tanh',        [output,derive] = nnet_layer_tanh();
@@ -38,12 +37,17 @@ function nnet = nnet_create(varargin)
             case 'sqrt',        [output,derive] = nnet_layer_sqrt();
             case 'abs',         [output,derive] = nnet_layer_abs();
             case 'sin',         [output,derive] = nnet_layer_sin();
-            case 'janu',        [output,derive] = nnet_layer_janu();
+        % non-loss operations with additional inputs
+            case 'amplify',     [output,derive] = nnet_layer_amplify();
+            case 'rescale',     [output,derive] = nnet_layer_rescale();
+            case 'truncate',    [output,derive] = nnet_layer_truncate();
+            case 'randn',       [output,derive] = nnet_layer_randn();
         % losses
             case 'sqeuclidean', [output,derive] = nnet_layer_sqeuclidean();
             case 'euclidean',   [output,derive] = nnet_layer_euclidean();
-            case 'xentropy',    [output,derive] = nnet_layer_xentropy();
-            case 'loglhood',    [output,derive] = nnet_layer_loglhood();
+            case 'xesoftmax',   [output,derive] = nnet_layer_xesoftmax();
+            case 'xesigmoid',   [output,derive] = nnet_layer_xesigmoid();
+            case 'xesigmoidlogit', [output,derive] = nnet_layer_xesigmoidlogit();
         % shrink batch
             case 'sumbatch',    [output,derive] = nnet_layer_sumbatch();
             case 'meanbatch',   [output,derive] = nnet_layer_meanbatch();
@@ -148,6 +152,7 @@ function [output,derive] = nnet_layer_sigmoid()
         y = 1 ./ (1 + exp(-x));
     end
     function d = func_derive(l,x,y,e,i)
+        y = 1 ./ (1 + exp(abs(x))); % much better precision around zero!
         d = {e .* (1 - y) .* y};
     end
     output = @func_output;
@@ -215,13 +220,65 @@ function [output,derive] = nnet_layer_sin()
     derive = @func_derive;
 end
 
-% janu (jan's unit)
-function [output,derive] = nnet_layer_janu()
+%% auxiliar (non-loss operations with additional inputs)
+
+% amplify
+function [output,derive] = nnet_layer_amplify()
     function y = func_output(l,x,i)
-        y = abs(mod(x+1,2)-1);
+        y  = i*x;
     end
     function d = func_derive(l,x,y,e,i)
-        d = {e .* sign(mod(x+1,2)-1)};
+        d = {i*e};
+    end
+    output = @func_output;
+    derive = @func_derive;
+end
+
+% rescale
+function [output,derive] = nnet_layer_rescale()
+    function y = func_output(l,x,i)
+        maxx = max(x(:));
+        minx = min(x(:));
+        z = x - minx;
+        z = z .* (i(2)-i(1)) ./ (maxx - minx);
+        y = i(1) + z;
+    end
+    function d = func_derive(l,x,y,e,i)
+        % most variables rescale with a constant value, but in extremes the gradient is zero
+        maxx = max(x(:));
+        minx = min(x(:));
+        dydx = repmat((i(2) - i(1)) ./ (maxx - minx),size(x));
+        dydx(x(:) == maxx) = 0;
+        dydx(x(:) == minx) = 0;
+        d = {dydx .* e};
+    end
+    output = @func_output;
+    derive = @func_derive;
+end
+
+% truncate
+function [output,derive] = nnet_layer_truncate()
+    function y = func_output(l,x,i)
+        y  = x;
+        y(y < i(1)) = i(1);
+        y(y > i(2)) = i(2);
+    end
+    function d = func_derive(l,x,y,e,i)
+        d = e;
+        d(ismember(y,i)) = 0;
+        d = {d};
+    end
+    output = @func_output;
+    derive = @func_derive;
+end
+
+% add gaussian noise
+function [output,derive] = nnet_layer_randn()
+    function y = func_output(l,x,i)
+        y  = x + i*randn(size(x));
+    end
+    function d = func_derive(l,x,y,e,i)
+        d = {e};
     end
     output = @func_output;
     derive = @func_derive;
@@ -255,8 +312,8 @@ function [output,derive] = nnet_layer_euclidean()
     derive = @func_derive;
 end
 
-% xentropy (cross-entropy for softmax)
-function [output,derive] = nnet_layer_xentropy()
+% xesoftmax (cross-entropy for softmax)
+function [output,derive] = nnet_layer_xesoftmax()
     function y = func_output(l,x,i)
         y = -sum(i .* log(x), 2);
     end
@@ -267,8 +324,8 @@ function [output,derive] = nnet_layer_xentropy()
     derive = @func_derive;
 end
 
-% loglhood (log-likelihood for sigmoid)
-function [output,derive] = nnet_layer_loglhood()
+% xesigmoid (cross-entropy for sigmoid)
+function [output,derive] = nnet_layer_xesigmoid()
     function y = func_output(l,x,i)
         y = sum(-(i .* log(x) + (1-i) .* log(1-x)),2);
     end
@@ -278,6 +335,21 @@ function [output,derive] = nnet_layer_loglhood()
     output = @func_output;
     derive = @func_derive;
 end
+
+% xesigomidlogit (xesigmoid, bypassing the sigmoid)
+function [output,derive] = nnet_layer_xesigmoidlogit()
+    function y = func_output(l,x,i)
+        % see https://www.tensorflow.org/api_docs/python/tf/nn/sigmoid_cross_entropy_with_logits
+        y = max(x,0) - (x.*i) + log(1+exp(-abs(x)));
+    end
+    function d = func_derive(l,x,y,e,i)
+        eax = exp(-abs(x));
+        d = { e .* ((x > 0) - i - (sign(x).*eax)./(1+eax)) };
+    end
+    output = @func_output;
+    derive = @func_derive;
+end
+
 
 
 %% auxiliar (shrink batch)

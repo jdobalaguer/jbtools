@@ -73,7 +73,8 @@ function model = model_simulation(model)
             % parfor
             parfor_result = model.simu.result.simulation(i_subject,i_index,:);
             parfor_func   = model.simu.func;
-            parfor (i_comb = 1:n_comb, mme_size())
+            for i_comb = 1:n_comb
+%             parfor (i_comb = 1:n_comb, mme_size())
                 
                 % comb
                 pars = [u_pars';num2cell(u_comb(i_comb,:))];

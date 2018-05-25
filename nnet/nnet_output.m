@@ -6,7 +6,7 @@ function output = nnet_output(nnet,input,label)
     %% function
     
     % default
-    func_default('label',cell(size(nnet)));
+%     func_default('label',cell(size(nnet)));
     
     % variables
     n    = length(nnet);

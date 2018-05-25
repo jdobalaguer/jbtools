@@ -55,6 +55,9 @@ function scan = scan_glm(scan)
         % first steps
         scan = scan_glm_steps(scan);
 
+        % function
+        scan = scan_glm_function(scan);
+        
         % design
         scan = scan_glm_condition_check(scan);  % check
         scan = scan_glm_regressor_add(scan);    % add
@@ -89,9 +92,6 @@ function scan = scan_glm(scan)
         scan = scan_glm_copy(scan,'second','tfce',0);      % copy
         scan = scan_glm_copy(scan,'second','spm',0);       % copy
 
-        % function
-        scan = scan_glm_function(scan);
-        
         % save
         scan = scan_tool_time(scan);
         scan = scan_tool_sound(scan,1);

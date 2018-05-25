@@ -14,6 +14,10 @@ function z = vec_zscore(varargin)
 end
 
 function z = f(y,~)
+    if isempty(y{1})|| all(y{1} == y{1}(1))
+        z = nan(size(y{1}));
+        return
+    end
     s = [size(y{1},1),ones(1,ndims(y)-1)];
     m = repmat(nanmean(y{1},  1),s);
     v = repmat(nanstd (y{1},1,1),s);

@@ -21,7 +21,7 @@ function model_landscape(model,c_pars)
     for i_cpars = 1:n_cpars
         
         % numbers
-        pars = unique(c_pars{i_cpars});
+        pars = unique(c_pars{i_cpars},'stable');
         s_comb  = size(model.cost.result.cost); s_comb(1:2) = [];
         n_index = length(model.cost.index);
 
@@ -64,30 +64,36 @@ function model_landscape(model,c_pars)
                     sa.ylabel     = 'cost';
                     fig_axis(sa);
                 case 2
-                    fig_pimage(reshape(mean_cost(1,i_index,:),s_comb(f_pars)));
+                    z = reshape(mean_cost(1,i_index,:),s_comb(sort(f_pars)));
+                    [~,ii_fpars] = sort(f_pars,'ascend');
+                    z = permute(z,ii_fpars);
+                    fig_pimage(z);
                     sa = struct();
+                    sa.xtick      = 1:length(model.simu.pars.(u_pars{f_pars(2)}));
+                    sa.xticklabel = num2leg(model.simu.pars.(u_pars{f_pars(2)}),'%.2f');
+                    sa.xlabel     = u_pars{f_pars(2)};
+                    sa.xlim       = [0,s_comb(f_pars(2))+1];
+                    sa.ytick      = 1:length(model.simu.pars.(u_pars{f_pars(1)}));
+                    sa.yticklabel = num2leg(model.simu.pars.(u_pars{f_pars(1)}),'%.2f');
+                    sa.ylabel     = u_pars{f_pars(1)};
+                    sa.ylim       = [0,s_comb(f_pars(1))+1];
+                    sa.ratio      = fliplr(s_comb(f_pars));
+                    fig_axis(sa);
+                    colorbar();
+                case 3
+                    z = reshape(mean_cost(1,i_index,:),s_comb(sort(f_pars)));
+                    [~,ii_fpars] = sort(f_pars,'ascend');
+                    z = permute(z,ii_fpars);
+                    fig_4d(z,0.8);
                     sa.xtick      = 1:length(model.simu.pars.(u_pars{f_pars(2)}));
                     sa.xticklabel = num2leg(model.simu.pars.(u_pars{f_pars(2)}),'%.2f');
                     sa.xlabel     = u_pars{f_pars(2)};
                     sa.ytick      = 1:length(model.simu.pars.(u_pars{f_pars(1)}));
                     sa.yticklabel = num2leg(model.simu.pars.(u_pars{f_pars(1)}),'%.2f');
                     sa.ylabel     = u_pars{f_pars(1)};
-                    fig_axis(sa);
-                    %axis('square');
-                    %set(gca(),'clim',[0,1]);
-                    colorbar();
-                case 3
-                    m = reshape(mean_cost(1,i_index,:),s_comb(f_pars));
-                    fig_4d(m,0.8);
-                    sa.xtick      = 1:length(model.simu.pars.(u_pars{f_pars(3)}));
-                    sa.xticklabel = num2leg(model.simu.pars.(u_pars{f_pars(3)}),'%.2f');
-                    sa.xlabel     = u_pars{f_pars(3)};
-                    sa.ytick      = 1:length(model.simu.pars.(u_pars{f_pars(2)}));
-                    sa.yticklabel = num2leg(model.simu.pars.(u_pars{f_pars(2)}),'%.2f');
-                    sa.ylabel     = u_pars{f_pars(2)};
-                    sa.ztick      = 1:length(model.simu.pars.(u_pars{f_pars(1)}));
-                    sa.zticklabel = num2leg(model.simu.pars.(u_pars{f_pars(1)}),'%.2f');
-                    sa.zlabel     = u_pars{f_pars(1)};
+                    sa.ztick      = 1:length(model.simu.pars.(u_pars{f_pars(3)}));
+                    sa.zticklabel = num2leg(model.simu.pars.(u_pars{f_pars(3)}),'%.2f');
+                    sa.zlabel     = u_pars{f_pars(3)};
                     fig_axis(sa);
                     colorbar();
             end

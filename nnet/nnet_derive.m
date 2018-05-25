@@ -6,7 +6,7 @@ function derive = nnet_derive(nnet,output,label)
     %% function
     
     % default
-    func_default('label',cell(size(nnet)));
+%     func_default('label',cell(size(nnet)));
     
     % variables
     n      = length(nnet);

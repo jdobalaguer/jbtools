@@ -14,7 +14,7 @@ function scan = scan_tool_fixjob(scan,path)
     spm_new = file_endsep(fileparts(which('spm.m')));
     
     % make it absolute
-    if file_islocal(job_new), job_new = file_endsep(fullfile(file_parts(strrep(job_old,pwd_old,pwd_new)),proj)); end
+    if file_islocal(job_new), job_new = file_endsep(fullfile(file_parts(strrep(job_old,pwd_old,pwd_new)),job_new)); end
     if file_isrel(job_new),   job_new = file_2absolute(job_new); end
     scan = nested(scan);
     

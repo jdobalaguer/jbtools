@@ -72,6 +72,7 @@ function varargout = stats_mxanova(x,l)
                                  
     % effects
     effects = tbl(2:end-2,1);
+    effects = strrep(effects,'*',' × ');
     
     % return
     ii_random = find(strcmp(tbl(2:end-2,8),'random'));

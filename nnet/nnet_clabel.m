@@ -5,6 +5,6 @@ function clabel = nnet_clabel(nnet,label)
 
     %% function
     clabel = cell(1,length(nnet));
-    f_loss = find(ismember({nnet.type},{'euclidean','sqeuclidean','loglhood','xentropy'}));
+    f_loss = find(ismember({nnet.type},{'euclidean','sqeuclidean','xesigmoid','xesigmoidlogit','xesoftmax','xesoftmaxlogit'}));
     clabel{f_loss} = label; %#ok<FNDSB>
 end

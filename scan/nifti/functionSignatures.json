@@ -1,0 +1,7 @@
+{
+"scan_nifti_load":      {"inputs":[{"name":"file", "kind":"required", "type":"filepath"},
+                                   {"name":"mask", "kind":"required"}]},
+"scan_nifti_save":      {"inputs":[{"name":"file",    "kind":"required", "type":"filepath"},
+                                   {"name":"vol",     "kind":"required"},
+                                   {"name":"template","kind":"required"}]}
+}

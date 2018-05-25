@@ -49,7 +49,13 @@ function varargout = stats_rmanova(x,l)
     effects = cellfun(@(c)strjoin(c,'*'),effects,'UniformOutput',false);
     
     % rm ANOVA
-    stats = ranova(rm,'WithinModel',strjoin(effects,' + '));
+    stats   = ranova(rm,'WithinModel',strjoin(effects,' + '));
+    
+    % for whatever reason, someone at mathworks thought it wasnt a good idea
+    % that the output respected the order in which you input the effects
+    effects = stats(3:2:end,:).Row; 
+    effects = strrep(effects,'(Intercept):','');
+    effects = strrep(effects,':',' × ');
     
     % return
     p   = stats.pValue(3:2:end);
@@ -61,7 +67,7 @@ function varargout = stats_rmanova(x,l)
     % print
     if ~nargout
         for i = 1:numel(h)
-            fprintf('Effect %02d: %-18s F(%3.0f,%3.0f) = %7.3f,\tp=%7.3f \n',i,effects{i},dfn(i),dfd(i),F(i),p(i));
+            fprintf(['Effect %02d: %-',num2str(3+max(cellfun(@numel,effects))),'s F(%3.0f,%3.0f) = %7.3f,\tp=%7.3f \n'],i,effects{i},dfn(i),dfd(i),F(i),p(i));
         end
     else
         varargout = {h,p,F,stats,rm};
