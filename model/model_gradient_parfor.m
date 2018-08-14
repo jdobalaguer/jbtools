@@ -25,6 +25,7 @@ function result = model_gradient_parfor(problem,parfor_x0,parfor_simu_glob,parfo
             fprintf('model_gradient_parfor: error. V(X0) = %d \n',parfor_v0);
         end
         assertWarning(exitflag > 0,'model_gradient_parfor: error. search not possible \n');
+        if exitflag < 1, keyboard; end
     end
 
     %% nested

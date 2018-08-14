@@ -47,6 +47,6 @@ end
 
 function s = add_subject(s)
     if ~isfield(s,'expt_subject')
-        s.expt_subject = repmat(randi(1000000),size(s.expt_index));
+        s.expt_subject = repmat(randi(1000000),size(s.expt_trial));
     end
 end

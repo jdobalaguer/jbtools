@@ -67,7 +67,7 @@ function model = model_gradient(model)
                 % comb
                 parfor_x0 = u_comb(i_comb,:)';
                 
-                % gradiend
+                % gradient
                 parfor_result(i_comb) = model_gradient_parfor(parfor_problem,parfor_x0,parfor_simu_glob,parfor_simu_pars,parfor_simu_func,parfor_cost_pars,parfor_cost_func,parfor_data);
                 
                 % progress

@@ -4,7 +4,7 @@ function scan_tool_makeTable(SPM,csv_file) %#ok<INUSL>
     % write a CSV file with the table of activations
     
     %% build text description of activations
-    evalc('[~,xSPM] = spm_getSPM(SPM);');
+    eval('[~,xSPM] = spm_getSPM(SPM);');
     txt = evalc('spm_list(''txtlist'',spm_list(''table'',xSPM))');
  
     %% parse spm text
